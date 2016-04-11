@@ -229,7 +229,7 @@ nrow(d)
 
 ### Plot of Topics and their total number of files
 
-![](assets/swb_corpus_creation_files/figure-markdown_github/unnamed-chunk-7-1.png)<!-- -->
+![](/assets/swb_corpus_creation_files/figure-markdown_github/unnamed-chunk-7-1.png)<!-- -->
 
 ### Number of unique files in the corpus
 
@@ -244,11 +244,11 @@ Conversations in the corpus
 
 ### Plot of Average conversation length per topic
 
-![](assets/swb_corpus_creation_files/figure-markdown_github/unnamed-chunk-11-1.png)<!-- -->
+![](/assets/swb_corpus_creation_files/figure-markdown_github/unnamed-chunk-11-1.png)<!-- -->
 
 ### Histogram of Average conversation length per utterance file
 
-![](assets/swb_corpus_creation_files/figure-markdown_github/unnamed-chunk-13-1.png)<!-- -->
+![](/assets/swb_corpus_creation_files/figure-markdown_github/unnamed-chunk-13-1.png)<!-- -->
 
 ### Average conversation length per utterance file
 
@@ -275,7 +275,7 @@ nrow(d)
 
 ### Plot of Level 1 Speech acts and their count
 
-![](assets/swb_corpus_creation_files/figure-markdown_github/unnamed-chunk-18-1.png)<!-- -->
+![](/assets/swb_corpus_creation_files/figure-markdown_github/unnamed-chunk-18-1.png)<!-- -->
 
 ### Level 2 Hierarchy
 
@@ -289,7 +289,7 @@ nrow(d)
 
 ### Plot of Level 2 speech acts and their count
 
-![](assets/swb_corpus_creation_files/figure-markdown_github/unnamed-chunk-21-1.png)<!-- --> \#\#\# Level 3 Hierarchy
+![](/assets/swb_corpus_creation_files/figure-markdown_github/unnamed-chunk-21-1.png)<!-- --> \#\#\# Level 3 Hierarchy
 
 ### Total number of Level 3 speech acts in the corpus:
 
@@ -301,7 +301,7 @@ nrow(d)
 
 ### Plot of Level 3 speech acts and their count
 
-![](assets/swb_corpus_creation_files/figure-markdown_github/unnamed-chunk-24-1.png)<!-- -->
+![](/assets/swb_corpus_creation_files/figure-markdown_github/unnamed-chunk-24-1.png)<!-- -->
 
 ### All labels
 
@@ -315,4 +315,4 @@ nrow(d)
 
 ### Plot of all speech acts and their count
 
-![](assets/swb_corpus_creation_files/figure-markdown_github/unnamed-chunk-27-1.png)<!-- -->
+![](/assets/swb_corpus_creation_files/figure-markdown_github/unnamed-chunk-27-1.png)<!-- -->
