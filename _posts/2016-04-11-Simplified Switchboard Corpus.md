@@ -5,6 +5,8 @@ published: true
 categories: [nlp]
 tags: [nlp]
 ---
+We will create a simplified version of Switchboard Speech act corpus and perform exploratory 
+data analysis on it. 
 
 Introduction
 ============
@@ -67,7 +69,7 @@ Add
 
 -   I have created java code to deal with cleaning data and creating different formats of data.
 -   Please have a look at the java code for more information. This code can clean text, tags and produce different csv versions of the switchboard data.
--   The final dataset can be downloaded from [here]()
+-   The final dataset can be downloaded from [here](https://github.com/sanjaymeena/simplified_switchboard_dialog_act_corpus)
 
 Exploratory Data Analysis of Switchboard Corpus
 -----------------------------------------------
