@@ -1,3 +1,11 @@
+---
+layout: post
+title: Simplified Switchboard Corpus
+published: true
+categories: [nlp]
+tags: [nlp]
+---
+
 Introduction
 ============
 
