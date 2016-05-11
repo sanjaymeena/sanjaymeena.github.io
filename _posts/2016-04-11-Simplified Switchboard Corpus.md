@@ -2,7 +2,7 @@
 layout: post
 title: Simplified Switchboard Corpus
 published: true
-categories: [nlp]
+categories: [tech,nlp]
 tags: [nlp]
 ---
 We will create a simplified version of Switchboard Speech act corpus and perform exploratory 

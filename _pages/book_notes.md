@@ -1,10 +1,12 @@
 ---
-layout: default
+title: Book notes
+permalink: /book_notes/
+layout: page
+sitemap: true 
 ---
 
-
 <div class="page_list">
- {% for post in site.posts %}
+  {% for post in site.categories.book_notes %}
    {% if post.url %}
     <article class="page_list">
 
@@ -18,6 +20,4 @@ layout: default
      {% endif %}
   {% endfor %}
 </div>
-
-
 

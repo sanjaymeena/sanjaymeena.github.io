@@ -1,10 +1,13 @@
 ---
-layout: default
+title: Tech Posts
+permalink: /tech/
+layout: page
+sitemap: true 
 ---
 
 
 <div class="page_list">
- {% for post in site.posts %}
+  {% for post in site.categories.tech %}
    {% if post.url %}
     <article class="page_list">
 
@@ -18,6 +21,4 @@ layout: default
      {% endif %}
   {% endfor %}
 </div>
-
-
 
