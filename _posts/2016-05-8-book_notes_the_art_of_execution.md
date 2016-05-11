@@ -6,8 +6,7 @@ categories: [book_notes]
 tags: [book-notes]
 ---
 
-Dealing with losing and winning situations in stocks 
-
+The art of Execution
 
 
 # Dealing with losing and winning situations in stocks 
