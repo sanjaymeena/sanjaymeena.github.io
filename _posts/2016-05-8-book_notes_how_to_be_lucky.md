@@ -12,7 +12,8 @@ tags: [book-notes]
 * Author: Gunther Max
 * Excerpt:  Is there anything we can do to bring more luck into our lives? 
 
-
+* TOC
+{:toc}
 
 ## 1. Making the Luck/Planning Distinction
 
