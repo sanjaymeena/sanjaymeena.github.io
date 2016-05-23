@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Financial Analysis
-published: true
+published: false
 categories: [investment_notes]
 tags: [investment-notes]
 ---
