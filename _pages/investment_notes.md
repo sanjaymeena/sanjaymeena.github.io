@@ -7,7 +7,7 @@ sitemap: true
 
 
 <div class="page_list">
-  {% for post in site.categories.investments %}
+  {% for post in site.categories.investment_notes %}
    {% if post.url %}
     <article class="page_list">
 
