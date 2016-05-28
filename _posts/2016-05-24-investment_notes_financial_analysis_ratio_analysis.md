@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Financial Analysis- Ratio Analysis
-published: true
+published: false
 categories: [investment_notes]
 tags: [investment-notes]
 series: financial_analysis
