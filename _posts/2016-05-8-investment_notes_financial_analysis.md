@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Financial Analysis - Balance Sheet
-published: false
+published: true
 categories: [investment_notes]
 tags: [investment-notes]
 series: financial_analysis
