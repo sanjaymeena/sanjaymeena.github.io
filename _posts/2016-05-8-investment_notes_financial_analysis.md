@@ -12,6 +12,7 @@ For an equity investor, Reading a company's financial statements is very importa
 
 {% include series.html %}
 
+
 * TOC
 {:toc}
 
