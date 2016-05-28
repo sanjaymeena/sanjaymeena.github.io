@@ -2,7 +2,7 @@
 layout: post
 title: Pharma Sector
 published: true
-categories: [investment_notes]
+categories: [book_notes]
 tags: [pharma, generics, CRAMS]
 ---
 
@@ -19,7 +19,7 @@ R&D Process for a new medicine is long and complex. In total it takes 10-15 year
 
 The figure below shows the typical R&D process that potential new medicines must go through. 
 
-<img src="{{ site.url }}/assets//pharma_sector/pharma_research_development_process.png" height="400" width="800">
+<img src="{{ site.url }}/assets/pharma_sector/pharma_research_development_process.png" height="400" width="800">
 
 Below are the various steps in the R&D process pipeline to create new medicine
 
@@ -114,7 +114,7 @@ API manufacturers need to file DMF with regulatory bodies. DMFs are filed with U
 
 India is the 3rd largest pharma player in the world with 500 different APIs and rank 4th globally in terms of production volumes and 13th globally in domestic consumption value. 
 
-<img src="{{ site.url }}/assets//pharma_sector/indian_pharma_market.png" height="300" width="600">
+<img src="{{ site.url }}/assets/pharma_sector/indian_pharma_market.png" height="300" width="600">
 
 
 
@@ -132,7 +132,7 @@ CRAMS essentially consists of following two activities :
 
 The image below shows the CRAMS value chain: 
 
-<img src="{{ site.url }}/assets//pharma_sector/crams_value_chain.png" height="400" width="800">
+<img src="{{ site.url }}/assets/pharma_sector/crams_value_chain.png" height="400" width="800">
 
 ### Contract Research
 
