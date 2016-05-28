@@ -7,6 +7,7 @@ tags: [investment-notes]
 series: financial_analysis
 ---
 
+
 For an equity investor, Reading a company's financial statements is very important. In fact, We should never invest in a business whose financial condition we cannot understand well. 
 
 {% include series.html %}
