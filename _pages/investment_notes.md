@@ -14,7 +14,7 @@ sitemap: true
       <h3><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h3>
 
       <div class="entry">
-        {{ post.excerpt }}
+        {{ post.content | strip_html | truncatewords: 50 }}
       </div>
       
     </article>
