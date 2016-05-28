@@ -10,13 +10,9 @@ sitemap: true
   {% for post in site.categories.investment_notes %}
    {% if post.url %}
     <article class="page_list">
-
-      <h3><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h3>
-
-      <div class="entry">
-        {{ post.content | strip_html | truncatewords: 50 }}
-      </div>
-      
+      <h4><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h4>
+     
+      {{ post.excerpt }} 
     </article>
      {% endif %}
   {% endfor %}
