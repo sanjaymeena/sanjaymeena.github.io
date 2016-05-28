@@ -3,7 +3,7 @@ layout: post
 title: Pharma Sector
 published: true
 categories: [investment_notes]
-tags: [pharma, contract_research]
+tags: [pharma]
 ---
 
 A broad overview of the Pharma Sector 
