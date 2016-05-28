@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Pharma Sector
-published: true
+published: false
 categories: [investment_notes]
 tags: [pharma,contract_research]
 ---
