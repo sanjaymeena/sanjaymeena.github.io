@@ -1,16 +1,19 @@
 ---
 layout: post
-title: Financial Analysis
-published: false
+title: Financial Analysis - Balance Sheet
+published: true
 categories: [investment_notes]
 tags: [investment-notes]
+series: financial_analysis
 ---
-
 
 For an equity investor, Reading a company's financial statements is very important. In fact, We should never invest in a business whose financial condition we cannot understand well. 
 
+{% include series.html %}
+
 * TOC
 {:toc}
+
 
 We will cover following analysis
 
@@ -22,14 +25,118 @@ We will cover following analysis
 
 # Balance Sheet Analysis 
 
-In simple terms, balance sheet discloses what a business owns and what it owes at a specific point in time.
+In simple terms, balance sheet discloses what a business owns and what it owes at a specific point in time. Balance Sheet tells about a company's liquidity, financial strength and efficeecy. 
 
 Assets=Liabilities + Equity
+
+## Assets
+
+Assets are resources controlled by the company as a result of past events and from which future economic benefits are expected to flow to the company (E.g. Land, machines, plants, future receivables from customers etc.)
+
+Assets side of the balance sheet is made of two broad categories : 
+
+1. Non Current Assets
+2. Current Assets
+
+### Non Current Assets
+
+These are the assets that are not easily convertible to cash or not expected to become cash within the next year. 
+
+
+#### Fixed Assets
+
+* These are assets whose future economic benefit is probable to flow into the the business, and whose cost can be measured reliably.
+* These are items of value a company owns and will use for an extended period of time. 
+* For e.g. If you own a factory , the machines and equipments, the land on which it is situated are all fixed assets.
+
+Fixed assets again can be divided into : 
+
+1. Tangible Assets
+2. Intanglible Assets
+
+#####  Tangible Assets
+
+* They have a physical form and can be seen and felt.
+* Tangible Assets include items like land, building, pland and equipment,vehicles, equipments etc. 
+
+##### Intangible Assets
+* These are long terms assets of a company that have no physical existence but hold tremendous relevance for the company as it is at its core of existence. 
+* Intangible Assets include goodwill, patents, copyrights, techincal know-how, computer software , trademarks, brands etc. 
+* <b>Goodwill</b> is recognized when a business acquires another business. 
+	* It represents the excess of cost paid by the purchasing business to the purchased business over the fair value of purchased business indentifiable assets.
+
+
+##### Captial Work in Progress
+
+These are assets that are in progress of being built and possibly under construction when the balance sheet was prepared. Once these assets are built, they get shifted to tangible assets or intangible assets.
+
+
+#### Long Term Investment
+
+* These are the investments that have a horizon of one or more year and are condidered long term from tax purpose.
+* These are usually made by a company in order to secure an additional income or a strategic goal.
+
+
+#### Long Term Loans & Advances
+
+These represent any loans and advance payments that the company has granted to employees , suppliers and government and which are to be received by the company in a period beyond one-year.
+
+### Other Non Current Assets
+
+These are obligations that are not going to be paid off within the year or operating cycle. 
+
+### Current Assets
+
+Current assets are assets expected to be realized or intended for sale or consumption in the business's normal operating cycle , or within one year. 
+
+Let's have a look at the various current assets: 
+
+#### Current Investments
+* These are investments that a company makes for a short period of time, largely a horizon of less than one year.
+* Most companies in strong cash position have a short term investments account  on the balance sheet
+
+
+#### Inventories
+
+Inventories include items like raw materials, work-in-progress goods and completely finished goods that are considered to be the portion of a business assets that are ready or will be ready for sale.
+
+Inventory is one of the most important assets that most business possess. The reason being the turnover of inventory (conversion of raw materials into finished products, which when sold bring in cash for the company) represents one of the primary sources of revenue generation and subsequent earnings for the company's shareholders/owners.
+
+Some pointers on size of inventory: 
+
+1. Large Inventory: 
+	* Large Inventory for long amount of time is usually not good for business because of inventory storage, obsolescence and spoilage costs. 
+	* An abnormally large inventory suggest that a good part of the merchandise may be unsalable and that its price may have to be drastically reduced in order to move it. 
+2. Small Inventory: 
+	* Too little inventory isn't good either, because business runs the risk of losing out on potential sales and potential market share as well. 
+
+#### Trade Receivables
+
+* These represent the money owed to the company by its customers to whom it solds goods or services on credit.
+	* E.g. If a company sells its vehicles worth 1 million $ to its dealers and receives money from them in 60 days, the 1 million $ will show as trade receivables on the balance sheet until the time actual payment is received by the company
+* Bad Debts
+	* Sometimes few customers do not pay up even after the company waits for the payment after specified time.These defaults are called bad debts.
+ 	
+####  Cash and Cash Equivalents
+* Cash is the most liquid asset found in a company's balance sheet. 
+* Cash Equivalents have short term existence, they mature within 3 months whereas short term investments are 12 months or less. 
+* Higher cash value indicate business is liquid. (It is expected not to face any difficulty in paying short term liabilities)
+* Cash is not "the cash flow" or "free cash flow" that you may have been heard. Cash is what remains on balance sheet after adjusting for all cash inflows and outflows during the period.
+* To assess the total cash a company has , it is important to add the 'Current Investment' the company owns.
+
+#### Short term loans and Advances
+
+These are like long term loans and advances but for period less than on year. 
+
+#### Other Current Assets
+These are assets that do not include cash, investments, receivables, and inventory and can be converted into cash within on business cycle which is usually less than one year. 
 
 
 ## Equity 
 
-Equity is divided into : 
+Equity represents the portion belonging to owners or shareholders of a business.
+
+Equity is subdivided into : 
 
 
 ### 1. Share capital
@@ -52,15 +159,19 @@ Here is how the addition is made to equity:
 
 Equity capital is the ultimate determinant of a company's borrowing capacity. 
 
-## Assets
+
 
 ## Liabilities
 
+Liabilities are obligations of a company arising from past events, the settlement of which is expected to result in an outflow of economic benefits from the company (like bank borrowings and future payments to suppliers)
+
 ###  Non Current Liabilities
+These are contracted commitments to pay back a sum of money over time with interest.
+
 
 #### Long term liabilities
 
-Obligations due more than 1 year into future. 
+These broadly include obligations of the company that become due more than 1 year into future. 
 
 #### Deferred Tax liabilities
  
@@ -85,34 +196,34 @@ The main reasons are :
 
 #### Long term provisions
  
-Money that is provided for future liabilities
+These represent money that is provided for future liabilities like any payment expected beyond one year on account of leave encashment or for warranties on products etc.
 
 #### Long term borrowings
 
-Loan and financial obligations that last over one year. 
+Loan and financial obligations that last over one year. These can be like the car loan which you are suppose to pay over a period of many years.
 
 
 ### Current Liabilities 
 
-Liabilities due in less than one year. 
+Liabilities for which payment is due normally in less than one year. 
 
 
 1. Trade payables/Account payables
 
-	Represents amount a business owes its vendors for goods and services .
+	Represents amount a business owes its vendors for goods and services that were purchased from them but which have not yet been paid.
 
 2. Other current liabilities
 
-	Short term payables not directly related to the main business of the company
+	Short term payables not directly related to the main business of the company. These include statutory dues, security deposits and advances from dealers and unclaimed liablities which are all due for payment within one year. 
 
 3. Short term provisions
 
-	Money that is provided for a liability that is expected to occur within one year. 
+	Money that is provided for a liability that is expected to occur within one year. E.g. Proposed dividend to be paid out to shareholders, payment for warranties on products.
 
 
 4. Short term borrowings
 
-Loans and financial obligations due within one year. 
+These represnt Loans and financial obligations due within one year. These can be like credit card or personal loan you borrow, and which have to be repaid over the next one year.
 
 
 Point to note: 
@@ -132,212 +243,22 @@ E.g. Say Tata motors owns 85% of JLR, which becomes the former's subsidiaries.
 * Minority interest would represent the 15% of the net assets of JLR not owned by TM. 
 
 
+# Some pointers on Balance Sheet
 
+Balance sheet is a powerful indicator of a business's health. It gives a snapshot of company's health. 
 
-# Ratio Categories : 
- 
-* Activity
-* Liquidity
-* Solvency
-* Profitability
-* Valuation
+We need to be cognizant of some practical issues with balance sheets: 
 
+* Balance Sheet is a static indicator. It tells about where the company has been and how well it did getting to where it is now. However, it doesn't tell much about the future of the business and about future income. 
+* It is useful to have a summary of the values of all the assets owned by an enterprise, however these values are frequently elusive in nature as they may not be their true value.
+* Value of company's 'Human Capital'- the skills and creativity of its employees cannot be valued precisely enough to reflect it on the balance sheet. 
 
+Overall, Balance Sheet is a remarkable statement that every investor must not miss reading and analyzing.
 
-## Activity Ratios 
 
-### Inventory:
+Further reading : 
 
-* Inventory Turnover = cost of goods sold/average inventory
-	* Higher the inventory turnover ratio, the shorter is the period that inventory is held. 
-
-* Inventory Days= number of days in a period/ inventory turnover
-
-
-### Receivables : 
-
-* Receivables turnover = revenue / average receivables 
-* Receivables days = number of days in a period / Receivable turnover
-
-
-### Payables : 
-
-*  Payables turnover = costs of good sold / average trade payables
-* Payables days = number of days in a period /payable turnover 
-
-###	Working Capital : 
-
-* Working capital turnover= revenue / average working capital 
-
-### Asset :
-
-*  Fixed Asset Turnover = Revenue / Average net fixed assets
-*  Total Asset Turnover = Revenue/ Average total assets
-
-
-## Liquidity Ratios :
-
-* Liquidity measures how quickly assets are converted into cash
-* They also measure  a company's ability to pay off its short-term obligations
-
-### Current ratio:
-current ratio= current assets/ Current liabilities. 
-
-### Quick ratio/ Acid test ratio :
-* (Cash+ Current investments + Receivables ) /Current liabilities
-
-### Cash ratio  :
-* (cash + current investments) / current liabilities
-
-### Cash conversion cycle :
-* (Inventory days + receivables days - payable days) 
-
-
-## Solvency Ratios :
-
-
-
-###  Debt Ratios
-			 
-#### Debt to Asset
-
-#### Debt to Capital
-
-#### Debt to Equity
-
-### Coverage Ratios
-
-#### Financial Leverage
-
-#### Interest Coverage
-
-## Profitability Ratios
-
-### Return on Sales
-
-####  Gross Profit Margin
-
-####  Operating Profit Margin
-
-####  Net Profit Margin
-
-## Return on Investment
-
-### Return on Assets
-
-### Return on Capital Employed
-
-### Return on Equity
-
-
-# Financial Shenanigans
-
-## Earning manipulation Shenanigans
-
-### 1. Recording revenue too soon or Recording bogus revenue
-
-* Rate of change in receivables vs rate of change in revenues
-* Lower growth in operating cash flows than in operating profits
-* Receivable days ratio
-
-### 1. Shifting current expenses to a later period
-* Look for R&D expenses in a company's financial statements and check how much of that is capitalized
-* Compare the depreciation rates charged by a company on its various assets with that of its competitors
-
-### 2.  "Managing" Earnings using big bath accounting
-
-* Look out for "big bath" charges during difficult times.
-* There is no better times to record huge charges than when the market is in a downturn. 
-
-### 3. Other Shenanigans to manage earnings
-
-1. Boosting income using one-time or unsustainable activities
-
-	* turning sale of a business into a recurring revenue stream
-	* shifting normal expenses below the line
-		* shifting non-operating and non-recurring income below the line 
-
-
-2. Shifting current income to a later period
-
-	* Creating reserves and releasing them into income in a later period
-	* Recording current-period sales in  a later period
-
-### 4. Warning Checklist
-
-These points are relevant to how companies manipulate their revenues and profits
-
-* Receivables that are rising faster than sales or simply receivables rising at a faster pace 
-* Rising receivables days - this may suggest that the revenue increase might have been achieved by relaxing credit terms
-* Cash flow from operations (CFO) lower than operating and/or net profit for many years in the past - warning for premature revenue recognition
-* Capitalization of  high proportion of R&D Expenses
-* Depreciating rates charged by a company on it various assets and compare with that of its competitors to ensure that there are no big disparities
-* Company depreciating its fixed assets too slowly (thereby creating a boost to income) , especially in industries that are experiencing rapid technological advances. 
-* Big bath expenses during difficult times. 
-* Sharp rise in profits just after a downturn. The company may have used big bath accounting in the previous year. 
-* Boost in income using one-time or unsustainable activities. 
-* Boost in income using one-time events
-* Company turning proceeds from the sale of business into a recurring revenue stream. 
-* Shift in normal operating expenses below the line 
-* Company routinely recording restructuring charges 
-* Company including proceeds received from selling a subsidiary as revenue. 
-* Company creating reserves and releasing them into income in a later period. 
-* Sudden and unexplained declines in deferred revenue. 
-* Unexpectedly consistent earnings during a volatile time. 
-* Signs of revenue being held back by the target just before an acquisition closes
-
-
-
-### 5.  General things to be vary of  : 
-
-* IPOs - Most promoters  and investment bankers connive to con you
-* Businesses that are difficult to understand
-* Business with a lot of regulations
-* Companies making a lot of acquisitions
-* Companies frequently demerging/selling its business divisions
-* Real estate and construction companies 
-* Banks and financial institutions
-* Companies with political connections
-* Companies from business groups like Reliance, Sterling, Adan i
-* Companies based out of hyderabad
-
-
-## Cash flow Shenanigans
-*  Shifting financial cash inflows to the operating section
-* Shifting normal operating cash outflows to the investing section
-
-* Inflating operating cash flows using acquisitions
-	* Companies that make numerous acquisitions
-	* Declining free cash flows while CFO appears to be strong
-
-* Corporate Governance
-	*  Do appropriate checks and balances exist among senior executives to snuff out corporate misdeeds
-	* Do outside members of the board play a meaningful role in protecting investors from greedy , misguided, or incompetent management? 
-	* Do the auditors possess the independence, knowledge, and determination to protect investors when management act inappropriately? 
-
-	* Has the company improperly taken circuitous steps to avoid regulatory scrutiny? 
-	* Boards lacking competence or independence
-	* Failure to challenge management on related party transactions
-	* Be wary of companies where a single person dominates the management and board? 
-	* Be skeptical of boastful or promotional management
-	* Astronomical fees lead to conflicted independent auditors
-
-
-## Conclusion - Red flags
-
-* Sharp jumps in receivables ,especially long term and unbilled.
-* Cash flows from operations materially lags behind net income.
-* Be wary of companies using percentage of completion method (especially engineering and construction company), as there are more chances of using aggressive assumptions.
-* Watch out if non-recurring expenses/extra ordinary expenses have been recurring. 
-* Do not get excited by the results of a company for few quarters after it has written off certain assets, as it is possible that it is the result of writing down good inventory or assets. 
-* Watch out for companies which try to include non-core income to boost operating margins in times of stress  or economic slowdown
-* Increase in capex, without corresponding increase in sales indicate that the company might be capitalizing normal operating expenses. 
-* Rapidly growing fixed asset account or "soft" asset accounts (e.g. "other assets") may be  a sign of aggressive capitalization. Create a quarterly common-size balance sheet (i.e. calculate all assets and liabilities as a percentage of total assets) to quickly identify assets that are growing faster than the rest of the Balance Sheet.
-* Inflating revenue right after closing on an acquisition is a pretty simple trick - once the merger is announced, instructs the target company to hold back revenue until after the merger closes. 
-* Look out in the notes to account for disclosure regarding securitization or factoring of receivables. 
-* Be wary of serial acquirers, as its difficult to understand operating cash flow. 
-* Auditors rarely disagree with management , so if they do disagree with management on transaction of significant magnitude , in all possibility it gives indication of some wrong doing. 
-
-
-
+* [The Intrepretation of Financial Statements - Benjamin Graham](http://www.amazon.com/Interpretation-Financial-Statements-Benjamin-Graham/dp/0887309135)
+* [Financial Statement Analysis - Martin Fridson](http://www.amazon.in/gp/product/0470635606/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&camp=3626&creative=24790&creativeASIN=0470635606&linkCode=as2&tag=safanive-21)
+* [Intermediate Accounting for Dummies - Maire Loughran](http://www.amazon.in/gp/product/1118176820/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&camp=3626&creative=24790&creativeASIN=1118176820&linkCode=as2&tag=safanive-21)
 
