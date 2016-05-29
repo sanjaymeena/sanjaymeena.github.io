@@ -8,7 +8,7 @@ tags: [pharma, generics, CRAMS]
 
 
 A broad overview of the Pharma Sector. 
-
+<!--more-->
 
 
 <b>Table of Content </b>
