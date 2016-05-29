@@ -7,7 +7,7 @@ tags: [nlp]
 ---
 We will create a simplified version of Switchboard Speech act corpus and perform exploratory 
 data analysis on it. 
-
+<!--more-->
 
 Introduction
 ============

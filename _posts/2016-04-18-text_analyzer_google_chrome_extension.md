@@ -7,7 +7,7 @@ tags: [javascript]
 ---
 
 Text Analyzer Extension can provide grammatical and semantic information for the selected text in English directly in Google chrome browser
-
+<!--more-->
 # Introduction
 
 You can install the extension from [Google Chrome Store ](https://chrome.google.com/webstore/detail/text-analyzer/jmfeahijghfnhalljdcjooonnlckfpod)

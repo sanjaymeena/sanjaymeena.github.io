@@ -7,7 +7,7 @@ tags: [book-notes]
 ---
 
 Dealing with losing and winning situations in stocks 
-
+<!--more-->
 
 ## Quit taking risks
 

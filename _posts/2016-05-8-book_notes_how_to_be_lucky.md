@@ -12,6 +12,8 @@ tags: [book-notes]
 * Author: Gunther Max
 * Excerpt:  Is there anything we can do to bring more luck into our lives? 
 
+<!--more-->
+
 * TOC
 {:toc}
 

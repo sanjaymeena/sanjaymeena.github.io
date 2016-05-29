@@ -11,6 +11,7 @@ tags: [book-notes]
 * Author: Lee Freeman-Shor
 * Exceprt: Only 49% of the very best investment ideas from legendary investors made money. Despite this , they still made a lot of money 
 
+<!--more-->
 
 * TOC
 {:toc}
