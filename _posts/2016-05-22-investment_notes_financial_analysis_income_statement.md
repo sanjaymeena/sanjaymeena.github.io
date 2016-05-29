@@ -8,7 +8,7 @@ series: financial_analysis
 ---
 
 
-test1
+test2
 An Income statement presents information on the financial results of a company's business activites over a period of time. It is also called Statement of Operations or Statements of Earnings. 
 
 
