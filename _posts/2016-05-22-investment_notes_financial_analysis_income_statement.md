@@ -1,39 +1,55 @@
 ---
 layout: post
 title: Financial Analysis- Income Statement
-published: false
+published: true
 categories: [investment_notes]
 tags: [investment-notes]
 series: financial_analysis
 ---
 
-For an equity investor, Reading a company's financial statements is very important. In fact, We should never invest in a business whose financial condition we cannot understand well. 
+
+test 
+An Income statement presents information on the financial results of a company's business activites over a period of time. It is also called Statement of Operations or Statements of Earnings. 
+
 
 {% include series.html %}
 
 * TOC
 {:toc}
 
-We will cover following analysis
 
-* Balance Sheet Analysis
-* Income Statement Analysis
-* Cash Flow statement Analysis
-* Ratio Analysis
-* Financial Shenanigans
+# Income Statement
 
-# Balance Sheet Analysis 
+The Basic equation underlying income statement is : <b>Net Income/Net Profit = Revenue - Expense</b>
 
-In simple terms, balance sheet discloses what a business owns and what it owes at a specific point in time. Balance Sheet tells about a company's liquidity, financial strength and efficeecy. 
 
-Assets=Liabilities + Equity
 
-## Assets
 
-Assets are resources controlled by the company as a result of past events and from which future economic benefits are expected to flow to the company (E.g. Land, machines, plants, future receivables from customers etc.)
+## Revenue from Operations
 
-Assets side of the balance sheet is made of two broad categories : 
 
-1. Non Current Assets
-2. Current Assets
+## Other Income
 
+## Expenses
+
+### Costs of material consumed
+
+### Change in inventory of finished goods and Work in progress
+
+### Employee Benefit Expenses
+
+### Finance costs
+
+### Other expneses
+
+### Depreciation and Amortisation Expenses
+
+## Profit after Tax
+
+## Tax Expenses
+
+## Net Profit and EPS
+
+## Minority Interest and Share of Profit or Associates
+
+## 

@@ -1,13 +1,13 @@
 ---
 layout: post
 title: Pharma Sector
-published: false
+published: true
 categories: [investment_notes]
 tags: [pharma, generics, CRAMS]
 ---
 
 
-* A broad overview of the Pharma Sector. 
+A broad overview of the Pharma Sector. 
 
 
 
