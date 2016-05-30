@@ -6,12 +6,14 @@ categories: [book_notes]
 tags: [book-notes]
 ---
 
+Only 49% of the very best investment ideas from legendary investors made money. Despite this , they still made a lot of money 
+<!--more-->
 
 * Book: [The Art of Execution](https://www.amazon.com/Art-Execution-worlds-investors-millions-ebook/dp/B0153LKGFE/ref=sr_1_1?s=digital-text&ie=UTF8&qid=1463282868&sr=1-1)
 * Author: Lee Freeman-Shor
-* Exceprt: Only 49% of the very best investment ideas from legendary investors made money. Despite this , they still made a lot of money 
 
-<!--more-->
+
+
 
 * TOC
 {:toc}

@@ -13,5 +13,14 @@ layout: default
     Written on {{ page.date | date: "%B %e, %Y" }}
   </div>
 
+  <hr>
+
+  <div>
+  Tags: {% include tagsforpost.html tags=page.tags %} 
+  <hr> 
+  </div>
+  
+  {% include sharing.html %}
+
   {% include disqus.html %}
 </article>

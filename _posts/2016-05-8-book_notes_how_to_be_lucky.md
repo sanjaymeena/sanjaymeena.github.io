@@ -6,13 +6,14 @@ categories: [book_notes]
 tags: [book-notes]
 ---
 
+Is there anything we can do to bring more luck into our lives? 
+<!--more-->
 
 
 * Book: [How to Get Lucky: 13 techniques for discovering and taking advantage of life's good breaks](https://www.amazon.com/How-Get-Lucky-techniques-discovering-ebook/dp/B003XRDBYY?ie=UTF8&ref_=dp_kinw_strp_1)
 * Author: Gunther Max
-* Excerpt:  Is there anything we can do to bring more luck into our lives? 
 
-<!--more-->
+
 
 * TOC
 {:toc}

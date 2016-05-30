@@ -38,11 +38,10 @@
         <div class="grid" id="searchBar">
         <div>
         <div id="search">
-             <form role="search" method="get" action="{{site.baseurl}}/search/">
-                 <input id="searchString" name="searchString"
-                        placeholder="Search this site" type="text">
-                 <input id="searchButton" name="googleSearchName" type="submit" value="Search">
-             </form>
+             <form action="{{site.baseurl}}/search/" method="get">
+            <input type="text" id="search-box" name="query" >
+            <input type="submit" value="search">
+           </form>
          </div>
 </div>
 </div>
