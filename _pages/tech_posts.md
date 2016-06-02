@@ -11,7 +11,7 @@ sitemap: true
    {% if post.url %}
     <article class="page_list">
 
-      <h3><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h3>
+      <h4><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h4>
 
       <div class="entry">
         {{ post.excerpt }}
