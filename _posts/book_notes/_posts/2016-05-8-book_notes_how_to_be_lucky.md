@@ -10,7 +10,7 @@ Is there anything we can do to bring more luck into our lives?
 <!--more-->
 
 
-* Book: [How to Get Lucky: 13 techniques for discovering and taking advantage of life's good breaks](https://www.amazon.com/How-Get-Lucky-techniques-discovering-ebook/dp/B003XRDBYY?ie=UTF8&ref_=dp_kinw_strp_1)
+* Book: [How to Get Lucky: 13 techniques for discovering and taking advantage of life's good breaks](https://www.amazon.com/100-Baggers-Stocks-100-1/dp/1621291650?ie=UTF8&*Version*=1&*entries*=0)
 * Author: Gunther Max
 
 

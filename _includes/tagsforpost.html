@@ -14,5 +14,7 @@
 {% endcomment %}
 
 {% for tag in sortedtags %}
-<a href="{{ site.baseurl }}/tag/{{tag}}">#{{tag}}</a>
+
+<a href="{{ site.baseurl }}/tag/{{tag}}"><span class="label label-default">{{tag}}</span></a>
+
 {% endfor %}
