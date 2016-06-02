@@ -67,7 +67,7 @@ We should note that these categories are not mutually exclusive and we can use c
 Activity ratios are also known as asset utilization ratios or operating efficiency ratios. 
 
 ### Overview
-
+ 
 The table is below : 
 
 <table class="table table-striped">
@@ -117,13 +117,13 @@ The table is below :
     </tr>
     <tr>
       <td>Fixed Asset Turnover</td>
-      <td>Revenue/td>
+      <td>Revenue</td>
       <td>Average net fixed assets</td>
     </tr>
     <tr>
       <td>Total Asset Turnover</td>
-      <td>Revenue/td>
-      <td>Average total assets</td>
+      <td>Revenue</td>
+      <td>Average total assets </td>
     </tr>
   </tbody>
 </table>
