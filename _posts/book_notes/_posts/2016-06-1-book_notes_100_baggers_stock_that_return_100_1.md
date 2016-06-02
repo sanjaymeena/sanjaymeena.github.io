@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 100 Baggers - Stock that return 100 to 1
-published: true
+published: false
 categories: [book_notes]
 tags: [book-notes]
 ---
