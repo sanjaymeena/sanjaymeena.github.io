@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 100 Baggers - Stock that return 100 to 1
-published: false
+published: true
 categories: [book_notes]
 tags: [book-notes]
 ---
@@ -25,7 +25,71 @@ This book is about 100-baggers. These are stocks that return $100 for every $1 i
 
 Author 'Christopher W. Mayer' has done a great work in digging and studying '100-baggers' to identify definite patterns. 
 
-There is no magic formula for producing 100-baggers. There is no easy way to screen for them. These notes are distilled principles which he mentions in the book . 
+
+Some 100-Bagger stocks discussed in the book are : 
+
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Company Name</th>
+      <th>Total Returns</th>
+      <th>Years to 100</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Berkshire Hathaway</td>
+      <td>18261</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <td>Kansas City Southern</td>
+      <td>16931</td>
+      <td>18.2</td>
+    </tr>
+    <tr>
+      <td>Altria Group</td>
+      <td>15120</td>
+      <td>24.2</td>
+    </tr>
+    <tr>
+      <td>Franklin Resources  </td>
+      <td>11363</td>
+      <td>4.2</td>
+    </tr>
+
+     <tr>
+      <td>SouthWest Airlines</td>
+      <td>5478</td>
+      <td>9.5</td>
+    </tr>
+
+     <tr>
+      <td>Monster Beverage</td>
+      <td>700</td>
+      <td>9.5</td>
+    </tr>
+      <tr>
+      <td>Amazon</td>
+      <td>283</td>
+      <td>13</td>
+    </tr>
+     <tr>
+    </tr>
+  </tbody>
+</table>
+
+The graph below shows the total 100 baggers by year-range
+
+<img src="{{ site.url }}/assets/books/100_baggers/100_baggers_by_year_range.png" height="300" width="500">
+
+
+We shoudl know that there is no magic formula for producing 100-baggers. There is no easy way to screen for them. 
+
+These notes are distilled principles which he mentions in the book . These are very handy principles and should be referred back time and gain in our quest for 100-baggers
+
+We will start with the most important principle. Rest of the principles are ancillary to the main principle. 
 
 ### The most important principle:
 
