@@ -8,7 +8,7 @@ tags: [linguistics,sentence_types,nlp]
 series: nlp_series
 ---
 
-English Sentences can be broadly categorized into 5 types.  Each type has a particular semantic and syntactic structure which helps for analysis of sentences at syntactic level.
+English Sentences are broadly categorized into 5 types.  Each type has a particular semantic and syntactic structure which helps for analysis of sentences at syntactic level.
 <!--more-->
 
 {% include series.html %} 
@@ -20,9 +20,9 @@ English Sentences can be broadly categorized into 5 types.  Each type has a pa
 
 # <span id="Introduction">Introduction</span>
 
-Semantic and Syntactic analysis of sentences can generate lot of useful information. Knowing the sentence types in english and their internal sub-types in creating natural language processing modules.
+Semantic and Syntactic analysis of sentences can generate lot of useful information. Knowing the sentence types their internal sub-types can help in creating natural language processing modules.
 
-Sentences can be many types. Based on their syntactic parse tree structure we can deduce a lot of  information about them.
+Sentences can be many types. Based on their syntactic parse tree structure we can deduce a lot of information about them.
 
 Here we will discuss the grammatical sentence types and the information associated with them.
 

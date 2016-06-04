@@ -140,7 +140,7 @@ The Manifest.json for this project looks like this:
 
 ## User Interface  
 
-There are several ways to build the UI of google chrome extension. In our case we will add context menu which be visible on right click of mouse. 
+There are several ways to build the UI of Google chrome extension. In our case we will add context menu which be visible on right click of mouse. 
 
 
 ### Context Menus
@@ -171,12 +171,12 @@ The entry in the Manifest.json looks like this:
 
 ## [Background Pages](https://developer.chrome.com/extensions/background_pages)
 
-* These are Javascript file(s) that always run in background of Chrome 
+* These are Java-script file(s) that always run in background of Chrome 
 * They don't have any user interface and run in the background
 * They have access to Chrome application level commands
 * They also have full access to all permitted chrome.* APIs
 
-In our case , <b>scripts/event.js</b> represents the backbround javascript file. 
+In our case , <b>scripts/event.js</b> represents the background javascript file. 
 
 Some of the important function that we defined in this file are : 
 
@@ -250,7 +250,7 @@ The main content script for us, apart from the included jquery  and tooltips lib
 
 ## Main function to process the NLP text
 
-* This javascript injects the nlp information extracted from Text Analyzer server into the current page. 
+* This javascript injects the NLP information extracted from Text Analyzer server into the current page. 
 * This helps avoid conflicts in case we inject this script on the same page multiple times without reloading.
 
 ```javascript
@@ -270,7 +270,7 @@ var injected = injected || (function(information) {
 
 ## Function to communicate with server for Information
 
-* Create a request json to send to the nlp server. The backend server is also created by me and hosted on [digitalocean](https://www.digitalocean.com/)
+* Create a request json to send to the NLP server. The back-end server is also created by me and hosted on [digitalocean](https://www.digitalocean.com/)
 * Post the data to the NLP server using XMLHttpRequest
 * Call function to process the response from the server. 
 * Post alert message if the communication with server failed. 
@@ -434,9 +434,9 @@ This is a long function which does the work of processing and displaying the res
 
 ### Code to display the information in tooltip
 
-I used the [tooltipster js library](http://iamceege.github.io/tooltipster/) to display the tooltip. 
+I used the [tooltipster js library](http://iamceege.github.io/tooltipster/) to display the tool-tip. 
 
-The code below creates the content to display and then uses tooltipster java script library to show the tooltip
+The code below creates the content to display and then uses tool-tipster Java script library to show the tool-tip
 
 
 ```javascript

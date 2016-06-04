@@ -14,7 +14,7 @@ Introduction
 
 In this post we will do following tasks:
 
--   We will create a simplified version of the switchboard speechacts corpus
+-   We will create a simplified version of the switchboard speech-acts corpus
 -   We will perform exploratory data analysis on the switchboard corpus
 
 About Switchboard corpus
@@ -33,7 +33,7 @@ Advantages of our version of dataset:
 -------------------------------------
 
 -   It will be lot more clearer and easy to use.
--   The creation of the corpus from the original files is automatic using java code.
+-   The creation of the corpus from the original files is automatic using Java code.
 -   It is also customizable so that we can extract different information from the corpus.
 
 Steps for Creating our version of dataset:
@@ -68,8 +68,8 @@ Add
 
 #### 1. Processing using Java Code
 
--   I have created java code to deal with cleaning data and creating different formats of data.
--   Please have a look at the java code for more information. This code can clean text, tags and produce different csv versions of the switchboard data.
+-   I have created Java code to deal with cleaning data and creating different formats of data.
+-   Please have a look at the Java code for more information. This code can clean text, tags and produce different csv versions of the switchboard data.
 -   The final dataset can be downloaded from [here](https://github.com/sanjaymeena/simplified_switchboard_dialog_act_corpus)
 
 Exploratory Data Analysis of Switchboard Corpus
@@ -79,7 +79,7 @@ We will use 'R' to perform the exploratory analysis of data.
 
 ### Load the Corpus
 
-Let's load the extended version of csv file creating from the java code.
+Let's load the extended version of csv file creating from the Java code.
 
 The dataset looks like following :
 

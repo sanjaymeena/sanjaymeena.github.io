@@ -29,7 +29,7 @@ We will cover following analysis
 
 # Balance Sheet Analysis 
 
-In simple terms, balance sheet discloses what a business owns and what it owes at a specific point in time. Balance Sheet tells about a company's liquidity, financial strength and efficeecy. 
+In simple terms, balance sheet discloses what a business owns and what it owes at a specific point in time. Balance Sheet tells about a company's liquidity, financial strength and efficiency. 
 
 Assets=Liabilities + Equity
 
@@ -56,16 +56,16 @@ These are the assets that are not easily convertible to cash or not expected to 
 Fixed assets again can be divided into : 
 
 1. Tangible Assets
-2. Intanglible Assets
+2. Intangible Assets
 
 #####  Tangible Assets
 
 * They have a physical form and can be seen and felt.
-* Tangible Assets include items like land, building, pland and equipment,vehicles, equipments etc. 
+* Tangible Assets include items like land, building, plants and equipment,vehicles, equipments etc. 
 
 ##### Intangible Assets
 * These are long terms assets of a company that have no physical existence but hold tremendous relevance for the company as it is at its core of existence. 
-* Intangible Assets include goodwill, patents, copyrights, techincal know-how, computer software , trademarks, brands etc. 
+* Intangible Assets include goodwill, patents, copyrights, technical know-how, computer software , trademarks, brands etc. 
 * <b>Goodwill</b> is recognized when a business acquires another business. 
 	* It represents the excess of cost paid by the purchasing business to the purchased business over the fair value of purchased business indentifiable assets.
 
@@ -77,7 +77,7 @@ These are assets that are in progress of being built and possibly under construc
 
 #### Long Term Investment
 
-* These are the investments that have a horizon of one or more year and are condidered long term from tax purpose.
+* These are the investments that have a horizon of one or more year and are considered long term from tax purpose.
 * These are usually made by a company in order to secure an additional income or a strategic goal.
 
 
@@ -116,7 +116,7 @@ Some pointers on size of inventory:
 
 #### Trade Receivables
 
-* These represent the money owed to the company by its customers to whom it solds goods or services on credit.
+* These represent the money owed to the company by its customers to whom it sold goods or services on credit.
 	* E.g. If a company sells its vehicles worth 1 million $ to its dealers and receives money from them in 60 days, the 1 million $ will show as trade receivables on the balance sheet until the time actual payment is received by the company
 * Bad Debts
 	* Sometimes few customers do not pay up even after the company waits for the payment after specified time.These defaults are called bad debts.
@@ -218,7 +218,7 @@ Liabilities for which payment is due normally in less than one year.
 
 2. Other current liabilities
 
-	Short term payables not directly related to the main business of the company. These include statutory dues, security deposits and advances from dealers and unclaimed liablities which are all due for payment within one year. 
+	Short term payables not directly related to the main business of the company. These include statutory dues, security deposits and advances from dealers and unclaimed liabilities which are all due for payment within one year. 
 
 3. Short term provisions
 
@@ -227,7 +227,7 @@ Liabilities for which payment is due normally in less than one year.
 
 4. Short term borrowings
 
-These represnt Loans and financial obligations due within one year. These can be like credit card or personal loan you borrow, and which have to be repaid over the next one year.
+These represent Loans and financial obligations due within one year. These can be like credit card or personal loan you borrow, and which have to be repaid over the next one year.
 
 
 Point to note: 
@@ -241,7 +241,7 @@ Point to note:
 * Only occurs in consolidated balance sheet (that combines the account of a company and its subsidiaries)
 * Minority interest represents the portion of consolidated subsidiaries owned by others. 
 
-E.g. Say Tata motors owns 85% of JLR, which becomes the former's subsidiaries. 
+E.g. Say Tata motors owns 85% of JLR, which becomes the formers subsidiaries. 
 
 * Now 100% of JLR's assets and liabilities would be included in the consolidated balance sheet of TM. 
 * Minority interest would represent the 15% of the net assets of JLR not owned by TM. 

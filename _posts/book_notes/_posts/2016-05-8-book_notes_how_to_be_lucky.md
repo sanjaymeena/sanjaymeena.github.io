@@ -38,7 +38,7 @@ Is there anything we can do to bring more luck into our lives?
 
 * Risk is a necessary ingredient of every successful life. Risk puts you in a position to win. 
 * Get used to the idea of taking risks and become comfortable with the thought of yourself as a prudent risker. 
-* Practise skills in assessing the risk-reward ratio in important situations. 
+* Practice skills in assessing the risk-reward ratio in important situations. 
 * Risk spooning : Seek out risks. Start small. Once you get used to risk, thing about increasing the dosage.
 
 ## 4. Run Cutting
@@ -59,7 +59,7 @@ Is there anything we can do to bring more luck into our lives?
 ## 6. The Zigzag paths
 
 * The lucky, alert to the luck/planning distribution , are aware that life is always going to be a turbulent sea of opportunities drifting randomly past in all directions. If you put blinders on yourself so that you can only see straight ahead, you will nearly miss everything.
-* Never take long-range plans seriously. Use them for general guidance as long as they seem to by taking you where you want to go, but whatever you do , dont get stuck with them. Throw them in the thrash heap as soon as something better comes along. 
+* Never take long-range plans seriously. Use them for general guidance as long as they seem to by taking you where you want to go, but whatever you do , don't get stuck with them. Throw them in the thrash heap as soon as something better comes along. 
 * Examples of Zig zag life paths: 
 	* Harlan Sanders, Kentucky Fried Chicken (KFC)
 	* Ray Croc, McDonalds	 
@@ -67,8 +67,8 @@ Is there anything we can do to bring more luck into our lives?
 
 ## 7. Constructive Supernaturalism
 
-* We can lump religiion, superstition together and refer to them by one neutral word: supernaturalism.
-* A supernatural belief, even a trivial and humourous one, helps people get lucky by helping them make otherwise impossible choices.
+* We can lump religion, superstition together and refer to them by one neutral word: supernaturalism.
+* A supernatural belief, even a trivial and humorous one, helps people get lucky by helping them make otherwise impossible choices.
 * Life is full of situations in which you must choose among alternatives but lack any rational basis for choosing. 
 	* The unlucky, would just stand there paralyzed , unable to make the impossible choice. 
 	* We rarely have all the facts we could wish for when embarking on a risky course and sometimes , we have no facts at all. That is where the lucky can 	make a super natural belief pay off. 
@@ -80,14 +80,14 @@ Is there anything we can do to bring more luck into our lives?
 * Optimism means expecting the best, but good luck involves knowing how you will handle the worst. 
 * Be a dedicated worst-case analyst.  
 * Example from gambling: 
-	* The losers are always optmistic. The pro studies how he will save himself when the cards fall against him. 
+	* The losers are always optimistic. The pro studies how he will save himself when the cards fall against him. 
 
 ## 9. The Closed Mouth
 
 * Silence doesn't only protect you from getting locked into unwanted positions, and it doesn't only keep you from revealing facts and feelings you many want known. 
 	* By avoiding excessive communication, lucky men and women are freed of the the need to explain and justify actions to other people.
 	* Saying too much, may jeer the 5th technique, 'The luck Selection'
-* It doesn't mean you must take a vow of eternal silence. You must have relationships, after all; you must take chances; you must talk to people. The message is to avoid unecessary talk about your problems, plans, and feelings. When there is no good reason to say something, say nothing.
+* It doesn't mean you must take a vow of eternal silence. You must have relationships, after all; you must take chances; you must talk to people. The message is to avoid unnecessary talk about your problems, plans, and feelings. When there is no good reason to say something, say nothing.
 
 
 ## 10. Recognizing a NonLesson
@@ -108,7 +108,7 @@ Is there anything we can do to bring more luck into our lives?
 
 * The luckier are the busier. They always seem to have many ventures going at the same time. You will also find that lucky people are still busier in adversity. 
 * The unlucky person knows exactly what form of luck he is seeking. If he gets lucky, the good luck will come in one shape only : a new job. Lucky people know that the more ventures they got into, the better were the odds that some kind of lucky break would come his way. 
-* You never know what seemingly unpromising activity is going to be the one that catches fire for you. All you can know is that the more activites you have going on , the greater is the likelihodd that something good will happen. 
+* You never know what seemingly unpromising activity is going to be the one that catches fire for you. All you can know is that the more activities you have going on , the greater is the likelihood that something good will happen. 
 * Sit down and make a list of what needs to be done. The list by itself doesn't get the jobs done, of course. What does it do is to make you feel better
 	* Making a list of problems and worries produces the same state of calm, the feeling of control. Many people feel an actual, physical easing of tension in the body when they take this simple step. 	
 
@@ -121,7 +121,7 @@ Is there anything we can do to bring more luck into our lives?
 
 # Getting lucky: Putting the 13 techniques together
 
-* Don't expect to be able to apply all of them all the time. Life will inevitably back you into corners in which, against your will and judgement, you will find yourself violating onr rule or another. Don't be upset about this. 
+* Don't expect to be able to apply all of them all the time. Life will inevitably back you into corners in which, against your will and judgement, you will find yourself violating one rule or another. Don't be upset about this. 
 * One good way to get started on luck improvement is to ask yourself which technique has been most notably lacking in your approach to your life. Almost everyone can identify some prominent failing - even those who consider themselves generally lucky. 
 * A good exercise is to read some of the world's greatest novels and plays with the 13 techniques in mind. Play special attention to stories with unlucky outcomes. What techniques would have produces a lucky outcome instead? 
 

@@ -21,7 +21,7 @@ Only 49% of the very best investment ideas from legendary investors made money. 
 # Three Investor tribes in Losing Situations
 
 
-There are 3 behaviour types of investors in losing situations: 
+There are 3 behavior types of investors in losing situations: 
 
 ## 1. The Rabbits/losers : Caught in the capital impairment
 
@@ -40,18 +40,18 @@ There are 3 behaviour types of investors in losing situations:
 
 3. Anchoring Bias
 
-	* When Rabits change their mind, its always an aching slow process. They are unwilling to accept new findings that they were wrong about the company and should get out of the position.
+	* When Rabbits change their mind, its always an aching slow process. They are unwilling to accept new findings that they were wrong about the company and should get out of the position.
 
 4. Endowment Bias
 
-	* Large losses that happen over a short duration are almost impossible to accept, especially when they are substantial. It's easier to hold on to losing position than realise the loss by selling up. 
-	* The rabbits cannot bear the idea of crystallising a loss. They are too much aware of how much they paid for those losing shares. 
+	* Large losses that happen over a short duration are almost impossible to accept, especially when they are substantial. It's easier to hold on to losing position than realize the loss by selling up. 
+	* The rabbits cannot bear the idea of crystallizing a loss. They are too much aware of how much they paid for those losing shares. 
 	* Try not to be anchor to the purchase prices. 
 
 5. Following the Crowd
 
 	* Rabbits are rarely unique in the investments they made. Sadly, this is another reason they tended to persist with their mistake. 
-	* Trait of conforming to peer pressure is why most investors only invest at the end of the bull run. No one wants to be seen as the fool who stood on the side while his neighbours and friends were making vast fortunes. 
+	* Trait of conforming to peer pressure is why most investors only invest at the end of the bull run. No one wants to be seen as the fool who stood on the side while his neighbors and friends were making vast fortunes. 
 	* The inner mental pressure to invest in stocks that you do not hold and that are going up is immense. 
 	* You have to constantly fight the urge to sell stocks that are hurting you. Feelings of pleasure, pain and fear go a long way to explaining investor actions and omissions. 
 
@@ -122,7 +122,7 @@ The bad news is that everyone can be a Rabbit. The good news is , no one needs t
 	* Many studies have shown the stocks with the worst stories tend to produce the highest returns. 
 
 11. Get sick of sick notes
-	* Familiarise yourself with all the well-worn excuse in advance so that you waste no time trying to fool yourself or anyone else persisting with a mistake. Below are some of the excuses: 
+	* Familiarize yourself with all the well-worn excuse in advance so that you waste no time trying to fool yourself or anyone else persisting with a mistake. Below are some of the excuses: 
 		* The 'If only' excuse
 		* The 'I would have been right but for' defense
 		* The 'It just hasn't happened yet'
@@ -147,12 +147,12 @@ When it comes to selling losing positions, Assassins are ruthless. They pull the
 
 According to legendary fund manager Stanley Druckenmiller , "George Soros is one of the best loss takers"
 
-Successful investing is about assymetric returns. "Winning is about ensuring the upside potential is significantly greater than the downside potenital loss"
+Successful investing is about asymmetric returns. "Winning is about ensuring the upside potential is significantly greater than the downside potenital loss"
 
 
 ### The Code of the Assassins
 
-Here are Assasins rule for what to do in losing position: 
+Here are Assassins rule for what to do in losing position: 
 
 * Kill all losers at 20-33%
 	* This device is the humble stop loss
@@ -172,10 +172,10 @@ A study by Professor Frazzini shows that <i>highest investment returns were achi
 
 ## 3. The Hunters: Pursuing Losing Shares
 
-Like Assasins, the main reason for their success was what they did when they found themselves in losing position. Hunters have invariably contrarian style of investing. 
+Like Assassins, the main reason for their success was what they did when they found themselves in losing position. Hunters have invariably contrarian style of investing. 
 
 * Hunters are successful practitioners of 'Dollar Cost Averaging', planning beforehand to buy more shares if a price fell. 
-	* In gambling, such behaviour is known as Martingle approach. It is frowned upon and rightly so, it leads to ruin. 
+	* In gambling, such behavior is known as Martingle approach. It is frowned upon and rightly so, it leads to ruin. 
 	* But in <B> Well Chosen Investments </B> this is a strategy that wins over time, you acquire more and more assets at cheaper price.
 	* If a stock you are invested in has fallen materially in price, but nothing else has changed, the investment thesis is still in tact, your odds will have improved significantly and you should materially increase your stake in that position.  
 
@@ -189,7 +189,7 @@ The above matrix clearly shows that doing nothing is never an option
 
 # I'm Winning - What Should I Do? 
 
-There are two behaviour types of investors when it come to dealing with winning positions: 
+There are two behavior types of investors when it come to dealing with winning positions: 
 
 ## 1. The Raiders: Snatching at Treasure 
 
@@ -198,19 +198,19 @@ When winning you don't want to do what the Raiders do.
 ### Why investors sell too soon
 
 * It feels so good
-	* Selling for a profit is a nice feeling. When we win, testoterone and dopamine are produced and these hormones make us feel good. 
+	* Selling for a profit is a nice feeling. When we win, testosterone and dopamine are produced and these hormones make us feel good. 
 * I'm bored
 	* Getting tired of waiting for action is part of human nature. 
 * Frustration
 	* Nothing is truer than saying , 'feel the pain of the gain' when it comes to staying invested in a winning position
 * Fear
 	* The pain of a short term loss overpowers the pleasure of a long term gain. This myopic (short-term) focus and hatred of losing is known as myopic loss aversion
-* Short-termism
+* Short-term-ism
 	* Many people focus on short term. The technical term for this is 'Recency bias'
 * Risk Aversion
 	* "The prospect theory" by Kahneman and Tversky found that whether a person is winning or losing affects how they make a decision
 		* When losing, risk is appealing because anything is better than a certain loss
-		* When winning, selling is appealing because certainity of a small victory is better than uncertainity of loss of greater victory
+		* When winning, selling is appealing because certainty of a small victory is better than uncertainty of loss of greater victory
 
 
 ### Why you shouldn't sell early 
@@ -255,21 +255,21 @@ The Connoisseurs are the most successful investment tribe.
 
 3. Invest Big and Focus
 	* When connoisseurs were very confident in an idea, they build up big positions
-4. Dont' be scared
+4. Don't' be scared
 	* One of the keys to riding a big winner is to avoid being scared out of it. 
-	* The way many Connoissuers avoided being scared out of a position or being attracted away by another great investment was 	to take small profits as the stock kept going up rather than selling entirely out of the position. 
+	* The way many Connoisseurs avoided being scared out of a position or being attracted away by another great investment was 	to take small profits as the stock kept going up rather than selling entirely out of the position. 
 
 5. Make sure you have a pillow
 	* One of key requirements of staying invested in a big winner is to have (or cultivate) a high boredom threshold. 
 	* Many of us , seeing we have made a profit of 40% in one of our stocks, start actively looking for another company to invest the money into. 
 
 6. Dealing with Losses
-	* Despite their successful approach, only one in three of Connoissuers' ideas made money. In other words, every Connoisseur was also an assassin or a hunter when it came to losses. 
+	* Despite their successful approach, only one in three of Connoisseurs' ideas made money. In other words, every Connoisseur was also an assassin or a hunter when it came to losses. 
 
 
-### Dangers of being a Connoissuers
+### Dangers of being a Connoisseurs
 
-Being a Connoissuers is not easy. It also comes with some significant dangers that must be watched for
+Being a Connoisseurs is not easy. It also comes with some significant dangers that must be watched for
 
 1. You can be too late. 
 	* Ned Davis, using Down Jones Industrial average from 1929 to 1998 showed that: THe bulk of investors returns (more or less half) in bull markets come in the first third of a rally. 
@@ -292,7 +292,7 @@ Being a Connoissuers is not easy. It also comes with some significant dangers th
 2. Position Size Matters
 	* Be prepared to invest big-just don't go all in on day one.
 3. Be greedy when winning
-	* Give your investment the possiblity of growing into '10 baggers'
+	* Give your investment the possibility of growing into '10 baggers'
 4. Materially adapt when you are losing
 	* Either add meaningfully to an existing investment or sell out. 
 5. Only invest in liquid stocks

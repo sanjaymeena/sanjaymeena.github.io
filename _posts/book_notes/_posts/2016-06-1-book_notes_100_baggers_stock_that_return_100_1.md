@@ -105,7 +105,7 @@ This has been quoted by legendary, Warren Buffet many times.
 
 Charlie Munger has a very famous quote, that is a cornerstone of a 100-bagger philosophy: 
 ```
-Over the long term, it's hard for a stock to earn a much better return than the business which underlies it earns. If the business earns 6% on capital over 40 years and you hold it for that 40 years, you're not going to make much different than a 6% return—even if you originally buy it at a huge discount. Conversely, if a business earns 18% on capital over 20 or 30 years, even if you pay an expensive looking price, you'll end up with a fine result. 
+Over the long term, it's hard for a stock to earn a much better return than the business which underlies it earns. If the business earns 6% on capital over 40 years and you hold it for that 40 years, you're not going to make much different than a 6% return, even if you originally buy it at a huge discount. Conversely, if a business earns 18% on capital over 20 or 30 years, even if you pay an expensive looking price, you'll end up with a fine result. 
 ```
 
 Below, we can see the dramatic difference between a 6% return and 18% return. 
@@ -118,7 +118,7 @@ We will start discussing the other most important principles now
 
 ### 1. You have to look for them
 
-* Don't waste limited mental bandwith on stocks that might pay a good yield or that might rise 30% or 50%. You only have so much time and so many resources to devote to stock research. Focus your efforts on the big game: The 100 baggers. 
+* Don't waste limited mental bandwidth on stocks that might pay a good yield or that might rise 30% or 50%. You only have so much time and so many resources to devote to stock research. Focus your efforts on the big game: The 100 baggers. 
 
 ### 2. Value Added Growth <a name="p2"></a>
 
@@ -127,7 +127,7 @@ We will start discussing the other most important principles now
     - There are a few exceptions though. Amazon and Comcast grew sales at high rate but did not show much in the way of reported earnings through the high growth phase.
 * Earnings Vs Earnings Power
     - Earnings are the reported numbers
-    - Earnings power reflects the ability of the stock to earn above-average reates of retrun on capital at above-average growth rates. It's long term assessment of competitive strengths. 
+    - Earnings power reflects the ability of the stock to earn above-average rates of return on capital at above-average growth rates. It's long term assessment of competitive strengths. 
 
 ### 3. Lower Multiples are preferred <a name="p3"></a>
 
@@ -160,8 +160,8 @@ You can read the original study [here](http://csinvesting.org/wp-content/uploads
 - Even best industries include companies that destroy values and the worst industries have companies that create value. Some companies buck the economics of their industry provides insight into the potential sources of economic performance. 
 - Creating an industry map is a good idea. This details all players that touch an industry.
     + Example: Airline Industry map would include aircraft lessor (Air Lease), manufacturers (Boeing), parts suppliers (B/E Aerospace) and more.
-    + This shows where the profit in an industry winds up and where you might foucus your energies.
-- Stable Industries are more conducive to sustainable value creation. E.g. Beverage Industry. Smartphones on the other hand are very unstable market. 
+    + This shows where the profit in an industry winds up and where you might focus your energies.
+- Stable Industries are more conducive to sustainable value creation. E.g. Beverage Industry. Smart phones on the other hand are very unstable market. 
 
 #### Mean Reversion study by Matthew Berry
 
@@ -171,9 +171,9 @@ His study covers the 15 years from 1990 to 2004 and it includes 4000 largest com
 * High Performer companies have many attributes in common
     - High Return on Invested Capital (ROIC)
     - High Gross margins are the most important signal of long run performance.
-        - If Gross Marings are sticky and persistent, then a good turaround candidate would be one with a high gross profit margin and a low operating margin. The latter is easier to fix than the former. 
+        - If Gross Margins are sticky and persistent, then a good turnaround candidate would be one with a high gross profit margin and a low operating margin. The latter is easier to fix than the former. 
         - Big Companies tend to cement their advantage. "Larger companies appear able to sustain returns for longer by finding efficiencies in SG&A that small companies cannot"
-    - Scale and track record are also useful indicators. Winners tend to remain winnners
+    - Scale and track record are also useful indicators. Winners tend to remain winners
 
 ### 5. Smaller Companies are preferred
 
@@ -186,7 +186,7 @@ His study covers the 15 years from 1990 to 2004 and it includes 4000 largest com
 * For a stock to get in the fund, management must maintain a significant vested interest.
 * By virtue of owner-operator's significant personal capital being at risk, he or she enjoys greater freedom of action and an enhanced ability to foucs on buidling long-term business value.
 
-* Owner-Operators are opportunistic, tax efficient. E.g. Carl Icachn, John Malone at Libery Media
+* Owner-Operators are opportunistic, tax efficient. E.g. Carl Icachn, John Malone at Liberty Media
 * S&P uses float adjusted market cap to determine weight in the index. It's also called free-float market cap. With stock buyback , the free-float goes down and so does the weight in the index.
 * Many of the best-performing stocks of the past 50 years had such a key figure for at least part of their history. 
 
@@ -224,7 +224,7 @@ Once you do all the work to find a 100 bagger, you need to give it time. Even th
 
 <img src="{{ site.url }}/assets/books/100_baggers/compounding_for_100_baggers.png" height="300" width="400">
 
-Knowing this, You need to find a way to defeat your own worst instincts- the impatience, the need for "action", the powerful feeling that you need to "do something". The Coffe-Can technique is a great idea and the genius of the technique lies in its 'simplicity'.
+Knowing this, You need to find a way to defeat your own worst instincts- the impatience, the need for "action", the powerful feeling that you need to "do something". The Coffee-Can technique is a great idea and the genius of the technique lies in its 'simplicity'.
 
 #### Coffee-Can Portfolio
 
@@ -240,7 +240,7 @@ Knowing this, You need to find a way to defeat your own worst instincts- the imp
 
 There is a world of noise out there. Everyday something important happens, or so the Media would like you believe. 
 
-* Stock prices fall for all different kind of reasons. Stocks sometimes make huge up/down movies and yet the business itself changes more slowly with time. 
+* Stock prices fall for all different kind of reasons. Stocks sometimes make huge up/down moves and yet the business itself changes more slowly with time. 
 * Don't fret so much with guesses as to where the stock market might go. Keep looking for great ideas. If history is any guide, they are always out there. 
 
 
@@ -252,7 +252,7 @@ There is a great quote by Nicholas Rescher on chance,luck in his book :
 [The Brilliant Randomness of Everyday life](http://www.amazon.com/Luck-Brilliant-Randomness-Everyday-Life/dp/0822957558): 
 ```
 To be sure, given our natural human commitment to the idea that we live in a rational world, we are inclined to think that there is always an ultimate reason. ... All of this is perfectly natural but also totally futile. 
-The only ultimate rational attitude is to sit lossely in the saddle of life and come to terms with the idea of chance as such. 
+The only ultimate rational attitude is to sit loosely in the saddle of life and come to terms with the idea of chance as such. 
 ```
 
 ### 10. You Should Be a Reluctant Seller
@@ -270,7 +270,7 @@ Some of the 'non-investment reasons' include:
 
 The reasons to sell can be : 
 
-* You've made a mistake - that is, 'the factual background of the particular company is less favorable than originally beleived'
+* You've made a mistake - that is, 'the factual background of the particular company is less favorable than originally believed'
 * The stock no longer meets your investment criteria. 
 * You want to switch into something better- although an investor should be careful here and only switch if "very sure of his ground"
 
