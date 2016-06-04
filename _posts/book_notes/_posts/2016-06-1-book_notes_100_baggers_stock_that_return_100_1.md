@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 100 Baggers - Stock that return 100 to 1
-published: false
+published: true
 categories: [book_notes]
 tags: [book-notes]
 ---
@@ -23,10 +23,10 @@ This book is about 100-baggers. These are stocks that return $100 for every $1 i
 
 # The Essential Principles of finding 100-Baggers
 
-Author 'Christopher W. Mayer' has done a great work in digging and studying '100-baggers' to identify definite patterns. 
+Author 'Christopher W. Mayer' has done a great job in digging and studying '100-baggers' to identify definite patterns. 
 
 
-Some 100-Bagger stocks discussed in the book are : 
+Some of the 100-Bagger stocks discussed in his book are : 
 
 
 <table class="table table-hover">
@@ -80,20 +80,21 @@ Some 100-Bagger stocks discussed in the book are :
   </tbody>
 </table>
 
-The graph below shows the total 100 baggers by year-range
+
+Most of the stocks took about 16-30 years to become 100 baggers. The graph below shows the total 100 baggers by year-range:
 
 <img src="{{ site.url }}/assets/books/100_baggers/100_baggers_by_year_range.png" height="300" width="500">
 
 
-We shoudl know that there is no magic formula for producing 100-baggers. There is no easy way to screen for them. 
+We should know that there is no magic formula for producing 100-baggers. There is no easy way to screen for them. 
 
-These notes are distilled principles which he mentions in the book . These are very handy principles and should be referred back time and gain in our quest for 100-baggers
+These notes are distilled principles which he mentions in his book . These are very handy principles and should be referred back time and gain in our quest for 100-baggers
 
 We will start with the most important principle. Rest of the principles are ancillary to the main principle. 
 
 ### The most important principle:
 
-The most important principle is 
+The most important principle is :
 ```
 Ability for a business to reinvest their free cash flow to earn above average returns
 ```
@@ -112,6 +113,7 @@ Below, we can see the dramatic difference between a 6% return and 18% return.
 <img src="{{ site.url }}/assets/books/100_baggers/high_roc.png" height="300" width="500">
 
 
+We will start discussing the other most important principles now 
 
 
 ### 1. You have to look for them
@@ -139,14 +141,13 @@ Principles 2 and 3 together <b> are called the Twin Engines of a 100-Bagger</b>
 
 A moat, even a narrow moat is a necessity. 
 
-
 * Moats can take various forms :
     * Strong Brand
     * Switching Cost
     * Network Effect
     * Low Cost producer
     * Size Advantage
-* Moats are not permanent. Competitors can eventuall figure out their way across. 
+* Moats are not permanent. Competitors can eventually figure out their way across. 
 * Moats in essence are a way for companies to fight mean reversion. 
     - Mean reversion does not affect all companies equally. 
 * True moats are rare and not so easy to identify all the time. So, look for clear signs of moats in a business. 
@@ -155,11 +156,11 @@ A moat, even a narrow moat is a necessity.
 
 You can read the original study [here](http://csinvesting.org/wp-content/uploads/2013/07/Measuring_the_Moat_July2013.pdf) 
 
-- Some industries are better at creating value than others
+- Some industries are better at creating value than others.
 - Even best industries include companies that destroy values and the worst industries have companies that create value. Some companies buck the economics of their industry provides insight into the potential sources of economic performance. 
 - Creating an industry map is a good idea. This details all players that touch an industry.
     + Example: Airline Industry map would include aircraft lessor (Air Lease), manufacturers (Boeing), parts suppliers (B/E Aerospace) and more.
-    + This shows where the profit in an industry winds up and where you might foucus your energies
+    + This shows where the profit in an industry winds up and where you might foucus your energies.
 - Stable Industries are more conducive to sustainable value creation. E.g. Beverage Industry. Smartphones on the other hand are very unstable market. 
 
 #### Mean Reversion study by Matthew Berry
@@ -190,6 +191,8 @@ His study covers the 15 years from 1990 to 2004 and it includes 4000 largest com
 * Many of the best-performing stocks of the past 50 years had such a key figure for at least part of their history. 
 
 
+Below images shows the "Virtous Feedback" created by Owner-Operators 
+
 <img src="{{ site.url }}/assets/books/100_baggers/owner-operator.png" height="300" width="500">
 
 
@@ -200,16 +203,16 @@ His study covers the 15 years from 1990 to 2004 and it includes 4000 largest com
         + Issue stock, issue debt, or tap the cash flow of the business
 
     - Over the longer terms, returns for shareholders will be determined largely by the decision the CEO makes in choosing which tools to use.  
-- Capital allocation is hte CEO's most important job
-- Value per share is what counts, not overall size or growth
+- Capital allocation is the CEO's most important job.
+- Value per share is what counts, not overall size or growth.
 - Cash flow, not earnings , determines value;
-- Decentralized organizations release entrepreneurial energies
-- Independent thinking is essential to long-term success
-- Sometimes the best opportunity is holding your stock
-- Patience is a virtue with acquisitions, as is occasional boldness
+- Decentralized organizations release entrepreneurial energies.
+- Independent thinking is essential to long-term success.
+- Sometimes the best opportunity is holding your stock.
+- Patience is a virtue with acquisitions, as is occasional boldness.
 
 ####  Kelly's Heroes : Bet Big
-- Many great investors intuitively bet big on their best ideas
+- Many great investors intuitively bet big on their best ideas.
 
 <img src="{{ site.url }}/assets/books/100_baggers/kelly_formula.png" height="300" width="500">
 
@@ -221,13 +224,13 @@ Once you do all the work to find a 100 bagger, you need to give it time. Even th
 
 <img src="{{ site.url }}/assets/books/100_baggers/compounding_for_100_baggers.png" height="300" width="400">
 
-Knowing this, You need to find a way to defeat your own worst instincts- the impatience, the need for "action", the powerful feeling that you need to "do something". The Coffe-Can technique is a great idea and the genius of the technique lies in its 'simplicity'
+Knowing this, You need to find a way to defeat your own worst instincts- the impatience, the need for "action", the powerful feeling that you need to "do something". The Coffe-Can technique is a great idea and the genius of the technique lies in its 'simplicity'.
 
 #### Coffee-Can Portfolio
 
 * The idea is simple : you find the best stocks you can and let them sit for 10 years. 
     - The essence of the coffee-can idea is really that it's a way to protect you against yourself- from the emotions and volatility that make you buy or sell at the wrong times.
-    - Two important takeaways:
+    - Two important takeaways are:
         + You must pick a compelling stock, ideally an established company with years of growth ahead and ability to compound at a high rate.
         + Overall coffee-can portfolio returns can more than makeup for losing positions. 
 
@@ -237,7 +240,7 @@ Knowing this, You need to find a way to defeat your own worst instincts- the imp
 
 There is a world of noise out there. Everyday something important happens, or so the Media would like you believe. 
 
-* Stock prices for for all different kind of reasons. Stocks sometimes make huge up/down movies and yet the business itself changes more slowly with time. 
+* Stock prices fall for all different kind of reasons. Stocks sometimes make huge up/down movies and yet the business itself changes more slowly with time. 
 * Don't fret so much with guesses as to where the stock market might go. Keep looking for great ideas. If history is any guide, they are always out there. 
 
 
@@ -254,7 +257,7 @@ The only ultimate rational attitude is to sit lossely in the saddle of life and 
 
 ### 10. You Should Be a Reluctant Seller
 
-In his book 'Common Stocks and Uncommon Profits', Phil Fischer had a chapter called mentions : "If the job has been done correctly when a common stock is purchased, the time to sell it is - almost never"
+In his book 'Common Stocks and Uncommon Profits', Phil Fischer mentions : "If the job has been done correctly when a common stock is purchased, the time to sell it is - almost never"
 
 In book '100 to 1 in the Stock Market', Thomas Phelps gave a selling advice
 'Never if you can help it take an investment action for a non-investment reason.'
@@ -270,3 +273,5 @@ The reasons to sell can be :
 * You've made a mistake - that is, 'the factual background of the particular company is less favorable than originally beleived'
 * The stock no longer meets your investment criteria. 
 * You want to switch into something better- although an investor should be careful here and only switch if "very sure of his ground"
+
+
