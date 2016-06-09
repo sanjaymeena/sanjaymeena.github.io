@@ -5,10 +5,12 @@ published: true
 categories: [Investing]
 tags: [pharma, generics, CRAMS]
 sitemap: true
+excerpt: A broad overview of the Pharma Sector.
 ---
 
 
-A broad overview of the Pharma Sector. 
+ 
+
 <!--more-->
 
 
