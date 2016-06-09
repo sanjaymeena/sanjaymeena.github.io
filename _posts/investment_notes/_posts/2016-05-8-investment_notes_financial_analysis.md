@@ -1,10 +1,11 @@
 ---
-layout: post
+layout: single
 title: Financial Analysis - Balance Sheet
 published: true
-categories: [investment_notes]
+categories: [Investing]
 tags: [investment-notes]
 series: financial_analysis
+sitemap: true
 ---
 
 

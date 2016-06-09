@@ -1,10 +1,10 @@
 ---
 title: Syntax in Linguistics
 author: Sanjay Meena
-layout: post
+layout: single
 published: true
 comments: true
-categories: [tech,nlp]
+categories: [Tech,NLP]
 tags: [adjective,adverbs,english,grammar,linguistics,nlp,nominals,nouns,prepositions,syntax,verbs]
 series: nlp_series
 --- 
@@ -29,7 +29,7 @@ Syntax is the rules and principles that govern the sentence structure of any lan
 The diagram below illustrates the syntactic categories in English language .
 
 
-<img src="/assets/nlp_posts/syntax-categories1.jpg" height="400" width="600">
+<img src="/images/posts/nlp_posts/syntax-categories1.jpg" height="400" width="600">
 
 
 

@@ -1,7 +1,8 @@
 ---
-layout: page
 title: About
 permalink: /about/
+header:
+  overlay_image: about.jpg
 ---
 
 

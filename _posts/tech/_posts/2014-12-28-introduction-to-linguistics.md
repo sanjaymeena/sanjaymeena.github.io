@@ -1,9 +1,9 @@
 ---
 title: Introduction to Linguistics
 author: Sanjay Meena
-layout: post
+layout: single
 published: true
-categories: [tech,nlp]
+categories: [Tech,NLP]
 tags: [linguistics,morphology,phonetics,phonology,semantics,syntax]
 series: nlp_series
 ---

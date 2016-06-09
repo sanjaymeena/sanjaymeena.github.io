@@ -1,8 +1,8 @@
 ---
-layout: post
+layout: single
 title: Text Analyzer - Google Chrome Extension
 published: true
-categories: [tech,javascript]
+categories: [Tech,javascript]
 tags: [javascript]
 ---
 
@@ -21,23 +21,23 @@ The chrome extension functionality can be explained in few pictures.
 
 ### 1. Right click mouse and click on TextAnalyzer 
 
-<img src="{{ site.url }}/assets/chrome-extension/app-screenshots/right_click_mouse.png" height="400" width="800">
+<img src="{{ site.url }}/images/posts/chrome-extension/app-screenshots/right_click_mouse.png" height="400" width="800">
 
 ### 2. The results will be displayed on hover over the selected text
 
 * While the results are being retrieved, there will be a small spinning wheel 
 
 
-<img src="{{ site.url }}/assets/chrome-extension/app-screenshots/can_resize_tooltip.png" height="400" width="800">
+<img src="{{ site.url }}/images/posts/chrome-extension/app-screenshots/can_resize_tooltip.png" height="400" width="800">
 
 ### 3. You can also select multiple sentences
-<img src="{{ site.url }}/assets/chrome-extension/app-screenshots/can_select_multiple_sentences.png" height="400" width="800">
+<img src="{{ site.url }}/images/posts/chrome-extension/app-screenshots/can_select_multiple_sentences.png" height="400" width="800">
 
 ### 4. Click on More Information to see more details in a new tab
-<img src="{{ site.url }}/assets/chrome-extension/app-screenshots/moreinformation.png" height="400" width="800">
+<img src="{{ site.url }}/images/posts/chrome-extension/app-screenshots/moreinformation.png" height="400" width="800">
 
 ### 5. The output is in json format
-<img src="{{ site.url }}/assets/chrome-extension/app-screenshots/json.png" height="400" width="800">
+<img src="{{ site.url }}/images/posts/chrome-extension/app-screenshots/json.png" height="400" width="800">
 
 ## How it can be useful? 
 If you are learning English grammar or  interested in looking at  grammar and semantics at the sentence level
@@ -93,7 +93,7 @@ This post will explain implementation of some features which are part of the tex
 
 The architecture for the chrome extension is below: 
 
-![Chrome extension architecture]({{ site.url }}/assets/chrome-extension/architecture.png)
+![Chrome extension architecture]({{ site.url }}/images/posts/chrome-extension/architecture.png)
 
 
 

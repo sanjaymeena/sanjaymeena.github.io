@@ -1,0 +1,17 @@
+# main links links
+main:
+  
+  - title: "Tech Posts"
+    url: /tech
+
+  - title: "Book Notes"
+    url: /book_notes
+
+  - title: "Investment Notes"
+    url: /investment_notes
+
+  - title: "Tags"
+    url: /tags
+
+  - title: "About"
+    url: /about

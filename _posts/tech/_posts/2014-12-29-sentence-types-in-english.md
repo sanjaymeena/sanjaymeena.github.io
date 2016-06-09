@@ -1,9 +1,9 @@
 ---
 title: Sentence Types in English
 author: Sanjay Meena
-layout: post
+layout: single
 published: true
-categories: [tech,nlp]
+categories: [Tech,NLP]
 tags: [linguistics,sentence_types,nlp]
 series: nlp_series
 ---

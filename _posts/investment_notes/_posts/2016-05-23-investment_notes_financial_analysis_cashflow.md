@@ -1,10 +1,11 @@
 ---
-layout: post
+layout: single
 title: Financial Analysis- Cash Flow Statement
 published: false
-categories: [investment_notes]
+categories: [Investing]
 tags: [investment-notes]
 series: financial_analysis
+sitemap: true
 ---
 
 Cash Flow Statement is probably the most important financial statement. Cash flow statement provides information about cash generated in operating activities. It also provides information about cash provided (or used) in a company's investing and financial activities. 

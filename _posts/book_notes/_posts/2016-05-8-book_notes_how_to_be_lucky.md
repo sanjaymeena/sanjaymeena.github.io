@@ -1,9 +1,10 @@
 ---
-layout: post
+layout: single
 title: How to Get Lucky
 published: true
-categories: [book_notes]
+categories: [Books]
 tags: [book-notes]
+sitemap: true
 ---
 
 Is there anything we can do to bring more luck into our lives? 

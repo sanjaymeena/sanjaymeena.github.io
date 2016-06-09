@@ -1,6 +1,15 @@
 ---
-layout: default
+layout: single
+author_profile: true
+header:
+  overlay_image: machine-learning.jpg
+  overlay_filter: 0.3 # same as adding an opacity of 0.5 to a black background
+author_profile: true  
+paginate: true
 ---
+
+{% include base_path %}
+
 
 
 <div class="page_list">
@@ -8,9 +17,7 @@ layout: default
    {% if post.url %}
     <article class="page_list">
 
-      <h4><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h4>
-
-      
+      <h3><a href="{{ site.baseurl }}{{ post.url }}"> [{{ post.categories[0] }}] {{ post.title }}</a></h3>
         {{ post.excerpt }}
       
       
@@ -18,6 +25,4 @@ layout: default
      {% endif %}
   {% endfor %}
 </div>
-
-
 

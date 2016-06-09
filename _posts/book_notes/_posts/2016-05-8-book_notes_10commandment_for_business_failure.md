@@ -1,9 +1,10 @@
 ---
-layout: post
+layout: single
 title: 10 Commandments for Business Failures
 published: false
-categories: [book_notes]
+categories: [Books]
 tags: [book-notes]
+sitemap: true
 ---
 
 Dealing with losing and winning situations in stocks 

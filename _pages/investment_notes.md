@@ -1,16 +1,16 @@
 ---
 title: Investment Notes
 permalink: /investment_notes/
-layout: page
-sitemap: true 
+header:
+  overlay_image: finance.jpg
 ---
 
 
 <div class="page_list">
-  {% for post in site.categories.investment_notes %}
+  {% for post in site.categories.Investing %}
    {% if post.url %}
     <article class="page_list">
-      <h4><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h4>
+      <h3><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h3>
      {{ post.excerpt }}
      
     </article>

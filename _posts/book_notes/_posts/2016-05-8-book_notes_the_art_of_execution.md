@@ -1,9 +1,10 @@
 ---
-layout: post
+layout: single
 title: The Art of Execution 
 published: true
-categories: [book_notes]
+categories: [Books]
 tags: [book-notes]
+sitemap: true
 ---
 
 Only 49% of the very best investment ideas from legendary investors made money. Despite this , they still made a lot of money 
@@ -142,7 +143,7 @@ The Assassins are the investors who live and breathe Warren Buffet's rules for i
 
 When it comes to selling losing positions, Assassins are ruthless. They pull the trigger without emotion. Large losses make an overall postive return an almost impossible uphill battle. The table below shows the impact of losses 
 
-<img src="/assets/books/the_art_of_execution/the_impact_of_losses.PNG" width="300">
+<img src="/images/posts/books/the_art_of_execution/the_impact_of_losses.PNG" width="300">
 
 
 According to legendary fund manager Stanley Druckenmiller , "George Soros is one of the best loss takers"
@@ -182,7 +183,7 @@ Like Assassins, the main reason for their success was what they did when they fo
 
 ## Decision Matrix of 3 investing styles : 
 
-<img src="/assets/books/the_art_of_execution/decision_matrix_losing.PNG" width="400">
+<img src="/images/posts/books/the_art_of_execution/decision_matrix_losing.PNG" width="400">
 
 The above matrix clearly shows that doing nothing is never an option
 
@@ -219,11 +220,11 @@ When winning you don't want to do what the Raiders do.
 	* Big winners are rare. All successful investors make money because they won big in a few names, while ensuring the bad ideas did not materially hurt them. 
 	* Stock market returns over time show kurtosis and not normal distribution/bell curve. This means that few big winners and losers distort the overall investors return.
 
-	<img src="/assets/books/the_art_of_execution/Kurtosis-Chart.PNG" width="400">
+	<img src="/images/posts/books/the_art_of_execution/Kurtosis-Chart.PNG" width="400">
 
 	* What a losing investment approach looks like : 
 
-	<img src="/assets/books/the_art_of_execution/losing_approach.PNG" width="400">
+	<img src="/images/posts/books/the_art_of_execution/losing_approach.PNG" width="400">
 
 2. Beat your rivals
 

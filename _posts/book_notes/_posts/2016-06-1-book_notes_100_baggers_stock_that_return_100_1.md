@@ -1,9 +1,10 @@
 ---
-layout: post
+layout: single
 title: 100 Baggers - Stock that return 100 to 1
 published: true
-categories: [book_notes]
+categories: [Books]
 tags: [book-notes]
+sitemap: true
 ---
 This book is about 100-baggers. These are stocks that return $100 for every $1 invested. 
 <!--more-->
@@ -83,7 +84,7 @@ Some of the 100-Bagger stocks discussed in his book are :
 
 Most of the stocks took about 16-30 years to become 100 baggers. The graph below shows the total 100 baggers by year-range:
 
-<img src="{{ site.url }}/assets/books/100_baggers/100_baggers_by_year_range.png" height="300" width="500">
+<img src="{{ site.url }}/images/posts/books/100_baggers/100_baggers_by_year_range.png" height="300" width="500">
 
 
 We should know that there is no magic formula for producing 100-baggers. There is no easy way to screen for them. 
@@ -110,7 +111,7 @@ Over the long term, it's hard for a stock to earn a much better return than the 
 
 Below, we can see the dramatic difference between a 6% return and 18% return. 
 
-<img src="{{ site.url }}/assets/books/100_baggers/high_roc.png" height="300" width="500">
+<img src="{{ site.url }}/images/posts/books/100_baggers/high_roc.png" height="300" width="500">
 
 
 We will start discussing the other most important principles now 
@@ -193,7 +194,7 @@ His study covers the 15 years from 1990 to 2004 and it includes 4000 largest com
 
 Below images shows the "Virtous Feedback" created by Owner-Operators 
 
-<img src="{{ site.url }}/assets/books/100_baggers/owner-operator.png" height="300" width="500">
+<img src="{{ site.url }}/images/posts/books/100_baggers/owner-operator.png" height="300" width="500">
 
 
 #### Some great ideas from the outstanding book : [Outsiders](http://www.amazon.com/Outsiders-Unconventional-Radically-Rational-Blueprint/dp/1422162672?ie=UTF8&*Version*=1&*entries*=0)
@@ -214,7 +215,7 @@ Below images shows the "Virtous Feedback" created by Owner-Operators
 ####  Kelly's Heroes : Bet Big
 - Many great investors intuitively bet big on their best ideas.
 
-<img src="{{ site.url }}/assets/books/100_baggers/kelly_formula.png" height="300" width="500">
+<img src="{{ site.url }}/images/posts/books/100_baggers/kelly_formula.png" height="300" width="500">
 
 
 ### 7. You Need Time: Use the Coffee-Can Approach as a Crutch
@@ -222,7 +223,7 @@ Below images shows the "Virtous Feedback" created by Owner-Operators
 Once you do all the work to find a 100 bagger, you need to give it time. Even the fastest 100 baggers in the book's study needed 5 years. 
 
 
-<img src="{{ site.url }}/assets/books/100_baggers/compounding_for_100_baggers.png" height="300" width="400">
+<img src="{{ site.url }}/images/posts/books/100_baggers/compounding_for_100_baggers.png" height="300" width="400">
 
 Knowing this, You need to find a way to defeat your own worst instincts- the impatience, the need for "action", the powerful feeling that you need to "do something". The Coffee-Can technique is a great idea and the genius of the technique lies in its 'simplicity'.
 

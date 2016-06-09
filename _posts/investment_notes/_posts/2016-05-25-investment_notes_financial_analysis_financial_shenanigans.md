@@ -1,10 +1,11 @@
 ---
-layout: post
+layout: single
 title: Financial Analysis- Financial Shenanigans
 published: false
-categories: [investment_notes]
+categories: [Investing]
 tags: [investment-notes]
 series: financial_analysis
+sitemap: true
 ---
 
 
