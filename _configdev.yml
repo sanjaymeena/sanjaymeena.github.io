@@ -12,8 +12,7 @@ title_separator          : "-"
 name                     : "Sanjay Meena"
 description              : "blog"
 url                      : 
-baseurl                  : # the subpath of your site, e.g. "/blog"
-gh_repo                  :
+baseurl                  : 
 teaser                   : # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
@@ -64,7 +63,7 @@ google_ad_slot           :
 # Site Author
 author:
   name             : "Sanjay Meena"
-  avatar           : "bio.JPG"
+  avatar           : "bio.jpg"
   bio              : "NLP Scientist"
   location         : "Taipei , Taiwan"
   email            : sanjaymeena@gmail.com
