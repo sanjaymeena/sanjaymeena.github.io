@@ -1,7 +1,7 @@
 ---
 layout: single
 title: Financial Analysis- Ratio Analysis
-published: false
+published: true
 categories: [Investing]
 tags: [investment_notes]
 series: financial_analysis
@@ -20,7 +20,6 @@ Table of Content
 
 
 # Ratio Categories : 
-
 There are some widely accepted ratios that have been found to be useful. They can be categorized as follows: 
  
 <table class="table table-striped">
