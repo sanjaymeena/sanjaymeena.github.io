@@ -194,6 +194,14 @@ paginate_path: /page:num/
 timezone: # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
+
+#
+# jekyll-press:
+#   exclude: 'atom.xml' # Exclude files from processing - file name, glob pattern or array of file names and glob patterns
+#   js_options: {}      # js minifier options
+#   css_options: {}     # css minifier options
+#   html_options: {}    # html minifier options
+
 # Plugins
 gems:
   - jekyll-paginate
@@ -201,6 +209,7 @@ gems:
   - jekyll-gist
   - jekyll-feed
   - jemoji
+  #- jekyll-press
 
 # mimic GitHub Pages with --safe
 whitelist:
@@ -209,6 +218,7 @@ whitelist:
   - jekyll-gist
   - jekyll-feed
   - jemoji
+  #- jekyll-press
 
 
 # Archives
@@ -244,5 +254,8 @@ tag_archive:
 # - http://jch.penibelst.de/
 compress_html:
   clippings: all
+  comments:  ["<!-- ", " -->"]
+  endings:   all
+
   ignore:
     envs: development
