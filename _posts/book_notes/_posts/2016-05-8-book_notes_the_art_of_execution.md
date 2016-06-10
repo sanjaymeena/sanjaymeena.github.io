@@ -35,39 +35,32 @@ There are 3 behavior types of investors in losing situations:
 	* They also make up stories to positively explain losing situation. 
 
 2. Primacy Error
-
 	* This describes the way that first impressions have a lasting and disproportional effect on a person. 
 	* With the Rabbits, first impression is almost everything. 	
 
 3. Anchoring Bias
-
 	* When Rabbits change their mind, its always an aching slow process. They are unwilling to accept new findings that they were wrong about the company and should get out of the position.
 
 4. Endowment Bias
-
 	* Large losses that happen over a short duration are almost impossible to accept, especially when they are substantial. It's easier to hold on to losing position than realize the loss by selling up. 
 	* The rabbits cannot bear the idea of crystallizing a loss. They are too much aware of how much they paid for those losing shares. 
 	* Try not to be anchor to the purchase prices. 
 
 5. Following the Crowd
-
 	* Rabbits are rarely unique in the investments they made. Sadly, this is another reason they tended to persist with their mistake. 
 	* Trait of conforming to peer pressure is why most investors only invest at the end of the bull run. No one wants to be seen as the fool who stood on the side while his neighbors and friends were making vast fortunes. 
 	* The inner mental pressure to invest in stocks that you do not hold and that are going up is immense. 
 	* You have to constantly fight the urge to sell stocks that are hurting you. Feelings of pleasure, pain and fear go a long way to explaining investor actions and omissions. 
 
 6. Ego
-
 	* The Rabbits really didn't like being wrong. In fact , ultimately they are more interested in being right than making money. 
 	* When a rabbit defended a losing investment it reminds of Warren Buffet's famous saying: ' Forecast tell you little about the future but a lot about the forecaster'
 	* You should expect to be wrong at least half of the time. The very best investment minds are!
 
 7. Self Attribution Bias
-
 	* Rabbits blame others or external factors for their misfortunes but take full credit when things go well. It is one of the key reasons why we don't learn from past mistakes but keep repeating them. 
 
 8. The Wrong Information
-
 	* In losing situation, Rabbit would go on a mission to seek out more information to help make the right decision. Their focus will be on finding reasons to support the original recommendation.  
 
 9. Too big to fail/ Denomination Effect
@@ -83,13 +76,11 @@ There are 3 behavior types of investors in losing situations:
 The bad news is that everyone can be a Rabbit. The good news is , no one needs to be. There are few simple things they could have done to overcome their problems: 
 
 1. Always have a Plan
-
 	* When faced with painful loss making situations, most people do nothing. 
 	* Draw up a plan of precisely what actions you will take when your investments don't work. 
 
 
 2. Sell or buy more
-
 	* The only solution to a losing situation is to sell out or buy more. You have to materially adapt if you hope to survive and prosper.
 	* Doing nothing when you are losing is never an option. 
 
@@ -130,7 +121,6 @@ The bad news is that everyone can be a Rabbit. The good news is , no one needs t
 		* The 'Who could have foreseen at the time I invested that XYZ would happen..' defense
 
 12. Be suspicious of status
-
 	* It is dangerous to assume that just because an investment professional is highly educated and has years of experience , he or she will be good at making money and getting the big calls right. 
 
 

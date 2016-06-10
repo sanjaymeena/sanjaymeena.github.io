@@ -97,9 +97,6 @@ A simple sentence, also called an independent clause, contains a subject and a v
 
 The three examples above are all simple sentences. Please note that sentence 2 contains a compound subject, and sentence 3 contains a compound verb. Simple sentences, therefore, contain a subject and verb and express a complete thought, but they can also contain compound subjects or verbs.
 
-* * *
-
-&nbsp;
 
 ## <span id="Compound">Compound</span>
 
@@ -201,7 +198,7 @@ Independent Clause; + Conjunctive Adverb, + Independent Clause
   *  The Berlin Wall’s construction in 1961 surprised the world; its destruction in 1989 stunned it.
   *   Poland was the first Eastern block country to turn away from communism; others soon followed.
 
-&nbsp;
+
 
 
 ## Complex Sentence
@@ -418,7 +415,7 @@ Who, when, what, where, why, how, whoever, whatever, wherever
   * She wants to ask where I live.
   * I want to know how we can meet each other.
 
-&nbsp;
+
 
 #### <span id="YesNoClause">Yes/No Clause</span>
 
@@ -489,7 +486,7 @@ advisable</td>
   * It is essential that everyone try hard to study English.
   * It is necessary that our country have to take actions on drug and corruption
 
-&nbsp;
+
 
 ### <span id="Complex_sentence_with_Adverbclause">Complex sentence with Adverb clause</span>
 

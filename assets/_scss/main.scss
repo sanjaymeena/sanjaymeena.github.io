@@ -6,7 +6,7 @@
  *  - https://twitter.com/mmistakes
  *
 */
-@import "tags"; //tags css
+
 @import "vendor/breakpoint/breakpoint"; // media query mixins
 @import "variables";
 @import "mixins";
@@ -34,4 +34,4 @@
 @import "vendor/font-awesome/font-awesome";
 @import "vendor/magnific-popup/magnific-popup";
 @import "print";
-
+@import "tags"; //tags css

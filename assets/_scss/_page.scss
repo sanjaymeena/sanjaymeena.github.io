@@ -49,9 +49,11 @@
 }
 
 .page__content {
-  p, li, dl {
+ /* 
+ p, li, dl,ul,ol {
     font-size: $post-font ;
   }
+  */
 
   /* paragraph indents */
   p {
@@ -79,19 +81,19 @@
   }
 
   dt {
-    margin-top: 1em;
+    margin-top: 0.41em;
     font-family: $sans-serif;
     font-weight: bold;
   }
 
   dd {
-    margin-left: 1em;
+    margin-left: .41em;
     font-family: $sans-serif;
-    font-size: $type-size-6;
+    font-size: $post-font;
   }
 
   .small {
-    font-size: $type-size-6;
+    font-size: $post-font;
   }
 
   /* blockquote citations */
