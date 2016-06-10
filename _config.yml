@@ -155,7 +155,7 @@ exclude:
   - LICENSE
   - log
   - node_modules
-  - package.json
+  #- package.json
   - Rakefile
   - README
   - tmp
