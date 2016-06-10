@@ -149,13 +149,13 @@ exclude:
   - Capfile
   - CHANGELOG
   - config
-  #- Gemfile
+  - Gemfile
   - Gruntfile.js
   - gulpfile.js
   - LICENSE
   - log
   - node_modules
-  #- package.json
+  - package.json
   - Rakefile
   - README
   - tmp
@@ -201,7 +201,6 @@ gems:
   - jekyll-gist
   - jekyll-feed
   - jemoji
-  - jekyll-press
 
 # mimic GitHub Pages with --safe
 whitelist:
@@ -210,7 +209,6 @@ whitelist:
   - jekyll-gist
   - jekyll-feed
   - jemoji
-  - jekyll-press
 
 
 # Archives
