@@ -123,6 +123,15 @@ paginate_path: /page:num/
 #timezone: America/New_York # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
+# jekyll-press config
+jekyll-press:
+  exclude: 'atom.xml' # Exclude files from processing - file name, glob pattern or array of file names and glob patterns
+  js_options: {}      # js minifier options
+  css_options: {}     # css minifier options
+  html_options: {}    # html minifier options
+
+
+
 # Reading Files
 include:
   - .htaccess
@@ -150,6 +159,7 @@ exclude:
   - Rakefile
   - README
   - tmp
+  - gulpfile.js
 keep_files:
   - .git
   - .svn
@@ -191,6 +201,7 @@ gems:
   - jekyll-gist
   - jekyll-feed
   - jemoji
+  - jekyll-press
 
 # mimic GitHub Pages with --safe
 whitelist:
@@ -199,6 +210,7 @@ whitelist:
   - jekyll-gist
   - jekyll-feed
   - jemoji
+  - jekyll-press
 
 
 # Archives

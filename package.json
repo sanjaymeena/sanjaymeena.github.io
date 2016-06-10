@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^6.3.5",
+    "gulp": "^3.9.1",
     "node-sass": "^3.4.2",
     "npm-run-all": "^1.7.0",
     "onchange": "^2.2.0",
