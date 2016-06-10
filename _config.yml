@@ -149,7 +149,7 @@ exclude:
   - Capfile
   - CHANGELOG
   - config
-  - Gemfile
+  #- Gemfile
   - Gruntfile.js
   - gulpfile.js
   - LICENSE
