@@ -39,6 +39,12 @@
   {% assign seo_author_twitter = seo_author_twitter | replace: "@", "" %}
 {% endif %}
 
+{% if page.keywords %}
+ <meta name="keywords" content="{{ page.keywords }}" />
+{% else %}
+<meta name="keywords" content="nlp, tech, python, javascript, investing, books, notes, value investing, java, syntactic analysis, natural languge processing, stanford parsing, google chrome plugin, R, shiny apps, data science, nlp scientist, machine learning, deep learning, tensorflow, theano, pandas, numpy, financial statements, ratio analysis, income statement, balance sheet, financial shenanigans, data analysis" />
+ {% endif %}
+
 <meta property="og:locale" content="{{ site.locale }}">
 <meta property="og:site_name" content="{{ site.title }}">
 <meta property="og:title" content="{{ page.title | default: site.title | markdownify | strip_html | strip_newlines | escape_once }}">

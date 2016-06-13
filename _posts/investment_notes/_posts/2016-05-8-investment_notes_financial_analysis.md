@@ -1,12 +1,14 @@
 ---
 layout: single
 title: Financial Analysis - Balance Sheet
-published: true
+published: false
 categories: [Investing]
 tags: [investment-notes]
 series: financial_analysis
 sitemap: true
 excerpt: For an equity investor, Reading a company's financial statements is very important. In fact, We should never invest in a business whose financial condition we cannot understand well.
+description: For an equity investor, Reading a company's financial statements is very important. In fact, We should never invest in a business whose financial condition we cannot understand well.
+keywords: balance sheet, assets, liabilities
 ---
 
 
@@ -36,6 +38,13 @@ In simple terms, balance sheet discloses what a business owns and what it owes a
 
 Assets=Liabilities + Equity
 
+We will look at the 'Balance Sheet' for PI Industries . PI is a leading Agri Input and Custom Synthesis & Manufacturing company in India. The annual report referred is for FY2016. You can find the see the Annual report [here](http://www.bseindia.com/bseplus/AnnualReport/523642/5236420315.pdf). 
+
+*Balance Sheet for P.I Industries*
+<img src="/images/posts/investment_notes/balance_sheet/balance_sheet.png" height = "800" width="900">
+
+Next, we will break down the various components of the Balance Sheet.
+
 ## Assets
 
 Assets are resources controlled by the company as a result of past events and from which future economic benefits are expected to flow to the company (E.g. Land, machines, plants, future receivables from customers etc.)
@@ -44,6 +53,10 @@ Assets side of the balance sheet is made of two broad categories :
 
 1. Non Current Assets
 2. Current Assets
+
+<img src="/images/posts/investment_notes/balance_sheet/assets.png" height = "400" width="900">
+
+
 
 ### Non Current Assets
 
@@ -60,11 +73,16 @@ Fixed assets again can be divided into :
 
 1. Tangible Assets
 2. Intangible Assets
+3. Capital Work in Progress
 
 #####  Tangible Assets
 
 * They have a physical form and can be seen and felt.
 * Tangible Assets include items like land, building, plants and equipment,vehicles, equipments etc. 
+
+<img src="/images/posts/investment_notes/balance_sheet/tangible_assets.png" height = "400" width="900">
+
+
 
 ##### Intangible Assets
 * These are long terms assets of a company that have no physical existence but hold tremendous relevance for the company as it is at its core of existence. 
@@ -72,10 +90,13 @@ Fixed assets again can be divided into :
 * <b>Goodwill</b> is recognized when a business acquires another business. 
 	* It represents the excess of cost paid by the purchasing business to the purchased business over the fair value of purchased business indentifiable assets.
 
+<img src="/images/posts/investment_notes/balance_sheet/intangible_assets.png" height = "400" width="900">
 
-##### Captial Work in Progress
+
+##### Capital Work in Progress
 
 These are assets that are in progress of being built and possibly under construction when the balance sheet was prepared. Once these assets are built, they get shifted to tangible assets or intangible assets.
+<img src="/images/posts/investment_notes/balance_sheet/capital_work_in_progress.png" height = "400" width="900">
 
 
 #### Long Term Investment
@@ -88,9 +109,14 @@ These are assets that are in progress of being built and possibly under construc
 
 These represent any loans and advance payments that the company has granted to employees , suppliers and government and which are to be received by the company in a period beyond one-year.
 
+<img src="/images/posts/investment_notes/balance_sheet/loans_and_advances.png" height = "400" width="900">
+
+
 ### Other Non Current Assets
 
 These are obligations that are not going to be paid off within the year or operating cycle. 
+
+
 
 ### Current Assets
 
@@ -117,6 +143,9 @@ Some pointers on size of inventory:
 2. Small Inventory: 
 	* Too little inventory isn't good either, because business runs the risk of losing out on potential sales and potential market share as well. 
 
+<img src="/images/posts/investment_notes/balance_sheet/inventories.png" height = "400" width="900">
+
+
 #### Trade Receivables
 
 * These represent the money owed to the company by its customers to whom it sold goods or services on credit.
@@ -124,6 +153,8 @@ Some pointers on size of inventory:
 * Bad Debts
 	* Sometimes few customers do not pay up even after the company waits for the payment after specified time.These defaults are called bad debts.
  	
+<img src="/images/posts/investment_notes/balance_sheet/trade_receivables.png" height = "400" width="900">
+
 ####  Cash and Cash Equivalents
 * Cash is the most liquid asset found in a company's balance sheet. 
 * Cash Equivalents have short term existence, they mature within 3 months whereas short term investments are 12 months or less. 
@@ -131,12 +162,20 @@ Some pointers on size of inventory:
 * Cash is not "the cash flow" or "free cash flow" that you may have been heard. Cash is what remains on balance sheet after adjusting for all cash inflows and outflows during the period.
 * To assess the total cash a company has , it is important to add the 'Current Investment' the company owns.
 
+<img src="/images/posts/investment_notes/balance_sheet/cash_bank.png" height = "400" width="900">
+
+
 #### Short term loans and Advances
 
 These are like long term loans and advances but for period less than on year. 
 
 #### Other Current Assets
 These are assets that do not include cash, investments, receivables, and inventory and can be converted into cash within on business cycle which is usually less than one year. 
+
+
+## Equity and Liabilities
+
+<img src="/images/posts/investment_notes/balance_sheet/equity_liabilities.png" height = "400" width="900">
 
 
 ## Equity 
@@ -154,6 +193,8 @@ Here is how the addition is made to equity:
 * 5 of face value * 500 shares =2500 will be added to share capital. 
 * Share premium (100 -5)* 100=47500 will be added to reserves and surplus under share premium reserves
 
+<img src="/images/posts/investment_notes/balance_sheet/share_capital.png" height = "400" width="900">
+
 
 ### 2. Reserves and surplus
 
@@ -167,18 +208,25 @@ Here is how the addition is made to equity:
 Equity capital is the ultimate determinant of a company's borrowing capacity. 
 
 
+<img src="/images/posts/investment_notes/balance_sheet/reserves_surplus.png" height = "400" width="900">
 
 ## Liabilities
 
 Liabilities are obligations of a company arising from past events, the settlement of which is expected to result in an outflow of economic benefits from the company (like bank borrowings and future payments to suppliers)
 
+
+
 ###  Non Current Liabilities
 These are contracted commitments to pay back a sum of money over time with interest.
 
+<img src="/images/posts/investment_notes/balance_sheet/non_current_liabilities.png" height = "400" width="900">
 
-#### Long term liabilities
 
-These broadly include obligations of the company that become due more than 1 year into future. 
+#### Long term borrowings
+
+Loan and financial obligations that last over one year. These can be like the car loan which you are suppose to pay over a period of many years.
+
+<img src="/images/posts/investment_notes/balance_sheet/long_term_borrowings.png" height = "400" width="900">
 
 #### Deferred Tax liabilities
  
@@ -201,42 +249,56 @@ The main reasons are :
 	* 0.9 crore of deferred tax is something which company has to pay up in the future as is thus a liability.
 
 
+<img src="/images/posts/investment_notes/balance_sheet/deffered_tax_liability.png" height = "400" width="900">
+
 #### Long term provisions
  
 These represent money that is provided for future liabilities like any payment expected beyond one year on account of leave encashment or for warranties on products etc.
+<img src="/images/posts/investment_notes/balance_sheet/provisions.png" height = "400" width="900">
 
-#### Long term borrowings
 
-Loan and financial obligations that last over one year. These can be like the car loan which you are suppose to pay over a period of many years.
+#### Other Long term liabilities
+
+These broadly include obligations of the company that become due more than 1 year into future. 
+<img src="/images/posts/investment_notes/balance_sheet/other_long_term_liabilities.png" height = "400" width="900">
+
 
 
 ### Current Liabilities 
 
 Liabilities for which payment is due normally in less than one year. 
 
-
-1. Trade payables/Account payables
-
-	Represents amount a business owes its vendors for goods and services that were purchased from them but which have not yet been paid.
-
-2. Other current liabilities
-
-	Short term payables not directly related to the main business of the company. These include statutory dues, security deposits and advances from dealers and unclaimed liabilities which are all due for payment within one year. 
-
-3. Short term provisions
-
-	Money that is provided for a liability that is expected to occur within one year. E.g. Proposed dividend to be paid out to shareholders, payment for warranties on products.
+<img src="/images/posts/investment_notes/balance_sheet/current_liabilities.png" height = "400" width="900">
 
 
-4. Short term borrowings
+#### Trade payables/Account payables
+Represents amount a business owes its vendors for goods and services that were purchased from them but which have not yet been paid.
 
+<img src="/images/posts/investment_notes/balance_sheet/trade_payables.png" height = "400" width="900">
+
+
+#### Other current liabilities
+Short term payables not directly related to the main business of the company. These include statutory dues, security deposits and advances from dealers and unclaimed liabilities which are all due for payment within one year. 
+<img src="/images/posts/investment_notes/balance_sheet/other_current_liabilities.png" height = "400" width="900">
+
+
+
+#### Short term provisions/ Current Provisions
+Money that is provided for a liability that is expected to occur within one year. E.g. Proposed dividend to be paid out to shareholders, payment for warranties on products.
+
+<img src="/images/posts/investment_notes/balance_sheet/provisions.png" height = "400" width="900">
+
+
+#### Short term borrowings
 These represent Loans and financial obligations due within one year. These can be like credit card or personal loan you borrow, and which have to be repaid over the next one year.
-
 
 Point to note: 
 
 * Don't take too much note of current liabilities other than spot large changes or trends. 
 * High current liabilities can result in higher effective returns on capital with relatively low cost and risk. 
+
+
+<img src="/images/posts/investment_notes/balance_sheet/short_term_borrowings.png" height = "400" width="900">
 
 
 ### Minority Interest
