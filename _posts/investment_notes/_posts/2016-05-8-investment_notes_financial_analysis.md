@@ -6,31 +6,43 @@ categories: [Investing]
 tags: [investment-notes]
 series: financial_analysis
 sitemap: true
-excerpt: For an equity investor, Reading a company's financial statements is very important. In fact, We should never invest in a business whose financial condition we cannot understand well.
-description: For an equity investor, Reading a company's financial statements is very important. In fact, We should never invest in a business whose financial condition we cannot understand well.
+excerpt: Identifying great companies requires an understanding of accounting and the ability to read and interpret the basic financial statements
+description: Identifying great companies requires an understanding of accounting and the ability to read and interpret the basic financial statements
 keywords: balance sheet, assets, liabilities
 ---
-
-
- 
-
 <!--more-->
+
+Financial statement analysis is a process of understanding the risk and profitability of a company by analyzing reported financial info, especially annual and quarterly reports. 
+
+The most important benefit of financial statement analysis is that it provides an idea to the investors about deciding on investing their funds in a particular company.
+
+Identifying great companies requires an understanding of accounting and the ability to read and interpret the basic financial statements: the income statement, balance sheet and cash flow statement.  Analyzing, tracking and comparing key numbers from these statements provides the clues that can help us identify great companies.
+
+> Accounting is the language of business.
+> <cite><a href="https://en.wikipedia.org/wiki/Warren_Buffett">Warren Buffett</a></cite>
+
 
 
 {% include series.html %}
 
 
+<b> Table of Content </b>
+
 * TOC
 {:toc}
 
 
-We will cover following analysis
+
+
+In this article series, We will cover following items: 
 
 * Balance Sheet Analysis
 * Income Statement Analysis
 * Cash Flow statement Analysis
 * Ratio Analysis
-* Financial Shenanigans
+* Financial Manipulations
+
+Let's start with the Balance Sheet Analysis
 
 # Balance Sheet Analysis 
 
@@ -38,12 +50,12 @@ In simple terms, balance sheet discloses what a business owns and what it owes a
 
 Assets=Liabilities + Equity
 
-We will look at the 'Balance Sheet' for PI Industries . PI is a leading Agri Input and Custom Synthesis & Manufacturing company in India. The annual report referred is for FY2016. You can find the see the Annual report [here](http://www.bseindia.com/bseplus/AnnualReport/523642/5236420315.pdf). 
+We will look at the 'Balance Sheet' for PI Industries . PI is a leading Agri Input and Custom Synthesis & Manufacturing company in India. The annual report referred for this post is for FY2016. You can find the Annual report [here](http://www.bseindia.com/bseplus/AnnualReport/523642/5236420315.pdf). 
 
 *Balance Sheet for P.I Industries*
 <img src="/images/posts/investment_notes/balance_sheet/balance_sheet.png" height = "800" width="900">
 
-Next, we will break down the various components of the Balance Sheet.
+As we see, Assets=Liabilities + Equity has to be satisfied.  Now, Lets break down various components of a Balance Sheet.
 
 ## Assets
 
@@ -54,14 +66,22 @@ Assets side of the balance sheet is made of two broad categories :
 1. Non Current Assets
 2. Current Assets
 
+
+Below we can see the Assets side of the balance sheet for PI Industries. 
+
 <img src="/images/posts/investment_notes/balance_sheet/assets.png" height = "400" width="900">
 
-
+We will break down break down Non Current Assets and Current Assets into their components and analyze them one by one. 
 
 ### Non Current Assets
 
-These are the assets that are not easily convertible to cash or not expected to become cash within the next year. 
+These are the assets that are not easily convertible to cash or not expected to become cash within the next year. Non Current Assets can be divided into : 
 
+* Fixed Assets
+* Long Term Investments
+* Long Term Loans and Advances
+
+Let's see them one by one. 
 
 #### Fixed Assets
 
@@ -80,23 +100,28 @@ Fixed assets again can be divided into :
 * They have a physical form and can be seen and felt.
 * Tangible Assets include items like land, building, plants and equipment,vehicles, equipments etc. 
 
+Below we can see the Tangible Assets for PI. 
+
 <img src="/images/posts/investment_notes/balance_sheet/tangible_assets.png" height = "400" width="900">
 
-
+Tangible Assets for PI consisted of Leasehold Land, Freehold land, Buildings, Plants and Equipment etc. 
 
 ##### Intangible Assets
 * These are long terms assets of a company that have no physical existence but hold tremendous relevance for the company as it is at its core of existence. 
 * Intangible Assets include goodwill, patents, copyrights, technical know-how, computer software , trademarks, brands etc. 
 * <b>Goodwill</b> is recognized when a business acquires another business. 
-	* It represents the excess of cost paid by the purchasing business to the purchased business over the fair value of purchased business indentifiable assets.
+	* It represents the excess of cost paid by the purchasing business to the purchased business over the fair value of purchased business identifiable assets.
 
 <img src="/images/posts/investment_notes/balance_sheet/intangible_assets.png" height = "400" width="900">
 
+Intangible Assets for PI consisted of Software, Product Development.
 
 ##### Capital Work in Progress
 
 These are assets that are in progress of being built and possibly under construction when the balance sheet was prepared. Once these assets are built, they get shifted to tangible assets or intangible assets.
+
 <img src="/images/posts/investment_notes/balance_sheet/capital_work_in_progress.png" height = "400" width="900">
+
 
 
 #### Long Term Investment
@@ -122,7 +147,16 @@ These are obligations that are not going to be paid off within the year or opera
 
 Current assets are assets expected to be realized or intended for sale or consumption in the business's normal operating cycle , or within one year. 
 
-Let's have a look at the various current assets: 
+Current Assets can be broken down into : 
+
+* Current Investments
+* Inventories
+* Trade Receivables
+* Cash and Cash Equivalents
+* Short term Loans and Advances
+* Other Current Assets
+
+Let's have a look at them one by one. 
 
 #### Current Investments
 * These are investments that a company makes for a short period of time, largely a horizon of less than one year.
@@ -232,11 +266,16 @@ Loan and financial obligations that last over one year. These can be like the ca
  
 They arise due to difference between profit as per the company's act and as per the income tax act
 
-The main reasons are : 
+There are mainly two types of deferred taxes : 
 
-1. Depreciation
 
-	Consider an example: 
+1. Deferred Tax Assets : They generally arise where tax relief is provided after an expense is deducted for accounting purposes.
+	* Examples of such situations include:
+		* A company may accrue an accounting expense in relation to a provision such as bad debts, but tax relief may not be obtained until the provision is utilized
+		* A company may incur tax losses and be able to "carry forward" losses to reduce taxable income in future years..
+2. Deferred tax liabilities: They generally arise where tax relief is provided in advance of an accounting expense/unpaid liabilities, or income is accrued but not taxed until received
+
+	Consider an example for deferred tax liability : 
 	  Assume a company buys machine for Rs 10 crore. The depreciation that can be claimed in the company's account as per companies act is say 20% . The depreciation as per income tax act is 50%. 
 	  
 	The deferred tax liability calculation would be calculated for the first year: 
@@ -249,17 +288,20 @@ The main reasons are :
 	* 0.9 crore of deferred tax is something which company has to pay up in the future as is thus a liability.
 
 
+
 <img src="/images/posts/investment_notes/balance_sheet/deffered_tax_liability.png" height = "400" width="900">
 
 #### Long term provisions
  
 These represent money that is provided for future liabilities like any payment expected beyond one year on account of leave encashment or for warranties on products etc.
+
 <img src="/images/posts/investment_notes/balance_sheet/provisions.png" height = "400" width="900">
 
 
 #### Other Long term liabilities
 
 These broadly include obligations of the company that become due more than 1 year into future. 
+
 <img src="/images/posts/investment_notes/balance_sheet/other_long_term_liabilities.png" height = "400" width="900">
 
 
@@ -279,6 +321,7 @@ Represents amount a business owes its vendors for goods and services that were p
 
 #### Other current liabilities
 Short term payables not directly related to the main business of the company. These include statutory dues, security deposits and advances from dealers and unclaimed liabilities which are all due for payment within one year. 
+
 <img src="/images/posts/investment_notes/balance_sheet/other_current_liabilities.png" height = "400" width="900">
 
 
@@ -327,7 +370,6 @@ Overall, Balance Sheet is a remarkable statement that every investor must not mi
 
 Further reading : 
 
-* [The Intrepretation of Financial Statements - Benjamin Graham](http://www.amazon.com/Interpretation-Financial-Statements-Benjamin-Graham/dp/0887309135)
+* [The Interpretation of Financial Statements - Benjamin Graham](http://www.amazon.com/Interpretation-Financial-Statements-Benjamin-Graham/dp/0887309135)
 * [Financial Statement Analysis - Martin Fridson](http://www.amazon.in/gp/product/0470635606/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&camp=3626&creative=24790&creativeASIN=0470635606&linkCode=as2&tag=safanive-21)
 * [Intermediate Accounting for Dummies - Maire Loughran](http://www.amazon.in/gp/product/1118176820/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&camp=3626&creative=24790&creativeASIN=1118176820&linkCode=as2&tag=safanive-21)
-

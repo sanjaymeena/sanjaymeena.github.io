@@ -30,7 +30,7 @@ The Basic equation underlying income statement is :
 * <b>Net Income/Net Profit = Revenue - Expense</b>
 
 
-We will look at the 'Income statement' for PI Industries . PI is a leading Agri Input and Custom Synthesis & Manufacturing company in India. The annual report referred is for FY2016. You can find the see the Annual report [here](http://www.bseindia.com/bseplus/AnnualReport/523642/5236420315.pdf). 
+We will look at the 'Income statement' for PI Industries . PI is a leading Agri Input and Custom Synthesis & Manufacturing company in India. The annual report referred is for FY2016. You can see the Annual report [here](http://www.bseindia.com/bseplus/AnnualReport/523642/5236420315.pdf). 
 
 *Income Statement for P.I Industries*
 <img src="/images/posts/investment_notes/income_statement/income_statement.png" height = "800" width="900">

@@ -45,12 +45,35 @@ This section details cash that a company generates or consumes from its core ope
 * Cash inflows result from cash sales and from collection of trade receivables. 
 * Cash outflows result from cash payments for inventory, salaries, taxes, and other operating related expenses and from paying account payable. 
 
+<img src="/images/posts/investment_notes/cashflow/cash_flow_from_operating_activities.png" height = "400" width="900">
+
+#### Pointers from Operating Cash flow
+
+Some key questions to ask are : 
+
+* What are the major determinants of operating cash flow?
+* Is operating cash flow higher or lower than net income? Why?
+* How consistent are operating cash flows?
+
+
 ### Cash Flow from Investing Activities
 
 * This section is concerned with the cash a company generates or uses when it invests. A company can use its cash to purchase investments such as debt securities from other companies or government or even shares of other publicly traded companies. 
 
 * This section importantly records the amount of cash that a company as spent in investing into its own business, either for growth or to maintain its current competitive market position. 
 	* These include purchasing and selling tangible assets like property, and plant and equipment, intangible assets, and other long term assets that would help the business grow. 
+
+<img src="/images/posts/investment_notes/cashflow/cash_flow_from_investing_activities.png" height = "400" width="900">
+
+
+#### Pointers from Investing Cash flow
+
+This sections tell us how much cash is being :
+
+* Invested for the future in property, plant, and equipment
+* Used to acquire entire companies
+* Put aside in liquid investment, such as stocks and bonds.
+
 
 ### Cash Flow from Financing Activities
 
@@ -65,11 +88,15 @@ The two primary sources of capital are :
 Cash inflows include cash receipts from issuing stocks (common or preferred) or bonds and cash receipts from borrowing.
 Cash outflows include cash payments to purchase stock, to pay dividends, and to repay bonds and other borrowings. 
 
+<img src="/images/posts/investment_notes/cashflow/cash_flow_from_financing_activities.png" height = "400" width="900">
 
-Some important things to Note: 
 
-* How cash flows from operating activities change with time. Ideally it should grow steadily with time. 
-* A company should generate bulk of its cash needs from operating activities and not financing activities
+#### Pointers from Financing cash flow
+
+* Understand whether the company is raising capital or repaying capital and what the nature of its capital sources are.
+* If company is borrowing each year, you should consider when repayment may be required.
+* Look at How cash flows from operating activities change with time. Ideally it should grow steadily with time. 
+* Ideally, A company should generate bulk of its cash needs from operating activities and not financing activities
 
 ## Evaluating Sources and Uses of Cash
 
@@ -90,31 +117,6 @@ Some key questions to ask are :
 
 * What are the major sources and uses of cash flow?
 * Is operating cash flow positive and sufficient to cover capital expenditures?
-
-
-### Pointers from Operating Cash flow
-
-Some key questions to ask are : 
-
-* What are the major determinants of operating cash flow?
-* Is operating cash flow higher or lower than net income? Why?
-* How consistent are operating cash flows?
-
-
-### Pointers from Investing Cash flow
-
-This sections tell us how much cash is being :
-
-* Invested for the future in property, plant, and equipment
-* Used to acquire entire companies
-* Put aside in liquid investment, such as stocks and bonds.
-
-
-### Pointers from Financing cash flow
-
-* Understand whether the company is raising capital or repaying capital and what the nature of its capital sources are.
-* If company is borrowing each year, you should consider when repayment may be required.
-
 
 ## Free Cash Flow
 
