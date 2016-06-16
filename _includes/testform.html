@@ -1,0 +1,62 @@
+
+
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  
+
+<form  id='reg-form' action="">
+ 
+<div  class="form-group">
+	<label for="text">Text</label>
+<input type="text" name="text" id="text" class="form-control"  value="I am sick.">
+</div>
+
+<div class="form-group">
+<label for="language">language</label>
+<input type="text" id="language" class="form-control"   name="language" value="en">
+</div>
+
+
+<div class="form-group">
+ <label for="module">module</label>
+<input type="text" id="module" name="module" value="NER">
+</div>
+  
+ <input type="submit" value="Submit">
+</form>
+
+
+<script type="text/javascript">
+$(document).ready(function()
+{
+ $(document).on('submit', '#reg-form', function(event)
+ {
+
+
+  // Stop form from submitting normally
+  event.preventDefault();
+  
+  var data = $(this).serialize();
+  
+  
+  $.ajax({
+  
+  type : 'GET',
+  url  : 'http://sanjaymeena.io:9000/TextAnalyzer',
+  data : data,
+   success: function(data, textStatus, jqXHR)
+    {
+       alert(data) //data - response from server
+    },
+    error: function (jqXHR, textStatus, errorThrown)
+    {
+    	
+    }
+  });
+  return false;
+ });
+ 
+});
+</script>
+
+<div id="result"></div>
