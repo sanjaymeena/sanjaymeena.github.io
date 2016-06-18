@@ -1,7 +1,7 @@
 ---
 layout: single
 title: Financial Analysis- Income Statement
-published: false
+published: true
 categories: [Investing]
 tags: [investment-notes]
 series: financial_analysis
