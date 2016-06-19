@@ -11,7 +11,7 @@ sitemap: true
 keywords: cash flow statement, cash flow from operating activities, cash flow from investing activities, cash inflow, cash outflows, free cash flow, free cash flow to the firm, FCFF, FCFE, Free Cash flow to equity
 ---
 
-
+  
 {% include series.html %}
 
 <b> Table of Content </b>

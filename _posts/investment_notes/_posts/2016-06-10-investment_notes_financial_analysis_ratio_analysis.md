@@ -10,7 +10,7 @@ description: Financial Ratios are effective in selecting investments and in pred
 sitemap: true
 keywords: return on equity, ROE, financial ratios, return on capital employed, ROCE, ROIC, current ratio, quick ratio, cash conversion cycle,interest coverage,return on sales,gross profit margin, net profit margin, return on assets ,ROA, debt to equity, receivables turnover, receivables days, payable days, working capital turnover, 
 ---
-
+   
 <!--more-->
 
 {% include series.html %}

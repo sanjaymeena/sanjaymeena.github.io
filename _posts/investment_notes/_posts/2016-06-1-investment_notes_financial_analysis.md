@@ -10,7 +10,7 @@ excerpt: Identifying great companies requires an understanding of accounting and
 description: Identifying great companies requires an understanding of accounting and the ability to read and interpret the basic financial statements
 keywords: balance sheet, assets, liabilities
 ---
-<!--more-->
+<!--more--> 
 
 Financial statement analysis is a process of understanding the risk and profitability of a company by analyzing reported financial info, especially annual and quarterly reports. 
 

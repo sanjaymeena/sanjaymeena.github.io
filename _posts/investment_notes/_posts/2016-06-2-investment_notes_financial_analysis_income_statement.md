@@ -9,7 +9,7 @@ sitemap: true
 excerpt: The first question on everyone's mind is whether a business made a profit or suffered a loss and how much. The Income Statement presents information on the financial results of a company's business activities over a period of time.
 description: The Income Statement presents information on the financial results of a company's business activities over a period of time. It communicates how much revenue the company generated during a period (quarter or year) and what costs it incurred in connection with generating that revenue. 
 keywords: revenue, expense, net income, net profit
----
+--- 
 <!--more-->
 
 {% include series.html %}
