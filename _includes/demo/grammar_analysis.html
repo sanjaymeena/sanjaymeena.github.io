@@ -1,0 +1,173 @@
+
+
+<style type="text/css">
+
+.result { font-size:small !important; }
+.result h1 h2 h3 h4 h5{ text-decoration:none !important; }
+.simple_form { font-size:medium !important; }
+
+textarea {resize: vertical; width: 100%}
+</style>
+
+
+  <script type="text/javascript" src="{{ site.baseurl }}/assets/js1/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript" src="{{ site.baseurl }}/assets/js1/vkbeautify.js"></script>
+  <script type="text/javascript" src="{{ site.baseurl }}/assets/js1/x2js.js"></script>
+
+ <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
+
+<form class="simple_form" id='reg-form' style="max-width:700px"  role="form" action="">
+ 
+<div  class="form-group-sm">
+
+<label for="text">Sentence</label>
+<textarea name="text" id="text" rows="2" cols="30" class="autoDefault"> </textarea>
+
+</div>
+<br/>
+<div class="form-group-sm">
+<label for="language">Language</label>
+<select id="language" name="language" class="form-control">
+  <option value="en" selected="selected">English</option>
+</select>
+
+</div>  
+
+<br/>
+<div class="form-group-sm">
+ <label for="module">Mode</label>
+
+<select id="mode" name="mode" >
+    
+    <option value="full_format" selected="selected" >full format</option>
+    <option value="logic_form_format" >logic form</option>
+        </select>
+</div>
+<br/>
+<div class="form-group-sm">
+ <label for="module">Output format</label>
+
+<select style="display:none" id="outputFormat" name="outputFormat" >
+    <option value="xml" selected="selected" >XML</option>
+    <option value="json" >JSON</option>
+        </select>
+</div>
+  <br/>
+ <input class="submit" type="submit" value="Submit">
+</form>
+
+
+<script type="text/javascript">
+$(document).ready(function()
+{
+
+ $(function() {
+    $('$text').focus(function() {
+        if ($(this).val() === $(this).data('default') && !$(this).data('edited')) {
+            $(this).val('');
+        }
+    }).change(function() {
+        $(this).data('edited', this.value.length > 0);
+    }).blur(function() {
+        if ($(this).val().length === 0) {
+            $(this).val($(this).data('default'));
+        }
+    }).blur(); //fire blur event initially
+});
+
+ $(document).on('submit', '#reg-form', function(event)
+ {
+
+
+  // Stop form from submitting normally
+  event.preventDefault();
+  
+  var data = $(this).serialize();
+  
+  
+  $.ajax({
+  
+  type : 'GET',
+  url  : 'http://sanjaymeena.io/nlpdemo/GrammarAnalysis',
+  data : data,
+  dataType: "xml",
+
+   success: function(data, textStatus, jqXHR)
+    {
+
+      processData(data);
+      
+// xmlString = (new XMLSerializer()).serializeToString(data);
+
+// var res=vkbeautify.xml(xmlString);
+// console.log(res);
+
+
+// document.getElementById("result1").value = res;
+//document.getElementById('result').style.display = "block";
+      // $('#result1').html(h);
+       //console.log(data);
+    },
+    error: function (jqXHR, textStatus, errorThrown)
+    {
+    	
+    }
+  });
+  return false;
+ });
+ 
+});
+
+
+
+
+
+function processData(data){
+
+var json=xmlToJson(data);
+
+
+
+var jsonText = vkbeautify.json(json, 4 );
+
+var json_highlight=syntaxHighlight(jsonText)
+
+document.getElementById("result").innerHTML = json_highlight;
+document.getElementById('result').style.display = "block";
+
+//$('#result').html(jsonText);
+}
+
+// Changes XML to JSON
+function xmlToJson(xml) {
+  
+  var x2js = new X2JS();
+  var res=x2js.xml2json(xml);
+  
+  return res;
+};
+
+
+
+function syntaxHighlight(json) {
+    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+        var cls = 'number';
+        if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+                cls = 'key';
+            } else {
+                cls = 'string';
+            }
+        } else if (/true|false/.test(match)) {
+            cls = 'boolean';
+        } else if (/null/.test(match)) {
+            cls = 'null';
+        }
+        return '<span class="' + cls + '">' + match + '</span>';
+    });
+}
+</script>
+
+<pre style="display:none"  class="result" id="result"></pre>
+

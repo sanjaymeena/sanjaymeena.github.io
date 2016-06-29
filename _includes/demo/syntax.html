@@ -1,0 +1,329 @@
+
+
+
+
+ <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
+
+
+
+<h3 align="center">Visual Syntactic Parse Tree</h3>
+
+
+
+<div class="col-md-4 col-md-offset-4">
+<form class="form-compact" id='reg-form' style="max-width:500px"  role="form" action="">
+ 
+<div  class="form-group-sm">
+
+<label for="text">Input Text</label>
+<textarea name="text" id="text" rows="2" cols="50"  data-default="Jack and Jill went up the hill. "> </textarea>
+
+</div>
+<br/>
+<div class="form-group-sm">
+<label for="language">Language</label>
+<select id="language" name="language" class="form-control">
+  <option value="en" selected="selected">English</option>
+</select>
+
+</div>  
+
+<br/>
+<div style="display:none" class="form-group-sm">
+ <label for="module">Modules</label>
+
+<select  id="module" name="module" class="form-control">
+  <option value="syntaxtree" selected="selected">Syntax Tree</option>
+</select>
+
+</div>
+  
+ <input type="submit" value="Submit">
+</form>
+
+</div>
+
+
+<div id="result" class="col-md-4 col-md-offset-4"></div>
+<br/>
+<br/>
+<div style="display:none"  class="col-md-4 col-md-offset-4" id="image-goes-here"></div>
+
+<script type="text/javascript">
+$(document).ready(function()
+{
+
+ $(function() {
+    $('$text').focus(function() {
+        if ($(this).val() === $(this).data('default') && !$(this).data('edited')) {
+            $(this).val('');
+        }
+    }).change(function() {
+        $(this).data('edited', this.value.length > 0);
+    }).blur(function() {
+        if ($(this).val().length === 0) {
+            $(this).val($(this).data('default'));
+        }
+    }).blur(); //fire blur event initially
+});
+
+ $(document).on('submit', '#reg-form', function(event)
+ {
+
+
+  // Stop form from submitting normally
+  event.preventDefault();
+  
+  var data = $(this).serialize();
+  
+  
+  $.ajax({
+  
+  type : 'GET',
+  url  : 'http://sanjaymeena.io/nlpdemo/TextAnalyzer',
+  data : data,
+   success: function(data, textStatus, jqXHR)
+    {
+
+       //alert(data) //data - response from server
+      // $('#result').html(data);
+
+       processdata(data);
+    },
+    error: function (jqXHR, textStatus, errorThrown)
+    {
+    	
+    }
+  });
+  return false;
+ });
+ 
+});
+
+
+
+function processdata(data){
+
+
+var res=data.replace(/[(]/g, '['); 
+res=res.replace(/[)]/g, ']'); 
+
+	//var res = strReplaceAll(data,'(', '[');
+	//res = strReplaceAll(res,')', ']');
+
+	$('#result').html(data);
+
+
+	document.getElementById("input").value = data;
+
+	//$('#i').val(res).trigger('change');
+	document.getElementById("i").value = res;
+	handler();
+
+
+
+
+	//document.getElementById('input').style.display = "block";
+	//document.getElementById('i').style.display = "block";
+	//document.getElementById('accordion').style.display = "block";
+	document.getElementById('image-goes-here').style.display = "block";
+}
+
+
+</script>
+
+
+
+
+	
+	<div id="accordion" style="display:none" >
+
+	<h3><a href="#">Input</a></h3><div style="text-align:left">
+			<textarea style="display:block"  id="input" cols="10" rows="2"></textarea></div>
+
+
+		<h3><a href="#">Syntax Tree </a></h3><div style="text-align:left">
+			<textarea style="display:none"  id="i" rows="4">[S [NP This] [VP [V is] [^NP a wug]]]</textarea>
+			
+		</div>
+		
+		<h3 style="display:none" ><a href="#">Options</a></h3><div style="display:none" >
+			<table>
+				<col width="1*">
+				<col width="1*">
+				<tr>
+					<td colspan="2" align="center"><div id="font-style-radio" class="nobr">
+						<input type="radio" name="font-style" id="serif" value="serif" class="redraw" /><label for="serif">Serif</label>
+						<input type="radio" name="font-style" id="sans-serif" value="sans-serif" class="redraw" checked /><label for="sans-serif">Sans-Serif</label>
+						<input type="radio" name="font-style" id="monospace" value="monospace" class="redraw" /><label for="monospace">Monospace</label>
+					</div></td>
+				</tr>
+				<tr>
+					<td align="center">Terminals:</td>
+					<td align="center">Non-terminals:</td>
+				</tr>
+				<tr>
+					<td align="center"><div id="term-font-check" class="nobr">
+						<input type="checkbox" id="term-bold" class="redraw" /><label for="term-bold">Bold</label>
+						<input type="checkbox" id="term-ital" class="redraw" /><label for="term-ital">Italic</label>
+						</div>
+					</td>
+					<td align="center"><div id="nonterm-font-check" class="nobr">
+						<input type="checkbox" id="nonterm-bold" class="redraw" /><label for="nonterm-bold">Bold</label>
+						<input type="checkbox" id="nonterm-ital" class="redraw" /><label for="nonterm-ital">Italic</label>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td align="left">Font size:</td>
+					<td><div id="font-size-slider"></div></td>
+				</tr>
+				<tr>
+					<td align="left">Height:</td>
+					<td><div id="vert-space-slider"></div></td>
+				</tr>
+				<tr>
+					<td align="left">Width:</td>
+					<td><div id="hor-space-slider"></div></td>
+				</tr>
+				<tr>
+					<td align="center" colspan="2"><div class="nobr">
+						<input type="checkbox" id="color-check" class="redraw" checked /><label for="color-check">Color</label>
+						<input type="checkbox" id="term-lines" class="redraw" checked /><label for="term-lines">Terminal lines</label>
+						<a href="#" id="make-link">Link</a>
+					</div></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+		
+	<br />
+
+
+	
+
+
+
+<style type="text/css">
+
+table { margin: 0px auto; }
+//.ui-widget { font-size:medium !important; }
+textarea {resize: vertical; width: 100%}
+
+#image-goes-here {  overflow: auto; width: 1000px; height: 700px;  }
+
+
+</style>
+
+
+<link type="text/css" href="{{ site.baseurl }}/assets/css1/cupertino/jquery-ui-1.8.18.custom.css" rel="stylesheet" />	
+<script type="text/javascript" src="{{ site.baseurl }}/assets/js1/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="{{ site.baseurl }}/assets/js1/jquery-ui-1.8.18.custom.min.js"></script>
+<script type="text/javascript" src="{{ site.baseurl }}/assets/js1/base64.js"></script>
+<script type="text/javascript" src="{{ site.baseurl }}/assets/js1/canvas2image.js"></script>
+<script type="text/javascript" src="{{ site.baseurl }}/assets/js1/syntree.js"></script>
+<script type="text/javascript">
+
+function handler(font_size_update, vert_space_update, hor_space_update) {
+try {
+	// Initialize the various options.
+	var term_font = "";
+	var nonterm_font = "";
+	var color = false;
+	var term_lines = false;
+	if (document.getElementById("term-ital").checked)
+		term_font = term_font + "italic ";
+	if (document.getElementById("term-bold").checked)
+		term_font = term_font + "bold ";
+	if (document.getElementById("nonterm-ital").checked)
+		nonterm_font = nonterm_font + "italic ";
+	if (document.getElementById("nonterm-bold").checked)
+		nonterm_font = nonterm_font + "bold ";
+	if (document.getElementById("color-check").checked)
+		color = true;
+	if (document.getElementById("term-lines").checked)
+		term_lines = true;
+	font_size = $("#font-size-slider").slider( "option", "value" );
+	vert_space = $("#vert-space-slider").slider( "option", "value" );
+	hor_space = $("#hor-space-slider").slider( "option", "value" );
+
+	
+
+	if (font_size_update) font_size = font_size_update;
+	if (vert_space_update) vert_space = vert_space_update;
+	if (hor_space_update) hor_space = hor_space_update;
+	term_font = term_font + font_size + "pt ";
+	nonterm_font = nonterm_font + font_size + "pt ";
+	term_font = term_font + $('input:radio[name=font-style]:checked').val();
+	nonterm_font = nonterm_font + $('input:radio[name=font-style]:checked').val();
+	
+	// Get the string.
+	var str = document.getElementById("i").value;
+	
+	/*$("#image-goes-here").text(str + ", " + font_size + ", " + 
+		term_font + ", " + nonterm_font + ", " + vert_space + ", " + hor_space);*/
+	
+	var img = go(str, font_size, term_font, nonterm_font, vert_space, hor_space, color, term_lines);
+	$("#image-goes-here").empty();
+	$("#image-goes-here").append(img);
+	
+} catch (err) {
+	if (debug) {
+		throw(err);
+	} else { 
+		if (err == "canvas")
+			$("#image-goes-here").text("Browser not supported.");
+	}
+} // try-catch
+return false;
+} // handler()
+
+$(function() {
+	// UI
+	$("#make-link, #color-check, #term-lines").button();
+	$("#font-size-slider").slider({value: 12, min: 8, max: 16, step: 1});
+	$("#vert-space-slider").slider({value: 35, min: 35, max: 70, step: 5});
+	$("#hor-space-slider").slider({value: 10, min: 10, max: 50, step: 5});
+	$("#font-style-radio, #term-font-check, #nonterm-font-check").buttonset();
+	$("#accordion").accordion({collapsible: true, icons: false, autoHeight: false});
+	
+	try {
+		var qs = decodeURIComponent(window.location.search.slice(1));
+		qs = qs.replace(/^i=/,"");
+		qs = qs.replace(/\+/g," ");
+		if (qs == "") throw "";
+		document.getElementById("i").value = qs;
+	} catch (err) {}
+	
+	handler();
+	
+	// Events
+
+	$("#i").input(function() {handler(); return true;});
+	$("#i").keypress(function() {handler(); return true;});
+	$("#i").keyup(function() {handler(); return true;});
+	$("#i").keydown(function() {handler(); return true;});
+	$("#i").change(function() {handler(); return true;});
+	$(".redraw").change(function() {return handler()});
+	$("#make-link").click(function() {
+		var loc = window.location.href;
+		loc = loc.replace(window.location.search, "");
+		
+		window.prompt ("Link for this tree:", loc + "?i=" +
+			encodeURIComponent(document.getElementById("i").value));
+		return false;
+	});
+	$("#font-size-slider").bind("slide", function (event, ui) {
+		handler(ui.value, null, null); return true;
+	});
+	$("#vert-space-slider").bind("slide", function (event, ui) {
+		handler(null, ui.value, null); return true;
+	});
+	$("#hor-space-slider").bind("slide", function (event, ui) {
+		handler(null, null, ui.value); return true;
+	});
+});
+</script>
+
+
+

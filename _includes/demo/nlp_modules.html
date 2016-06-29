@@ -1,17 +1,27 @@
 
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<style type="text/css">
 
-<form  id='reg-form' style="max-width:600px"  role="form" action="">
+.result { font-size:small !important; }
+ hr { text-decoration:none !important; }
+.simple_form { font-size:medium !important; }
+
+textarea {resize: vertical; width: 100%}
+</style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+ <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
+
+<form class="simple_form" id='reg-form' style="max-width:700px"  role="form" action="">
  
-<div  class="form-group">
+<div  class="form-group-sm">
 
 <label for="text">Text</label>
 <textarea name="text" id="text" rows="4" cols="30" class="autoDefault" data-default="some default text"> </textarea>
-</div>
 
-<div class="form-group">
+</div>
+<br/>
+<div class="form-group-sm">
 <label for="language">language</label>
 <select id="language" name="language" class="form-control">
   <option value="en" selected="selected">English</option>
@@ -20,8 +30,8 @@
 
 </div>  
 
-
-<div class="form-group">
+<br/>
+<div class="form-group-sm">
  <label for="module">Modules</label>
 
 <select id="module" name="module" class="form-control">
@@ -37,11 +47,11 @@
 
 
 </div>
-  
- <input type="submit" value="Submit">
+  <br/>
+ <input class="submit" type="submit" value="Submit">
 </form>
 
-
+<hr>
 <script type="text/javascript">
 $(document).ready(function()
 {
@@ -73,7 +83,7 @@ $(document).ready(function()
   $.ajax({
   
   type : 'GET',
-  url  : 'http://sanjaymeena.io:9000/TextAnalyzer',
+  url  : 'http://sanjaymeena.io/nlpdemo/TextAnalyzer',
   data : data,
    success: function(data, textStatus, jqXHR)
     {
@@ -91,4 +101,4 @@ $(document).ready(function()
 });
 </script>
 
-<div id="result"></div>
+<div class="result" id="result"></div>
