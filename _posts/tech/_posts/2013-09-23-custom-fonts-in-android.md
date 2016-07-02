@@ -8,6 +8,7 @@ excerpt: Custom Fonts in Android
 sitemap: true
 categories: [Tech]
 tags: [java, android, fonts]
+description: creating custom fonts in Android
 keywords: custom fonts in android
 ---
 

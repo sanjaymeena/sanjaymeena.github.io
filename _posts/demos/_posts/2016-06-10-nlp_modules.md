@@ -9,6 +9,7 @@ categories: [demos]
 tags: [nlp,syntax]
 read_time: false
 excerpt: Various Modules from NLP Pipeline
+description: Various Modules in NLP
 --- 
 <!--more-->
 

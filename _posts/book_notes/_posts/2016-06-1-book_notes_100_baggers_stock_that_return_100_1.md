@@ -5,6 +5,8 @@ published: true
 categories: [Books]
 tags: [book-notes]
 sitemap: true
+description : 100 Baggers - Stock that return 100 to 1
+excerpt: This book is about 100-baggers. These are stocks that return $100 for every $1 invested. 
 ---
 This book is about 100-baggers. These are stocks that return $100 for every $1 invested. 
 <!--more-->

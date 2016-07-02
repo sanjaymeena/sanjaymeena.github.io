@@ -8,6 +8,7 @@ sitemap: true
 categories: [demos]
 tags: [nlp,deep-learning]
 excerpt: Text Classification
+description: Various NLP Modules
 --- 
 <!--more-->
 

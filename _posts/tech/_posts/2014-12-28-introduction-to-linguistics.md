@@ -6,6 +6,8 @@ published: true
 categories: [Tech,NLP]
 tags: [linguistics,morphology,phonetics,phonology,semantics,syntax]
 series: nlp_series
+description: The scientific study of a language is called Linguistics.
+
 ---
 
 The scientific study of a language is called Linguistics. Language is the ability to comprehend both spoken and written words, and to produce meaningful words when a person speaks or writes. 

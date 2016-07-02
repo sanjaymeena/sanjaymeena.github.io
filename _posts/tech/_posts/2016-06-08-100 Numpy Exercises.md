@@ -7,6 +7,8 @@ comments: true
 categories: [Tech]
 tags: [python,numpy]
 excerpt: NumPy is the fundamental package for scientific computing with Python. 
+sitemap: true
+description: NumPy is the fundamental package for scientific computing with Python. 
 --- 
 <!--more-->
 

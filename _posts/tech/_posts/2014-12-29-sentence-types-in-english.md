@@ -4,7 +4,9 @@ author: Sanjay Meena
 layout: single
 published: true
 categories: [Tech,NLP]
-tags: [linguistics,sentence_types,nlp]
+tags: [linguistics,sentence types,nlp]
+description: English Sentences are broadly categorized into 5 types. Each type has a particular semantic and syntactic structure which helps for analysis of sentences at syntactic level.
+<!--more-->
 series: nlp_series
 ---
 

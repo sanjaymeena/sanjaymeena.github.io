@@ -6,6 +6,7 @@ categories: [Investing]
 tags: [pharma, generics, CRAMS]
 sitemap: true
 excerpt: A broad overview of the Pharma Sector.
+description: A broad overview of the Pharma Sector. Also a look at the Custom Synthesis in India Pharma
 ---
 
 

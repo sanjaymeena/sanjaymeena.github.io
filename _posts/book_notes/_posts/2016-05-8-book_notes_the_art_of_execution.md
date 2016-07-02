@@ -5,6 +5,9 @@ published: true
 categories: [Books]
 tags: [book-notes]
 sitemap: true
+description : The Art of Execution. How to make money in investments
+excerpt: Only 49% of the very best investment ideas from legendary investors made money. Despite this , they still made a lot of money 
+
 ---
 
 Only 49% of the very best investment ideas from legendary investors made money. Despite this , they still made a lot of money 

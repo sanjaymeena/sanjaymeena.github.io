@@ -5,6 +5,9 @@ published: true
 categories: [Books]
 tags: [book-notes]
 sitemap: true
+description : Is there anything we can do to bring more luck into our lives? 
+excerpt: Is there anything we can do to bring more luck into our lives? 
+
 ---
 
 Is there anything we can do to bring more luck into our lives? 

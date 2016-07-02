@@ -2,6 +2,10 @@
 layout: single
 title: Text Analyzer - Google Chrome Extension
 published: true
+sitemap: true
+description: Text Analyzer Extension can provide grammatical and semantic information for the selected text in English directly in Google chrome browser
+keywords: google chrome extension, text analysis, english grammar, grammar
+excerpt: Text Analyzer Extension can provide grammatical and semantic information for the selected text in English directly in Google chrome browser
 categories: [Tech,javascript]
 tags: [javascript]
 ---

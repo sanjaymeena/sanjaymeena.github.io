@@ -4,6 +4,11 @@ title: Simplified Switchboard Corpus
 published: single
 categories: [Tech,NLP]
 tags: [nlp]
+sitemap: true
+description: simplified version of Switchboard Speech act corpus
+keywords: switchboard speech act corpus, speech acts, switchboard
+excerpt: We will create a simplified version of Switchboard Speech act corpus and perform exploratory 
+
 ---
 We will create a simplified version of Switchboard Speech act corpus and perform exploratory 
 data analysis on it. 

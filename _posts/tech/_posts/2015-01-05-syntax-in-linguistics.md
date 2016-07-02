@@ -6,6 +6,7 @@ published: true
 comments: true
 categories: [Tech,NLP]
 tags: [adjective,adverbs,english,grammar,linguistics,nlp,nominals,nouns,prepositions,syntax,verbs]
+description: Syntax is the part of linguistics that studies sentence structure.
 series: nlp_series
 --- 
 Syntax is the part of linguistics that studies sentence structure. We had discussed about components of linguistics in here. Here we will discuss broadly about syntax in linguistics.

@@ -8,6 +8,8 @@ excerpt: How to create GATE plugins
 categories: [Tech]
 tags: [java, NLP, Gate]
 keywords: gate plugin, java
+description: How to create GATE plugins
+
 ---
 
 <b> Table of Content </b>
