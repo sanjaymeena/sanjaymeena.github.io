@@ -13,6 +13,9 @@ main:
   - title: "Demos"
     url: /demos
 
+  - title: "Misc"
+    url: /misc 
+
 
   - title: "Tags"
     url: /tags

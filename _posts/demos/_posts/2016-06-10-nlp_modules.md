@@ -4,6 +4,7 @@ author: Sanjay Meena
 layout: single
 published: true
 comments: true
+sitemap: true
 categories: [demos]
 tags: [nlp,syntax]
 read_time: false
