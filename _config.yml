@@ -12,7 +12,7 @@ title_separator          : "-"
 name                     : "Sanjay Meena"
 description              : "blog"
 url                      :
-baseurl                  : #"http://sanjaymeena.io"
+baseurl                  : "http://sanjaymeena.io"
 base_path                : "http://sanjaymeena.io"
 teaser                   : # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"
 # breadcrumbs            : false # true, false (default)
@@ -39,16 +39,19 @@ yandex_site_verification :
 twitter:
   username               : sanjaymeena
 facebook:
-  username               :
+  username               : sanjaymeena
   app_id                 :
   publisher              :
 og_image                 : # Open Graph/Twitter default site image
 # For specifying social profiles
 # - https://developers.google.com/structured-data/customize/social-profiles
 social:
-  type                   : # Person or Organization (defaults to Person)
-  name                   : # If the user or organization name differs from the site's name
+  type                   : Person
+  name                   : Sanjay Meena
   links: # An array of links to social media profiles
+    - "https://twitter.com/sanjaymeena"
+    - "https://www.linkedin.com/in/sanjay-meena-7546058"
+    - "https://plus.google.com/u/0/+sanjaymeena123"
 
 # Analytics
 analytics:
