@@ -2,7 +2,7 @@
 title:  English Grammar Analysis Demo
 author: Sanjay Meena
 layout: archive
-published: false
+published: true
 comments: true
 categories: [demos]
 tags: [nlp]

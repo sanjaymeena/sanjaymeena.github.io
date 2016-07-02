@@ -2,7 +2,7 @@
 title:  NLP Modules
 author: Sanjay Meena
 layout: single
-published: false
+published: true
 comments: true
 categories: [demos]
 tags: [nlp,syntax]
