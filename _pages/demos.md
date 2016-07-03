@@ -1,6 +1,10 @@
 ---
 title: Tech Demos
 permalink: /demos/
+description: This section is for the demos and source code related to NLP, Data Science and Machine Learning.
+keywords: Natural Language Processing, NLP, Data Science, machine learning, deep learning
+excerpt: Demos and source code related to NLP, Data Science and Machine Learning.
+ 
 header:
   overlay_image: demos.jpg
 ---

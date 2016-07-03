@@ -2,8 +2,13 @@
 layout: single
 title: Book Notes
 permalink: /book_notes/
+
 header:
   overlay_image: book-notes.jpg
+description: This section is for the book notes i made  on books from various disciplines of value investing, psychology etc.
+keywords: value investing, behavioural finance, psychology
+excerpt: This section is for the book notes i made  on books from various disciplines of value investing, psychology etc.
+  
 ---
 
 <div class="page_list">

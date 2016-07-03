@@ -5,6 +5,10 @@ author_profile: true
 permalink: /tech/
 header:
   overlay_image: machine-learning.jpg
+  
+description: Posts related to Natural Language Processing, Data Science ,Deep Learning , Programming
+keywords: NLP, natural language processing, deep learning, machine learning, technology
+excerpt: Posts related to Natural Language Processing, Data Science, Machine Learning and Programming
 ---
 
 
