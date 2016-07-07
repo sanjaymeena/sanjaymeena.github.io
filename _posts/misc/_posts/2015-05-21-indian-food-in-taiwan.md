@@ -10,7 +10,6 @@ sitemap: true
 comments: true
 categories: [misc]
 tags: [indian food, taipei, taiwan, vegetarian food]
-series: financial_analysis
 description: Indian Food restaurants in various cities of taiwan.
 keywords: indian food in taiwan, indian food in taipei, vegetarain food in taipei, indian buffett 
 ---
