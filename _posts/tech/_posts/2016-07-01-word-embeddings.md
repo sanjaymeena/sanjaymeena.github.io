@@ -18,3 +18,21 @@ description : Word embeddings
 {:toc}
 
 
+
+
+# Word Embeddings
+
+## Word2Vector
+
+
+## Glove
+
+
+## Dependency based word embeddings
+
+
+# Extensions of Word Embeddings
+
+## Paragraph Vector 
+
+## Skip Though Vectors
