@@ -6,7 +6,7 @@ title: Word embeddings
 author: Sanjay Meena
 layout: single
 sitemap: true
-published: false
+published: true
 excerpt: Word embeddings
 categories: [Tech]
 tags: [NLP, Deep Learning]
@@ -101,8 +101,6 @@ W2V comes in two flavors:
     * [http://multithreaded.stitchfix.com/blog/2015/03/11/word-is-worth-a-thousand-vectors/](http://multithreaded.stitchfix.com/blog/2015/03/11/word-is-worth-a-thousand-vectors/)
     * [http://www.slideshare.net/roelofp/041114-dl-nlpwordembeddings](http://www.slideshare.net/roelofp/041114-dl-nlpwordembeddings)
     * [https://github.com/3Top/word2vec-api#where-to-get-a-pretrained-models](https://github.com/3Top/word2vec-api#where-to-get-a-pretrained-models)
-
-
 
 ### Glove
 

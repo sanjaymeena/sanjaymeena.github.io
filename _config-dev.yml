@@ -11,8 +11,9 @@ title                    : "Sanjay Meena"
 title_separator          : "-"
 name                     : "Sanjay Meena"
 description              : "blog"
-url                      : 
-baseurl                  : #"http://sanjaymeena.io" 
+url                      :
+baseurl                  : #"http://sanjaymeena.io"
+base_path                : "http://sanjaymeena.io"
 teaser                   : # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
@@ -24,7 +25,7 @@ comments:
     server               : # https://meta.discourse.org/t/embedding-discourse-comments-via-javascript/31963 , e.g.: meta.discourse.org
   facebook:
     # https://developers.facebook.com/docs/plugins/comments
-    appid                :
+    appid                : 104927903264352
     num_posts            : # 5 (default)
     colorscheme          : # "light" (default), "dark"
 
@@ -38,16 +39,19 @@ yandex_site_verification :
 twitter:
   username               : sanjaymeena
 facebook:
-  username               :
-  app_id                 :
+  username               : sanjaymeena
+  app_id                 : 104927903264352
   publisher              :
 og_image                 : # Open Graph/Twitter default site image
 # For specifying social profiles
 # - https://developers.google.com/structured-data/customize/social-profiles
 social:
-  type                   : # Person or Organization (defaults to Person)
-  name                   : # If the user or organization name differs from the site's name
+  type                   : Person
+  name                   : Sanjay Meena
   links: # An array of links to social media profiles
+    - "https://twitter.com/sanjaymeena"
+    - "https://www.linkedin.com/in/sanjay-meena-7546058"
+    - "https://plus.google.com/u/0/+sanjaymeena123"
 
 # Analytics
 analytics:
@@ -114,13 +118,22 @@ defaults:
       type: pages
     values:
       layout: single
-      author_profile: true     
+      author_profile: true
 
 # Outputting
 permalink: /:categories/:title/
 paginate: 10 # amount of posts to show
 paginate_path: /page:num/
 #timezone: America/New_York # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+
+
+# jekyll-press config
+jekyll-press:
+  exclude: 'atom.xml' # Exclude files from processing - file name, glob pattern or array of file names and glob patterns
+  js_options: {}      # js minifier options
+  css_options: {}     # css minifier options
+  html_options: {}    # html minifier options
+
 
 
 # Reading Files
@@ -150,6 +163,7 @@ exclude:
   - Rakefile
   - README
   - tmp
+  - gulpfile.js
 keep_files:
   - .git
   - .svn
@@ -184,6 +198,14 @@ paginate_path: /page:num/
 timezone: # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
+
+#
+# jekyll-press:
+#   exclude: 'atom.xml' # Exclude files from processing - file name, glob pattern or array of file names and glob patterns
+#   js_options: {}      # js minifier options
+#   css_options: {}     # css minifier options
+#   html_options: {}    # html minifier options
+
 # Plugins
 gems:
   - jekyll-paginate
@@ -191,6 +213,7 @@ gems:
   - jekyll-gist
   - jekyll-feed
   - jemoji
+  #- jekyll-press
 
 # mimic GitHub Pages with --safe
 whitelist:
@@ -199,6 +222,7 @@ whitelist:
   - jekyll-gist
   - jekyll-feed
   - jemoji
+  #- jekyll-press
 
 
 # Archives
@@ -211,23 +235,33 @@ whitelist:
 #  - <base_path>/tags/my-awesome-tag/index.html ~> path: /tags/
 #  - <base_path/categories/my-awesome-category/index.html ~> path: /categories/
 #  - <base_path/my-awesome-category/index.html ~> path: /
-category_archive:
-  type: liquid
-  path: /categories/
-tag_archive:
-  type: liquid
-  path: /tags/
+
+
+# category_archive:
+#   type: liquid
+#   path: /categories/
+# tag_archive:
+#   type: liquid
+#   path: /tags/
 # https://github.com/jekyll/jekyll-archives
-# jekyll-archives:
-#   enabled:
-#     - categories
-#     - tags
-#   layouts:
-#     category: archive-taxonomy
-#     tag: archive-taxonomy
-#   permalinks:
-#     category: /categories/:name/
-#     tag: /tags/:name/
+jekyll-archives:
+  enabled:
+    - categories
+    - tags
+  layouts:
+    category: archive-taxonomy
+    tag: archive-taxonomy
+  permalinks:
+    category: /categories/:name/
+    tag: /tags/:name/
 
 
+# HTML Compression
+# - http://jch.penibelst.de/
+compress_html:
+  clippings: all
+  comments:  ["<!-- ", " -->"]
+  endings:   all
 
+  ignore:
+    envs: development
