@@ -6,7 +6,7 @@ title: Word embeddings
 author: Sanjay Meena
 layout: single
 sitemap: true
-published: true
+published: false
 excerpt: Word embeddings
 categories: [Tech]
 tags: [NLP, Deep Learning]
