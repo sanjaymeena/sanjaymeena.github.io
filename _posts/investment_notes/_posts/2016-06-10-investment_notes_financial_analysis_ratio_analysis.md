@@ -1,4 +1,7 @@
 ---
+header:
+  teaser: posts/investment_notes/financial_ratios/header.jpg
+  image:  posts/investment_notes/financial_ratios/financialratioanalysis.jpg
 layout: single
 title: Financial Analysis- Ratio Analysis
 published: true
