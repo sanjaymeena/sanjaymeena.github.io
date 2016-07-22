@@ -6,7 +6,7 @@ title: Meanings are Vectors
 author: Sanjay Meena
 layout: single
 sitemap: true
-published: false
+published: true
 excerpt: A recent big idea in natural language processing is that "meanings are vectors" . Word embeddings are one of the most exciting area of research in deep learning.
 categories: [Tech]
 tags: [NLP, Deep Learning]
