@@ -12,7 +12,7 @@ excerpt: This section is for the book notes i made  on books from various discip
 ---
 
 <div class="page_list">
-  <h3>This year's posts</h3>
+    <h3>This year's posts : </h3>
   {%for post in site.categories.Books %}
     {% unless post.next %}
       <ul class="this">
