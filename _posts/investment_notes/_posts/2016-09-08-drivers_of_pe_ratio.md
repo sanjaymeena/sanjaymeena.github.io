@@ -11,6 +11,7 @@ sitemap: true
 excerpt: What drives the Price to Earnings (P/E) ratio of a Stock?  
 description: We will look at drivers of Price to Earnings ratio of a company
 keywords: price to earnings ratio, PE, p/e, drivers of pe ratio
+share: twitter facebook linkedin
 --- 
 
 
