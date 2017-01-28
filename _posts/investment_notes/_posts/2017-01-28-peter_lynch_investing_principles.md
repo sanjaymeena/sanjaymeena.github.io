@@ -8,7 +8,7 @@ sitemap: true
 excerpt: Golden Investing lessons from Peter Lynch
 description: Golden Investing lessons from Peter Lynch
 keywords: peter lynch, investing principles
-share: twitter facebook
+share: twitter facebook linkedin
 --- 
 
 <!--more-->
