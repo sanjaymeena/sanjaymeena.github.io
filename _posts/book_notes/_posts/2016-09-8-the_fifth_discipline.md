@@ -1,13 +1,12 @@
 ---
 layout: single
 title: The Fifth Discipline: The Art and Practice of the Learning Organization
-published: true
+published: false
 categories: [Books]
 tags: [book-notes]
 sitemap: true
 excerpt: The Fifth Discipline: The Art and Practice of the Learning Organization
 description: 
-keywords:
 ---
 
 
