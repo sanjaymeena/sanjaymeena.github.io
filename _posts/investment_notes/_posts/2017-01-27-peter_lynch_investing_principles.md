@@ -11,8 +11,9 @@ keywords: peter lynch, investing principles
 share: twitter facebook linkedin
 --- 
 
-<!--more-->
-Peter Lynch is known as one of the great stock investors in the world. He brought simplicity to the investment philosophy . He has  shared his knowledge with the investing masses through his writings, including his two seminal books "One Up on Wall Street" and "Beating the Street". The ideas and lessons from his writings are timeless and still transferable to investors across a broad spectrum of skill levels. 
+
+
+Peter Lynch is known as one of the great stock investors in the world. He brought simplicity to the investment philosophy . He has  shared his knowledge with the investing masses through his writings, including his two seminal books "One Up on Wall Street" and "Beating the Street". The ideas and lessons from his writings are timeless and still transferable to investors across a broad spectrum of skill levels. <!--more-->
 
 
 
