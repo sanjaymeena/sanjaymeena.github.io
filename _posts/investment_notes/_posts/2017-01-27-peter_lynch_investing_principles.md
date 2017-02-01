@@ -1,4 +1,6 @@
 ---
+header:
+  teaser: posts/investment_notes/peter_lynch/peter_lynch.jpg
 layout: single
 title: Investing Lessons from Peter Lynch
 published: true
