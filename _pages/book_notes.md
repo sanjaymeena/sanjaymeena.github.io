@@ -37,7 +37,7 @@ excerpt: This section is for the book notes i made  on books from various discip
   {% capture last_year %}{{ this_year }}{% endcapture %}
 {% endfor %}
 
-  </ul>
+  
 </div>
 
 

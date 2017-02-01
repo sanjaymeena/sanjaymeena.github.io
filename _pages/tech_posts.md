@@ -39,5 +39,5 @@ excerpt: Posts related to Natural Language Processing, Data Science, Machine Lea
   {% capture last_year %}{{ this_year }}{% endcapture %}
 {% endfor %}
 
-  </ul>
+
 </div>

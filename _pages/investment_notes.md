@@ -37,5 +37,4 @@ excerpt: Value Investing related posts
   {% capture last_year %}{{ this_year }}{% endcapture %}
 {% endfor %}
 
-  </ul>
 </div>
