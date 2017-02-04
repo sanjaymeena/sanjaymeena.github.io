@@ -11,9 +11,9 @@ title                    : "Sanjay Meena"
 title_separator          : "-"
 name                     : "Sanjay Meena"
 description              : "My personal blog"
-url                      : #"http://sanjaymeena.io"
+url                      : http://localhost:4000
 baseurl                  : 
-base_path                : #"http://sanjaymeena.io"
+base_path                : http://localhost:4000 #"http://sanjaymeena.io"
 teaser                   : # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200

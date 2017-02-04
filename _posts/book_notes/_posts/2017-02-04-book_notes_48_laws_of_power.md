@@ -3,11 +3,11 @@ header:
   teaser: posts/books/48_laws_of_power/power.jpg
 layout: single
 title: 48 Laws of Power
-published: false
+published: true
 categories: [Books]
 tags: [book-notes]
 sitemap: true
-excerpt: 48 Laws of Power
+excerpt: 48 Laws of Power by Robert Greene
 description: 48 Laws of Power - Robert Greene
 keywords: laws of power, power, success
 share: twitter facebook linkedin
@@ -201,7 +201,7 @@ glory to others. By planning to the end you will not be overwhelmed by circumsta
 will know when to stop. Gently guide fortune and help determine the future by thinking far
 ahead.
 
-### 30.Make your Accomplishments Seem Effortless
+### 30. Make your Accomplishments Seem Effortless
 Your actions must seem natural and executed with ease. All the toil and practice that go into
 them, and also all the clever tricks, must be concealed. When you act, act effortlessly, as if you 
 could do much more. Avoid the temptation of revealing how hard you work – it only raises
