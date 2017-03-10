@@ -20,7 +20,7 @@ I have started maintaining a summary log of the research papers i read related t
 * Dialogue Systems
 * Deep Learning
 
-The research paper log table can be searched and sorted by columns.
+The table below can be searched and sorted by columns.
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
