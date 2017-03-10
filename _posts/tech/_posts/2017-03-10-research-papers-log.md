@@ -10,6 +10,7 @@ categories: [Tech]
 tags: [NLP, Deep Learning]
 keywords: research papers, AI, NLP, Deep Learning,research 
 description : A summary log of read research papers in the field of AI
+share: twitter facebook linkedin
 ---
 
 I have started maintaining a summary log of the research papers i read related to my work. The papers are mostly related to :
