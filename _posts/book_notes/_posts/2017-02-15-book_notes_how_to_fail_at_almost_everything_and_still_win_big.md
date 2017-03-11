@@ -3,7 +3,7 @@ header:
   teaser: 
 layout: single
 title: How to Fail at Almost Everything and Still Win Big
-published: false
+published: true
 categories: [Books]
 tags: [book-notes]
 sitemap: true
@@ -12,6 +12,14 @@ description: How to Fail at Almost Everything and Still Win Big by Scott Adams
 keywords: fail,success,win,scott adams
 share: twitter facebook linkedin
 --- 
+
+Scott Adams is creator of Dilbert comic strip and author of several non fiction works. In this book he recounts the humorous ups and downs of his life, revealing the outsized role of luck in our lives and how to best play the system. 
+
+* Book: [How to Fail at Almost Everything and Still Win Big](https://www.amazon.com/How-Fail-Almost-Everything-Still-ebook/dp/B00COOFBA4)
+* Author: Scott Adams
+
+
+I have made an attempt to summarize the best of his advices form the book. 
 
 
 Focus on your diet first and get that right so you have enough energy to want to exercise. 
@@ -24,7 +32,7 @@ Once you optimize your personal energy, all you need for success is luck. You ca
 * And if you stay in the game long enough, luck has a better chance of finding you. 
 * avoid career traps such as pursuing jobs that require you to sell your limited supply of time while preparaing you for nothing better.
 
->Happiness is the only useful goal in life. 
+> Happiness is the only useful goal in life. 
 
 Unless you are a sociopath, your own happiness will depend on being good to others. And happiness tends to happen naturally whenever you have good health, resources, and a flexible schedule. 
 
@@ -42,7 +50,8 @@ Eat right, exercise, think positively, learn as much as possible, and stay out o
 Look for patterns in every part of life, from diet to exercise to any component of success. Try to find scientific backing for your observed patterns, and use yourself as a  laboratory to see if the patterns hold for you. 
 
 Most important, understand that 
->goals are for losers and systems are for winners. People who seem to have good luck are often the people who have a system that allows luck to find them.
+
+>Goals are for losers and systems are for winners. People who seem to have good luck are often the people who have a system that allows luck to find them.
 >
 
 Humans will always think in terms of goals. Our brains are wired that way. But goals make sense only if you also have a system that moves you in the right direction. 
