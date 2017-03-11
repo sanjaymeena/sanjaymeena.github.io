@@ -3,7 +3,7 @@ header:
   teaser: 
 layout: single
 title: How to Fail at Almost Everything and Still Win Big
-published: true
+published: false
 categories: [Books]
 tags: [book-notes]
 sitemap: true

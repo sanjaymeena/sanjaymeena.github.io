@@ -1,7 +1,7 @@
 ---
 layout: single
 title: Good Strategy Bad Strategy
-published: true
+published: false
 categories: [Books]
 tags: [book-notes]
 sitemap: true
