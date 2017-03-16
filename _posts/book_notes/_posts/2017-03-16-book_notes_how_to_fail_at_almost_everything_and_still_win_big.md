@@ -1,9 +1,10 @@
 ---
 header:
-  teaser: 
+  teaser: posts/books/scott_adams_how_to_fail/scott_adams_how_to_fail.jpg
 layout: single
 title: How to Fail at Almost Everything and Still Win Big
-published: false
+author: Sanjay Meena
+published: true
 categories: [Books]
 tags: [book-notes]
 sitemap: true
@@ -19,11 +20,20 @@ Scott Adams is creator of Dilbert comic strip and author of several non fiction 
 * Author: Scott Adams
 
 
-I have made an attempt to summarize the best of his advices form the book. 
+I have summarized the best of his advices form the book. 
 
 
-Focus on your diet first and get that right so you have enough energy to want to exercise. 
-Exercise will further improve your enery, and that in turn will make you more productive, more creative, more positive, more socially desirable, and more able to handle life's little bumps. 
+### Personal Energy 
+
+We want to increase our personal energy. 
+The flow may look like this :
+
+Diet -> Exercise -> Personal Energy
+
+* Focus on your <b>Diet</b> first and get that right so you have enough energy to want to exercise. 
+* <b>Exercise</b> will further improve your enery, and that in turn will make you more productive, more creative, more positive, more socially desirable, and more able to handle life's little bumps. 
+
+### Increase your odds for Luck
 
 Once you optimize your personal energy, all you need for success is luck. You can't directly control luck, but you can move from strategies with bad odds to strategies with good odds. For example, 
 
@@ -32,12 +42,15 @@ Once you optimize your personal energy, all you need for success is luck. You ca
 * And if you stay in the game long enough, luck has a better chance of finding you. 
 * avoid career traps such as pursuing jobs that require you to sell your limited supply of time while preparaing you for nothing better.
 
+### Happiness
+
 > Happiness is the only useful goal in life. 
 
 Unless you are a sociopath, your own happiness will depend on being good to others. And happiness tends to happen naturally whenever you have good health, resources, and a flexible schedule. 
 
 Get your health right first, acquire resources and new skills through hard work, and look for an opportunity that gives you a flexible schedule someday.
 
+### Developing Skills
 
 Some skills are more important than others, and you should acquire as many of those key skills as possible, including public speaking, business writing, a working understanding of the psychology of persuasion, an understanding of basic technology concepts, social skills, proper voice technique, good grammar, and basic accounting. 
 
@@ -49,7 +62,9 @@ Eat right, exercise, think positively, learn as much as possible, and stay out o
 
 Look for patterns in every part of life, from diet to exercise to any component of success. Try to find scientific backing for your observed patterns, and use yourself as a  laboratory to see if the patterns hold for you. 
 
-Most important, understand that 
+
+### Goals vs Systems
+Understand that :
 
 >Goals are for losers and systems are for winners. People who seem to have good luck are often the people who have a system that allows luck to find them.
 >
