@@ -4,7 +4,7 @@ header:
 layout: single
 title: How to Fail at Almost Everything and Still Win Big
 author: Sanjay Meena
-published: false
+published: true
 categories: [Books]
 tags: [book-notes]
 sitemap: true

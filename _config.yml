@@ -7,10 +7,10 @@
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Sanjay Meena"
+title                    : "Seeking Wisdom"
 title_separator          : "-"
 name                     : "Sanjay Meena"
-description              : "My personal blog"
+description              : "Blog on Equities, Tech, Books"
 url                      : "http://sanjaymeena.io"
 baseurl                  : 
 base_path                : "http://sanjaymeena.io"
