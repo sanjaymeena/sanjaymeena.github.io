@@ -20,7 +20,7 @@ Scott Adams is creator of Dilbert comic strip and author of several non fiction 
 * Author: Scott Adams
 
 
-I have summarized the best of his advices form the book. 
+I have summarized the best of his advices from the book. 
 
 
 ### Personal Energy 

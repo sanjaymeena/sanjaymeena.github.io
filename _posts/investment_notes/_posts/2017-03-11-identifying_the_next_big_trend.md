@@ -3,7 +3,7 @@ header:
   teaser: posts/investment_notes/peter_lynch/peter_lynch.jpg
 layout: single
 title: Identifying the next big trend in Markets
-published: true
+published: false
 categories: [Investing]
 tags: [investment-notes]
 sitemap: true
