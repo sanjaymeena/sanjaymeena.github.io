@@ -1,15 +1,15 @@
 ---
 header:
-  teaser: posts/investment_notes/peter_lynch/peter_lynch.jpg
+  teaser: posts/investment_notes/identify_next_big_trends/megatrends-word-cloud.jpg
 layout: single
 title: Identifying the next big trend in Markets
-published: false
+published: true
 categories: [Investing]
 tags: [investment-notes]
 sitemap: true
 excerpt: Identifying the next big trend in Markets
 description: Identifying the next big trend in Markets
-keywords: 
+keywords: trends, stocks, bull market, scale of opportunity, illiquid , unpopular, pickaxe and shovel theme
 share: twitter facebook linkedin
 --- 
 
@@ -105,5 +105,3 @@ Most of the new bull market stocks will be sector leaders having small market ca
 
 * The shares of the service providers will only do well if they can grow at a faster or similar rate that the industries to which these companies provide a service. 
 * While looking at pick Axe and shovel theory , a company will do well only on the basis of its own earnings growth only. 
-
-

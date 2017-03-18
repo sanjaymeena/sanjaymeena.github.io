@@ -1,4 +1,6 @@
 ---
+header:
+  teaser: posts/tech/research/research.jpg
 title: Research Summary Log
 author: Sanjay Meena
 layout: customjs
