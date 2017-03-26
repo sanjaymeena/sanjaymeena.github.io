@@ -18,6 +18,8 @@ share: twitter facebook linkedin
 
 ##  Market folly is one of the biggest sources of multi-baggers
 
+Market Volatility is excellent opportunity to grab good businesses at low prices. 
+
 In end-2008, global stock markets crashed given the US sub-prime crisis. In India, businesses
 like IT and Healthcare (where India enjoys competitive advantage) were also hammered –
 a great opportunity to pick up stocks like TCS, Wipro and HCL Tech at P/Es of 10x or less.
