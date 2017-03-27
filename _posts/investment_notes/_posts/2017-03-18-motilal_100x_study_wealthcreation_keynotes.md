@@ -9,7 +9,7 @@ tags: [investment-notes]
 sitemap: true
 excerpt: Some key notes from the 2014 thematic study on 100 Baggers by Motilal Oswal
 description: Some key notes from the 2014 thematic study on 100 Baggers by Motilal Oswal
-keywords: trends, stocks, bull market, scale of opportunity, illiquid , unpopular, pickaxe and shovel theme
+keywords: 100x, multibagger, size, quality, growth, longevity, price of a stocks
 share: twitter facebook linkedin
 series: SQGLP Framework 
 --- 
