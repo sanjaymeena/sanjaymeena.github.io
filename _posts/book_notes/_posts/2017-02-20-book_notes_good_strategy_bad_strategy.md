@@ -74,46 +74,137 @@ Strategic leverage arises from a mixture of anticipation, insight into what is m
 
 ### Anticipation
 Anticipation can simply mean considering the habit, preferences ,and policies of others, as well as various inertias and constraints of change. 
-Proximate Objectives
+
 
 ### Pivot Points
 A pivot point magnifies the effect of effort. It is a natural or created imbalance in a situation, a place where a relatively small adjustment can unleash much larger pent-up forces. 
 
 ### Concentration
+Returns to concetration arise when focusing efforts on fewer, or more limited ,objectives generates larger payoff. These gains flow from combinations of : 
 
+1. Constraints 
+If resources were not limited, there would be no need to select one objective over another. If senior leadership did not have limited cognition, they would gain nothing from concentrating their attention on a few priorites. 
 
-	* Resolving ambiguity
-	* Taking a strong position and creating options
-	* Hierarchies of objectives
+2. Threshold effects
+A "threshold effect" exists when there is a critical level of effort necessary to affect the system. Levels of effort below this threshold have little payoff. 
 
+For e.g. there seems to be threshold effects in advertising. Very small amount of advertising will produce no result at all. One has to get over this hump or threshold to start getting a responce to advertising efforts. 
 
-
-Chain Link Systems
-
-	* How do we get stuck
-
-	* How to get unstuck
-	* Excellence
+The power of concentration is : <b>Choosing an objective that can be decisviely affected by the resources at hand. <b>
 
 
 
+## Proximate Objectives
 
-Using Design
+One of a leader's most powerful tools is the creation of a good proximate objective - one that is close enough at hand to be feasible. 
 
-	* premeditation
-	* anticipation
-	* design of coordinated action
-	* The parts of a whole
-	* The trade-off
-	* The arc of enterprise
-	* order out of chaos
+Some objectives which are not proximate : 
+
+1. War on Drugs : No matter how desirable it might be to stop the use of illegal drugs, it is not a proxmiate objective because it is not feasible within the presnt legal and law-enforcement framework. 
+2. Energy independence : It is infeasible with the absence of political courage to raise gasoline prices and commit to the development of nuclear power, solar power etc. 
+
+### Resovling Ambiguity
+An important duty of any leader is to absorb a large part of complexity and ambiguity , passing on to the organziation a simpler problem - one that is solvable. 
+
+### Taking a Strong Position and Creating Options
+
+More dynamic the situation, the poorer your foresight will be. More uncertain and dynamic the situation, the more proximate a strategic objective must be. 
+
+The proximate objective is guided by the forecasts of the future, but the more uncertain the future, the more its essential logic is that of "taking and strong position and creating options
 
 
 
-Focus
 
-Growth
-Using Advantage
+
+### Hierarchies of objective
+
+Proximate objectives not only cascade down hierarchies; they cascade in time. 
+
+`To concetrate on an objective - to make it a priority- necessarily assumes that many other important things will be take care of.`
+
+Skills can be seens as if they were rungs on a ladder, with higher rungs in reach only when the lower rungs had been attained. 
+
+
+
+
+## Chain Link Systems
+A system has a chain-link logic when its performance is limited by its weakest subunit, or "link". When there is a weak link, a chian is not made stronger by strengthening the other links. 
+
+E.g. For the Space Shuttle Challenger, the weakest link was a solid rubber O-ring. It failed and the rocket exploded. 
+
+If a chain must not fail, there is no point in strengthening only some of the links. Similarly, for Challenger, there could be no gain to make the booster engines stronger if the O-ring was weak.
+
+
+* Quality matters when quantiity is an inadquate subsitute. 
+* If you have a special skill or insight at removing limiting factors, then you can be very successful. 
+
+
+### Getting Stuck
+There are portions of organizations , and even of economies , that are chain-linked.  Wehn each link is managed somewhat separately, the system can get stuck in a low-effectiveness state. The problem arises because of quality matching.  That is, if you are in charge of one link of the chain, there is no point in investing resources in making your link better if other link managers are not. 
+
+### Getting Unstuck
+
+1. The first logical problem in chain-link situatinos is to identify the bottlenecks. 
+2. The second, and greatest, problem is that incremental change may not pay off and may even make things worse. 
+
+Chain-link systems can be changed and made excellent. It takes insight into the key bottlenecks. Pus, it takes leadership and the willingness to absorb short-term losses in the quest for future gains. 
+
+### Excellence
+E.g. IKEA's system has a chain-link logic. 
+
+IKEA teaches us that : 
+
+1. In building sustained strategic advantage, talented leaders seek to create constellations of activities that are chain-linked. This adds extra effectiveness to the strategy and makes competetive imitation difficult. 
+2. To unstuck a stuck chain-linked system, a strong leader must possess the insight and fortitde the make the necessary investments in each link of the chain. 
+
+## Using Design
+The concept of strategy has many different facets. There are 3 aspects presented in their purest and most essential form: 
+
+1. Premedidataion
+2. The anticipation of other's behaviour
+3. Purposeful design of coordinate actions
+
+### Premeditation
+This essential means planning and designing in advance. 
+
+### Anticipation
+Judgement or anticipation concering the thoughts/behaviours of others. 
+
+###  Design of Coordinated Action
+Doing strategy is more like designing a high performacnce aircraft than deciding which forklift truck to buy or how large to build a new factory. 
+
+### The Parts of a Whole
+Business and corporate strategy deal with large-scale design-type problems. The greater the challenge, or the higher the performance sought, the more interactions have to be considered. 
+
+### Trade off
+Performance is the joint outcome of capability and clever design. 
+
+### The arc of enterprise
+* A strong resource position can obciate the need for sophisticated design-type strategy. 
+* A very powerful resource position produces profit without a great effort, and it is human nature tha the easy life breeds laxity. It is also human nature to associate current profit with recent actions, even though it should be evident that current plenty is the harvest of planting seasons long past. 
+
+
+
+Overall Good strategy is design, and design is about fitting various pieces together so they work as a coherent whole. 
+
+
+
+##  Focus
+In general, people will not push further because the analysis of unstructured information is hard, time-consuming work that requires both a rich knowledge of facts and well developed skills in logic, deduction, and induction. 
+
+If you are serious about strategy work, you must always do your own analysis. A strategy is not ncessarily what the CEO intended or what some executive says it is. Sometimes they are hiding the truth, sometimes they are mistating it, and sometimes they have taken a position as leader without really knowing the reasons for their company's success. 
+
+
+At the core, strategy is about focus and most complex companies do not focus their resources. Instead they pursue multiple goals at once, not concentrating enough resources to achive a breakthrough in any of them. 
+
+
+## Growth
+Healthy growth is not engineered. It is the outcome of growing demand for special capabilities or of expanded or extended capabilities. It is the outocme of firm having superiour capabilities . It is the outcome of a firm having superiour products and skills. It is the reward for successful innovation, cleverness, efficiency, and creativity. This kind of growth is not just an industry phenomenon. It normally shows up as gain in market share that is simultaneous with a superiour rate of profit. 
+
+
+
+
+## Using Advantage
 
 	* Competitive advantages in Business
 	* Interesting Advantages
