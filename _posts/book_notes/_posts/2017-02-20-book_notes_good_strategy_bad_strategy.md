@@ -206,22 +206,48 @@ Healthy growth is not engineered. It is the outcome of growing demand for specia
 
 ## Using Advantage
 
-	* Competitive advantages in Business
-	* Interesting Advantages
-	* 
-		* Some advantages are more interesting than others
+No one has an advantage at everything. Teams, organizations, and even nations have advantages in certain kinds of rivalry under particular conditions.
 
-	* Value-creating changes
-	* 
-		* Deepening advantage
-		* Broadening the extend of advantage
-		* Creating higher demand
-		* Strengthening isolating mechanisms
-		* 
+The secret to using advantage is understanding this particularity. You must press when you have advantage and side-step situations in which you do not. You must exploit your rival's weaknesses and avoid leading with your own.
 
 
+### Value Creating Changes
+Connection between wealth and competitive-advantage is dynamic. Increasing value requires a strategy for progress on at least on of four different fronts:
 
-Using Dynamics
+* Deepening advantages
+* Broadening the extent of advantages
+* Creating higher demand for advantaged products or services
+* Strenghtening the isloating mechanisms that block easy replication and imitation by competitors
+
+
+#### Deepening advantage
+Deepening an advantage means widening the gap between buyer value and cost by either:
+* increasing values to buyers 
+* reducing costs
+* or both
+
+#### Broadening the extent of advantages
+Extending an existing competitive advantage brings into new fields and new competitions. The basis for productive extensions offer reside within complex pools of knowldege and know-how
+
+#### Creating higher demand
+A competitive advantage becomes more valuable when the number of buyers grows and or when the quantity demanded by each buyer increases. 
+
+Engineering higher demand for the services of scarce resources is one of the most basic form of business strategems. 
+
+
+#### Strengthening Isolating Mechanisms
+An isolating mechansim inihibts competitors from duplicating your product or the resources underlying your competitive advantage. 
+
+
+Common approaches to Strengthening isloating mechanims
+
+* Working on patents, brand-names protections, and copyrights. 
+* When a new product is developed, its protection may be strengthened by stretching an already powerful brand name to cover it. 
+* Have a moving target for imitators. In a static setting, rivals will sooner or later figure out how to duplicate much of your proprietary know-how and other specialized resources. However if you alter your methods and products, rivals will have a much harder time with imitation. 
+
+
+
+## Using Dynamics
 
 	* Sensing the Wave's Swell
 	* Discerning the fundamentals
