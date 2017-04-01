@@ -3,7 +3,7 @@ header:
   teaser: posts/investment_notes/identify_next_big_trends/megatrends-word-cloud.jpg
 layout: single
 title: Understanding Business Models
-published: false
+published: true
 categories: [Investing]
 tags: [investment-notes]
 sitemap: true
@@ -24,11 +24,8 @@ I made these notes from Basant Maheshwari's Book : [A Thoughtful Investor](http:
 
 # What constitutes a good business. 
 
-
 * A good business is one that purchases on credit and sells on cash. 
 * It will generate a high return on Equity without employing too much debt and follow an asset light model where investments in fixed assets like machinery and plant is relatively low even while the working capital remains negative. 
-
-
 
 ##  Entry Barriers
 
@@ -44,7 +41,6 @@ Most important entry barrier to business. A product becomes a brand after creati
 * Mind Share is a subjective exercise with unquantifiable arguments. 
 * A company captures market share by pushing it product toward its customer either by lucrative pricing or distribution or advertising. 
 * A Mind share is more of a pull strategy where the customer himself comes looking for the product because he perceives the product to be of superior quality with a more than sufficient utility. 
-
 
 ## Franchise Led Growth
 
@@ -105,6 +101,3 @@ Leading stock of each sector will either have :
 * Strong brand, patent 
 * Low Cost producer
 * High Network effect etc.
-
-
-
