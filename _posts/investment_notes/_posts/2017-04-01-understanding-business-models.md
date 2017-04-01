@@ -12,7 +12,7 @@ description: Some key notes about Business Model from Thoughtful Investor book b
 keywords: 100x, multibagger, size, quality, growth, longevity, price of a stocks
 share: twitter facebook linkedin
 --- 
-
+ 
 Table of Content
 
 * TOC
