@@ -23,7 +23,7 @@ Scott Adams has recommended this wonderful book on Persuasion.
 # Shortest Course on Persuasion 
 
 
-The book is very short and author has beautifully conveyed his ideas on persuasion in a single sentence of 27 words!!
+This book is very short and author has beautifully conveyed his ideas on persuasion in a single sentence of 27 words!!
 
 >People will do anything for those who encourage their dreams, justify their failures, allay their fears, confirm their suspicions, and help them throw rock at their enemies.
 
