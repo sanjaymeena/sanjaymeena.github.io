@@ -2,17 +2,18 @@
 header:
   teaser: posts/investment_notes/identify_next_big_trends/megatrends-word-cloud.jpg
 layout: single
-title: Scholls investment rules
-published: false
+title: Walter Schloss Investment Tenets
+published: true
 categories: [Investing]
 tags: [investment-notes]
 sitemap: true
-excerpt: Scholls investment rules
-description: Scholls investment rules
-keywords: 100x, multibagger, size, quality, growth, longevity, price of a stocks
+excerpt: Key Investment rules from super investor of Graham-and-Doddsville
+description: Key Investment rules from super investor of Graham-and-Doddsville
+keywords: Walter Schloss, investment tenets, Graham-and-Doddsville
 share: twitter facebook linkedin
 --- 
 
+Warren Buffett has named him as one of The Super investors of Graham-and-Doddsville. He disproved the academic position that the market was efficient, and that beating the S&P 500 was "pure chance"
 
 
 1. Price is the most important factor to use in relation to value. 
