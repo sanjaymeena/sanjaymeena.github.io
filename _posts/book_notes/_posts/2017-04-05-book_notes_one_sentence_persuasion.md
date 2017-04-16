@@ -1,19 +1,17 @@
 ---
-header:
-  teaser: 
 layout: single
 title: The One Sentence Persuasion Course
-published: false
+published: true
 categories: [Books]
 tags: [book-notes]
 sitemap: true
-excerpt: 
-description: 
-keywords: 
+excerpt: Persusian explained in one sentence
+description: Persusian explained in one sentence
+keywords: Persusian, dreams, failures,justify, encourage
 share: twitter facebook linkedin
 --- 
 
-Scott Adams is a thoughtful advocate for learning persuasion. I had written a post on his book 'How to Fail at Almost Everything and Still Win Big' [here](http://sanjaymeena.io/books/book_notes_how_to_fail_at_almost_everything_and_still_win_big/)
+Scott Adams is a thoughtful advocate for learning persuasion. I had written a post on his book 'How to Fail at Almost Everything and Still Win Big' which you can read [here](http://sanjaymeena.io/books/book_notes_how_to_fail_at_almost_everything_and_still_win_big/)
 
 
 Scott Adams has recommended this wonderful book on Persuasion.
@@ -21,7 +19,11 @@ Scott Adams has recommended this wonderful book on Persuasion.
 * Book: [The One Sentence Persuasion Course](https://www.amazon.com/One-Sentence-Persuasion-Course-Bidding-ebook/dp/B00AAF5GJK)
 * Author: Blair Warren
 
-The book is very short and author has beautifully conveyed his ideas on persuasion in a single line of 27 words!!
+
+# Shortest Course on Persuasion 
+
+
+This book is very short and author has beautifully conveyed his ideas on persuasion in a single sentence of 27 words!!
 
 >People will do anything for those who encourage their dreams, justify their failures, allay their fears, confirm their suspicions, and help them throw rock at their enemies.
 
@@ -35,30 +37,31 @@ The above line contains five of the most important insights the author has learn
 
 They are the most important because they are simple, they are immediately useful and they can be frighteningly powerful. They are the tools for anyone who must connect with others and, more importantly make these connections pay off.
 
-#### Encourage their dreams
+## Encourage their dreams
 
 Parents often encourage their children's dreams for "their own good" and attempt to steer them towards more "reasonable" goal. And children often accept this as normal, until others come along who believe in them and encourage their dreams. When this happens , who do you think has more power? Parent? Or Strangers?
 
-#### Justify their failures
+## Justify their failures
 
 This effect is played the best in politics. Assuring others that they are not responsible is essential for gaining influence over theirs. 
 
 
-#### Allay their fears
+## Allay their fears
 When we are afraid, it is almost impossible to concentrate on anything else. Someone telling us not to be afraid hardly works. We prefer to be with people who work with us until our fear subsides. They present evidence, they offer support, they tell us stories, but they do not tell us how to feel and expect us to feel that way.
 
 
-#### Confirm their suspicions
+## Confirm their suspicions
 When another person confirms something that we suspect, we not only feel a surge of superiority, we feel attracted to the one who helped us make that surge come about. Hitler 'confirmed' the suspicions of many Germans about the cause of their troubles and drew them further into his power by doing so.
 
-#### Help them throw rocks at their enemies
+## Help them throw rocks at their enemies
 Nothing bonds like having a common enemy. Whether it is another individual, a group, an illness, a setback, a rival philosophy or religion, or what have you, when one is engaged in a struggle, one is looking for others to join him. Those who do become more than friends; they become partners. 
 
 
 >People will do anything for those who encourage their dreams, justify their failures, allay their fears, confirm their suspicions, and help them throw rock at their enemies.
 
-The above quote is missing something that is very important in the persuasion process. Here's what missing :  <b>`YOU`</b> . 
-It's <i> all</i> about the other person. 
+The above quote is missing something that is very important in the persuasion process. Here's what missing :  <b>`YOU`</b>  
+
+<u><b>It's all about the other person. </b></u>
 
 
 One thing people rarely resist is someone trying to meet their needs. And when ones needs have been met, a bond is often forged and natural desire to reciprocate has been created. 
