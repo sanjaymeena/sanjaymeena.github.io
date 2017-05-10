@@ -5,11 +5,15 @@ published: false
 categories: [Books]
 tags: [book-notes]
 sitemap: true
-excerpt: Good Strategy Bad Strategy
-description: Good Strategy Bad Strategy
+excerpt: Strategy is a term thrown around quite a bit without the underlying depth of its details. Developing and implementing a strategy is the central task of a leader, whether the CEO of a fortune 100 company, an entrepreneur. 
+description: Strategy is a term thrown around quite a bit without the underlying depth of its details. Developing and implementing a strategy is the central task of a leader, whether the CEO of a fortune 100 company, an entrepreneur. 
 keywords: strategy
 share: twitter facebook linkedin
---- 
+--- 	
+
+Strategy is a term thrown around quite a bit without the underlying depth of its details. Developing and implementing a strategy is the central task of a leader, whether the CEO of a fortune 100 company, an entrepreneur. 
+
+Book : [Good Strategy Bad Strategy](https://www.amazon.com/Good-Strategy-Bad-Difference-Matters/dp/1501259326)
 
 ## Strategic Thinking 
 To guide your own thinking in strategy work, you must cultivate three essential skills or habits.
@@ -58,4 +62,8 @@ Strategy is about action, about doing something. The kernel of a strategy must c
 
 For e.g. 
 
-For a doctor, the challenge appears as a set of signs and symptoms together with a history. The doctor makes a clinical diagnosis, naming a disease or pathology. The theurapeutic approach choosen is the doctor's guiding policy. The doctor's specific prescriptions for diet, therapy, and meditation are the set of coherent actions to be taken. 
+For a doctor, the challenge appears as a set of signs and symptoms together with a history. 
+
+* The doctor makes a clinical diagnosis, naming a disease or pathology. 
+* The theurapeutic approach choosen is the doctor's guiding policy. 
+* The doctor's specific prescriptions for diet, therapy, and meditation are the set of coherent actions to be taken. 
