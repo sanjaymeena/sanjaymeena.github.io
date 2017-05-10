@@ -1,7 +1,7 @@
 ---
 layout: single
 title: Good Strategy Bad Strategy
-published: false
+published: true
 categories: [Books]
 tags: [book-notes]
 sitemap: true
@@ -65,5 +65,5 @@ For e.g.
 For a doctor, the challenge appears as a set of signs and symptoms together with a history. 
 
 * The doctor makes a clinical diagnosis, naming a disease or pathology. 
-* The theurapeutic approach choosen is the doctor's guiding policy. 
+* The therapeutic approach chosen is the doctor's guiding policy. 
 * The doctor's specific prescriptions for diet, therapy, and meditation are the set of coherent actions to be taken. 
