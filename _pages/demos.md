@@ -61,9 +61,27 @@ header:
 <td>Compound intereste calculator made using <a href="https://www.r-project.org/">R</a> and <a href="http://shiny.rstudio.com/">Shiny</a>, Web Application Framework for R. You can read a small report <a href="https://github.com/sanjaymeena/developing-data-products/blob/master/slides/compound_interest_shiny_presentation.md"><b>here</b></a></td>   
 </tr>  
 
+
+
   </tbody>
 </table>
 
-### Deep Learning
+### Data Science Related 
 
-To be added 
+<table class="table table-hover">
+  <thead>
+    <tr>
+     
+      <th><h4> Links </h4></th>
+      <th><h4>Description </h4></th>
+    </tr>
+  </thead>
+  <tbody>
+
+
+<tr> 
+<td><a href="https://rpubs.com/sanjaymeena">Data Science related analysis using R</a> </td>   
+<td>Projects and tasks related to <a href="https://zh-tw.coursera.org/learn/data-scientists-tools">The Data Scientist’s Toolbox</a> </td>   
+</tr>  
+  </tbody>
+</table>

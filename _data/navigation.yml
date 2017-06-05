@@ -14,11 +14,10 @@ main:
     url: /demos
 
   - title: "Misc"
-    url: /misc 
+    url: /misc
 
-
-  - title: "Tags"
-    url: /tags
+  #- title: "Tags"
+   # url: /tags
 
   - title: "About"
     url: /about
