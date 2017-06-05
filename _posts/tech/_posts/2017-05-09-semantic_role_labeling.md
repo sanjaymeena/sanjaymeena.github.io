@@ -3,7 +3,7 @@ title: Semantic Role Labeling
 author: Sanjay Meena
 layout: single
 sitemap: true
-published: true
+published: false
 excerpt: Semantic Role Labeling
 categories: [Tech]
 tags: [NLP, Deep Learning]

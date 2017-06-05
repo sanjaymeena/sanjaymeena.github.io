@@ -1,7 +1,7 @@
 ---
 layout: single
 title: Sources of Power
-published: true
+published: false
 categories: [Books]
 tags: [book-notes]
 sitemap: true
