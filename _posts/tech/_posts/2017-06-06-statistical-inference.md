@@ -144,3 +144,5 @@ Bayes’ rule allows us to switch the conditioning event, provided a little bit 
 
 $$ \mathsf { P (B|A) = \frac {P(A|B) P(B)} { P(A|B) P(B) +  P(A|B^{'}) P(B^{'})} } $$
 
+
+
