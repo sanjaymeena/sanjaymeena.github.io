@@ -145,6 +145,117 @@ Bayes’ rule allows us to switch the conditioning event, provided a little bit 
 $$ \mathsf { P (B|A) = \frac {P(A|B) P(B)} { P(A|B) P(B) +  P(A|B^{'}) P(B^{'})} } $$
 
 
+## Statistical Independence
 
-test
+Two events A and B are independent if
+
+$$ \mathsf { P (A \cap B) = P(A) P(B) } $$
+
+* Important principle is that probabilities of independent things multiply! 
+* It also means that we shouldn’t multiply non-independent probabilities.
+
+## Independent and Identically Distributed (IID) random variables
+
+Random variables are said to be independent and identically distributed (iid) if they are independent and all are drawn from the same population. The IID samples are a model for random samples which is the default starting point of most statistical inference. 
+
+
+
+## Expected Values
+Expected values characterize a distribution. 
+
+### The population mean for discrete random variables
+
+The expected value or (population) mean of a random variable is the center of its distribution. For discrete random variable X with PMF p(x), it is defined as follows:
+
+$$ \mathsf { E[X] = \sum_{x} xp(x)} $$
+
+
+
+### The sample mean
+
+The sample mean (estimator) estimates the population mean (estimand. Since the population mean is the center of mass of the population distribution, the sample mean is the center of mass of the data.
+
+$$ \mathsf { \bar {X }= \sum_{i=1}^n x_{i}p(x_{i})} $$
+
+the distribution of the estimator (the sample mean) is centered at the distribution of what it’s estimating (the population mean). 
+
+Some important points to remember are : 
+
+* Expected values are properties of distributions.
+* The population mean is the center of mass of population.
+* The sample mean is the center of mass of the observed data.
+* The sample mean is an estimate of the population mean.
+* The sample mean is unbiased: the population mean of its distribution is the mean that it’s trying to estimate.
+* The more data that goes into the sample mean, the more. concentrated its density / mass function is around the population mean.
+
+
+## Variation
+
+The variance
+The variance, on the other hand, is a measure of spread. 
+
+If X is a random variable with mean \mu, the variance of X is defined as
+
+$$ \mathsf { Var(X) = E[(X- \mu)^2] = E[X^2] - E[X]^2} $$
+
+Variance of a coin flip , with probability of head as P is : 
+
+$$ \mathsf {Var(X) = E[X^2] - E[X]^2 = p - p^2 = p(1 - p) } $$
+
+
+* Densities with a higher variance are more spread out than densities with a lower variance. 
+* The square root of the variance is called the standard deviation. The main benefit of working with standard deviations is that they have the same units as the data, whereas the variance has the units squared.
+
+
+## Sample variance 
+
+The sample variance is the estimator of the population variance. The sample variance is (almost) the average squared deviation of observations around the sample mean. It is given by
+
+$$ \mathsf {S^2 = \frac {\sum_{i=1} (X_i - \bar {X})^2} {n-1}  } $$
+
+
+The sample Standard deviation S , is the square root of the sample variance. 
+
+## Standard Error
+We call the standard deviation of a statistic its standard error.
+
+
+* The sample variance, $$ \mathsf {S^2} $$ , estimates the population variance, $$ \mathsf {\sigma^2} $$
+* The distribution of the sample variance is centered around population variance , $$ \mathsf {\sigma^2} $$
+* The variance of the sample mean is $$ \mathsf {\frac {\sigma^2} {n}} $$
+* Its logical estimate is $$ \mathsf { \frac  {s^2} {n}}$$
+* The logical estimate of the standard error is  $$ \mathsf { \frac {S} {\sqrt {n} }} $$
+* S, the standard deviation, talks about how variable the population is.
+* $$ \mathsf { \frac {S} {\sqrt {n}}} $$ , the standard error, talks about how variable averages of random samples of size n from the population are.
+
+
+
+## S#tandard Normals
+
+Standard normals have variance 1. Sampling means of n standard normals have standard deviation $$ \mathsf { \frac {1} {\sqrt{n}}}$$
+
+
+# SOme common distributions
+
+## Bernoulli distribution
+
+## Binomial trials
+
+## the normal distribution
+
+## the poisson distribution
+
+
+# Asymptopia
+
+## Central Limit Theorm 
+
+## Confidence Intervals
+
+
+# t confidence intervals 
+
+
+# Hyphothesis Testing
+
 
