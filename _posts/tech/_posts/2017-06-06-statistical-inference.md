@@ -1,16 +1,19 @@
 ---
-title: Statistics
+title: Statistical Inference
 author: Sanjay Meena
 layout: single
 sitemap: true
-published: false
-excerpt: Statistics
+published: true
+series: statistical_inference
+excerpt: Statistics are the foundations of Data Analysis. Statistical Inference is a process of deducing properties of an underlying distribution by analysis of data. 
 categories: [Tech]
 tags: [NLP, Statistics]
-keywords: Statistics
-description : Statistical Inference
-share: twitter facebook linkedin
+keywords: Statistical Inference
+description : Statistics are the foundations of Data Analysis. Statistical Inference is a process of deducing properties of an underlying distribution by analysis of data. 
+share: twitter linkedin
 ---
+
+{% include series.html %}
 
 <script type="text/javascript"
     src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
@@ -23,6 +26,12 @@ share: twitter facebook linkedin
 
 
 # Introduction
+
+Statistics are the foundations of Data Analysis. Understanding the key concepts in statistics is essential to be an effective Data Scientist. 
+
+We will have several posts to cover important concepts in Statistical Inference. 
+
+Statistical Inference is defined as the  the process of deducing properties of an underlying distribution by analysis of data. 
 
 Several tools are key to the use of statistical inference. Recognizing them helps us to have a holistic view of Statistics. 
 
@@ -47,7 +56,7 @@ Several tools are key to the use of statistical inference. Recognizing them help
 
 
 
-## Probablity
+## Probability
 Probability forms the foundation for almost all treatments of statistical inference.
 
 
@@ -68,15 +77,13 @@ A random variable is a numerical outcome of an experiment. The random variables 
 * Discrete random variables : takes only a countable number of possibilities
 * Continuous random variables : These can take any value on the real line. 
 
-`
-Q: If you had a ruler of infinite precision, would measuring the height of adults around the world be continuous or discrete?
-A: Continous
-`
 
-`
-Q: Is the drawing of a hand of cards continuous or discrete?
-A: Discrete
-`
+<b>Q</b>: If you had a ruler of infinite precision, would measuring the height of adults around the world be continuous or discrete?
+<b>A</b>: Continuous
+
+<b>Q</b>: Is the drawing of a hand of cards continuous or discrete?
+<b>A</b>: Discrete
+
 
 
 
@@ -88,7 +95,7 @@ We need convenient mathematical functions to model the probabilities of these ra
 
 
 ### Probability Mass Function (PMF) 
-This function is  asssociated with  a discrete random variable. A probability mass function evaluated at a value corresponds to the probability that a random variable takes that value. To be a valid pmf a function, , must satisfy following conditions:
+This function is  associated with  a discrete random variable. A probability mass function evaluated at a value corresponds to the probability that a random variable takes that value. To be a valid pmf a function, , must satisfy following conditions:
 
 1.  It must always be larger than or equal to 0.
 2. The sum of the possible values that the random variable can take has to add up to one.
@@ -141,7 +148,7 @@ Remember that quantiles have units.
 
 A percentile is simply a quantile with $$ \mathsf {\alpha} $$ expressed as a percent rather than a proportion. Remember that percentiles are not probabilities!
 
-## Conditional Probablility
+## Conditional Probability
 
 Conditioning is a central subject in statistics. If have information about a random variable, it changes the probabilities associated with it. 
 This is the idea of conditioning, taking away the randomness that we know to have occurred. 
@@ -169,7 +176,7 @@ Two events A and B are independent if
 $$ \mathsf { P (A \cap B) = P(A) P(B) } $$
 
 * Important principle is that probabilities of independent things multiply! 
-* It also means that we shouldn’t multiply non-independent probabilities.
+* It also means that we shouldn't multiply non-independent probabilities.
 
 
 ## Independent and Identically Distributed (IID) random variables
@@ -177,7 +184,7 @@ $$ \mathsf { P (A \cap B) = P(A) P(B) } $$
 
 Random variables are said to be iid if they are independent and identically distributed. By independent we mean "statistically unrelated from one another". Identically distributed means that "all have been drawn from the same population distribution".
 
-Random variables which are iid are the default model for random samples and many of the importany theories of statistics assume that variables are iid. 
+Random variables which are iid are the default model for random samples and many of the important theories of statistics assume that variables are iid. 
 
 
 
