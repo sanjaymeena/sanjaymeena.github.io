@@ -8,7 +8,7 @@ excerpt: Statistics
 categories: [Tech]
 tags: [NLP, Statistics]
 keywords: Statistics
-description : Statistics
+description : Statistical Inference
 share: twitter facebook linkedin
 ---
 
@@ -64,8 +64,20 @@ $$ \mathsf{ P(A \cup B) = P(A) + P(B) - P( A \cap B ) } $$
 ## Random Variables
 
 A random variable is a numerical outcome of an experiment. The random variables  broadly come in two varieties : 
-	* Discrete random variables : takes only a countable number of possibilities
-	* Continuous random variables : These can take any value on the real line. 
+
+* Discrete random variables : takes only a countable number of possibilities
+* Continuous random variables : These can take any value on the real line. 
+
+`
+Q: If you had a ruler of infinite precision, would measuring the height of adults around the world be continuous or discrete?
+A: Continous
+`
+
+`
+Q: Is the drawing of a hand of cards continuous or discrete?
+A: Discrete
+`
+
 
 
 Some gambling experiments like the tossing of a coin and the rolling of a die produce random variables. 
@@ -136,13 +148,18 @@ This is the idea of conditioning, taking away the randomness that we know to hav
 
 Let B be an event so that P(B) > 0. Then the conditional probability of an event A given that B has occurred is:
 	
-$$ \mathsf { P (A|B) = \frac {P(A \cap B)} {P(B)} } $$
+$$ \mathsf{P(B|A) = \frac {P(A \cap B)} {P(A)} = P (A|B) *  \frac {P(B)} {P(A)}} $$
 
-Bayes’ rule allows us to switch the conditioning event, provided a little bit of extra information. Formally Bayes’ rule is:
+Suppose we don't know P(A) itself, but only know its conditional probabilities, that is, the probability that it occurs if B occurs and the probability that it occurs if B doesn't occur. 
 
 
+We can then express P(A) as : 
+$$ \mathsf { P(A) = P(A|B) * P(B) + P(A| B^{`}) * P(B^{`}) } $$  
 
-$$ \mathsf { P (B|A) = \frac {P(A|B) P(B)} { P(A|B) P(B) +  P(A|B^{'}) P(B^{'})} } $$
+and substitute this is into the denominator of Bayes' Formula to get : 
+
+$$ \mathsf {P(B|A) = \frac {P(A|B) P(B)} { P(A|B) P(B) +  P(A|B^{`}) P(B^{`})} } $$
+
 
 
 ## Statistical Independence
@@ -154,9 +171,13 @@ $$ \mathsf { P (A \cap B) = P(A) P(B) } $$
 * Important principle is that probabilities of independent things multiply! 
 * It also means that we shouldn’t multiply non-independent probabilities.
 
+
 ## Independent and Identically Distributed (IID) random variables
 
-Random variables are said to be independent and identically distributed (iid) if they are independent and all are drawn from the same population. The IID samples are a model for random samples which is the default starting point of most statistical inference. 
+
+Random variables are said to be iid if they are independent and identically distributed. By independent we mean "statistically unrelated from one another". Identically distributed means that "all have been drawn from the same population distribution".
+
+Random variables which are iid are the default model for random samples and many of the importany theories of statistics assume that variables are iid. 
 
 
 
@@ -173,7 +194,7 @@ $$ \mathsf { E[X] = \sum_{x} xp(x)} $$
 
 ### The sample mean
 
-The sample mean (estimator) estimates the population mean (estimand. Since the population mean is the center of mass of the population distribution, the sample mean is the center of mass of the data.
+The sample mean (estimator) estimates the population mean (estimand. Since the population mean is the center of mass of the population distribution, the sample mean is the center of mass of the data. sample mean is an unbiased estimator of the population mean.
 
 $$ \mathsf { \bar {X }= \sum_{i=1}^n x_{i}p(x_{i})} $$
 
@@ -182,6 +203,8 @@ the distribution of the estimator (the sample mean) is centered at the distribut
 Some important points to remember are : 
 
 * Expected values are properties of distributions.
+* The average, or mean, of random variables is itself a random variable and its associated distribution itself has an expected value. 
+* The center of this distribution is the same as that of the original distribution.
 * The population mean is the center of mass of population.
 * The sample mean is the center of mass of the observed data.
 * The sample mean is an estimate of the population mean.
@@ -189,12 +212,11 @@ Some important points to remember are :
 * The more data that goes into the sample mean, the more. concentrated its density / mass function is around the population mean.
 
 
-## Variation
+## Variance
 
-The variance
 The variance, on the other hand, is a measure of spread. 
 
-If X is a random variable with mean \mu, the variance of X is defined as
+If X is a random variable with mean $$ \mathsf {\mu} $$ , the variance of X is defined as
 
 $$ \mathsf { Var(X) = E[(X- \mu)^2] = E[X^2] - E[X]^2} $$
 
@@ -203,11 +225,14 @@ Variance of a coin flip , with probability of head as P is :
 $$ \mathsf {Var(X) = E[X^2] - E[X]^2 = p - p^2 = p(1 - p) } $$
 
 
+Because it is often more useful to use measurements in the same units as X,  we define the standard deviation of X as the square root of Var(X).
+
+
 * Densities with a higher variance are more spread out than densities with a lower variance. 
 * The square root of the variance is called the standard deviation. The main benefit of working with standard deviations is that they have the same units as the data, whereas the variance has the units squared.
 
 
-## Sample variance 
+### Sample variance 
 
 The sample variance is the estimator of the population variance. The sample variance is (almost) the average squared deviation of observations around the sample mean. It is given by
 
@@ -219,7 +244,6 @@ The sample Standard deviation S , is the square root of the sample variance.
 ## Standard Error
 We call the standard deviation of a statistic its standard error.
 
-
 * The sample variance, $$ \mathsf {S^2} $$ , estimates the population variance, $$ \mathsf {\sigma^2} $$
 * The distribution of the sample variance is centered around population variance , $$ \mathsf {\sigma^2} $$
 * The variance of the sample mean is $$ \mathsf {\frac {\sigma^2} {n}} $$
@@ -227,35 +251,4 @@ We call the standard deviation of a statistic its standard error.
 * The logical estimate of the standard error is  $$ \mathsf { \frac {S} {\sqrt {n} }} $$
 * S, the standard deviation, talks about how variable the population is.
 * $$ \mathsf { \frac {S} {\sqrt {n}}} $$ , the standard error, talks about how variable averages of random samples of size n from the population are.
-
-
-
-## S#tandard Normals
-
-Standard normals have variance 1. Sampling means of n standard normals have standard deviation $$ \mathsf { \frac {1} {\sqrt{n}}}$$
-
-
-# SOme common distributions
-
-## Bernoulli distribution
-
-## Binomial trials
-
-## the normal distribution
-
-## the poisson distribution
-
-
-# Asymptopia
-
-## Central Limit Theorm 
-
-## Confidence Intervals
-
-
-# t confidence intervals 
-
-
-# Hyphothesis Testing
-
 
