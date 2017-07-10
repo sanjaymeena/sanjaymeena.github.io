@@ -1,7 +1,7 @@
 ---
 layout: single
 title: Sources of Power
-published: false
+published: true
 categories: [Books]
 tags: [book-notes]
 sitemap: true
@@ -9,9 +9,17 @@ excerpt: A "Good strategy" is an approach that magnifies the effectiveness of ac
 description: A "Good strategy" is an approach that magnifies the effectiveness of actions by finding and using sources of power. 
 keywords: strategy
 share: twitter facebook linkedin
+series: Good Strategy Bad Strategy
 --- 
 
-Table of Content
+
+{% include series.html %}
+
+
+This post we discuss the various sources of power or advantages in a good strategy. 
+
+
+<b>Table of Content</b>
 
 * TOC
 {:toc}

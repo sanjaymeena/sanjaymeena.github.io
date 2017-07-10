@@ -8,8 +8,11 @@ sitemap: true
 excerpt: Strategy is a term thrown around quite a bit without the underlying depth of its details. Developing and implementing a strategy is the central task of a leader, whether the CEO of a fortune 100 company, an entrepreneur. 
 description: Strategy is a term thrown around quite a bit without the underlying depth of its details. Developing and implementing a strategy is the central task of a leader, whether the CEO of a fortune 100 company, an entrepreneur. 
 keywords: strategy
-share: twitter facebook linkedin
+share: twitter  linkedin
+series: Good Strategy Bad Strategy
 --- 	
+
+{% include series.html %}
 
 Strategy is a term thrown around quite a bit without the underlying depth of its details. Developing and implementing a strategy is the central task of a leader, whether the CEO of a fortune 100 company, an entrepreneur. 
 
