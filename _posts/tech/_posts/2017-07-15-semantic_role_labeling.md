@@ -4,7 +4,7 @@ author: Sanjay Meena
 layout: single
 sitemap: true
 published: true
-excerpt: Semantic Role Labeling
+excerpt: Semantic Role Labeling consists of the detection of the semantic arguments associated with the predicate or verb of a sentence and their classification into their specific roles.
 categories: [Tech]
 tags: [NLP, Deep Learning]
 keywords: Deep Learning, Semantic Role Labeling, LSTM, DB-LSTM
