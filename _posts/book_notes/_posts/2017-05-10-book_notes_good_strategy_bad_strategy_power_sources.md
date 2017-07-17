@@ -1,14 +1,14 @@
 ---
 layout: single
 title: Sources of Power
-published: false
+published: true
 categories: [Books]
 tags: [book-notes]
 sitemap: true
 excerpt: A "Good strategy" is an approach that magnifies the effectiveness of actions by finding and using sources of power. 
 description: A "Good strategy" is an approach that magnifies the effectiveness of actions by finding and using sources of power. 
 keywords: strategy
-share: twitter facebook linkedin
+share: twitter linkedin
 --- 
 
 Table of Content
@@ -239,7 +239,7 @@ Entropy is always at work. With the passage of time, great works of art blur and
 The bread and butter of every consultant's business is undoing entropy - cleaning up the debris and weeds that grow in every organizational garden. 
 
 
-Overall we can say that every building block of good strategy is : 
+Overall we can say that every building block of a good strategy is : 
 
 * intelligent anticipation
 * a guiding policy that reduces complexity
