@@ -8,12 +8,8 @@ sitemap: true
 excerpt: A "Good strategy" is an approach that magnifies the effectiveness of actions by finding and using sources of power. 
 description: A "Good strategy" is an approach that magnifies the effectiveness of actions by finding and using sources of power. 
 keywords: strategy
-<<<<<<< HEAD:_posts/book_notes/_posts/2017-05-10-book_notes_good_strategy_bad_strategy_power_sources.md
-share: twitter linkedin
-=======
 share: twitter facebook linkedin
 series: Good Strategy Bad Strategy
->>>>>>> 19672831770dd33cdafc150bce5ec69dcaf5f379:_posts/book_notes/_posts/2017-07-10-book_notes_good_strategy_bad_strategy_power_sources.md
 --- 
 
 
