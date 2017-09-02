@@ -5,14 +5,14 @@ published: true
 categories: [Investing]
 tags: [investment-notes]
 sitemap: true
-excerpt: CANSLIM stands for one of the seven chief characteristics of these greatest winning stocks at their developing early stages
-description: CANSLIM stands for one of the seven chief characteristics of these greatest winning stocks at their developing early stages
+excerpt: CANSLIM stands for seven chief characteristics of the greatest winning stocks at their developing early stages
+description: CANSLIM stands for seven chief characteristics of the greatest winning stocks at their developing early stages
 keywords: CANSLIM, Winning System
 share: twitter facebook linkedin
 --- 
 
 
-# Introduction 
+# Introduction  
 
 We all are interested in knowing the common characteristics and rules of success related to picking winners in stocks. There have been many intensive studies of past market leaders to identify patterns and develop investment strategies. 
 
