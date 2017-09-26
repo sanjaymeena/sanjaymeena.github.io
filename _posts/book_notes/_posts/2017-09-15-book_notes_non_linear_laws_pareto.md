@@ -12,10 +12,7 @@ share: twitter facebook linkedin
 series: Non Linear Laws
 --- 
 
-
-
 {% include series.html %}
-
 
 # Introduction
 
@@ -85,3 +82,5 @@ In organizations and life generally, we tend to focus on the value that is creat
 
 Identify whatever activities or links subtracts more value than they add, add cut them. Stop any activity that you or others engage in, if the value subtracted is nearly as great as, or is greater than value added. 
 
+
+{% include series.html %}
