@@ -75,7 +75,7 @@ I have divided the projects into
 
 
 
-* <b>Note: The tables are searchable by words and columns can be sorted by clicking on the columns</b>
+* <b>Note: The tables are searchable by words and columns can be sorted by clicking on the column names</b>
 
 
 
