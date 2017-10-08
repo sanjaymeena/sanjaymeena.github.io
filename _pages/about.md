@@ -19,6 +19,6 @@ I am currently working as a Data Scientist in  Taipei, Taiwan.
 
 ### Lists 
 
-1.  [Some of the projects i have worked in AI, Data Science, NLP ]({{ site.baseurl }}/demos/)
+1.  [Some of the projects i have worked in AI, Data Science, NLP ]({{ site.baseurl }}/projects/)
 
 2. [Some Running Events I have participated in ]({{ site.baseurl }}/misc/marathon_log/)

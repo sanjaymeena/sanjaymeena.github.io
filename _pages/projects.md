@@ -1,7 +1,7 @@
 ---
 title: Tech Projects and Demos
-permalink: /demos/
-description: This section is for the demos and source code related to NLP, Data Science and Machine Learning.
+permalink: /projects/
+description: This section is for the projects related to NLP, Data Science, Machine Learing, Deep Learning
 keywords: Natural Language Processing, NLP, Data Science, machine learning, deep learning
 excerpt: Demos and source code related to NLP, Data Science and Machine Learning.
 layout: customjs
@@ -71,7 +71,7 @@ These use Machine Learning, Deep Learning , Data Science knowledge and are conne
 I have divided the projects into 
 
 1. Data Science Projects - Involving usage of Python, R. Many of these are related to NLP. 
-2. Core NLP Projects - Java based for core nlp topics
+2. Core NLP Projects - Java based for core NLP topics
 
 
 

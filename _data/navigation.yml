@@ -11,7 +11,7 @@ main:
     url: /tech
 
   - title: "Projects"
-    url: /demos
+    url: /projects
 
   - title: "Misc"
     url: /misc
