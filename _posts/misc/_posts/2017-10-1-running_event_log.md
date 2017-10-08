@@ -1,6 +1,6 @@
 ---
 layout: single
-title: Running Record	
+title: Running Event Log	
 published: true
 categories: [Misc]
 tags: [marathon, log]
