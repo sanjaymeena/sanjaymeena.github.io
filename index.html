@@ -7,12 +7,38 @@ header:
 author_profile: true
 paginate: true
 description: Blog on A.I, Value Investing, Books, Technology
-keywords: value investing, pharma, stocks, financial analysis, nlp, natural language processing, java, behavioural finance, data science
+keywords: machine learning, deep learning, artificial intelligence, value investing, pharma, stocks, financial analysis, nlp, natural language processing, Java, behavioral finance, data science, information extraction, information retrieval
 excerpt: Blog on A.I, Value Investing, Books, Technology
 ---
 
 {% include base_path %}
 
+
+
+<div>
+<p>
+<h2>Hello there! </h2>
+
+I maintain this Blog to record my learnings from different fields of Investing and Technology. 
+<br>
+
+Blog posts are divided into following categories . 
+<ul> 
+<li> <a href="{{ site.baseurl }}/tech/">Tech Posts </a> : Posts related to Data Science, AI, Natural Language Processing (NLP), Deep Learning and Machine Learning</li>
+<li> <a href="{{ site.baseurl }}/investment_notes/">Investing Posts </a> :Posts on various topics related to Investing like Finance, Psychology, Investing Approaches</li>
+<li> <a href="{{ site.baseurl }}/book_notes/">Book Notes </a> : Notes from Various Books on topics like Investing, Psychology, Nature etc. </li>
+<li> <a href="{{ site.baseurl }}/misc/">Misc </a> - Miscellaneous Posts </li>
+</ul>
+</p>
+
+<p>
+You can also have a look at some of the tech projects i have worked on the over the years : <a href="{{ site.baseurl }}/demos/"> Projects </a>
+</p>
+</div>
+
+
+
+Below are my posts sorted by Year. 
 <div class="page_list">
   {%for post in site.posts %}
      {% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}

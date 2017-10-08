@@ -8,7 +8,7 @@ excerpt: Indian food in major cities of Taiwan.
 published: true
 sitemap: true
 comments: true
-categories: [misc]
+categories: [Misc]
 tags: [indian food, taipei, taiwan, vegetarian food]
 description: Indian Food restaurants in various cities of taiwan.
 keywords: indian food in taiwan, indian food in taipei, vegetarain food in taipei, indian buffett 

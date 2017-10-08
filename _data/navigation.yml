@@ -1,16 +1,16 @@
 # main links links
 main:
 
-  - title: "Investment Notes"
+  - title: "Investing"
     url: /investment_notes
 
-  - title: "Book Notes"
+  - title: "Books"
     url: /book_notes
 
-  - title: "Tech Posts"
+  - title: "Tech"
     url: /tech
 
-  - title: "Demos"
+  - title: "Projects"
     url: /demos
 
   - title: "Misc"
