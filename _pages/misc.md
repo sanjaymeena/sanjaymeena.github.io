@@ -11,7 +11,7 @@ excerpt: Value Investing related posts
 ---
 
 <div class="page_list">
-  {%for post in site.categories.misc %}
+  {%for post in site.categories.Misc %}
      {% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}
 
   {% if forloop.first %}
