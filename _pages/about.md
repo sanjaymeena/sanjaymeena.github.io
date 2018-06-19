@@ -21,4 +21,4 @@ I am currently working as a Data Scientist in  Taipei, Taiwan.
 
 1.  [Some of the projects i have worked in AI, Data Science, NLP ]({{ site.baseurl }}/projects/)
 
-2. [Some Running Events I have participated in ]({{ site.baseurl }}/misc/marathon_log/)
+2. [Some Running Events I have participated in ]({{ site.baseurl }}/misc/running_event_log/)

@@ -1,6 +1,7 @@
 ---
 layout: single
 title: How to Lie with Statistics
+author_profile: true
 published: true
 categories: [Books]
 tags: [book-notes]
