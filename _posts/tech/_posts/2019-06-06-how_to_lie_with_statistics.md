@@ -1,10 +1,10 @@
 ---
 layout: single
 title: How to Lie with Statistics
-author_profile: true
+author: Sanjay Meena
 published: true
 categories: [Tech]
-tags: [statistics]
+tags: [Statistics]
 sitemap: true
 excerpt: There is something about numbers isn’t there? They have an uncanny ability to suspend our common sense.
 description: There is something about numbers isn’t there? They have an uncanny ability to suspend our common sense.
