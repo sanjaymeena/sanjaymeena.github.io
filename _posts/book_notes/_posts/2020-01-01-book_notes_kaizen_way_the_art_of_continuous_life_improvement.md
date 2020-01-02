@@ -6,9 +6,9 @@ published: true
 categories: [Books]
 tags: [book-notes]
 sitemap: true
-excerpt: The art of continous life improvement
-description: The art of continous life improvement
-keywords: 
+excerpt: The art of continuous life improvement
+description: The art of continuous life improvement
+keywords: kaizen way, 改善, life improvement, continuous, compounding effect, ask why
 share: twitter facebook linkedin
 --- 
 

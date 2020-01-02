@@ -34,8 +34,4 @@ Beware of undetaking too much at the start. Be content with a little. Allow for 
 
 
 We keep hearing live life to the fullest! An Adult person considers 10-6 pm (1/3rd of a day) as the "day". Rest of the time (2/3rd of a day) is unaccounted for. 
-# How to talk back to Statistics
-<img src="/images/posts/books/how_to_lie_with_statistics/how_to_talk_to_stats.jpg" height = "200" width="200">
-
-
 
