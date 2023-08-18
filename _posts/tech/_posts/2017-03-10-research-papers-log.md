@@ -76,7 +76,7 @@ $(document).ready(function(){
 </thead>
 <tbody>
 <tr>
-<td><a href='http://aclweb.org/anthology/D16-1087'>Named Entity Recognition for Novel Types by Transfer Learning</a></td>
+<td><a href='https://aclweb.org/anthology/D16-1087'>Named Entity Recognition for Novel Types by Transfer Learning</a></td>
 <td>Named Entity Recognition (NER)</td>
 <td>Given training data in a related domain with similar (but not identical) named entity (NE) types and a small amount of in-domain training data, They use transfer learning to learn a domain-specific NE model.</td>
 <td>NER;CRF;Transfer Learning</td>

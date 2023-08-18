@@ -29,4 +29,4 @@ Below is mindmap for drivers of PE Ratio
 [<img src="/images/posts/investment_notes/nbfc/Drivers of PE Ratio.png" height = "1500" width="1000">](/images/posts/investment_notes/nbfc/Drivers of PE Ratio.png)
 
 
-The source of this mindmap is from Basant Maheshwari's excellent book, ['The Thoughtful Investor'](http://www.thethoughtfulinvestor.in/). It is a very good book written with the context of Indian Equity Markets. 
+The source of this mindmap is from Basant Maheshwari's excellent book, ['The Thoughtful Investor'](https://www.thethoughtfulinvestor.in/). It is a very good book written with the context of Indian Equity Markets. 

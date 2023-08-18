@@ -11,7 +11,7 @@ keywords: Persusian, dreams, failures,justify, encourage
 share: twitter facebook linkedin
 --- 
 
-Scott Adams is a thoughtful advocate for learning persuasion. I had written a post on his book 'How to Fail at Almost Everything and Still Win Big' which you can read [here](http://sanjaymeena.io/books/book_notes_how_to_fail_at_almost_everything_and_still_win_big/)
+Scott Adams is a thoughtful advocate for learning persuasion. I had written a post on his book 'How to Fail at Almost Everything and Still Win Big' which you can read [here](https://sanjaymeena.io/books/book_notes_how_to_fail_at_almost_everything_and_still_win_big/)
 
 
 Scott Adams has recommended this wonderful book on Persuasion.

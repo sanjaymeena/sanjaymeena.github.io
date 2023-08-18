@@ -11,9 +11,9 @@ title                    : "Seeking Wisdom"
 title_separator          : "-"
 name                     : "Sanjay Meena"
 description              : "Blog on Equities, Tech, Books"
-url                      : http://localhost:4000
+url                      : https://localhost:4000
 baseurl                  :
-base_path                : http://localhost:4000 #"http://sanjaymeena.io"
+base_path                : https://localhost:4000 #"https://sanjaymeena.io"
 teaser                   : # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
@@ -86,7 +86,7 @@ author:
   linkedin         : "sanjay-meena-7546058"
   pinterest        :
   soundcloud       :
-  stackoverflow    : # http://stackoverflow.com/users/123456/username
+  stackoverflow    : # https://stackoverflow.com/users/123456/username
   steam            :
   tumblr           :
   twitter          : sanjaymeena
@@ -127,7 +127,7 @@ defaults:
 permalink: /:categories/:title/
 paginate: 10 # amount of posts to show
 paginate_path: /page:num/
-#timezone: America/New_York # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+#timezone: America/New_York # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
 # jekyll-press config
@@ -199,7 +199,7 @@ kramdown:
 permalink: /:categories/:title/
 paginate: 5 # amount of posts to show
 paginate_path: /page:num/
-timezone: # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
 
@@ -261,7 +261,7 @@ jekyll-archives:
 
 
 # HTML Compression
-# - http://jch.penibelst.de/
+# - https://jch.penibelst.de/
 compress_html:
   clippings: all
   comments:  ["<!-- ", " -->"]

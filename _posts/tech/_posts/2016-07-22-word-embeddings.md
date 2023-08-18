@@ -15,7 +15,7 @@ description : A recent big idea in natural language processing is that "meanings
 ---
 
 <script type="text/javascript"
-    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 
 <b> Table of Content </b>
@@ -108,20 +108,20 @@ The image below shows the two architectures:
 
 References:
 
-* [http://arxiv.org/pdf/1301.3781.pdf](http://arxiv.org/pdf/1301.3781.pdf)
-* [http://multithreaded.stitchfix.com/blog/2015/03/11/word-is-worth-a-thousand-vectors/](http://multithreaded.stitchfix.com/blog/2015/03/11/word-is-worth-a-thousand-vectors/)
-* [http://www.slideshare.net/roelofp/041114-dl-nlpwordembeddings](http://www.slideshare.net/roelofp/041114-dl-nlpwordembeddings)
+* [https://arxiv.org/pdf/1301.3781.pdf](https://arxiv.org/pdf/1301.3781.pdf)
+* [https://multithreaded.stitchfix.com/blog/2015/03/11/word-is-worth-a-thousand-vectors/](https://multithreaded.stitchfix.com/blog/2015/03/11/word-is-worth-a-thousand-vectors/)
+* [https://www.slideshare.net/roelofp/041114-dl-nlpwordembeddings](https://www.slideshare.net/roelofp/041114-dl-nlpwordembeddings)
 * [https://github.com/3Top/word2vec-api#where-to-get-a-pretrained-models](https://github.com/3Top/word2vec-api#where-to-get-a-pretrained-models)
 <hr>
 
 ## Glove
-Stanford’s GloVe: [Global Vectors for Word Representation](http://www-nlp.stanford.edu/pubs/glove.pdf)  is an unsupervised learning algorithm for obtaining vector representations for words. 
+Stanford’s GloVe: [Global Vectors for Word Representation](https://www-nlp.stanford.edu/pubs/glove.pdf)  is an unsupervised learning algorithm for obtaining vector representations for words. 
 
 Training is performed on aggregated global word-word co-occurrence statistics from a corpus, and the resulting representations showcase interesting linear substructures of the word vector space.
 
-[Levy et al.](http://www.aclweb.org/anthology/Q15-1016) reported that there is no significant performance difference between different word embeddings implementations like Glove, Word2vec etc. 
+[Levy et al.](https://www.aclweb.org/anthology/Q15-1016) reported that there is no significant performance difference between different word embeddings implementations like Glove, Word2vec etc. 
 
-In my work on some classification tasks, i found Glove to perform better than Word2vec . I  used  publicly available models for [word2vec](https://code.google.com/archive/p/word2vec/) and [Glove](http://nlp.stanford.edu/projects/glove/)
+In my work on some classification tasks, i found Glove to perform better than Word2vec . I  used  publicly available models for [word2vec](https://code.google.com/archive/p/word2vec/) and [Glove](https://nlp.stanford.edu/projects/glove/)
 <hr>
 
 ## Dependency based word embeddings
@@ -183,9 +183,9 @@ This method ignores the context words in the input. The paragraph vector is trai
 From expirements described in [Mikolov's paper on paragraph vectors](https://cs.stanford.edu/~quocle/paragraph_vector.pdf) combination of PV-DM with PV-DBOW is more consistent across many tasks like Sentiment Analysis , Information retrieval.
 
 ### Skip-Thought Vectors
-[Skip-Thought Vectors](http://arxiv.org/pdf/1506.06726v1.pdf) are unsupervised sentence vectors. The inspiration is word vector learning. This method abstracts the skip-gram model of words to sentences the sentence level. So, instead of using a word to predit its surrounding context (or words in this case), Skip thoughts <b> encode a sentence to predict the sentences around it.</b>
+[Skip-Thought Vectors](https://arxiv.org/pdf/1506.06726v1.pdf) are unsupervised sentence vectors. The inspiration is word vector learning. This method abstracts the skip-gram model of words to sentences the sentence level. So, instead of using a word to predit its surrounding context (or words in this case), Skip thoughts <b> encode a sentence to predict the sentences around it.</b>
 
-Skip Thought Model requires having a training corpus of contiguous text. [The paper](http://arxiv.org/pdf/1506.06726v1.pdf) trained on a large collection of novels, namely the [BookCorpus dataset](http://www.cs.toronto.edu/~mbweb/).
+Skip Thought Model requires having a training corpus of contiguous text. [The paper](https://arxiv.org/pdf/1506.06726v1.pdf) trained on a large collection of novels, namely the [BookCorpus dataset](https://www.cs.toronto.edu/~mbweb/).
 
 
 [<img src="/images/posts/tech/w2v/skip-thought.png" height = "450" width="700">](/images/posts/tech/w2v/skip-thought.png)
@@ -236,9 +236,9 @@ Gensim Doc2Vec
 
 There are various tutorial online for how to use gensim for word2vec and doc2vec. 
 
-- [http://rare-technologies.com/doc2vec-tutorial/](http://rare-technologies.com/doc2vec-tutorial/)
-- [http://ufldl.stanford.edu/wiki/index.php/UFLDL_Tutorial](http://ufldl.stanford.edu/wiki/index.php/UFLDL_Tutorial)
-- [http://www.wildml.com/2015/09/implementing-a-neural-network-from-scratch/](http://www.wildml.com/2015/09/implementing-a-neural-network-from-scratch/)
+- [https://rare-technologies.com/doc2vec-tutorial/](https://rare-technologies.com/doc2vec-tutorial/)
+- [https://ufldl.stanford.edu/wiki/index.php/UFLDL_Tutorial](https://ufldl.stanford.edu/wiki/index.php/UFLDL_Tutorial)
+- [https://www.wildml.com/2015/09/implementing-a-neural-network-from-scratch/](https://www.wildml.com/2015/09/implementing-a-neural-network-from-scratch/)
 - [https://linanqiu.github.io/2015/10/07/word2vec-sentiment/](https://linanqiu.github.io/2015/10/07/word2vec-sentiment/)
 
 

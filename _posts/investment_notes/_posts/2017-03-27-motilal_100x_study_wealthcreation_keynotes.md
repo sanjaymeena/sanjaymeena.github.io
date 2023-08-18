@@ -18,7 +18,7 @@ series: SQGLP Framework
 
 # Biggest Wealth Creator Key notes
 
-In continuation of the SQGLP framework discussion, some key points from the Motilal Oswal 2014 study are summarized in this post. You can read the 1st part of the post [here](http://sanjaymeena.io/investing/motilal_100x_study/) : 
+In continuation of the SQGLP framework discussion, some key points from the Motilal Oswal 2014 study are summarized in this post. You can read the 1st part of the post [here](https://sanjaymeena.io/investing/motilal_100x_study/) : 
 
 
 ##  Market folly is one of the biggest sources of multi-baggers

@@ -157,7 +157,7 @@ A moat, even a narrow moat is a necessity.
 
 ####  Michael Mauboussin on Moats
 
-You can read the original study [here](http://csinvesting.org/wp-content/uploads/2013/07/Measuring_the_Moat_July2013.pdf) 
+You can read the original study [here](https://csinvesting.org/wp-content/uploads/2013/07/Measuring_the_Moat_July2013.pdf) 
 
 - Some industries are better at creating value than others.
 - Even best industries include companies that destroy values and the worst industries have companies that create value. Some companies buck the economics of their industry provides insight into the potential sources of economic performance. 
@@ -199,7 +199,7 @@ Below images shows the "Virtous Feedback" created by Owner-Operators
 <img src="{{ site.url }}/images/posts/books/100_baggers/owner-operator.png" height="300" width="500">
 
 
-#### Some great ideas from the outstanding book : [Outsiders](http://www.amazon.com/Outsiders-Unconventional-Radically-Rational-Blueprint/dp/1422162672?ie=UTF8&*Version*=1&*entries*=0)
+#### Some great ideas from the outstanding book : [Outsiders](https://www.amazon.com/Outsiders-Unconventional-Radically-Rational-Blueprint/dp/1422162672?ie=UTF8&*Version*=1&*entries*=0)
 
 * All CEO's were great capital allocators, or great investors
     - They also have 3 ways to raise money:
@@ -252,7 +252,7 @@ There is a world of noise out there. Everyday something important happens, or so
 There is an element of good luck/bad luck in our lives as well as in stock markets. 
 
 There is a great quote by Nicholas Rescher on chance,luck in his book : 
-[The Brilliant Randomness of Everyday life](http://www.amazon.com/Luck-Brilliant-Randomness-Everyday-Life/dp/0822957558): 
+[The Brilliant Randomness of Everyday life](https://www.amazon.com/Luck-Brilliant-Randomness-Everyday-Life/dp/0822957558): 
 ```
 To be sure, given our natural human commitment to the idea that we live in a rational world, we are inclined to think that there is always an ultimate reason. ... All of this is perfectly natural but also totally futile. 
 The only ultimate rational attitude is to sit loosely in the saddle of life and come to terms with the idea of chance as such. 

@@ -29,7 +29,7 @@ Table of Content
 
 # The essence of 100x stocks 
 
-[Motilal Oswal](http://www.motilaloswal.com/) has some very good Annual Wealth Creation Studies. They are a highly recommended read. I especially liked the 19th Wealth creation Study where the the theme was the power of growth in Wealth Creation. You can read the original report [here](http://www.motilaloswal.com/downloads/19-wcs-2014-100x-12-dec-2014.pdf) 
+[Motilal Oswal](https://www.motilaloswal.com/) has some very good Annual Wealth Creation Studies. They are a highly recommended read. I especially liked the 19th Wealth creation Study where the the theme was the power of growth in Wealth Creation. You can read the original report [here](https://www.motilaloswal.com/downloads/19-wcs-2014-100x-12-dec-2014.pdf) 
 
 I have tried to capture some important ideas from the study that details the SQGLP (Size, Quality, Growth, Longevity, Price) Framework. 
 

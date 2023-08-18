@@ -23,7 +23,7 @@ keywords: custom fonts in android
 
 Android does not have a standard way of adding custom fonts using XML. We can add them programmatically at run time but that is not a flexible approach. Using custom attributes , we can  setup the custom fonts in android using XML.
 
-I’ve taken example of [Roboto Font](http://developer.android.com/design/style/typography.html "Roboto Font")  for this demo.  This font needs API level >11 to be used directly. We  will use it as a custom font.
+I’ve taken example of [Roboto Font](https://developer.android.com/design/style/typography.html "Roboto Font")  for this demo.  This font needs API level >11 to be used directly. We  will use it as a custom font.
 
 
 
@@ -31,7 +31,7 @@ I’ve taken example of [Roboto Font](http://developer.android.com/design/style
 
 ### <span id="Copy_Fonts_to_assets_folder">Copy Fonts to assets folder</span>
 
-Create a folder in the root of your project called assets/fonts/ and paste the Roboto TTF font files available from the [android typography website](http://developer.android.com/design/style/typography.html).
+Create a folder in the root of your project called assets/fonts/ and paste the Roboto TTF font files available from the [android typography website](https://developer.android.com/design/style/typography.html).
 
 ### <span id="Define_Custom_attributes">Define Custom attributes</span>
 
@@ -471,16 +471,16 @@ private Typeface createTypeface(Context context, int typefaceValue) throws Illeg
 
 Now we can use the custom fonts through the layout files. We need to reference the namespace  in our layout file:
 
-<span class="lang:default decode:true crayon-inline">xmlns:app=&#8221;http://schemas.android.com/apk/res/com.sanjaymeena.customfont&#8221;</span>
+<span class="lang:default decode:true crayon-inline">xmlns:app=&#8221;https://schemas.android.com/apk/res/com.sanjaymeena.customfont&#8221;</span>
 
 ``` xml 
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="https://schemas.android.com/apk/res/android"
 
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="https://schemas.android.com/tools"
 
-    xmlns:app="http://schemas.android.com/apk/res/com.sanjaymeena.customfont"
+    xmlns:app="https://schemas.android.com/apk/res/com.sanjaymeena.customfont"
 
     android:id="@+id/ideapager_scrollview"
 

@@ -19,7 +19,7 @@ Table of Content
 {:toc}
 
 
-I made these notes from Basant Maheshwari's Book : [A Thoughtful Investor](http://www.thethoughtfulinvestor.in/) . I would recommend budding and experienced investors alike  to read this book.
+I made these notes from Basant Maheshwari's Book : [A Thoughtful Investor](https://www.thethoughtfulinvestor.in/) . I would recommend budding and experienced investors alike  to read this book.
 
 
 # What constitutes a good business. 

@@ -57,7 +57,7 @@ Banks can borrow up to 8-10 times their net worth so even small defaults can mak
 
 * Example
 	* A bank worth 100 $; can borrow another 900$ to create a loan portfolio of 1000 $
-	* Even a 5% [delinquency](http://www.investopedia.com/terms/d/delinquent.asp?layout=infini&v=5F&adtest=5F&ato=0) or 50$ has the power to knock out 40% (50/125 * 100) of net worth
+	* Even a 5% [delinquency](https://www.investopedia.com/terms/d/delinquent.asp?layout=infini&v=5F&adtest=5F&ato=0) or 50$ has the power to knock out 40% (50/125 * 100) of net worth
 
  It is not difficult for a bank to generate a high rate of growth because there is never shortage of people who wants to borrow money. Hence in case of a lending business, a company that grows at 30% should be preferred to the one that grows at 30%
 

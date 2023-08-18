@@ -1,7 +1,7 @@
 /*
  * Canvas2Image v0.1
  * Copyright (c) 2008 Jacob Seidelin, jseidelin@nihilogic.dk
- * MIT License [http://www.opensource.org/licenses/mit-license.php]
+ * MIT License [https://www.opensource.org/licenses/mit-license.php]
  */
 
 var Canvas2Image = (function() {

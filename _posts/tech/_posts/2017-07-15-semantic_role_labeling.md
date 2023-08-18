@@ -52,16 +52,16 @@ This post i wanted to introduce the new neural network which has given very good
 
 It is an end-to-end system using bi-directional long short-term memory (DB-LSTM) which was presented in : 
 
-[End-to-end learning of semantic role labeling using recurrent neural networks](http://www.aclweb.org/anthology/P15-1109) (Zhou & Xu International joint conference on Natural Language Processing, 2015 )
+[End-to-end learning of semantic role labeling using recurrent neural networks](https://www.aclweb.org/anthology/P15-1109) (Zhou & Xu International joint conference on Natural Language Processing, 2015 )
 
 Recurrent Neural Network (RNN) has advantage in modeling sequencing problems. The past information is built up through the recurrent layer when model consumes the sequence word by word. 
 
 People often met with two difficulties with RNN :
 
 * Information of the current word strongly depends on distant words, rather than its neighborhood. 
-* Gradient parameters may explode or vanish especially in processing long sequences [(Bengio et al. 1994) ](http://www.dsi.unifi.it/~paolo/ps/tnn-94-gradient.pdf)  . 
+* Gradient parameters may explode or vanish especially in processing long sequences [(Bengio et al. 1994) ](https://www.dsi.unifi.it/~paolo/ps/tnn-94-gradient.pdf)  . 
  
-Long short-term memory (LSTM) [(Hochreiter and Schmidhuber, 1997)](http://www.bioinf.jku.at/publications/older/2604.pdf) was proposed to address the above difficulties. 
+Long short-term memory (LSTM) [(Hochreiter and Schmidhuber, 1997)](https://www.bioinf.jku.at/publications/older/2604.pdf) was proposed to address the above difficulties. 
 
 
 In language related problems, the structural knowledge can be extracted by processing sequences both forward and backward so that the complementary information from the past and the future can be integrated for inference.
@@ -107,7 +107,7 @@ Stochastic gradient descent (SGD) algorithm is used as the training technique fo
 
 
 
-Overall the model was evaluated on the [CoNLL-2005 shared task](http://www.lsi.upc.edu/~srlconll/) and achieved state of the art F1 score of 81.07
+Overall the model was evaluated on the [CoNLL-2005 shared task](https://www.lsi.upc.edu/~srlconll/) and achieved state of the art F1 score of 81.07
 
 It is encouraging to see that deep learning models with end-to-end training can outperform traditional models on tasks which are previously
 believed to heavily depend on syntactic parsing. 

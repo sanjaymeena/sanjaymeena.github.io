@@ -172,7 +172,7 @@ I have divided the projects into
 
 <tr> 
 <td>Data Science</td> 
-<td>Compound intereste calculator made using <a href="https://www.r-project.org/">R</a> and <a href="http://shiny.rstudio.com/">Shiny</a>, Web Application Framework for R. You can read a small report <a href="https://github.com/sanjaymeena/developing-data-products/blob/master/slides/compound_interest_shiny_presentation.md"><b>here</b></a></td>  
+<td>Compound intereste calculator made using <a href="https://www.r-project.org/">R</a> and <a href="https://shiny.rstudio.com/">Shiny</a>, Web Application Framework for R. You can read a small report <a href="https://github.com/sanjaymeena/developing-data-products/blob/master/slides/compound_interest_shiny_presentation.md"><b>here</b></a></td>  
 <td><font color="brown">Topics : </font>Data Products, R Application <br> <font color="brown">Development : </font> R, Shiny</td>
 <td> <a href="https://sanjaymeena.shinyapps.io/compound_interest_calculator/">Demo </a> <br> <a href="https://github.com/sanjaymeena/developing-data-products">Code </a> <br> <a href="https://rpubs.com/sanjaymeena">Reports </a> </td> 
 

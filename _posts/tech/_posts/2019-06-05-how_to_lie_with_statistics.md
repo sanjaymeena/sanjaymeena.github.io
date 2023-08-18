@@ -12,7 +12,7 @@ keywords: biased sample, sampling, stratified,mean, median, mode, average, stati
 --- 
 
 
-I have written a blog post on ["How to Lie with Statistics"](https://medium.com/p/how-to-lie-with-statistics-b671b66399d?source=email-c78b6fd46a--writer.postDistributed&sk=ebfedf62c6fcdf6b8a91b1f8abe0ac9d) on [Medium](https://medium.com/p/how-to-lie-with-statistics-b671b66399d?source=email-c78b6fd46a--writer.postDistributed&sk=ebfedf62c6fcdf6b8a91b1f8abe0ac9d). Please check out it out. The original version written by me is [here](http://sanjaymeena.io/books/book_notes_how_to_lie_with_stats/)
+I have written a blog post on ["How to Lie with Statistics"](https://medium.com/p/how-to-lie-with-statistics-b671b66399d?source=email-c78b6fd46a--writer.postDistributed&sk=ebfedf62c6fcdf6b8a91b1f8abe0ac9d) on [Medium](https://medium.com/p/how-to-lie-with-statistics-b671b66399d?source=email-c78b6fd46a--writer.postDistributed&sk=ebfedf62c6fcdf6b8a91b1f8abe0ac9d). Please check out it out. The original version written by me is [here](https://sanjaymeena.io/books/book_notes_how_to_lie_with_stats/)
 
 
 

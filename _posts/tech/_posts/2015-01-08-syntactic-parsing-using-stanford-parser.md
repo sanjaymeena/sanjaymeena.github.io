@@ -23,7 +23,7 @@ description : Syntactic parsing using Stanford parser
 
 In Linguistics, Syntax provides rules to put together to form components of sentence and put together these components to form sentences.  Syntactic Parsing is a method to perform syntactic analysis of a sentence.
 
-The <a title="Stanford NLP Group" href="http://nlp.stanford.edu/" target="_blank">Stanford NLP Group </a> has provided java implementation of probabilistic natural language parsers, both highly optimized PCFG and lexicalized dependency parsers, and a lexicalized PCFG parser. You can find more information about it <a title="Stanford lex parser" href="http://nlp.stanford.edu/software/lex-parser.shtml" target="_blank">here</a>.  The lexical parsers are available for many languages including Chinese,  German , Arabic etc.
+The <a title="Stanford NLP Group" href="https://nlp.stanford.edu/" target="_blank">Stanford NLP Group </a> has provided java implementation of probabilistic natural language parsers, both highly optimized PCFG and lexicalized dependency parsers, and a lexicalized PCFG parser. You can find more information about it <a title="Stanford lex parser" href="https://nlp.stanford.edu/software/lex-parser.shtml" target="_blank">here</a>.  The lexical parsers are available for many languages including Chinese,  German , Arabic etc.
 
 This post is a tutorial on how to use the Stanford parser for English with different configurations. We would be able to run and use the Stanford parser by loading the models at run time or as a standalone socket server.
 
@@ -33,7 +33,7 @@ Consider an example sentence :
 
 When the power line snapped, Jack was listening to the radio , and Linda was reading in bed.
 
-You can check the parse tree output online <a href="http://nlp.stanford.edu:8080/parser/index.jsp" target="_blank">here</a> . The parse tree for the above sentence will look like following :
+You can check the parse tree output online <a href="https://nlp.stanford.edu:8080/parser/index.jsp" target="_blank">here</a> . The parse tree for the above sentence will look like following :
 
 ``` image
 (ROOT
@@ -73,14 +73,14 @@ You can download the Stanford parser code for this tutorial  from <a href="http
 We will create a version of Stanford parser which:
 
   * Can be configured using XML file
-  * Can be run as a [Network Socket Client-Server model](http://en.wikipedia.org/wiki/Network_socket)
+  * Can be run as a [Network Socket Client-Server model](https://en.wikipedia.org/wiki/Network_socket)
   * The client code will first try to use socket server. If not socket server is running, it will load the stanford parser locally.
 
 ## <span id="Configuration_File">Configuration  File</span>
 
   * We specify the port number (5556) on which the parser will run.
   * We specify the path to the Part of Speech (POS) tagger model file :  &#8220;resources/stanfordparser/models/pos-tagger/en/english-left3words-distsim.tagger&#8221;
-  * We specify the path to the lexical parser. In this version we have used Probabilistic Context-Free Grammar parser model . There is new [Shift Reduce Constituency parser]( http://nlp.stanford.edu/software/srparser.shtml) which is more accurate and around 20 times faster than PCFG parser. Only negative is that it requires a lot  of memory (~2 GB) to initialize and run properly . You can see its relative  performance matrix at the bottom of  this [URL](http://nlp.stanford.edu/software/srparser.shtml).
+  * We specify the path to the lexical parser. In this version we have used Probabilistic Context-Free Grammar parser model . There is new [Shift Reduce Constituency parser]( https://nlp.stanford.edu/software/srparser.shtml) which is more accurate and around 20 times faster than PCFG parser. Only negative is that it requires a lot  of memory (~2 GB) to initialize and run properly . You can see its relative  performance matrix at the bottom of  this [URL](https://nlp.stanford.edu/software/srparser.shtml).
   * We specify the max length of the sentences for which the parser will run. Please note that &#8220;50&#8221; is usually a good sentence length. For much longer sentences, the accuracy of the Stanford parser starts suffering.
 
 

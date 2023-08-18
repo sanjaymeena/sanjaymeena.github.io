@@ -75,7 +75,7 @@ Following information is provided currently:
 * Following information is associated with each word: 
     * Lemma -> The root form of the word. 
     * Part of Speech -> The part of speech of the word, Tense, Plurality etc
-    * Definition -> Definition of the word as found in [Wordnet 3.1](http://wordnetweb.princeton.edu/perl/webwn)
+    * Definition -> Definition of the word as found in [Wordnet 3.1](https://wordnetweb.princeton.edu/perl/webwn)
 
 
 
@@ -110,7 +110,7 @@ The manifest.json file tells Chrome important information about your extension:
 * Contains general extension related information (e.g. name, version)
 
 
-Google has published a list of all the fields supported in [manifest version 2](http://developer.chrome.com/extensions/manifest.html)
+Google has published a list of all the fields supported in [manifest version 2](https://developer.chrome.com/extensions/manifest.html)
 
 The Manifest.json for this project looks like this: 
 
@@ -283,7 +283,7 @@ var injected = injected || (function(information) {
 
     function sendRequestToTextAnalyzerServer(information) {
         // The URL to POST our data to
-        var postUrl = 'http://104.131.121.5:9000/TextAnalyzerWebService';
+        var postUrl = 'https://104.131.121.5:9000/TextAnalyzerWebService';
         var selectedElement = getSelectionBoundaryElement(false);
         var selectedText = information.selectionText;
         var language = "en";
@@ -438,7 +438,7 @@ This is a long function which does the work of processing and displaying the res
 
 ### Code to display the information in tooltip
 
-I used the [tooltipster js library](http://iamceege.github.io/tooltipster/) to display the tool-tip. 
+I used the [tooltipster js library](https://iamceege.github.io/tooltipster/) to display the tool-tip. 
 
 The code below creates the content to display and then uses tool-tipster Java script library to show the tool-tip
 

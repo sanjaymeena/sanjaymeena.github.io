@@ -90,9 +90,9 @@ Foods of India are better known for its spiciness. **Throughout India, be it Nor
 <span style="font-size: 18pt;"><strong>Indian Cuisine Map</strong></span>
 
   * List of Indian dishes : 
-      * You can have a look [here](http://en.wikipedia.org/wiki/List_of_Indian_dishes) to see the list of main Indian dishes.
+      * You can have a look [here](https://en.wikipedia.org/wiki/List_of_Indian_dishes) to see the list of main Indian dishes.
   * List of Indian breads: 
-      * You can have a look [here](http://en.wikipedia.org/wiki/List_of_Indian_breads) to see the list of main Indian dishes.
+      * You can have a look [here](https://en.wikipedia.org/wiki/List_of_Indian_breads) to see the list of main Indian dishes.
 
 
 
@@ -176,7 +176,7 @@ Songjiang Nanjing Station
 <li> <a href="https://goo.gl/7cwQm3"> https://goo.gl/7cwQm3</a></li>
 <li> <a href="https://goo.gl/AaP4vr"> https://goo.gl/AaP4vr</a></li>
 <li> <a href="https://goo.gl/hH3Baz"> https://goo.gl/hH3Baz</a></li>
-<li> <a href="http://goo.gl/YJ3as8" > http://goo.gl/YJ3as8</a></li>
+<li> <a href="https://goo.gl/YJ3as8" > https://goo.gl/YJ3as8</a></li>
 
 </ul>
 </td>   
@@ -378,7 +378,7 @@ Expensive
 
 
 <tr> 
-<td> <a href="http://www.tandoor.com.tw/">Tandoor</a></td>
+<td> <a href="https://www.tandoor.com.tw/">Tandoor</a></td>
 <td >Very good food. </td>   
 
 <td> 
@@ -416,7 +416,7 @@ Moderate
 
 
 <tr> 
-<td> <a href="http://www.ilovemik.com/">Mayur Indian Kitchen (MIK)</a> </td>   
+<td> <a href="https://www.ilovemik.com/">Mayur Indian Kitchen (MIK)</a> </td>   
 <td> They also serve south-indian dishes like idly, dosa etc.</td>
 
 <td> 
@@ -487,7 +487,7 @@ Expensive
 
 
 <tr> 
-<td> <a href="http://www.indianfood.com.tw/">Calcutta Indian Food</a></td>
+<td> <a href="https://www.indianfood.com.tw/">Calcutta Indian Food</a></td>
 <td > to add . </td>   
    
 
@@ -559,7 +559,7 @@ Moderate
 
 
 <tr> 
-<td> <a href="http://kunming-islamic.myweb.hinet.net/" data-href="http://laorencha.blogspot.com/2010/05/kunming-islamic-restaurant.html">Kunming Islamic Restaurant (昆明園)</a></td>
+<td> <a href="https://kunming-islamic.myweb.hinet.net/" data-href="https://laorencha.blogspot.com/2010/05/kunming-islamic-restaurant.html">Kunming Islamic Restaurant (昆明園)</a></td>
 <td > This place serves middle eastern as well as Indian food. </td>   
    
 
@@ -594,7 +594,7 @@ Moderate
 
 
 <tr> 
-<td> <a href="http://www.khanakhazana.com.tw/">Khana Khazana</a></td>
+<td> <a href="https://www.khanakhazana.com.tw/">Khana Khazana</a></td>
 <td > This place serves middle eastern as well as Indian food. </td>   
    
 
@@ -696,7 +696,7 @@ Moderate
 
 
 <tr> 
-<td> <a href="http://www.india-taj.com/">Taj India Restaurant</a></td>
+<td> <a href="https://www.india-taj.com/">Taj India Restaurant</a></td>
 <td > to add. </td>   
    
 
@@ -760,7 +760,7 @@ For the days when you have insatiable hunger for Indian food, you can go to thes
   <tbody>
 
 <tr> 
-<td> <a href="http://www.ali88.com.tw/">Alibaba</a></td>
+<td> <a href="https://www.ali88.com.tw/">Alibaba</a></td>
 <td > to add. </td>   
    
 
@@ -793,7 +793,7 @@ Moderate
 
 
 <tr> 
-<td> <a href="http://www.tripadvisor.com/ShowUserReviews-g293913-d3330044-r150025068-Cafe_at_Far_Eastern-Taipei.html">Shangri-la far eastern Plaza Hotel</a></td>
+<td> <a href="https://www.tripadvisor.com/ShowUserReviews-g293913-d3330044-r150025068-Cafe_at_Far_Eastern-Taipei.html">Shangri-la far eastern Plaza Hotel</a></td>
 <td > Continental Buffet which includes Indian <span class="highlight">food</span>. </td>   
    
 
@@ -853,7 +853,7 @@ If you want to buy authentic Indian groceries , you can go to the following stor
   <tbody>
 
 <tr> 
-<td> <a href="http://www.indianstoretaiwan.com.tw/">Trinity Indian Store</a></td>
+<td> <a href="https://www.indianstoretaiwan.com.tw/">Trinity Indian Store</a></td>
 <td > Note: You can order online here. Its very convenient. </td>   
    
 
@@ -956,7 +956,7 @@ Moderate
 
 <td>
 <ul>
-<li> <a href="http://www.foodspotting.com/places/622277-yashodha-hsinchu">https://goo.gl/9D4AMm</a> </li>
+<li> <a href="https://www.foodspotting.com/places/622277-yashodha-hsinchu">https://goo.gl/9D4AMm</a> </li>
 </ul>
 </td>
 
@@ -1015,13 +1015,13 @@ Kaohsiung is the Taiwan&#8217;s largest industrial center and the 2nd largest c
   * Directions: [Google Map](https://goo.gl/maps/fWfGb)
   * Website:<https://www.facebook.com/pages/Maharaja-Indian-Restaurant/167971443276306>
   * Reviews: 
-      *  <http://srishtitanushri.blogspot.tw/2012/07/taiwan-maharaja-indian-restuarant.html>
+      *  <https://srishtitanushri.blogspot.tw/2012/07/taiwan-maharaja-indian-restuarant.html>
       * <div>
-          <a href="http://taiwanvore.com/2014/06/02/maharaja-%E7%91%AA%E5%93%88%E5%8D%B0%E5%BA%A6%E9%A4%90%E5%BB%B3-khh-tnn/">http://taiwanvore.com/2014/06/02/maharaja-%E7%91%AA%E5%93%88%E5%8D%B0%E5%BA%A6%E9%A4%90%E5%BB%B3-khh-tnn/</a>
+          <a href="https://taiwanvore.com/2014/06/02/maharaja-%E7%91%AA%E5%93%88%E5%8D%B0%E5%BA%A6%E9%A4%90%E5%BB%B3-khh-tnn/">https://taiwanvore.com/2014/06/02/maharaja-%E7%91%AA%E5%93%88%E5%8D%B0%E5%BA%A6%E9%A4%90%E5%BB%B3-khh-tnn/</a>
         </div>
     
       * <div>
-          <a href="http://www.tripadvisor.co.nz/ShowUserReviews-g297908-d4056373-r156748237-Maharaja_Indian_Restaurant-Kaohsiung.html">http://www.tripadvisor.co.nz/ShowUserReviews-g297908-d4056373-r156748237-Maharaja_Indian_Restaurant-Kaohsiung.html</a>
+          <a href="https://www.tripadvisor.co.nz/ShowUserReviews-g297908-d4056373-r156748237-Maharaja_Indian_Restaurant-Kaohsiung.html">https://www.tripadvisor.co.nz/ShowUserReviews-g297908-d4056373-r156748237-Maharaja_Indian_Restaurant-Kaohsiung.html</a>
         </div>
 
 ### <span id="Lahore_Exotic_CuisineRestaurant"><a href="https://www.facebook.com/Lahore.tw">Lahore Exotic Cuisine Restaurant</a></span> {#HEADING}
@@ -1031,11 +1031,11 @@ Kaohsiung is the Taiwan&#8217;s largest industrial center and the 2nd largest c
   * Website: <https://www.facebook.com/Lahore.tw>
   * Reviews: 
       * <div>
-          <a href="http://pakistaniat.com/2010/12/29/lahore-restaurant-in-kaohsiung/">http://pakistaniat.com/2010/12/29/lahore-restaurant-in-kaohsiung/</a>
+          <a href="https://pakistaniat.com/2010/12/29/lahore-restaurant-in-kaohsiung/">https://pakistaniat.com/2010/12/29/lahore-restaurant-in-kaohsiung/</a>
         </div>
     
       * <div>
-          <a href="http://www.tripadvisor.com.ph/ShowUserReviews-g297908-d1514844-r143088230-Lahore_Halal-Kaohsiung.html">http://www.tripadvisor.com.ph/ShowUserReviews-g297908-d1514844-r143088230-Lahore_Halal-Kaohsiung.html</a>
+          <a href="https://www.tripadvisor.com.ph/ShowUserReviews-g297908-d1514844-r143088230-Lahore_Halal-Kaohsiung.html">https://www.tripadvisor.com.ph/ShowUserReviews-g297908-d1514844-r143088230-Lahore_Halal-Kaohsiung.html</a>
         </div>
 
 ### <span id="The_Spice_Shop"><a href="https://www.facebook.com/SpiceShopKH">The Spice Shop</a></span>
@@ -1045,11 +1045,11 @@ Kaohsiung is the Taiwan&#8217;s largest industrial center and the 2nd largest c
   * Website: <https://www.facebook.com/SpiceShopKH>
   * Reviews: 
       * <div>
-          <a href="http://www.taiwanfun.com/south/kaoping/dining/0608/0608Spice.htm">http://www.taiwanfun.com/south/kaoping/dining/0608/0608Spice.htm</a>
+          <a href="https://www.taiwanfun.com/south/kaoping/dining/0608/0608Spice.htm">https://www.taiwanfun.com/south/kaoping/dining/0608/0608Spice.htm</a>
         </div>
     
       * <div>
-          <a href="http://www.taiwannights.com/en/restaurant/the-spice-shop-taipei-226">http://www.taiwannights.com/en/restaurant/the-spice-shop-taipei-226</a>
+          <a href="https://www.taiwannights.com/en/restaurant/the-spice-shop-taipei-226">https://www.taiwannights.com/en/restaurant/the-spice-shop-taipei-226</a>
         </div>
 
 # <span id="Tainan">Tainan</span>
@@ -1068,7 +1068,7 @@ Tainan is the oldest city in Taiwan and has many indian restaurants.
   * Directions: [Google Map](https://goo.gl/maps/EG8Fg)
   * Website: <https://www.facebook.com/pages/Maharaja-Indian-Restaurant/167971443276306>
   * Reviews: 
-      *  [http://www.tripadvisor.com/ShowUserReviews-g293912-d816796-r135020624-Masala\_Indian\_Restaurant-Tainan.html](http://www.tripadvisor.com/ShowUserReviews-g293912-d816796-r135020624-Masala_Indian_Restaurant-Tainan.html)
+      *  [https://www.tripadvisor.com/ShowUserReviews-g293912-d816796-r135020624-Masala\_Indian\_Restaurant-Tainan.html](https://www.tripadvisor.com/ShowUserReviews-g293912-d816796-r135020624-Masala_Indian_Restaurant-Tainan.html)
       * <https://tainancity.wordpress.com/2009/11/28/indian-food-masala/>
 
 ### <span id="Khana_Indian_and_Pakistani_Food"><a href="https://www.facebook.com/pages/%E9%A6%AC%E5%A4%8F%E6%8B%89%E5%8D%B0%E5%BA%A6%E6%96%99%E7%90%86-53-KHANA/523659754401306?ref=br_rs">Khana Indian and Pakistani Food</a></span>
@@ -1095,7 +1095,7 @@ Hualien County is home to several world-class scenic attractions. With all of i
   * Directions: [Google Map](https://goo.gl/maps/TdvEQ)
   * Website: <https://www.facebook.com/MadinaHualien>
   * Reviews: 
-      * [http://www.tripadvisor.com/Restaurant\_Review-g297907-d3855847-Reviews-Medina\_Restaurant-Hualien.html](http://www.tripadvisor.com/Restaurant_Review-g297907-d3855847-Reviews-Medina_Restaurant-Hualien.html)
+      * [https://www.tripadvisor.com/Restaurant\_Review-g297907-d3855847-Reviews-Medina\_Restaurant-Hualien.html](https://www.tripadvisor.com/Restaurant_Review-g297907-d3855847-Reviews-Medina_Restaurant-Hualien.html)
 
 ### <span id="King_of_India_Halal_Restaurant"><a href="https://www.facebook.com/pages/%E5%8D%B0%E5%BA%A6%E7%8E%8B%E5%AD%90-King-of-India-Halal-Restaurant-Hualien/269960736511759">King of India Halal Restaurant</a></span>
 
@@ -1124,19 +1124,19 @@ Taichung is a city located in western Taiwan, with a population of just over 2
       * Bollywood 3: 
           * Directions: [Google Map](https://goo.gl/maps/R7oK1)
   * Reviews: 
-      * <http://taiwanhalalfood.blogspot.tw/2012/12/no-4.html>
-      * <http://www.tripadvisor.com/Restaurant_Review-g297910-d877735-Reviews-Bollywood-Taichung.html>
-      * <http://www.greenislandadventures.com/taichunglinks.htm>
+      * <https://taiwanhalalfood.blogspot.tw/2012/12/no-4.html>
+      * <https://www.tripadvisor.com/Restaurant_Review-g297910-d877735-Reviews-Bollywood-Taichung.html>
+      * <https://www.greenislandadventures.com/taichunglinks.htm>
 
 &nbsp;
 
-### <span id="Ganga_Faces_of_India"><a href="%20http://ganga.tw/html/front/bin/home.phtml">Ganga Faces of India</a></span> {#HEADING}
+### <span id="Ganga_Faces_of_India"><a href="%20https://ganga.tw/html/front/bin/home.phtml">Ganga Faces of India</a></span> {#HEADING}
 
   * Location:  Section 4, Wenxin Rd.
   * Directions: [Google Map](https://goo.gl/maps/b8lUL)
-  * Website: <http://ganga.tw/html/front/bin/home.phtml>
+  * Website: <https://ganga.tw/html/front/bin/home.phtml>
   * Reviews: 
-      * [http://www.tripadvisor.com/Restaurant\_Review-g297910-d7132879-Reviews-Ganga\_Faces\_of\_India-Taichung.html](http://www.tripadvisor.com/Restaurant_Review-g297910-d7132879-Reviews-Ganga_Faces_of_India-Taichung.html)
+      * [https://www.tripadvisor.com/Restaurant\_Review-g297910-d7132879-Reviews-Ganga\_Faces\_of\_India-Taichung.html](https://www.tripadvisor.com/Restaurant_Review-g297910-d7132879-Reviews-Ganga_Faces_of_India-Taichung.html)
 
 ### <span id="Mr_IndiaRestaurant"><a href="https://www.facebook.com/MrIndiaYinDuXianSheng">Mr India Restaurant</a></span> {#HEADING}
 
@@ -1145,14 +1145,14 @@ Taichung is a city located in western Taiwan, with a population of just over 2
   * Website: <https://www.facebook.com/MrIndiaYinDuXianSheng>
   * Reviews: 
       * <div>
-          <a href="http://www.taiwanfun.com/central/taichung/dining/1001/1001MrIndia.htm">http://www.taiwanfun.com/central/taichung/dining/1001/1001MrIndia.htm</a>
+          <a href="https://www.taiwanfun.com/central/taichung/dining/1001/1001MrIndia.htm">https://www.taiwanfun.com/central/taichung/dining/1001/1001MrIndia.htm</a>
         </div>
         
         <div>
         </div>
     
       * <div>
-          <a href="http://www.tripadvisor.com/Restaurant_Review-g297910-d6528515-Reviews-Mr_India_Indian_Restaurant-Taichung.html">http://www.tripadvisor.com/Restaurant_Review-g297910-d6528515-Reviews-Mr_India_Indian_Restaurant-Taichung.html</a>
+          <a href="https://www.tripadvisor.com/Restaurant_Review-g297910-d6528515-Reviews-Mr_India_Indian_Restaurant-Taichung.html">https://www.tripadvisor.com/Restaurant_Review-g297910-d6528515-Reviews-Mr_India_Indian_Restaurant-Taichung.html</a>
         </div>
 
 ### <span id="The_Spice_Shop-2"><a href="https://www.facebook.com/SpiceShopTaichung">The Spice Shop</a></span> {#HEADING}
@@ -1162,15 +1162,15 @@ Taichung is a city located in western Taiwan, with a population of just over 2
   * Website: <https://www.facebook.com/SpiceShopTaichung>
   * Reviews: 
       * <div>
-          <a href="http://www.tripadvisor.com/ShowUserReviews-g297910-d6876107-r237541831-The_Spice_Shop_Indian_Cuisine-Taichung.html">http://www.tripadvisor.com/ShowUserReviews-g297910-d6876107-r237541831-</a>
+          <a href="https://www.tripadvisor.com/ShowUserReviews-g297910-d6876107-r237541831-The_Spice_Shop_Indian_Cuisine-Taichung.html">https://www.tripadvisor.com/ShowUserReviews-g297910-d6876107-r237541831-</a>
         </div>
     
       * <div>
-          <a href="http://www.tripadvisor.com/ShowUserReviews-g297910-d6876107-r237541831-The_Spice_Shop_Indian_Cuisine-Taichung.html">The_Spice_Shop_Indian_Cuisine-Taichung.html</a>
+          <a href="https://www.tripadvisor.com/ShowUserReviews-g297910-d6876107-r237541831-The_Spice_Shop_Indian_Cuisine-Taichung.html">The_Spice_Shop_Indian_Cuisine-Taichung.html</a>
         </div>
         
         <div>
-          <a href="http://www.taiwanfun.com/central/taichung/dining/0009/0009rrSpiceShop.htm">http://www.taiwanfun.com/central/taichung/dining/0009/0009rrSpiceShop.htm</a>
+          <a href="https://www.taiwanfun.com/central/taichung/dining/0009/0009rrSpiceShop.htm">https://www.taiwanfun.com/central/taichung/dining/0009/0009rrSpiceShop.htm</a>
         </div>
 
 ### <span id="Chillies_Indian_Restaurant"><a href="https://www.facebook.com/profile.php?id=100008709195337&fref=ts">Chillies Indian Restaurant</a></span> {#HEADING}
@@ -1180,12 +1180,12 @@ Taichung is a city located in western Taiwan, with a population of just over 2
   * Website: <https://www.facebook.com/profile.php?id=100008709195337&fref=ts>
   * Reviews: 
       * <div>
-          <a href="http://www.taiwanfun.com/central/taichung/dining/1502/1502ChilliesIndianRestaurant.htm">http://www.taiwanfun.com/central/taichung/dining/1502/1502ChilliesIndianRestaurant.htm</a>
+          <a href="https://www.taiwanfun.com/central/taichung/dining/1502/1502ChilliesIndianRestaurant.htm">https://www.taiwanfun.com/central/taichung/dining/1502/1502ChilliesIndianRestaurant.htm</a>
         </div>
         
         <div>
         </div>
     
       * <div>
-          <a href="http://www.tripadvisor.com/Restaurant_Review-g297910-d7786168-Reviews-Chillies_Indian_Restaurant-Taichung.html">http://www.tripadvisor.com/Restaurant_Review-g297910-d7786168-Reviews-Chillies_Indian_Restaurant-Taichung.html</a>
+          <a href="https://www.tripadvisor.com/Restaurant_Review-g297910-d7786168-Reviews-Chillies_Indian_Restaurant-Taichung.html">https://www.tripadvisor.com/Restaurant_Review-g297910-d7786168-Reviews-Chillies_Indian_Restaurant-Taichung.html</a>
         </div>

@@ -12,15 +12,15 @@ description: NumPy is the fundamental package for scientific computing with Pyth
 --- 
 <!--more-->
 
-[NumPy](http://www.numpy.org/) is the fundamental package for scientific computing with Python. .Knowledge of NumPy is very useful when implementing deep learning models in python based frameworks like [TensorFlow](https://www.tensorflow.org), [Theano](http://deeplearning.net/software/theano/) 
+[NumPy](https://www.numpy.org/) is the fundamental package for scientific computing with Python. .Knowledge of NumPy is very useful when implementing deep learning models in python based frameworks like [TensorFlow](https://www.tensorflow.org), [Theano](https://deeplearning.net/software/theano/) 
 
-The exercise content of this post is already available from very useful [repository](http://www.labri.fr/perso/nrougier/teaching/numpy.100/). I wrote the exercises in Ipython notebook to make it easy to try them out . The ipython notebook is available at [github](https://github.com/sanjaymeena/numpy-100)
+The exercise content of this post is already available from very useful [repository](https://www.labri.fr/perso/nrougier/teaching/numpy.100/). I wrote the exercises in Ipython notebook to make it easy to try them out . The ipython notebook is available at [github](https://github.com/sanjaymeena/numpy-100)
 
 Some other useful resources to learn NumPy: 
 
-* [http://www.bogotobogo.com/python/python_numpy_array_tutorial_basic_A.php](http://www.bogotobogo.com/python/python_numpy_array_tutorial_basic_A.php)
-* [http://www.bogotobogo.com/python/python_numpy_array_tutorial_basic_B.php](http://www.bogotobogo.com/python/python_numpy_array_tutorial_basic_B.php)
-* [http://nbviewer.jupyter.org/github/andrewgiessel/pydata_bos_2013_intro_to_numpy/blob/master/Introduction%20To%20NumPy.ipynb](http://nbviewer.jupyter.org/github/andrewgiessel/pydata_bos_2013_intro_to_numpy/blob/master/Introduction%20To%20NumPy.ipynb)
+* [https://www.bogotobogo.com/python/python_numpy_array_tutorial_basic_A.php](https://www.bogotobogo.com/python/python_numpy_array_tutorial_basic_A.php)
+* [https://www.bogotobogo.com/python/python_numpy_array_tutorial_basic_B.php](https://www.bogotobogo.com/python/python_numpy_array_tutorial_basic_B.php)
+* [https://nbviewer.jupyter.org/github/andrewgiessel/pydata_bos_2013_intro_to_numpy/blob/master/Introduction%20To%20NumPy.ipynb](https://nbviewer.jupyter.org/github/andrewgiessel/pydata_bos_2013_intro_to_numpy/blob/master/Introduction%20To%20NumPy.ipynb)
 
 
 Below are the list of Numpy exercises :
@@ -1709,7 +1709,7 @@ print(uZ)
 
 ```python
 # Author: Alex Riley
-# Make sure to read: http://ajcr.net/Basic-guide-to-einsum/
+# Make sure to read: https://ajcr.net/Basic-guide-to-einsum/
 
 A= np.arange(3)
 B =  np.arange(12).reshape(3,4)

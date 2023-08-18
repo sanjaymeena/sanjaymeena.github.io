@@ -50,7 +50,7 @@ In simple terms, balance sheet discloses what a business owns and what it owes a
 
 Assets=Liabilities + Equity
 
-We will look at the 'Balance Sheet' for PI Industries . PI is a leading Agri Input and Custom Synthesis & Manufacturing company in India. The annual report referred for this post is for FY2016. You can find the Annual report [here](http://www.bseindia.com/bseplus/AnnualReport/523642/5236420315.pdf). 
+We will look at the 'Balance Sheet' for PI Industries . PI is a leading Agri Input and Custom Synthesis & Manufacturing company in India. The annual report referred for this post is for FY2016. You can find the Annual report [here](https://www.bseindia.com/bseplus/AnnualReport/523642/5236420315.pdf). 
 
 *Balance Sheet for P.I Industries*
 <img src="/images/posts/investment_notes/balance_sheet/balance_sheet.png" height = "800" width="900">
@@ -370,6 +370,6 @@ Overall, Balance Sheet is a remarkable statement that every investor must not mi
 
 Further reading : 
 
-* [The Interpretation of Financial Statements - Benjamin Graham](http://www.amazon.com/Interpretation-Financial-Statements-Benjamin-Graham/dp/0887309135)
-* [Financial Statement Analysis - Martin Fridson](http://www.amazon.in/gp/product/0470635606/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&camp=3626&creative=24790&creativeASIN=0470635606&linkCode=as2&tag=safanive-21)
-* [Intermediate Accounting for Dummies - Maire Loughran](http://www.amazon.in/gp/product/1118176820/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&camp=3626&creative=24790&creativeASIN=1118176820&linkCode=as2&tag=safanive-21)
+* [The Interpretation of Financial Statements - Benjamin Graham](https://www.amazon.com/Interpretation-Financial-Statements-Benjamin-Graham/dp/0887309135)
+* [Financial Statement Analysis - Martin Fridson](https://www.amazon.in/gp/product/0470635606/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&camp=3626&creative=24790&creativeASIN=0470635606&linkCode=as2&tag=safanive-21)
+* [Intermediate Accounting for Dummies - Maire Loughran](https://www.amazon.in/gp/product/1118176820/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&camp=3626&creative=24790&creativeASIN=1118176820&linkCode=as2&tag=safanive-21)

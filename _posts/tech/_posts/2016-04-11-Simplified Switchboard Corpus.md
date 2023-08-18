@@ -29,8 +29,8 @@ The Switchboard Dialog Act Corpus (SwDA) extends the Switchboard-1 Telephone Spe
 
 Recommended reading:
 
--   [Dialog Act Coders' Manual](http://www.stanford.edu/~jurafsky/ws97/manual.august1.html)
--   [Stolcke et al. 2000](http://compprag.christopherpotts.net/bibliography.html#DialogActCL)
+-   [Dialog Act Coders' Manual](https://www.stanford.edu/~jurafsky/ws97/manual.august1.html)
+-   [Stolcke et al. 2000](https://compprag.christopherpotts.net/bibliography.html#DialogActCL)
 
 The manual for this Dataset can be found at :[Switchboard DAMSL Dialogue Acts](https://web.stanford.edu/~jurafsky/ws97/manual.august1.html)
 
@@ -46,8 +46,8 @@ Steps for Creating our version of dataset:
 
 ### 1. Get the csv format of data from the link:
 
--   (site) <http://compprag.christopherpotts.net/swda.html>
--   (data) <http://compprag.christopherpotts.net/code-data/swda.zip>
+-   (site) <https://compprag.christopherpotts.net/swda.html>
+-   (data) <https://compprag.christopherpotts.net/code-data/swda.zip>
 
 ### 2. Creating one csv file :
 

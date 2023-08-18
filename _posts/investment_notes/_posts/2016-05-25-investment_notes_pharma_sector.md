@@ -78,7 +78,7 @@ Below are the various steps in the R&D process pipeline to create new medicine
 ## Some Pharma Terms
 
 The number of abbreviations in pharma is extensive. Here i have added few terms which i came across during my research for some investing ideas. 
-You can find lot more information [here](http://pharmatreasures.blogspot.tw/2013/12/common-abbreviations-used-in.html) 
+You can find lot more information [here](https://pharmatreasures.blogspot.tw/2013/12/common-abbreviations-used-in.html) 
 
 
 * <b>Therapeutic Drugs</b>
@@ -193,6 +193,6 @@ Some Negatives:
 
 # References
 
-* [http://www.phrma.org/sites/default/files/pdf/phrma_industry_profile.pdf](http://www.phrma.org/sites/default/files/pdf/phrma_industry_profile.pdf)
-* [http://forum.valuepickr.com/uploads/default/original/2X/2/262fafdd2cac5d4d858b17ef3175b0612af22a16.pdf](http://forum.valuepickr.com/uploads/default/original/2X/2/262fafdd2cac5d4d858b17ef3175b0612af22a16.pdf)
-* [http://marketrealist.com/2015/01/classification-of-pharmaceutical-subindustries/](http://marketrealist.com/2015/01/classification-of-pharmaceutical-subindustries/)
+* [https://www.phrma.org/sites/default/files/pdf/phrma_industry_profile.pdf](https://www.phrma.org/sites/default/files/pdf/phrma_industry_profile.pdf)
+* [https://forum.valuepickr.com/uploads/default/original/2X/2/262fafdd2cac5d4d858b17ef3175b0612af22a16.pdf](https://forum.valuepickr.com/uploads/default/original/2X/2/262fafdd2cac5d4d858b17ef3175b0612af22a16.pdf)
+* [https://marketrealist.com/2015/01/classification-of-pharmaceutical-subindustries/](https://marketrealist.com/2015/01/classification-of-pharmaceutical-subindustries/)

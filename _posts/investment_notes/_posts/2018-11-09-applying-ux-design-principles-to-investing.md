@@ -96,6 +96,6 @@ References:
 
 * [Laws of UX ](https://lawsofux.com)
 * [Simplicity is Overrated](https://blog.marvelapp.com/simplicity-is-overrated/)
-* [Law of conservation of complexity](http://www.humanist.co/blog/law-of-conservation-of-complexity/)
+* [Law of conservation of complexity](https://www.humanist.co/blog/law-of-conservation-of-complexity/)
 
 

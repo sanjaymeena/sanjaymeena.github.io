@@ -192,7 +192,7 @@ The study of how individual words and their most basic meaningful units are comb
 
 Syntax also allows us to accept “I went to the store” as a meaningful (grammatical) sentence while “To store went I” would not be acceptable English.
 
-You can read more on syntax on this **<a title="Syntax" href="http://www.sanjaymeena.net/?p=237" target="_blank">post</a>**
+You can read more on syntax on this **<a title="Syntax" href="https://www.sanjaymeena.net/?p=237" target="_blank">post</a>**
 
 ### <span id="Semantics">Semantics</span>
 
@@ -209,7 +209,7 @@ Because semantics moves beyond the literal meaning of words and is culture-depen
 You can see the major levels of linguistic structure in the below diagram: 
 
 
-<img src="http://upload.wikimedia.org/wikipedia/commons/7/79/Major_levels_of_linguistic_structure.svg" alt="" width="600" height="600" />
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/79/Major_levels_of_linguistic_structure.svg" alt="" width="600" height="600" />
   
 
 
