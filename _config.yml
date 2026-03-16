@@ -12,7 +12,7 @@ title_separator          : "-"
 name                     : "Sanjay Meena"
 description              : "Blog on Equities, Tech, Books"
 url                      : "https://sanjaymeena.io"
-baseurl                  : 
+baseurl                  : ""
 base_path                : "https://sanjaymeena.io"
 teaser                   : # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"
 # breadcrumbs            : false # true, false (default)
@@ -166,7 +166,6 @@ exclude:
   - Rakefile
   - README
   - tmp
-  - gulpfile.js
   - vendor
 keep_files:
   - .git
@@ -193,14 +192,6 @@ kramdown:
   toc_levels: 1..6
   smart_quotes: lsquo,rsquo,ldquo,rdquo
   enable_coderay: false
-
-
-# Outputting
-permalink: /:categories/:title/
-paginate: 5 # amount of posts to show
-paginate_path: /page:num/
-timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-
 
 
 #

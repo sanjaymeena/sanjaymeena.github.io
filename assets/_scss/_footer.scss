@@ -64,3 +64,19 @@
     font-weight: bold;
   }
 }
+
+.page__footer-tools {
+  margin-top: 1em;
+  margin-bottom: 1em;
+
+  @include breakpoint($large) {
+    @include prefix(2.5 of 12);
+  }
+
+  a {
+    font-family: $sans-serif-narrow;
+    font-size: $type-size-6;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+}
