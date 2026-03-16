@@ -114,6 +114,21 @@ defaults:
       subscribe: true
       #share: twitter linkedin facebook # Sharing on twitter ,facebook and LinkedIn by default
 
+  # _posts/tools - excluded from feed/email but included in sitemap for SEO
+  - scope:
+      path: "_posts/tools"
+      type: posts
+    values:
+      layout: single
+      author_profile: false
+      read_time: true
+      comments: false
+      share: true
+      related: true
+      subscribe: false
+      feed: false
+      categories: [tools]
+
   # _pages
   - scope:
       path: ""

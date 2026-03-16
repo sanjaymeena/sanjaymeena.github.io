@@ -4,6 +4,9 @@ main:
   - title: "Investing"
     url: /investment_notes
 
+  - title: "Developer Tools"
+    url: https://tools.sanjaymeena.io
+
   - title: "Books"
     url: /book_notes
 
