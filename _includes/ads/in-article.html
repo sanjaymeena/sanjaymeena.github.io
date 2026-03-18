@@ -1,0 +1,22 @@
+<!-- In-article Ad Unit -->
+{% if site.ads.enabled %}
+<div class="ad-container ad-in-article" style="margin: 2rem auto; text-align: center; max-width: 728px; clear: both; position: relative; z-index: 1;">
+  {% if site.ads.test_mode %}
+  <!-- Test mode placeholder -->
+  <div style="background: #e3f2fd; border: 2px dashed #2196f3; padding: 1rem; color: #1565c0; font-family: sans-serif; height: 90px; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+    <strong>IN-ARTICLE AD</strong><br>
+    <small>(after content, before tags/footer)</small>
+  </div>
+  {% else %}
+  <ins class="adsbygoogle"
+       style="display:block; text-align:center;"
+       data-ad-layout="in-article"
+       data-ad-format="fluid"
+       data-ad-client="ca-{{ site.ads.client_id }}"
+       data-ad-slot="{{ site.ads.in_article }}"></ins>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+  {% endif %}
+</div>
+{% endif %}

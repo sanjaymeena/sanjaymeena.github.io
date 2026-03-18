@@ -60,15 +60,20 @@ analytics:
     tracking_id          : "UA-78154345-1"
 
 # Google AdSense
-google_ad_client         :
-google_ad_slot           :
+ads:
+  enabled                : true
+  client_id              : "pub-8491284845992193"
+  display_top            : "9600254158"
+  display_middle         : "5078555211"
+  display_bottom         : "8104307257"
+  in_article             : "6122908108"
 
 
 # Site Author
 author:
   name             : "Sanjay Meena"
   avatar           : "bio.jpg"
-  bio              : "Data Scientist"
+  bio              : "Machine Learning Engineer"
   location         : "Melbourne , Australia"
   email            : sanjaymeena@gmail.com
   uri              :
@@ -79,7 +84,6 @@ author:
   facebook         :
   foursquare       :
   github           : sanjaymeena
-  google_plus      : sanjaymeena123
   keybase          :
   instagram        :
   lastfm           :

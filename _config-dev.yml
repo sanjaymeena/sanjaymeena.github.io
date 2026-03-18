@@ -59,9 +59,15 @@ analytics:
   google:
     tracking_id          : "UA-78154345-1"
 
-# Google AdSense
-google_ad_client         :
-google_ad_slot           :
+# Google AdSense (test mode for local development)
+ads:
+  enabled                : true
+  test_mode              : true
+  client_id              : "pub-8491284845992193"
+  display_top            : "9600254158"
+  display_middle         : "5078555211"
+  display_bottom         : "8104307257"
+  in_article             : "6122908108"
 
 
 # Site Author
