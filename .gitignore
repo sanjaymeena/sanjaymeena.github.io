@@ -10,3 +10,4 @@ node_modules
 npm-debug.log*
 /vendorGemfile.lock
 vendor/
+Gemfile.lock
