@@ -1,0 +1,69 @@
+---
+import { formatDate } from '../lib/posts';
+import { SITE, socialLinks } from '../lib/site';
+
+/**
+ * Author block in three placements. One component so the Phase 5 theme restyles
+ * a single file instead of three copies of markup.
+ *
+ * All data comes from SITE.author / socialLinks(); nothing is hardcoded here.
+ */
+export type AuthorBioVariant = 'byline' | 'card' | 'full';
+
+export interface Props {
+  variant?: AuthorBioVariant;
+  /** byline only: the post's publish date. */
+  date?: Date;
+  /** byline only: reading time from readingTimeMinutes(), not recomputed here. */
+  minutes?: number;
+}
+
+const { variant = 'card', date, minutes } = Astro.props;
+const { author } = SITE;
+const socials = socialLinks();
+
+const isByline = variant === 'byline';
+// Rendered size, also used for the width/height attributes so the square crop
+// does not shift layout while the 653x490 source loads.
+const avatarSize = variant === 'full' ? 128 : variant === 'card' ? 72 : 32;
+---
+
+<aside class:list={['author-bio', `author-bio--${variant}`]}>
+  <img
+    class="author-bio__avatar"
+    src={author.avatar}
+    alt=""
+    width={avatarSize}
+    height={avatarSize}
+    loading={isByline ? 'eager' : 'lazy'}
+    decoding="async"
+  />
+
+  <div class="author-bio__body">
+    <p class="author-bio__name">{author.name}</p>
+
+    {
+      isByline ? (
+        <p class="author-bio__meta">
+          {date && <time datetime={date.toISOString()}>{formatDate(date)}</time>}
+          {date && minutes !== undefined && <span aria-hidden="true">&middot;</span>}
+          {minutes !== undefined && <span>{minutes} minute read</span>}
+        </p>
+      ) : (
+        <>
+          <p class="author-bio__role">{author.bio}</p>
+          <p class="author-bio__location">{author.location}</p>
+          <ul class="author-bio__social">
+            {socials.map((social) => (
+              <li>
+                <a href={social.url} target="_blank" rel="me noopener noreferrer">
+                  {social.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </>
+      )
+    }
+  </div>
+</aside>

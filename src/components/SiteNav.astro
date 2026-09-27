@@ -1,0 +1,167 @@
+---
+import { CATEGORY_LINKS, NAV, SITE } from '../lib/site';
+
+/**
+ * Top navigation, rendered from NAV in src/lib/site.ts.
+ *
+ * Functional chrome only — Phase 5 owns the visual theme. Styling is limited to
+ * the existing global.css tokens.
+ */
+const pathname = Astro.url.pathname;
+
+// Post URLs are /<prefix>/<slug>/, where <prefix> is the URL segment ("books",
+// "investing", "demos") rather than the archive page NAV links to
+// ("/book_notes/", "/investment_notes/", "/projects/"). Collapsing the first
+// segment through CATEGORY_LINKS is what lets a book post highlight "Books".
+const firstSegment = pathname.split('/')[1] ?? '';
+const canonical = CATEGORY_LINKS[firstSegment] ?? pathname;
+
+const isActive = (url: string) => url.startsWith('/') && canonical.startsWith(url);
+
+const listId = 'site-nav-list';
+---
+
+<header class="site-nav">
+  <div class="site-nav__inner">
+    <a class="site-nav__brand" href="/">{SITE.title}</a>
+
+    <button
+      type="button"
+      class="site-nav__toggle"
+      aria-expanded="false"
+      aria-controls={listId}
+      data-nav-toggle
+    >
+      <span aria-hidden="true">☰</span>
+      <span class="visually-hidden">Menu</span>
+    </button>
+
+    <nav class="site-nav__nav" aria-label="Main">
+      <ul class="site-nav__list" id={listId} data-nav-list>
+        {
+          NAV.map((item) => {
+            const active = isActive(item.url);
+            return (
+              <li>
+                <a
+                  href={item.url}
+                  class:list={['site-nav__link', { 'site-nav__link--active': active }]}
+                  aria-current={active ? 'page' : undefined}
+                  target={item.external ? '_blank' : undefined}
+                  rel={item.external ? 'noopener noreferrer' : undefined}
+                >
+                  {item.title}
+                  {item.external && <span class="visually-hidden">(opens in a new tab)</span>}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+
+    {/* The icon names the destination: moon while light, sun while dark. The
+        swap is pure CSS (see .theme-toggle in global.css) so it is correct
+        even before the bundled script runs. */}
+    <button
+      type="button"
+      class="theme-toggle"
+      data-theme-toggle
+      aria-pressed="false"
+      aria-label="Switch to dark theme"
+    >
+      <svg
+        class="theme-toggle__icon theme-toggle__icon--moon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+      </svg>
+      <svg
+        class="theme-toggle__icon theme-toggle__icon--sun"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+<script>
+  import {
+    THEME_CHANGE_EVENT,
+    THEME_STORAGE_KEY,
+    applyTheme,
+    resolvedTheme,
+    storedTheme,
+    type Theme,
+  } from '../lib/theme';
+
+  // Progressive enhancement. The script is what *adds* the collapsed state, so
+  // with JS disabled the menu stays expanded and the site remains navigable.
+  for (const toggle of document.querySelectorAll<HTMLButtonElement>('[data-nav-toggle]')) {
+    const list = document.getElementById(toggle.getAttribute('aria-controls') ?? '');
+    if (!list) continue;
+    list.setAttribute('data-collapsed', 'true');
+    toggle.addEventListener('click', () => {
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!expanded));
+      list.setAttribute('data-collapsed', String(expanded));
+    });
+  }
+
+  // ---- theme toggle ----
+  const themeButtons = document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+  const announceTheme = () => {
+    const theme = resolvedTheme();
+    for (const button of themeButtons) {
+      button.setAttribute('aria-pressed', String(theme === 'dark'));
+      button.setAttribute(
+        'aria-label',
+        theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme',
+      );
+    }
+    // Giscus (and anything else theme-aware) listens for this rather than
+    // polling the attribute.
+    document.dispatchEvent(
+      new CustomEvent<{ theme: Theme }>(THEME_CHANGE_EVENT, { detail: { theme } }),
+    );
+  };
+
+  for (const button of themeButtons) {
+    button.addEventListener('click', () => {
+      const next: Theme = resolvedTheme() === 'dark' ? 'light' : 'dark';
+      try {
+        localStorage.setItem(THEME_STORAGE_KEY, next);
+      } catch {
+        // Private browsing: the choice still applies for this page view.
+      }
+      applyTheme(next);
+      announceTheme();
+    });
+  }
+
+  // With no stored choice the OS owns the theme, so follow it live.
+  prefersDark.addEventListener('change', () => {
+    if (storedTheme()) return;
+    applyTheme(null);
+    announceTheme();
+  });
+
+  applyTheme(storedTheme());
+  announceTheme();
+</script>

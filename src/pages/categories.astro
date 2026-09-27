@@ -1,0 +1,49 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { getPublishedList } from '../lib/posts';
+import { ARCHIVES } from '../lib/site';
+
+/**
+ * Replaces _pages/categories.md. That page used `layout: archive` with an empty
+ * body, so it rendered as a bare "Categories" heading with nothing under it; this
+ * is an actual index of the archives with post counts.
+ */
+const posts = await getPublishedList();
+const counts = new Map<string, number>();
+for (const post of posts) {
+  counts.set(post.category, (counts.get(post.category) ?? 0) + 1);
+}
+
+// `demos` posts have no archive page of their own; /projects/ lists them.
+const entries = [
+  ...ARCHIVES.map((archive) => ({
+    url: `/${archive.path}/`,
+    title: archive.title,
+    description: archive.description,
+    count: counts.get(archive.category) ?? 0,
+  })),
+  {
+    url: '/projects/',
+    title: 'Tech Projects and Demos',
+    description: 'Demos and source code related to NLP, Data Science and Machine Learning.',
+    count: counts.get('demos') ?? 0,
+  },
+];
+---
+
+<PageLayout
+  title="Categories"
+  description="Browse Seeking Wisdom posts by category: tech, investing, book notes, developer tools, misc and projects."
+>
+  <ul class="category-index">
+    {
+      entries.map((entry) => (
+        <li class="category-index__item">
+          <a href={entry.url}>{entry.title}</a>
+          <span class="category-index__count">{entry.count} posts</span>
+          <p class="category-index__description">{entry.description}</p>
+        </li>
+      ))
+    }
+  </ul>
+</PageLayout>

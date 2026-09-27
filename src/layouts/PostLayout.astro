@@ -1,0 +1,146 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import AdSense from '../components/AdSense.astro';
+import AuthorBio from '../components/AuthorBio.astro';
+import Comments from '../components/Comments.astro';
+import Demo from '../components/Demo.astro';
+import SeriesNav from '../components/SeriesNav.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import {
+  archiveOf,
+  getAdjacentPosts,
+  postUrl,
+  readingTimeMinutes,
+  tagAnchor,
+  type Post,
+} from '../lib/posts';
+import { CATEGORY_LINKS, SITE, archiveForCategory } from '../lib/site';
+
+// KaTeX fonts/CSS are only needed on posts, so the import lives here rather
+// than in BaseLayout.
+import 'katex/dist/katex.min.css';
+
+export interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+
+const { title, description, keywords, tags, categories, series, demo, date, toc } = post.data;
+const url = postUrl(post);
+const absoluteUrl = new URL(url, Astro.site).toString();
+const minutes = readingTimeMinutes(post.body);
+const teaser = post.data.header?.teaser ?? post.data.header?.image;
+const { prev, next } = await getAdjacentPosts(url);
+
+const category = categories[0] ?? archiveOf(post);
+const archive = archiveForCategory(category);
+const categoryUrl = CATEGORY_LINKS[category];
+const categoryLabel = archive?.title ?? category;
+
+const blogPosting: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  datePublished: date.toISOString(),
+  url: absoluteUrl,
+  mainEntityOfPage: absoluteUrl,
+  author: { '@type': 'Person', name: SITE.author.name },
+  ...(keywords.length > 0 ? { keywords: keywords.join(', ') } : {}),
+  ...(tags.length > 0 ? { articleSection: tags.join(', ') } : {}),
+  ...(teaser ? { image: new URL(`/images/${teaser}`, Astro.site).toString() } : {}),
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+  image={teaser ? `/images/${teaser}` : undefined}
+  type="article"
+  publishedTime={date}
+  prev={prev}
+  next={next}
+  jsonLd={[blogPosting]}
+  ads
+>
+  <main>
+    <article class="post">
+      <header class="post__header">
+        {
+          categoryUrl ? (
+            <a class="post__archive" href={categoryUrl}>
+              {categoryLabel}
+            </a>
+          ) : (
+            <span class="post__archive">{categoryLabel}</span>
+          )
+        }
+        <h1 class="post__title">{title}</h1>
+        <AuthorBio variant="byline" date={date} minutes={minutes} />
+      </header>
+
+      {series && <SeriesNav series={series} currentUrl={url} />}
+
+      {toc && <TableOfContents headings={headings} />}
+
+      <div class="post__body prose">
+        <Content />
+      </div>
+
+      {demo && <Demo name={demo} />}
+
+      {/* Placements match the Jekyll includes: in-article after the content and
+          before the tags, display-bottom after the comments. Both render nothing
+          unless PUBLIC_ADSENSE_ENABLED=true. */}
+      <AdSense placement="in-article" />
+
+      {
+        tags.length > 0 && (
+          <footer class="post__footer">
+            <span class="post__footer-label">Tags:</span>
+            {/* The Jekyll /tags/ page is one page of per-tag sections, so tags link
+                to its anchors (`cgi_escape`d, spaces as "+"), not to /tags/<tag>/. */}
+            <ul class="tag-list">
+              {tags.map((tag) => (
+                <li>
+                  <a href={`/tags/#${tagAnchor(tag)}`} rel="tag">
+                    {tag}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </footer>
+        )
+      }
+
+      <AuthorBio variant="card" />
+
+      {
+        (prev || next) && (
+          <nav class="post__pagination" aria-label="Adjacent posts">
+            {prev && (
+              <a class="post__pagination-link" href={prev.url} rel="prev">
+                <span class="post__pagination-label">Previous</span>
+                {prev.title}
+              </a>
+            )}
+            {next && (
+              <a class="post__pagination-link" href={next.url} rel="next">
+                <span class="post__pagination-label">Next</span>
+                {next.title}
+              </a>
+            )}
+          </nav>
+        )
+      }
+
+      <Comments category={category} draft={post.data.draft} />
+
+      <AdSense placement="display-bottom" />
+    </article>
+  </main>
+</BaseLayout>

@@ -1,0 +1,104 @@
+
+
+<style type="text/css">
+
+.result { font-size:small !important; }
+ hr { text-decoration:none !important; }
+.simple_form { font-size:medium !important; }
+
+textarea {resize: vertical; width: 100%}
+</style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+ <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
+
+<form class="simple_form" id='reg-form' style="max-width:700px"  role="form" action="">
+ 
+<div  class="form-group-sm">
+
+<label for="text">Text</label>
+<textarea name="text" id="text" rows="4" cols="30" class="autoDefault" data-default="some default text"> </textarea>
+
+</div>
+<br/>
+<div class="form-group-sm">
+<label for="language">language</label>
+<select id="language" name="language" class="form-control">
+  <option value="en" selected="selected">English</option>
+  
+</select>
+
+</div>  
+
+<br/>
+<div class="form-group-sm">
+ <label for="module">Modules</label>
+
+<select id="module" name="module" class="form-control">
+  <option value="TextStructureCreation" selected="selected">TextStructureCreation</option>
+  <option value="Tagger" >Tagger</option>
+  <option value="NER" >Named Entity Recognition</option>
+  <option value="DiscourseAnalysis" >Discourse Analysis</option>
+
+  
+  
+</select>
+
+
+
+</div>
+  <br/>
+ <input class="submit" type="submit" value="Submit">
+</form>
+
+<hr>
+<script type="text/javascript">
+$(document).ready(function()
+{
+
+ $(function() {
+    $('$text').focus(function() {
+        if ($(this).val() === $(this).data('default') && !$(this).data('edited')) {
+            $(this).val('');
+        }
+    }).change(function() {
+        $(this).data('edited', this.value.length > 0);
+    }).blur(function() {
+        if ($(this).val().length === 0) {
+            $(this).val($(this).data('default'));
+        }
+    }).blur(); //fire blur event initially
+});
+
+ $(document).on('submit', '#reg-form', function(event)
+ {
+
+
+  // Stop form from submitting normally
+  event.preventDefault();
+  
+  var data = $(this).serialize();
+  
+  
+  $.ajax({
+  
+  type : 'GET',
+  url  : 'https://sanjaymeena.io/nlpdemo/TextAnalyzer',
+  data : data,
+   success: function(data, textStatus, jqXHR)
+    {
+       //alert(data) //data - response from server
+       $('#result').html(data);
+    },
+    error: function (jqXHR, textStatus, errorThrown)
+    {
+    	
+    }
+  });
+  return false;
+ });
+ 
+});
+</script>
+
+<div class="result" id="result"></div>

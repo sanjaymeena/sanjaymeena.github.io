@@ -1,0 +1,24 @@
+# Editor / OS
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+codekit-config.json
+
+# Node
+node_modules
+npm-debug.log*
+
+# Astro build output
+dist/
+.astro/
+
+# The last Jekyll build, kept only as the parity baseline for `npm run verify`.
+# It can no longer be regenerated (the Jekyll source was deleted) — remove this
+# entry and the directory once the migration is signed off.
+_site
+
+# Local environment. PUBLIC_* values are baked into the client bundle rather than
+# secret, but a .env may later hold deploy credentials. .env.example is committed.
+.env
+.env.*
+!.env.example

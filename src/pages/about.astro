@@ -1,0 +1,39 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import AuthorBio from '../components/AuthorBio.astro';
+import { SITE } from '../lib/site';
+
+// Prose ported verbatim from _pages/about.md.
+---
+
+<PageLayout
+  title="About"
+  description="About Sanjay Meena - data science, NLP and value investing."
+  image="/images/about.jpg"
+>
+  <p>
+    By Day I am a technical geek and researcher in the area of Data Science and Natural Language
+    Processing (NLP) using deep learning, Machine Learning. By Night I am an investment enthusiast in
+    the field of value investing.
+  </p>
+
+  <p>
+    In my spare time, You can find me rollerblading along the riverside. I admit to have an insatiable
+    hunger for pizzas and you can find me roaming around the city scouting for the best pizza joints.
+    Furthermore, you can find my head burrowed in books hoping to find new perspectives on things,
+    investing..
+  </p>
+
+  <p>I am currently working as a Data Scientist in Taipei, Taiwan.</p>
+
+  <AuthorBio variant="full" />
+
+  <h2 id="contact-me">Contact me</h2>
+  <p><a href={`mailto:${SITE.author.email}`}>{SITE.author.email}</a></p>
+
+  <h2 id="lists">Lists</h2>
+  <ol>
+    <li><a href="/projects/">Some of the projects i have worked in AI, Data Science, NLP</a></li>
+    <li><a href="/misc/running_event_log/">Some Running Events I have participated in</a></li>
+  </ol>
+</PageLayout>

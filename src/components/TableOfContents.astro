@@ -1,0 +1,92 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+export interface Props {
+  headings: MarkdownHeading[];
+  title?: string;
+}
+
+const { headings, title = 'Table of Contents' } = Astro.props;
+
+interface TocNode extends MarkdownHeading {
+  children: TocNode[];
+}
+
+/**
+ * Flat heading list -> nested list, keyed on depth.
+ *
+ * Built from Astro's own `headings` rather than remark-toc: `slug` is the id
+ * Astro generated for the heading, so a TOC anchor cannot drift from the markup,
+ * and `text` is a string, so raw HTML in a heading cannot be copied into the
+ * entry. remark-toc copies heading children verbatim, which for this corpus's
+ * WordPress-exported headings (`### <span id="X"><a href="...">Name</a></span>`)
+ * emitted an <a> nested inside an <a> — invalid HTML whose click went to the
+ * external URL instead of the heading — and duplicated every `id` on the page.
+ */
+function buildTree(items: MarkdownHeading[]): TocNode[] {
+  const root: TocNode[] = [];
+  const stack: TocNode[] = [];
+  for (const item of items) {
+    const node: TocNode = { ...item, children: [] };
+    while (stack.length > 0 && stack[stack.length - 1].depth >= node.depth) stack.pop();
+    if (stack.length === 0) root.push(node);
+    else stack[stack.length - 1].children.push(node);
+    stack.push(node);
+  }
+  return root;
+}
+
+// NB: no regex literal may begin with `<` here — Astro's frontmatter scanner
+// reads that as an unterminated regex and then fails to find the closing `---`,
+// which turns the whole file into frontmatter. `replaceAll` and a `[<]`
+// character class sidestep it.
+function escapeHtml(value: string): string {
+  return value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;');
+}
+
+/** Astro reports a heading's raw inline HTML as part of its text. */
+function plainText(value: string): string {
+  return value.replace(/[<][^>]+>/g, '').trim();
+}
+
+function renderList(nodes: TocNode[]): string {
+  if (nodes.length === 0) return '';
+  const items = nodes
+    .map((node) => {
+      const label = escapeHtml(plainText(node.text));
+      const children = renderList(node.children);
+      return `<li><a href="#${escapeHtml(node.slug)}">${label}</a>${children}</li>`;
+    })
+    .join('');
+  return `<ul>${items}</ul>`;
+}
+
+const list = renderList(buildTree(headings));
+---
+
+{
+  list && (
+    <nav class="toc" aria-label={title}>
+      {/* An 18-entry contents list pushes the article below the fold on a
+          phone, so it collapses there and stays open on wider screens. The
+          `open` attribute is in the markup so a no-JS reader still gets the
+          full list; the script only ever removes it. */}
+      <details class="toc__details" open data-toc-details>
+        <summary class="toc__summary">
+          <h2 class="toc__title">{title}</h2>
+        </summary>
+        <Fragment set:html={list} />
+      </details>
+
+      <script>
+        for (const details of document.querySelectorAll<HTMLDetailsElement>('[data-toc-details]')) {
+          if (window.matchMedia('(max-width: 47.99rem)').matches) details.open = false;
+        }
+      </script>
+    </nav>
+  )
+}

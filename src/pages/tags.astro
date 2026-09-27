@@ -1,0 +1,49 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { formatDate, getPublishedList, getTags, tagAnchor } from '../lib/posts';
+
+/**
+ * Replaces _pages/tags.md. Same structure as the Jekyll page: a tag cloud with
+ * counts, then one section per tag anchored by `cgi_escape`d tag name, so
+ * existing /tags/#Deep+Learning links keep resolving.
+ */
+const tags = await getTags();
+const postCount = (await getPublishedList()).length;
+---
+
+<PageLayout
+  title="Tags"
+  description={`All ${tags.length} tags used across ${postCount} posts on Seeking Wisdom.`}
+  image="/images/tags.jpg"
+>
+  <div id="tags">
+    <ul class="tag-box inline">
+      {
+        tags.map(({ tag, posts }) => (
+          <li>
+            <a href={`#${tagAnchor(tag)}`}>
+              {tag} <span>{posts.length}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    {
+      tags.map(({ tag, posts }) => (
+        <section class="tag-section">
+          <h2 id={tagAnchor(tag)}>{tag}</h2>
+          <ul class="posts">
+            {posts.map((post) => (
+              <li>
+                <time datetime={post.date.toISOString()}>{formatDate(post.date)}</time>
+                {' » '}
+                <a href={post.url}>{post.title}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+</PageLayout>

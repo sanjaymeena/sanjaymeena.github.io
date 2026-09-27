@@ -1,0 +1,146 @@
+---
+import { SITE, pageTitle } from '../lib/site';
+import AdSenseLoader from '../components/AdSenseLoader.astro';
+import Analytics from '../components/Analytics.astro';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import '../styles/global.css';
+
+export interface SeoLink {
+  url: string;
+  title: string;
+}
+
+export interface Props {
+  title?: string;
+  description?: string;
+  keywords?: string[];
+  image?: string;
+  type?: 'website' | 'article';
+  publishedTime?: Date;
+  noindex?: boolean;
+  /** Adjacent posts, emitted as rel=prev/next like jekyll-seo-tag did. */
+  prev?: SeoLink;
+  next?: SeoLink;
+  /** Extra JSON-LD graphs (BlogPosting, CollectionPage, ...). */
+  jsonLd?: Record<string, unknown>[];
+  /**
+   * Set by pages that render <AdSense /> units, so adsbygoogle.js is not loaded
+   * on the ~18 pages that would show no ads.
+   */
+  ads?: boolean;
+}
+
+const {
+  title,
+  description = SITE.description,
+  keywords,
+  image,
+  type = 'website',
+  publishedTime,
+  noindex = false,
+  prev,
+  next,
+  jsonLd = [],
+  ads = false,
+} = Astro.props;
+
+const fullTitle = pageTitle(title);
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = image ? new URL(image, Astro.site) : undefined;
+const twitterHandle = `@${SITE.author.twitter}`;
+
+// jekyll-seo-tag put the bare page title in og:title/twitter:title and only the
+// <title> element carried the "- Seeking Wisdom" suffix.
+const socialTitle = title ?? SITE.title;
+
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: SITE.author.name,
+  url: SITE.url,
+  // The old build also listed a Google+ profile here; that network is gone.
+  sameAs: [
+    `https://twitter.com/${SITE.author.twitter}`,
+    `https://www.linkedin.com/in/${SITE.author.linkedin}`,
+    `https://github.com/${SITE.author.github}`,
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    {/* Applies a stored theme before first paint so a dark-mode reader never
+        sees a white flash. Inline and un-bundled on purpose: it must run before
+        the stylesheet applies, and its key must match THEME_STORAGE_KEY in
+        src/lib/theme.ts. */}
+    <script is:inline>
+      try {
+        var storedTheme = localStorage.getItem('theme');
+        if (storedTheme === 'dark' || storedTheme === 'light') {
+          document.documentElement.dataset.theme = storedTheme;
+        }
+      } catch (error) {
+        /* localStorage throws in some private-browsing modes; the OS
+           preference then applies through the prefers-color-scheme query. */
+      }
+    </script>
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {keywords && keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex,nofollow" />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${SITE.title} Feed`}
+      href={new URL(SITE.feed.path, Astro.site)}
+    />
+
+    <meta property="og:locale" content={SITE.locale} />
+    <meta property="og:site_name" content={SITE.title} />
+    <meta property="og:title" content={socialTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonical} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    {type === 'article' && <meta property="article:author" content={SITE.author.name} />}
+    {
+      type === 'article' && publishedTime && (
+        <meta property="article:published_time" content={publishedTime.toISOString()} />
+      )
+    }
+
+    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:site" content={twitterHandle} />
+    <meta name="twitter:creator" content={twitterHandle} />
+    <meta name="twitter:title" content={socialTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:url" content={canonical} />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
+
+    {prev && <link rel="prev" href={new URL(prev.url, Astro.site)} title={prev.title} />}
+    {next && <link rel="next" href={new URL(next.url, Astro.site)} title={next.title} />}
+
+    <script type="application/ld+json" set:html={JSON.stringify(personLd)} />
+    {jsonLd.map((graph) => <script type="application/ld+json" set:html={JSON.stringify(graph)} />)}
+
+    {/* Analytics renders nothing unless enabled at build time; the ad loader is
+        additionally scoped to pages that render units. See src/lib/integrations.ts. */}
+    <Analytics />
+    {ads && <AdSenseLoader />}
+
+    <slot name="head" />
+  </head>
+  <body>
+    <SiteNav />
+    <slot />
+    <SiteFooter />
+  </body>
+</html>

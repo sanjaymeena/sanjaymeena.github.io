@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ARCHIVES } from '../lib/site';
+
+// Replaces _pages/404.md, whose permalink was /404.html — Astro emits exactly
+// that from src/pages/404.astro, which is what GitHub Pages serves for misses.
+// The old page loaded //linkhelp.clients.google.com/tbproxy/lh/wm/fixurl.js, a
+// Google service that has been shut down; the links below replace it.
+---
+
+<BaseLayout
+  title="Page Not Found"
+  description="Page not found. Your pixels are in another canvas."
+  noindex={true}
+>
+  <main class="page">
+    <h1 class="page__title">Page Not Found</h1>
+    <p>
+      Sorry, but the page you were trying to view does not exist — perhaps you can find it through
+      one of the sections below.
+    </p>
+    <ul class="notfound__links">
+      <li><a href="/">Home — all posts by year</a></li>
+      {ARCHIVES.map((archive) => <li><a href={`/${archive.path}/`}>{archive.title}</a></li>)}
+      <li><a href="/projects/">Tech Projects and Demos</a></li>
+      <li><a href="/tags/">Tags</a></li>
+      <li><a href="/categories/">Categories</a></li>
+    </ul>
+  </main>
+</BaseLayout>

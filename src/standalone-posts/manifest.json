@@ -1,0 +1,34 @@
+[
+  {
+    "slug": "tech/Sentiment_Analysis_Reviews",
+    "file": "tech__Sentiment_Analysis_Reviews.html",
+    "title": "Sentiment Analysis for User Reviews",
+    "date": "2017-10-14",
+    "description": "We create a system to assign sentiment scores to reviews (0.0 to 1.0 where a zero score is a full negative sentiment)",
+    "excerpt": "We create a system to assign sentiment scores to reviews (0.0 to 1.0 where a zero score is a full negative sentiment)",
+    "categories": [
+      "tech"
+    ],
+    "tags": [
+      "NLP",
+      "Sentiment Analysis"
+    ],
+    "draft": false
+  },
+  {
+    "slug": "tech/spam_deep_learning",
+    "file": "tech__spam_deep_learning.html",
+    "title": "Deep Learning based Email Spam Filter",
+    "date": "2017-09-27",
+    "description": "We create Deep Learning based Email Spam Filter on Enron and Spam assassin dataset and compare results with Xgboost, SVM and Random forest",
+    "excerpt": "We create Deep Learning based Email Spam Filter on Enron and Spam assassin dataset and compare results with Xgboost, SVM and Random forest",
+    "categories": [
+      "tech"
+    ],
+    "tags": [
+      "NLP",
+      "Deep Learning"
+    ],
+    "draft": false
+  }
+]

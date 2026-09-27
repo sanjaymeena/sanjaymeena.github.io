@@ -1,0 +1,1456 @@
+/*
+ * Design tokens + base styles.
+ *
+ * Phase 5 restyle. The token blocks below are the only place literal design
+ * values may appear; every rule in this file and every component must consume
+ * these tokens.
+ *
+ * Palette and type follow the Solitude theme (astro-solitude.efu.me), read off
+ * its published stylesheet rather than eyeballed: light text #363636 on
+ * #f7f9fe with a #475dea accent, dark text #f7f7fa on #18171d with a #ffc848
+ * accent, borders accent-tinted at 14% alpha in both. Type is a plain system
+ * stack — no webfont is loaded.
+ *
+ * Two colours are not in the Solitude palette but are needed here:
+ *   --color-surface  panel background, taken from Solitude's own card-bg
+ *                    (#fff light / #1b1c20 dark)
+ *   --color-link-line  derived from --color-link, so the accent tint tracks
+ *                    whichever palette is active
+ */
+
+:root {
+  /* ---------------------------------------------------------- colour ---- */
+  --color-bg: #f7f9fe;
+  --color-text: #2b2a30;
+  --color-muted: #6b6b70;
+  /* Solitude ships these at 0.14 alpha, which all but vanishes on a near-white
+     page; 0.26 keeps the accent-tinted hairline actually readable. */
+  --color-border: rgba(71, 93, 234, 0.26);
+  --color-rule: rgba(71, 93, 234, 0.26);
+  /* Solitude paints code blocks #fff, which disappears on a #f7f9fe page;
+     this tint keeps fenced code distinguishable from both page and card. */
+  --color-code-bg: #e8edfb;
+  --color-link: #475dea;
+  --color-link-hover: #3646c9;
+  /* Panels carry the accent tint so light mode is not a white-on-white wash;
+     dark mode gets its contrast from the gold accent instead. */
+  --color-surface: #f1f4fd;
+  --color-surface-accent: color-mix(in oklab, var(--color-link) 8%, transparent);
+
+  --color-link-line: color-mix(in oklab, var(--color-link) 34%, transparent);
+
+  /* Lets the UA canvas, scrollbars and native form controls (the legacy
+     Jekyll demo posts have real <input>/<select> elements) follow the theme. */
+  color-scheme: light dark;
+
+  /* ------------------------------------------------------------ type ---- */
+  /* No webfont: Solitude's own --solitude-font-family is a system stack, so
+     text paints on the first frame and there is nothing to download. */
+  --font-sans:
+    system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+
+  --text-xs: 0.8125rem; /* 13px — eyebrows, timestamps, tag pills */
+  --text-sm: 0.9375rem; /* 15px — secondary UI, table cells */
+  --text-base: 1.0625rem; /* 17px — prose */
+  --text-lede: 1.25rem; /* 20px — page introductions */
+  --text-h4: 1.125rem; /* 18px */
+  --text-h3: 1.25rem; /* 20px */
+  --text-h2: 1.5rem; /* 24px */
+  --text-h1: 1.75rem; /* 28px — in-prose h1 */
+  --text-title: clamp(1.9rem, 1.6rem + 1.6vw, 2.4rem); /* post/page title */
+
+  --leading-body: 1.9;
+  --leading-snug: 1.55;
+  --leading-tight: 1.3;
+
+  /* A system stack only ships the standard weight cuts, so headings snap to
+     600/700 rather than the fractional weights a variable font allows. */
+  --weight-body: 400;
+  --weight-medium: 500;
+  --weight-heading: 600;
+  --weight-title: 700;
+
+  --tracking-tight: -0.017em;
+  --tracking-wide: 0.07em;
+
+  /* ------------------------------------------------- measure & space ---- */
+  /*
+   * --measure is the reading column and applies to prose and to every other
+   * article block, so their left edges align. --content-width is the page
+   * shell. --content-width-wide is the breakout width for code, tables and
+   * figures: they leave the column but never the screen, because --breakout
+   * clamps to the viewport minus gutters and therefore collapses back to the
+   * column width on a phone instead of causing horizontal overflow.
+   */
+  --measure: 72ch;
+  --content-width: 56rem;
+  --content-width-wide: 66rem;
+  --shell-gutter: 1.25rem;
+  --breakout: min(var(--content-width-wide), calc(100vw - 2 * var(--shell-gutter)));
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.75rem;
+  --space-7: 2.5rem;
+  --space-8: 3.5rem;
+  --space-9: 5rem;
+
+  /* ----------------------------------------------------------- shape ---- */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-pill: 999px;
+}
+
+/* --------------------------------------------------------- dark palette -- */
+
+/*
+ * Solitude's dark palette. Declared twice on purpose: once for the OS
+ * preference and once for an explicit choice, because a media query cannot be
+ * combined with an attribute selector in a single rule. The `:not()` guard
+ * keeps an explicit light choice winning over a dark OS, and the two blocks
+ * must stay identical — the sub-step B toggle only ever sets data-theme.
+ *
+ * --color-link-soft and --color-link-line need no dark counterpart: they are
+ * color-mix() over --color-link, so they re-resolve against the gold accent.
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-bg: #18171d;
+    --color-text: #f7f7fa;
+    --color-muted: #a9a9b3;
+    --color-border: rgba(255, 200, 72, 0.14);
+    --color-rule: rgba(255, 200, 72, 0.14);
+    --color-code-bg: #1b1c20;
+    --color-link: #ffc848;
+    --color-link-hover: #e6b43f;
+    --color-surface: #1b1c20;
+    --color-surface-accent: color-mix(in oklab, var(--color-link) 10%, transparent);
+  }
+}
+
+:root[data-theme='dark'] {
+  --color-bg: #18171d;
+  --color-text: #f7f7fa;
+  --color-muted: #a9a9b3;
+  --color-border: rgba(255, 200, 72, 0.14);
+  --color-rule: rgba(255, 200, 72, 0.14);
+  --color-code-bg: #1b1c20;
+  --color-link: #ffc848;
+  --color-link-hover: #e6b43f;
+  --color-surface: #1b1c20;
+  --color-surface-accent: color-mix(in oklab, var(--color-link) 10%, transparent);
+  color-scheme: dark;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+/*
+ * Phones: tighter gutter only. Body copy is already 17px, which fits ~35
+ * characters per line in a 390px viewport — as close to a comfortable measure
+ * as a phone gets, so there is no second size step to take.
+ */
+@media (max-width: 30rem) {
+  :root {
+    --shell-gutter: 1rem;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  /* Deep links and TOC entries should not land flush against the viewport. */
+  scroll-padding-block-start: var(--space-5);
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-optical-sizing: auto;
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/*
+ * Body copy runs at 1.9 for reading comfort. Chrome and data-dense blocks
+ * would look slack at that rhythm, so they step back to snug; prose keeps the
+ * airy value.
+ */
+.site-nav,
+.site-footer,
+.author-bio,
+.pager,
+.post-list,
+.posts,
+.tag-box,
+.category-index,
+.project-table,
+.legacy-demo,
+.toc__title,
+.comments__title {
+  line-height: var(--leading-snug);
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-link) 22%, transparent);
+}
+
+:target {
+  scroll-margin-block: var(--space-5);
+}
+
+a {
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: var(--color-link-hover);
+  text-decoration: underline;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-link);
+  outline-offset: 2px;
+}
+
+.page,
+.post {
+  margin-inline: auto;
+  max-width: var(--content-width);
+  padding: var(--space-6) var(--shell-gutter) var(--space-9);
+}
+
+/*
+ * Every article block shares the reading column, so the eyebrow, title,
+ * contents, prose, tags and comments all start on the same left edge. Only
+ * code, tables, figures and images break out past it (see --breakout below).
+ *
+ * These boxes must not set font-size on themselves: --measure is in `ch`,
+ * which resolves against the element's own font, so a block sized at 15px
+ * would compute a narrower column than the prose and the edges would drift
+ * apart. Their font-size lives on their children instead.
+ */
+.post__header,
+.post__body,
+.toc,
+.series-note,
+.post__footer,
+.post__pagination,
+.post .author-bio,
+.comments {
+  max-width: var(--measure);
+  margin-inline: auto;
+}
+
+.page__lede {
+  color: var(--color-muted);
+  font-size: var(--text-lede);
+  line-height: var(--leading-snug);
+  text-wrap: pretty;
+}
+
+/* Static pages keep the reading measure for running text while wide content
+   (tag clouds, project tables) still gets the full shell. Nothing here is
+   centred, so every left edge stays on the column. */
+.page > p,
+.page > ul,
+.page > ol,
+.page__intro {
+  max-width: var(--measure);
+}
+
+/* ------------------------------------------------------------------ post -- */
+
+.post__header {
+  margin-bottom: var(--space-7);
+}
+
+.post__archive {
+  display: inline-block;
+  margin-bottom: var(--space-3);
+  color: var(--color-link);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.post__title {
+  margin: 0;
+  font-size: var(--text-title);
+  font-weight: var(--weight-title);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  text-wrap: balance;
+}
+
+.post__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
+  /* No font-size here: this box is sized by --measure, which is in ch. */
+}
+
+.post__footer-label {
+  color: var(--color-link);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.tag-list {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tag-list a {
+  display: inline-block;
+  padding: 0.2rem 0.7rem;
+  border: 1px solid color-mix(in oklab, var(--color-link) 38%, transparent);
+  border-radius: var(--radius-pill);
+  background: color-mix(in oklab, var(--color-link) 12%, transparent);
+  color: var(--color-link-hover);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+}
+
+.tag-list a:hover,
+.tag-list a:focus {
+  border-color: var(--color-link-line);
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+/* ------------------------------------------------------- series (was Liquid) -- */
+
+.series-note {
+  /* margin-block only, so the shared article-column centring is not cancelled. */
+  margin-block: 0 var(--space-7);
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-link-line);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-accent);
+  line-height: var(--leading-snug);
+  /* No font-size here: this box is sized by --measure, which is in ch. */
+}
+
+.series-note__lead,
+.series-note__list {
+  font-size: var(--text-sm);
+}
+
+.series-note__lead {
+  margin: 0 0 var(--space-3);
+  font-weight: var(--weight-medium);
+}
+
+.series-note__list {
+  margin: 0;
+  padding-left: var(--space-5);
+}
+
+.series-note__part {
+  color: var(--color-muted);
+}
+
+.series-note__current {
+  font-style: italic;
+}
+
+/* ------------------------------------------------------------- prose body -- */
+
+.prose {
+  /* The reading column: 72ch at the 17px base. Narrower than the 56rem shell,
+     and narrower than the breakout width code and tables get below. */
+  max-width: var(--measure);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+}
+
+.prose > :first-child {
+  margin-top: 0;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  margin: var(--space-7) 0 var(--space-4);
+  font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  text-wrap: balance;
+}
+
+.prose h1 {
+  font-size: var(--text-h1);
+  font-weight: var(--weight-title);
+}
+.prose h2 {
+  font-size: var(--text-h2);
+}
+.prose h3 {
+  font-size: var(--text-h3);
+}
+.prose h4 {
+  font-size: var(--text-h4);
+}
+
+/* A heading directly after body copy needs the full gap; one directly after
+   another heading (h3 under h2) does not. */
+.prose h1 + h2,
+.prose h2 + h3,
+.prose h3 + h4 {
+  margin-top: var(--space-4);
+}
+
+.prose p,
+.prose ul,
+.prose ol {
+  margin: 0 0 var(--space-5);
+  text-wrap: pretty;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: var(--space-6);
+}
+
+.prose li {
+  margin-bottom: var(--space-2);
+}
+
+.prose li::marker {
+  color: var(--color-link);
+}
+
+.prose li > ul,
+.prose li > ol {
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.prose blockquote {
+  margin: var(--space-6) 0;
+  padding: var(--space-1) 0 var(--space-1) var(--space-5);
+  border-left: 3px solid var(--color-link-line);
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+.prose blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.prose hr {
+  margin: var(--space-8) 0;
+  border: 0;
+  border-top: 1px solid var(--color-rule);
+}
+
+/*
+ * Images keep their intrinsic width — they are never stretched — but may break
+ * out of the reading column up to --breakout. `left: 50%` plus a compensating
+ * translate centres them on the column axis whether they end up narrower or
+ * wider than it, which `margin-inline: auto` cannot do once the box overflows
+ * its container.
+ */
+.prose img {
+  display: block;
+  position: relative;
+  left: 50%;
+  max-width: var(--breakout);
+  height: auto;
+  transform: translateX(-50%);
+  border-radius: var(--radius-md);
+}
+
+.prose strong {
+  font-weight: var(--weight-heading);
+}
+
+.prose table {
+  display: block;
+  width: 100%;
+  margin: var(--space-6) 0;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+}
+
+.prose th,
+.prose td {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  text-align: left;
+}
+
+.prose th {
+  background: var(--color-surface);
+  font-weight: var(--weight-heading);
+}
+
+.prose :not(pre) > code {
+  padding: 0.15em 0.4em;
+  border-radius: var(--radius-sm);
+  background: var(--color-code-bg);
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  font-weight: var(--weight-medium);
+  word-break: break-word;
+}
+
+.prose pre {
+  margin: var(--space-6) 0;
+  padding: var(--space-4) var(--space-5);
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-code-bg);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.65;
+  tab-size: 2;
+}
+
+.prose pre code {
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  font-size: inherit;
+  font-weight: inherit;
+  word-break: normal;
+}
+
+/* -------------------------------------------------------------- breakout -- */
+
+/*
+ * Code, tables and figures leave the reading column for the wider
+ * --content-width-wide, so a long line of Java or a comparison table is not
+ * squeezed into 72ch. `margin-inline-start: calc(50% - half)` recentres them on
+ * the column axis. --breakout is already clamped to the viewport, so on a phone
+ * this collapses to the column width and nothing overflows horizontally.
+ */
+.prose pre,
+.prose figure {
+  width: var(--breakout);
+  max-width: none;
+  margin-inline-start: calc(50% - var(--breakout) / 2);
+}
+
+/*
+ * Tables get the breakout width as a ceiling, not a floor: a three-column
+ * table stretched across 66rem would look abandoned, and fit-content keeps its
+ * left edge on the reading column. It still scrolls internally once its
+ * content exceeds the ceiling.
+ */
+.prose table {
+  width: fit-content;
+  max-width: var(--breakout);
+  margin-inline-start: 0;
+}
+
+/* ----------------------------------------------------------- shiki theme -- */
+
+/*
+ * Shiki is configured with `themes: { light, dark }` and `defaultColor: false`,
+ * so every token carries --shiki-light/--shiki-dark inline and applies no colour
+ * of its own. Without the switch below, dark mode would paint github-light's
+ * near-black tokens onto the #1b1c20 block and code would be unreadable. The
+ * block background stays --color-code-bg in both themes; only tokens follow.
+ */
+.prose pre.astro-code,
+.prose pre.astro-code span {
+  color: var(--shiki-light);
+}
+
+:root[data-theme='dark'] .prose pre.astro-code,
+:root[data-theme='dark'] .prose pre.astro-code span {
+  color: var(--shiki-dark);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .prose pre.astro-code,
+  :root:not([data-theme='light']) .prose pre.astro-code span {
+    color: var(--shiki-dark);
+  }
+}
+
+.prose pre.astro-code {
+  background-color: var(--color-code-bg) !important;
+}
+
+/* ------------------------------------------------------- table of contents -- */
+
+.toc {
+  /* margin-block only: the shared article-column rule owns margin-inline, and a
+     `margin:` shorthand here would silently cancel the centring. */
+  margin-block: 0 var(--space-7);
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  line-height: var(--leading-snug);
+  /* No font-size here: this box is sized by --measure, which is in ch. */
+}
+
+.toc__details {
+  font-size: var(--text-sm);
+}
+
+.toc__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-3);
+  cursor: pointer;
+  list-style: none;
+}
+
+.toc__details:not([open]) .toc__summary {
+  margin-bottom: 0;
+}
+
+.toc__summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Chevron drawn from two borders so it inherits --color-muted exactly. */
+.toc__summary::after {
+  content: '';
+  flex: 0 0 auto;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-right: 1.5px solid var(--color-muted);
+  border-bottom: 1.5px solid var(--color-muted);
+  transform: rotate(45deg);
+  transition: transform 0.15s ease;
+}
+
+.toc__details[open] > .toc__summary::after {
+  transform: rotate(-135deg);
+}
+
+.toc__title {
+  margin: 0;
+  color: var(--color-link);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.toc ul {
+  margin: 0;
+  padding-left: var(--space-5);
+  list-style: none;
+}
+
+.toc__details > ul {
+  padding-left: 0;
+}
+
+.toc li {
+  margin: var(--space-1) 0;
+}
+
+.toc > ul > li {
+  margin: var(--space-2) 0;
+}
+
+.toc a {
+  color: var(--color-text);
+  border-bottom: 1px solid transparent;
+}
+
+.toc a:hover,
+.toc a:focus {
+  color: var(--color-link);
+  border-bottom-color: var(--color-link-line);
+  text-decoration: none;
+}
+
+/* ------------------------------------------------------------------ math -- */
+
+/*
+ * KaTeX sets its own 1.21em default, which dwarfs 17px body copy and forces
+ * extra line-box height on every paragraph containing inline math. Both are
+ * pulled back towards the surrounding text size.
+ */
+.prose .katex {
+  font-size: 1.06em;
+}
+
+/* Display math can be wider than the column on phones; scroll rather than
+   overflow the layout. */
+.prose .katex-display {
+  margin: var(--space-6) 0;
+  padding: var(--space-2) var(--space-1);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+}
+
+.prose .katex-display > .katex {
+  font-size: 1.12em;
+}
+
+/* ------------------------------------------------------- legacy Jekyll demo -- */
+
+.legacy-demo {
+  margin-top: var(--space-7);
+}
+
+.legacy-demo--missing {
+  padding: var(--space-5);
+  border: 1px dashed var(--color-rule);
+  border-radius: var(--radius-md);
+  color: var(--color-muted);
+}
+
+.legacy-demo textarea,
+.legacy-demo select,
+.legacy-demo input {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+}
+
+.legacy-demo pre.result {
+  padding: var(--space-4) var(--space-5);
+  overflow-x: auto;
+  background: var(--color-code-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+/* ------------------------------------------------------------- post index -- */
+
+.post-list {
+  margin: var(--space-7) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.post-list__item {
+  padding: var(--space-5) 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.post-list__meta {
+  display: flex;
+  gap: var(--space-3);
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+}
+
+.post-list__title {
+  margin: var(--space-1) 0 var(--space-2);
+  font-size: var(--text-h3);
+  font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-snug);
+}
+
+.post-list__excerpt {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+}
+
+/* ------------------------------------------------------------- utilities -- */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --------------------------------------------------------- static pages -- */
+
+.page__title {
+  margin: 0 0 var(--space-4);
+  font-size: var(--text-title);
+  font-weight: var(--weight-title);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  text-wrap: balance;
+}
+
+.page__intro h2 {
+  margin: var(--space-6) 0 var(--space-3);
+  font-size: var(--text-h2);
+  font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+}
+
+.page__intro-text {
+  margin: 0 0 var(--space-4);
+  color: var(--color-muted);
+}
+
+.page__intro ul {
+  margin: 0 0 var(--space-5);
+  padding-left: var(--space-6);
+}
+
+.page__intro li {
+  margin-bottom: var(--space-2);
+}
+
+/* Accent markers keep list pages in the same voice as prose. */
+.page li::marker {
+  color: var(--color-link);
+}
+
+.page h2 {
+  margin: var(--space-7) 0 var(--space-4);
+  font-size: var(--text-h2);
+  font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+}
+
+.page h3 {
+  margin: var(--space-6) 0 var(--space-3);
+  font-size: var(--text-h3);
+  font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+}
+
+.notfound__links {
+  padding-left: var(--space-6);
+}
+
+.notfound__links li {
+  margin-bottom: var(--space-2);
+}
+
+/* ------------------------------------------- year-grouped post listings -- */
+
+.page_list {
+  margin-top: var(--space-7);
+}
+
+.page_list__year h2 {
+  margin: var(--space-6) 0 var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-link);
+  font-size: var(--text-h2);
+  font-weight: var(--weight-title);
+  letter-spacing: var(--tracking-tight);
+  font-variant-numeric: tabular-nums;
+}
+
+.posts {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* A spread shadow tints the whole row on hover without shifting its text or
+   its hairline off the column edge, which padding plus a negative margin
+   would do. */
+.posts__item {
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: box-shadow 0.15s ease;
+}
+
+.posts__item:hover {
+  box-shadow: 0 0 0 var(--space-2) var(--color-surface-accent);
+}
+
+.posts__item a {
+  color: var(--color-text);
+  font-weight: var(--weight-medium);
+}
+
+.posts__item a:hover,
+.posts__item a:focus {
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+.posts__item time {
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+  margin-right: var(--space-2);
+}
+
+.posts__category {
+  color: var(--color-link);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  text-transform: capitalize;
+}
+
+.posts__excerpt {
+  margin: var(--space-1) 0 0;
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+}
+
+/* --------------------------------------------------------------- tags -- */
+
+.tag-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-4) 0 var(--space-7);
+  padding: 0;
+  list-style: none;
+}
+
+.tag-box a {
+  display: inline-block;
+  padding: 0.2rem 0.7rem;
+  border: 1px solid color-mix(in oklab, var(--color-link) 38%, transparent);
+  border-radius: var(--radius-pill);
+  background: color-mix(in oklab, var(--color-link) 12%, transparent);
+  color: var(--color-link-hover);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+}
+
+.tag-box a:hover,
+.tag-box a:focus {
+  border-color: var(--color-link-line);
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+.tag-box span {
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+}
+
+.tag-section h2 {
+  margin: var(--space-7) 0 var(--space-3);
+  padding-bottom: var(--space-1);
+  border-bottom: 1px solid var(--color-border);
+  font-size: var(--text-h3);
+  font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-tight);
+}
+
+.tag-section .posts__item {
+  padding: var(--space-1) 0;
+  border-bottom: 0;
+}
+
+/* --------------------------------------------------------- categories -- */
+
+.category-index {
+  margin: var(--space-6) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.category-index__item {
+  padding: var(--space-4) 0;
+  border-top: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: box-shadow 0.15s ease;
+}
+
+.category-index__item:hover {
+  box-shadow: 0 0 0 var(--space-2) var(--color-surface-accent);
+}
+
+.category-index__item > a {
+  color: var(--color-text);
+  font-size: var(--text-h3);
+  font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-tight);
+}
+
+.category-index__item > a:hover,
+.category-index__item > a:focus {
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+.category-index__count {
+  display: inline-block;
+  margin-left: var(--space-3);
+  padding: 0.1rem 0.55rem;
+  border: 1px solid color-mix(in oklab, var(--color-link) 38%, transparent);
+  border-radius: var(--radius-pill);
+  background: color-mix(in oklab, var(--color-link) 12%, transparent);
+  color: var(--color-link-hover);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+}
+
+.category-index__description {
+  margin: var(--space-1) 0 0;
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
+/* ---------------------------------------------------------- pagination -- */
+
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin: var(--space-5) 0;
+  font-size: var(--text-sm);
+}
+
+.pager__position {
+  color: var(--color-muted);
+}
+
+/* ------------------------------------------------ post prev/next links -- */
+
+.post__pagination {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: var(--space-7);
+}
+
+.post__pagination-link {
+  flex: 1 1 14rem;
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+}
+
+.post__pagination-link:hover,
+.post__pagination-link:focus {
+  border-color: var(--color-link-line);
+  text-decoration: none;
+}
+
+.post__pagination-label {
+  display: block;
+  margin-bottom: var(--space-1);
+  color: var(--color-link);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+/* ------------------------------------------------- /projects/ tables -- */
+
+.project-table {
+  margin: var(--space-5) 0 var(--space-8);
+}
+
+.project-table__search input {
+  width: 100%;
+  max-width: 22rem;
+  margin-bottom: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+}
+
+.project-table__grid {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.project-table__grid th,
+.project-table__grid td {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.project-table__grid th {
+  background: var(--color-surface);
+  padding: 0;
+}
+
+.project-table__grid th button {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  font-weight: var(--weight-heading);
+  text-align: left;
+}
+
+.project-table__grid th button:hover {
+  color: var(--color-link);
+}
+
+.project-table__label {
+  color: var(--color-link);
+}
+
+.project-table__links,
+.project-table__bullets {
+  margin: 0;
+  padding-left: var(--space-5);
+}
+
+.project-table__grid tbody tr[hidden] {
+  display: none;
+}
+
+/* ---------------------------------------------------------- global chrome -- */
+
+.site-nav {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.site-nav__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  margin-inline: auto;
+  max-width: var(--content-width);
+  padding: var(--space-2) var(--shell-gutter);
+}
+
+.site-nav__brand,
+.site-nav__brand:hover,
+.site-nav__brand:focus {
+  color: var(--color-text);
+  font-weight: var(--weight-title);
+  letter-spacing: var(--tracking-tight);
+  text-decoration: none;
+}
+
+.site-nav__toggle {
+  margin-left: auto;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font: inherit;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* Theme switch. The moon shows while the resolved theme is light (clicking it
+   goes dark) and the sun while it is dark, so the icon always names the
+   destination. Both selectors are needed because a dark OS with no stored
+   choice sets no data-theme attribute. */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  border-color: var(--color-link-line);
+  color: var(--color-link);
+}
+
+.theme-toggle__icon {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.theme-toggle__icon--sun {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .theme-toggle__icon--sun {
+    display: block;
+  }
+
+  :root:not([data-theme='light']) .theme-toggle__icon--moon {
+    display: none;
+  }
+}
+
+:root[data-theme='dark'] .theme-toggle__icon--sun {
+  display: block;
+}
+
+:root[data-theme='dark'] .theme-toggle__icon--moon {
+  display: none;
+}
+
+.site-nav__nav {
+  flex: 1 1 100%;
+}
+
+.site-nav__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-nav__list[data-collapsed='true'] {
+  display: none;
+}
+
+.site-nav__link {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-size: var(--text-sm);
+}
+
+.site-nav__link:hover,
+.site-nav__link:focus {
+  background: var(--color-surface-accent);
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+/* A tinted pill, matching the tag chips, rather than the old inset underline
+   which read as a stray rounded box under the label. */
+.site-nav__link--active,
+.site-nav__link--active:hover,
+.site-nav__link--active:focus {
+  background: var(--color-surface-accent);
+  color: var(--color-link);
+  font-weight: var(--weight-heading);
+}
+
+@media (min-width: 48rem) {
+  .site-nav__toggle {
+    display: none;
+  }
+
+  .site-nav__nav {
+    flex: 1 1 auto;
+  }
+
+  .site-nav__list,
+  .site-nav__list[data-collapsed='true'] {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.15rem;
+    margin: 0;
+  }
+}
+
+.site-footer {
+  margin-top: var(--space-8);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+}
+
+.site-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  margin-inline: auto;
+  max-width: var(--content-width);
+  padding: var(--space-4) var(--shell-gutter) var(--space-6);
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
+.site-footer__copy {
+  margin: 0;
+}
+
+.site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ------------------------------------------------------------ author bio -- */
+
+.author-bio {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+/* The source image is 653x490; the square crop keeps every placement consistent. */
+.author-bio__avatar {
+  flex: 0 0 auto;
+  border-radius: var(--radius-pill);
+  background: var(--color-border);
+  object-fit: cover;
+}
+
+.author-bio__body {
+  min-width: 0;
+}
+
+.author-bio__name {
+  margin: 0;
+  font-weight: var(--weight-heading);
+}
+
+.author-bio__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0.15rem 0 0;
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+}
+
+.author-bio__role,
+.author-bio__location {
+  margin: 0.15rem 0 0;
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
+.author-bio__social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-sm);
+}
+
+.author-bio--byline {
+  margin-top: var(--space-5);
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.author-bio--byline .author-bio__name {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+.author-bio--card {
+  margin-top: var(--space-7);
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.author-bio--full {
+  gap: var(--space-5);
+  margin: var(--space-6) 0;
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.author-bio--full .author-bio__name {
+  font-size: var(--text-h3);
+}
+
+.author-bio--full .author-bio__role,
+.author-bio--full .author-bio__location {
+  font-size: var(--text-base);
+}
+
+/* -------------------------------------------------------------- comments -- */
+
+.comments {
+  margin-top: var(--space-8);
+}
+
+.comments__title {
+  margin: 0 0 var(--space-4);
+  font-size: var(--text-h3);
+  font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-tight);
+}
+
+/* Reserved space so the lazily injected giscus iframe does not jump the page. */
+.comments__mount {
+  min-height: 2rem;
+}
+
+.comments__note {
+  margin: var(--space-3) 0 0;
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+}
+
+/* -------------------------------------------------------------- ad units -- */
+
+/* 728px is the standard leaderboard width the old includes capped to. */
+.ad-container {
+  position: relative;
+  z-index: 1;
+  clear: both;
+  margin: var(--space-7) auto;
+  max-width: 728px;
+  text-align: center;
+}

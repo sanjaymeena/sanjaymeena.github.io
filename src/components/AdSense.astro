@@ -1,0 +1,52 @@
+---
+import { adsEnabled } from '../lib/integrations';
+import { SITE } from '../lib/site';
+
+/**
+ * One AdSense unit. Ported from _includes/ads/in-article.html and
+ * _includes/ads/display-bottom.html; the attribute sets below match what the
+ * live Jekyll site emits, because the ad client keys off them.
+ *
+ * Pair with <AdSenseLoader /> in the document head — that loads adsbygoogle.js
+ * once no matter how many units a page renders.
+ *
+ * The container styling lives in global.css; the only inline style is on <ins>,
+ * which the AdSense script requires in order to size the slot.
+ */
+export type AdPlacement = 'in-article' | 'display-top' | 'display-middle' | 'display-bottom';
+
+export interface Props {
+  placement: AdPlacement;
+}
+
+const { placement } = Astro.props;
+
+const SLOTS: Record<AdPlacement, string> = {
+  'in-article': SITE.adsense.slots.inArticle,
+  'display-top': SITE.adsense.slots.displayTop,
+  'display-middle': SITE.adsense.slots.displayMiddle,
+  'display-bottom': SITE.adsense.slots.displayBottom,
+};
+
+const enabled = adsEnabled();
+const client = `ca-${SITE.adsense.client}`;
+const slot = SLOTS[placement];
+const inArticle = placement === 'in-article';
+---
+
+{
+  enabled && (
+    <div class:list={['ad-container', `ad-container--${placement}`]}>
+      <ins
+        class="adsbygoogle"
+        style={inArticle ? 'display:block; text-align:center;' : 'display:block'}
+        data-ad-client={client}
+        data-ad-slot={slot}
+        {...(inArticle
+          ? { 'data-ad-layout': 'in-article', 'data-ad-format': 'fluid' }
+          : { 'data-ad-format': 'auto', 'data-full-width-responsive': 'true' })}
+      />
+      <script is:inline>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+  )
+}

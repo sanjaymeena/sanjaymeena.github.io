@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostList from '../components/PostList.astro';
+import { getPublishedList } from '../lib/posts';
+import { SITE } from '../lib/site';
+
+const HOME_KEYWORDS = [
+  'machine learning',
+  'deep learning',
+  'artificial intelligence',
+  'value investing',
+  'pharma',
+  'stocks',
+  'financial analysis',
+  'nlp',
+  'natural language processing',
+  'Java',
+  'behavioral finance',
+  'data science',
+  'information extraction',
+  'information retrieval',
+];
+
+const posts = await getPublishedList();
+
+const websiteLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: SITE.title,
+  description: 'Blog on A.I, Value Investing, Books, Technology',
+  url: SITE.url,
+};
+---
+
+<BaseLayout
+  description="Blog on A.I, Value Investing, Books, Technology"
+  keywords={HOME_KEYWORDS}
+  image="/images/machine-learning.jpg"
+  jsonLd={[websiteLd]}
+>
+  <main class="page">
+    <h1 class="page__title">{SITE.title}</h1>
+
+    <div class="page__intro">
+      <h2>Hello there!</h2>
+      <p>I maintain this Blog to record my learnings from different fields of Investing and Technology.</p>
+      <p>Blog posts are divided into following categories.</p>
+      <ul>
+        <li>
+          <a href="/tech/">Tech Posts</a>: Posts related to Data Science, AI, Natural Language
+          Processing (NLP), Deep Learning and Machine Learning
+        </li>
+        <li>
+          <a href="/investment_notes/">Investing Posts</a>: Posts on various topics related to
+          Investing like Finance, Psychology, Investing Approaches
+        </li>
+        <li>
+          <a href="/book_notes/">Book Notes</a>: Notes from Various Books on topics like Investing,
+          Psychology, Nature etc.
+        </li>
+        <li><a href="/misc/">Misc</a> - Miscellaneous Posts</li>
+      </ul>
+      <p>
+        You can also have a look at some of the tech projects i have worked on the over the years:
+        <a href="/projects/">Projects</a>
+      </p>
+    </div>
+
+    <p class="page__lede">Below are my posts sorted by Year.</p>
+
+    <PostList posts={posts} showCategory />
+  </main>
+</BaseLayout>

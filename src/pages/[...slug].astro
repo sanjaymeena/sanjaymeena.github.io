@@ -1,0 +1,51 @@
+---
+import PostLayout from '../layouts/PostLayout.astro';
+import { getPublishedPosts, type Post } from '../lib/posts';
+import {
+  getStandalonePosts,
+  injectStandaloneChrome,
+  readStandaloneHtml,
+  standaloneChrome,
+  type StandalonePost,
+} from '../lib/standalone';
+
+/**
+ * Every post URL on this site is `/<slug>/`, where `slug` is the post's original
+ * Jekyll path (`tech/statistical-inference`, `books/book_notes_48_laws_of_power`,
+ * `tech/nlp/introduction-to-linguistics`). The rest parameter is emitted
+ * verbatim, so the casing and nesting of the old permalinks survive exactly.
+ *
+ * Static pages (/about/, /tech/, /tags/, ...) are single-segment routes and take
+ * precedence over this catch-all, so there is no conflict with them.
+ */
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  return [
+    ...posts.map((post) => ({ params: { slug: post.data.slug }, props: { post } })),
+    ...getStandalonePosts().map((standalone) => ({
+      params: { slug: standalone.slug },
+      props: { standalone },
+    })),
+  ];
+}
+
+type Props =
+  | { post: Post; standalone?: undefined }
+  | { post?: undefined; standalone: StandalonePost };
+
+const props = Astro.props as Props;
+
+// Standalone posts are complete HTML documents, emitted verbatim apart from a
+// minimal nav bar so they are not orphan pages (see standaloneChrome()).
+const standaloneHtml = props.standalone
+  ? injectStandaloneChrome(await readStandaloneHtml(props.standalone.file), standaloneChrome())
+  : null;
+---
+
+{
+  standaloneHtml !== null ? (
+    <Fragment set:html={standaloneHtml} />
+  ) : (
+    <PostLayout post={props.post as Post} />
+  )
+}

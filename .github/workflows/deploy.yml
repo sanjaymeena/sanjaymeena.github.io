@@ -1,0 +1,77 @@
+# Deploys the Astro build to GitHub Pages (https://sanjaymeena.github.io).
+#
+# Replaces GitHub Pages' native "deploy from branch" Jekyll build, which has
+# nothing to build once the Ruby toolchain is removed.
+#
+# One-time manual step (repo Settings -> Pages -> Build and deployment -> Source):
+# switch from "Deploy from a branch" to "GitHub Actions", or the deploy job fails.
+#
+# www.sanjaymeena.io is served separately by AWS Amplify + CloudFront; see
+# amplify.yml. This workflow does not touch that origin, and there is
+# deliberately no CNAME file — www DNS points at CloudFront, not at GitHub.
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one deploy at a time, but never cancel an in-flight production deploy.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          # Astro 7 needs >= 22.12.0; the current LTS satisfies that.
+          node-version: lts/*
+          cache: npm
+
+      - name: Set up Pages
+        uses: actions/configure-pages@v6
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          # Repo variable: Settings -> Secrets and variables -> Actions ->
+          # Variables -> PUBLIC_GA4_ID. Unset or empty means <Analytics />
+          # renders nothing, so the build never fails for want of an id.
+          PUBLIC_GA4_ID: ${{ vars.PUBLIC_GA4_ID }}
+          # Matches the Jekyll site, which had `ads.enabled: true`.
+          PUBLIC_ADSENSE_ENABLED: 'true'
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          # The action defaults to _site (Jekyll); Astro writes to dist.
+          path: ./dist
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

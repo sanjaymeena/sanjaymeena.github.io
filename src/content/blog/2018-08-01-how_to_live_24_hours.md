@@ -1,0 +1,29 @@
+---
+title: How to live 24 hours a day
+slug: books/how_to_live_24_hours
+date: '2018-08-01'
+description: How to live 24 hours a day
+excerpt: How to live 24 hours a day
+categories:
+  - books
+tags:
+  - book-notes
+keywords:
+  - How to live 24 hours a day
+toc: true
+draft: true
+---
+
+ 
+
+# Introduction 
+
+We shall never have any more time. We have, and we have always had , all the time there is. Most of us perhaps have the realisation of this profound and neglected truth, however it is the doing that is always the pain point. Having a framework of managing time is essential for optimal use of time. 
+
+Most of us are haunted by a suppressed disatisfaction with  arrangement of our daily life. The primal cause of that inconvenient dissatisfaction is the feeling that you are everyday living undone something which you like to do and we are always hoping to do when you have "more time" .
+
+The chief beauty about the constant supply of time is that you cannot waste it in advance. The next year, next day, next hour are all lying ready for us to use. 
+
+Beware of undetaking too much at the start. Be content with a little. Allow for accident. Allow for human nature, especially our own. 
+
+We keep hearing live life to the fullest! An Adult person considers 10-6 pm (1/3rd of a day) as the "day". Rest of the time (2/3rd of a day) is unaccounted for.

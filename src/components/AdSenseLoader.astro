@@ -1,0 +1,26 @@
+---
+import { adsEnabled } from '../lib/integrations';
+import { SITE } from '../lib/site';
+
+/**
+ * The adsbygoogle.js loader, once per page in <head>. Mirrors the old
+ * _includes/head/custom.html.
+ *
+ * Kept separate from AdSense.astro because a page may render several ad units
+ * but must only load the library once. Off unless PUBLIC_ADSENSE_ENABLED=true in
+ * a production build — note the live Jekyll site has `ads.enabled: true`, so ads
+ * disappear from the site until this is switched on.
+ */
+const enabled = adsEnabled();
+---
+
+{
+  enabled && (
+    <script
+      is:inline
+      async
+      src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-${SITE.adsense.client}`}
+      crossorigin="anonymous"
+    />
+  )
+}

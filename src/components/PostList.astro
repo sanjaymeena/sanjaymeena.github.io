@@ -1,0 +1,36 @@
+---
+import { formatDateShort, groupByYear, type ListedPost } from '../lib/posts';
+
+export interface Props {
+  posts: ListedPost[];
+  /** Prefix each entry with its category, as the homepage did. */
+  showCategory?: boolean;
+}
+
+const { posts, showCategory = false } = Astro.props;
+const years = groupByYear(posts);
+---
+
+<div class="page_list">
+  {
+    years.map(({ year, posts: yearPosts }) => (
+      <section class="page_list__year">
+        {/* The `-ref` suffix on the year anchor matches the Jekyll templates, so
+            existing /#2016-ref links keep working. */}
+        <h2 id={`${year}-ref`}>{year}</h2>
+        <ul class="posts">
+          {yearPosts.map((post) => (
+            <li class="posts__item">
+              <time datetime={post.date.toISOString()}>{formatDateShort(post.date)}</time>
+              <a href={post.url}>
+                {showCategory && post.category && <span class="posts__category">[{post.category}]</span>}{' '}
+                {post.title}
+              </a>
+              {post.excerpt && <p class="posts__excerpt">{post.excerpt}</p>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+</div>

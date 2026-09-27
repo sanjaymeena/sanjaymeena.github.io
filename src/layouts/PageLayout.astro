@@ -1,0 +1,29 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+export interface Props {
+  title: string;
+  description?: string;
+  keywords?: string[];
+  /** Hero/OG image, relative to the site root. */
+  image?: string;
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown>[];
+}
+
+const { title, description, keywords, image, noindex, jsonLd } = Astro.props;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  keywords={keywords}
+  image={image}
+  noindex={noindex}
+  jsonLd={jsonLd}
+>
+  <main class="page">
+    <h1 class="page__title">{title}</h1>
+    <slot />
+  </main>
+</BaseLayout>

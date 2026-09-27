@@ -1,0 +1,45 @@
+---
+import { getSeriesPosts, postUrl } from '../lib/posts';
+
+export interface Props {
+  series: string;
+  currentUrl: string;
+}
+
+const { series, currentUrl } = Astro.props;
+const posts = await getSeriesPosts(series);
+
+// Replaces _includes/series.html, which rendered a "Part N of M" panel for any
+// post with a `series` value. Deliberate deviation: Jekyll rendered the panel
+// even for a series with a single live post, which reads as noise, so this only
+// renders when there is more than one published part.
+const show = posts.length > 1;
+---
+
+{
+  show && (
+    <aside class="series-note" aria-label={`Part of the ${series} series`}>
+      <p class="series-note__lead">
+        This article is <strong>Part {posts.findIndex((p) => postUrl(p) === currentUrl) + 1}</strong>{' '}
+        in a <strong>{posts.length}-Part</strong> Series.
+      </p>
+      <ul class="series-note__list">
+        {posts.map((post, i) => {
+          const isCurrent = postUrl(post) === currentUrl;
+          return (
+            <li>
+              <span class="series-note__part">Part {i + 1} —</span>{' '}
+              {isCurrent ? (
+                <span class="series-note__current" aria-current="page">
+                  This Article
+                </span>
+              ) : (
+                <a href={postUrl(post)}>{post.data.title}</a>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </aside>
+  )
+}

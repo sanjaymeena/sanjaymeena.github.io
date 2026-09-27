@@ -1,0 +1,35 @@
+---
+import { analyticsEnabled, ga4MeasurementId } from '../lib/integrations';
+
+/**
+ * GA4 via gtag.js.
+ *
+ * The old `_config.yml` had `tracking_id: "UA-78154345-1"` — a Universal
+ * Analytics property, which stopped processing hits in 2023. It is deliberately
+ * not carried over.
+ *
+ * TODO(sanjay): create a GA4 property and set PUBLIC_GA4_ID=G-XXXXXXXXXX in the
+ * build environment (see .env.example, and the deploy workflow). Until then this
+ * component renders nothing, so no page ships analytics bytes.
+ *
+ * Production builds only: `npm run dev` never loads GA.
+ */
+const enabled = analyticsEnabled();
+const id = ga4MeasurementId();
+---
+
+{
+  enabled && (
+    <>
+      <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${id}`} />
+      <script is:inline define:vars={{ id }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', id);
+      </script>
+    </>
+  )
+}

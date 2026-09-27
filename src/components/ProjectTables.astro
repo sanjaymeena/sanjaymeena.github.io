@@ -1,0 +1,152 @@
+---
+export interface ProjectLink {
+  label: string;
+  url: string;
+}
+
+export interface Project {
+  area: string;
+  description: string;
+  bullets?: string[];
+  topics: string;
+  development: string;
+  links: ProjectLink[];
+  year: number;
+}
+
+export interface Props {
+  /** Table id, matching the old `#datascience` / `#corenlp` anchors. */
+  id: string;
+  caption: string;
+  projects: Project[];
+}
+
+const { id, caption, projects } = Astro.props;
+
+const COLUMNS = ['Area', 'Description', 'Keywords', 'Links', 'Year'] as const;
+---
+
+<div class="project-table" data-project-table={id}>
+  <label class="project-table__search">
+    <span class="visually-hidden">Search {caption}</span>
+    <input type="search" placeholder="Search by words ..." data-project-search />
+  </label>
+
+  <table id={id} class="project-table__grid">
+    <caption class="visually-hidden">{caption}</caption>
+    <thead>
+      <tr>
+        {
+          COLUMNS.map((label) => (
+            <th scope="col">
+              <button type="button" data-project-sort>{label}</button>
+            </th>
+          ))
+        }
+      </tr>
+    </thead>
+    <tbody>
+      {
+        projects.map((project) => (
+          <tr>
+            <td>{project.area}</td>
+            <td>
+              {project.description}
+              {project.bullets && project.bullets.length > 0 && (
+                <ul class="project-table__bullets">
+                  {project.bullets.map((bullet) => (
+                    <li>{bullet}</li>
+                  ))}
+                </ul>
+              )}
+            </td>
+            <td>
+              <span class="project-table__label">Topics:</span> {project.topics}
+              <br />
+              <span class="project-table__label">Development:</span> {project.development}
+            </td>
+            <td>
+              <ul class="project-table__links">
+                {project.links.map((link) => (
+                  <li>
+                    <a href={link.url}>{link.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </td>
+            <td>{project.year}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+
+<script>
+  // Replaces jQuery 3.1.1 + Bootstrap 3 + jquery.dataTables (~250KB) with the two
+  // behaviours the page actually advertised: a search box and click-to-sort
+  // headers. Astro bundles this once no matter how many tables use the component.
+  const ASC = 'ascending';
+  const DESC = 'descending';
+
+  function cellText(row: HTMLTableRowElement, index: number): string {
+    return (row.cells[index]?.textContent ?? '').replace(/\s+/g, ' ').trim().toLowerCase();
+  }
+
+  function numericValue(row: HTMLTableRowElement, index: number): number {
+    const parsed = Number.parseFloat(cellText(row, index));
+    return Number.isNaN(parsed) ? -Infinity : parsed;
+  }
+
+  function sortRows(rows: HTMLTableRowElement[], column: number, direction: string): void {
+    const factor = direction === ASC ? 1 : -1;
+    const isYear = column === 4;
+    rows.sort((a, b) => {
+      if (isYear) return (numericValue(a, column) - numericValue(b, column)) * factor;
+      return cellText(a, column).localeCompare(cellText(b, column)) * factor;
+    });
+  }
+
+  for (const root of document.querySelectorAll<HTMLElement>('[data-project-table]')) {
+    const table = root.querySelector<HTMLTableElement>('table');
+    const input = root.querySelector<HTMLInputElement>('[data-project-search]');
+    const buttons = [...root.querySelectorAll<HTMLButtonElement>('[data-project-sort]')];
+    const body = table?.tBodies[0];
+    if (!table || !body) continue;
+
+    const rows = [...body.rows];
+    let sortedColumn = 4;
+    let direction = DESC; // the old DataTables config used "order": [[4, "desc"]]
+    sortRows(rows, sortedColumn, direction);
+    for (const row of rows) body.append(row);
+
+    const applySortState = () => {
+      buttons.forEach((button, index) => {
+        // aria-sort belongs on the header cell, not the button inside it.
+        button.closest('th')?.setAttribute(
+          'aria-sort',
+          index === sortedColumn ? (direction === ASC ? ASC : DESC) : 'none',
+        );
+      });
+    };
+    applySortState();
+
+    buttons.forEach((button, index) => {
+      button.addEventListener('click', () => {
+        direction = sortedColumn === index && direction === DESC ? ASC : DESC;
+        sortedColumn = index;
+        sortRows(rows, sortedColumn, direction);
+        for (const row of rows) body.append(row);
+        applySortState();
+      });
+    });
+
+    input?.addEventListener('input', () => {
+      const query = input.value.replace(/\s+/g, ' ').trim().toLowerCase();
+      for (const row of rows) {
+        const text = [...row.cells].map((cell) => cell.textContent?.toLowerCase() ?? '').join(' ');
+        row.hidden = query.length > 0 && !text.includes(query);
+      }
+    });
+  }
+</script>

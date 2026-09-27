@@ -1,0 +1,29 @@
+---
+/**
+ * Renders a legacy Jekyll demo include (`{% include demo/<name>.html %}`).
+ *
+ * The partials live in src/components/demos/ and are copied there verbatim from
+ * _includes/demo/ by `npm run migrate`. They are loaded lazily so only the two
+ * posts that still use them pay for the bytes.
+ */
+const modules = import.meta.glob('./demos/*.html', { query: '?raw', import: 'default' });
+
+export interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+const key = `./demos/${name}.html`;
+const load = Object.hasOwn(modules, key) ? modules[key] : undefined;
+const html = load ? await load() : null;
+---
+
+{
+  html ? (
+    <div class="legacy-demo" set:html={html} />
+  ) : (
+    <p class="legacy-demo legacy-demo--missing">
+      The legacy interactive demo <code>{name}</code> was not migrated.
+    </p>
+  )
+}

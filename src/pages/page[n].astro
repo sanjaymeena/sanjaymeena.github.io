@@ -1,0 +1,64 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import PostList from '../components/PostList.astro';
+import { getPublishedList, type ListedPost } from '../lib/posts';
+import { SITE } from '../lib/site';
+
+/**
+ * Replaces jekyll-paginate's /page2/ ... /pageN/.
+ *
+ * `index.html` never referenced `paginator`, so the Jekyll build emitted twelve
+ * pages that were each a byte-for-byte duplicate of the homepage — pure duplicate
+ * content. These are real paginated slices instead. Page 1 stays at `/`, which is
+ * the full year-grouped archive, so numbering starts at 2 as it did before.
+ *
+ * NB: the pagination size is read inside getStaticPaths. Astro evaluates it in a
+ * separate prerender scope, so frontmatter-level consts are not in scope there.
+ */
+export async function getStaticPaths() {
+  const perPage = SITE.pagination.perPage;
+  const posts = await getPublishedList();
+  const lastPage = Math.ceil(posts.length / perPage);
+  const paths = [];
+  for (let page = 2; page <= lastPage; page++) {
+    paths.push({
+      params: { n: String(page) },
+      props: { page, lastPage, posts: posts.slice((page - 1) * perPage, page * perPage) },
+    });
+  }
+  return paths;
+}
+
+const PREFIX = SITE.pagination.pathPrefix;
+
+const { page, lastPage, posts } = Astro.props as {
+  page: number;
+  lastPage: number;
+  posts: ListedPost[];
+};
+
+// Page 1 is `/` itself (the full year-grouped archive), so "newer" from page 2
+// points at the root rather than a non-existent /page1/.
+const newerUrl = page - 1 <= 1 ? '/' : `/${PREFIX}${page - 1}/`;
+const olderUrl = page < lastPage ? `/${PREFIX}${page + 1}/` : null;
+---
+
+<PageLayout
+  title={`All Posts, Page ${page}`}
+  description={`Page ${page} of ${lastPage} of the Seeking Wisdom post archive.`}
+  noindex={true}
+>
+  <nav class="pager" aria-label="Archive pagination">
+    <a href={newerUrl} rel="prev">← Newer</a>
+    <span class="pager__position">Page {page} of {lastPage}</span>
+    {olderUrl && <a href={olderUrl} rel="next">Older →</a>}
+  </nav>
+
+  <PostList posts={posts} showCategory />
+
+  <nav class="pager" aria-label="Archive pagination">
+    <a href={newerUrl} rel="prev">← Newer</a>
+    <span class="pager__position">Page {page} of {lastPage}</span>
+    {olderUrl && <a href={olderUrl} rel="next">Older →</a>}
+  </nav>
+</PageLayout>

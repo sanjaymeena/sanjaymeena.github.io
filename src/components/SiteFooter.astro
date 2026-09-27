@@ -1,0 +1,26 @@
+---
+import { SITE, socialLinks } from '../lib/site';
+
+const { author, feed } = SITE;
+const year = new Date().getFullYear();
+// Shared with AuthorBio so the two cannot drift apart.
+const socials = socialLinks();
+---
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__copy">&copy; {year} {author.name}</p>
+    <ul class="site-footer__links">
+      {
+        socials.map((social) => (
+          <li>
+            <a href={social.url} target="_blank" rel="me noopener noreferrer">
+              {social.label}
+            </a>
+          </li>
+        ))
+      }
+      <li><a href={feed.path} rel="alternate">RSS</a></li>
+    </ul>
+  </div>
+</footer>

@@ -1,0 +1,103 @@
+---
+import { COMMENTS } from '../lib/site';
+
+export interface Props {
+  /** Post category. Comments are off for `tools`, matching _config.yml's
+   *  `comments: false` default for _posts/tools. */
+  category?: string;
+  /** Draft posts never render comments. */
+  draft?: boolean;
+}
+
+const { category, draft = false } = Astro.props;
+
+// Inert until the maintainer pastes the two IDs from giscus.app into
+// COMMENTS (src/lib/site.ts). No fabricated IDs are checked in, so an
+// unconfigured build renders nothing rather than a broken embed.
+const configured = COMMENTS.repoId !== '' && COMMENTS.categoryId !== '';
+const enabled = configured && !draft && category !== 'tools';
+---
+
+{
+  enabled && (
+    <section class="comments" aria-label="Comments" data-comments>
+      <h2 class="comments__title">Comments</h2>
+
+      {/* Giscus is injected only once this placeholder nears the viewport, so no
+          comment JS is requested on initial paint. */}
+      <div class="comments__mount" data-giscus-mount />
+
+      <p class="comments__note">
+        Comments are a GitHub Discussion on{' '}
+        <a href={`https://github.com/${COMMENTS.repo}/discussions`} rel="noopener noreferrer">
+          {COMMENTS.repo}
+        </a>
+        .
+      </p>
+
+      <script>
+        import { COMMENTS } from '../lib/site';
+        import { THEME_CHANGE_EVENT, resolvedTheme, type Theme } from '../lib/theme';
+
+        // Attribute names and values verified against the snippet giscus.app
+        // emits. giscus has no `data-loading` attribute, so laziness comes from
+        // this observer rather than from the embed.
+        const GISCUS_SRC = 'https://giscus.app/client.js';
+        const ATTRIBUTES: Record<string, string> = {
+          'data-repo': COMMENTS.repo,
+          'data-repo-id': COMMENTS.repoId,
+          'data-category': COMMENTS.category,
+          'data-category-id': COMMENTS.categoryId,
+          'data-mapping': COMMENTS.mapping,
+          'data-strict': '0',
+          'data-reactions-enabled': '1',
+          'data-emit-metadata': '0',
+          'data-input-position': 'bottom',
+          // Read at injection time, not at page load: the embed may arrive
+          // minutes later via the observer, after several theme switches.
+          'data-theme': resolvedTheme(),
+          'data-lang': COMMENTS.lang,
+        };
+
+        const mount = document.querySelector<HTMLElement>('[data-giscus-mount]');
+
+        if (mount) {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              if (!entries.some((entry) => entry.isIntersecting)) return;
+              observer.disconnect();
+
+              const script = document.createElement('script');
+              script.src = GISCUS_SRC;
+              script.async = true;
+              script.crossOrigin = 'anonymous';
+              for (const [name, value] of Object.entries(ATTRIBUTES)) {
+                script.setAttribute(name, value);
+              }
+              mount.appendChild(script);
+            },
+            // Start fetching a little before the placeholder is actually visible
+            // so the thread is closer to ready by the time the reader arrives.
+            { rootMargin: '300px 0px' },
+          );
+          observer.observe(mount);
+
+          // Giscus paints its own cross-origin iframe, so a theme switch cannot
+          // restyle it with CSS; the documented channel is a postMessage asking
+          // it to setConfig. Without this the thread would stay in whichever
+          // palette it loaded with.
+          document.addEventListener(THEME_CHANGE_EVENT, (event) => {
+            const iframe =
+              mount.querySelector<HTMLIFrameElement>('iframe.giscus-frame') ??
+              mount.querySelector<HTMLIFrameElement>('iframe');
+            const theme = (event as CustomEvent<{ theme: Theme }>).detail.theme;
+            iframe?.contentWindow?.postMessage(
+              { giscus: { setConfig: { theme } } },
+              'https://giscus.app',
+            );
+          });
+        }
+      </script>
+    </section>
+  )
+}

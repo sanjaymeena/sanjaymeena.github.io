@@ -1,0 +1,39 @@
+# AWS Amplify build settings for the Astro site.
+#
+# This file is load-bearing. Amplify previously auto-detected Jekyll from the
+# Gemfile; that file and the rest of the Ruby toolchain are gone, so without an
+# explicit build spec www.sanjaymeena.io (S3 + CloudFront) would stop deploying.
+#
+# Structure follows the static-site example in Astro's own AWS guide:
+# https://docs.astro.build/en/guides/deploy/aws/
+version: 1
+
+frontend:
+  phases:
+    preBuild:
+      commands:
+        # Astro 7 requires Node >= 22.12.0 (node_modules/astro/package.json
+        # engines), so pin it instead of trusting the build image default.
+        # `nvm use` in preBuild is Amplify's documented build-settings mechanism.
+        - nvm install 22 && nvm use 22
+        - node -v && npm -v
+        - npm ci
+    build:
+      commands:
+        # Env vars are set inline rather than in a top-level `env:` block so this
+        # spec cannot fail on a schema difference; Vite picks PUBLIC_*-prefixed
+        # vars up from the environment at build time (verified locally).
+        #
+        # Ads were enabled on the Jekyll site (`ads.enabled: true`) and stay on.
+        # TODO(sanjay): set PUBLIC_GA4_ID=G-XXXXXXXXXX here, or in the Amplify
+        # console under App settings -> Environment variables, to switch GA4 on
+        # for this origin. Deliberately unset rather than given a placeholder id.
+        - PUBLIC_ADSENSE_ENABLED=true npm run build
+  artifacts:
+    # Astro's static output directory.
+    baseDirectory: /dist
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*

@@ -1,0 +1,43 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import PostList from '../components/PostList.astro';
+import { getPostsByCategory } from '../lib/posts';
+import { ARCHIVES } from '../lib/site';
+
+/**
+ * The five category archives from _pages/ (tech_posts.md, investment_notes.md,
+ * book_notes.md, misc.md, tools.md).
+ *
+ * A single-segment dynamic route outranks the `[...slug]` catch-all used for
+ * posts, and post URLs are always two segments or more, so the two never collide.
+ * Only the archives listed in getStaticPaths are emitted; anything else 404s.
+ */
+export async function getStaticPaths() {
+  return ARCHIVES.map((archive) => ({
+    params: { archive: archive.path },
+    props: { archive },
+  }));
+}
+
+const { archive } = Astro.props as { archive: (typeof ARCHIVES)[number] };
+const posts = await getPostsByCategory(archive.category);
+
+const collectionLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: archive.title,
+  description: archive.description,
+  url: new URL(`/${archive.path}/`, Astro.site).toString(),
+};
+---
+
+<PageLayout
+  title={archive.title}
+  description={archive.description}
+  keywords={archive.keywords}
+  image={archive.hero ? `/images/${archive.hero}` : undefined}
+  jsonLd={[collectionLd]}
+>
+  {archive.intro && <p class="page__intro-text">{archive.intro}</p>}
+  <PostList posts={posts} />
+</PageLayout>
