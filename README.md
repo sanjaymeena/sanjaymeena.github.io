@@ -101,8 +101,13 @@ production-builds-only. See [`.env.example`](.env.example).
 `PUBLIC_ADSENSE_ENABLED=true` is set in both pipelines (`amplify.yml` and
 `deploy.yml`), so ads render on both production origins — matching the old
 Jekyll site's `ads.enabled: true`. Local builds and `npm run dev` never include
-them. `PUBLIC_GA4_ID` is still unset everywhere (TODO); until it is, GA4 is off
-on both origins.
+them.
+
+`PUBLIC_GA4_ID` is `G-C381Y5N6L` (the "sanjaymeenaio" GA4 property) on both
+origins: a repository variable for the Pages workflow, inline in `amplify.yml`
+for CloudFront. A measurement id is not a secret — gtag.js ships it in public
+page source — which is why the two origins may set it differently. The dead
+Universal Analytics property `UA-78154345-1` is deliberately not carried over.
 
 Comments are Giscus (GitHub Discussions). They stay inert until `repoId` and
 `categoryId` are filled into `COMMENTS` in `src/lib/site.ts` — the steps are in
@@ -125,9 +130,14 @@ The Astro migration is **live on both origins** (pushed to `master` September
 not switch it back to "Deploy from a branch", or Pages will try to run a Jekyll
 build against a repo that no longer has a `Gemfile`.
 
-Remaining one-time setup: add `PUBLIC_GA4_ID` under Settings → Secrets and
-variables → Actions → Variables (for Pages) and in the Amplify console under
-App settings → Environment variables (for `www`).
+All one-time setup is complete: Pages builds from the workflow, the Amplify app
+is connected to `master`, and both origins have AdSense and GA4 enabled.
+
+This repository is **not a fork**. It replaced a 2016 fork of
+`barryclark/jekyll-now` in September 2026 to drop the inherited fork badge and
+About text; it starts from a single commit, so `git log` does not reach the
+Jekyll era. The full prior history, including the `v1.0.0`–`v1.2.0` tags, is
+preserved in a local mirror backup rather than on GitHub.
 
 ## Verification
 

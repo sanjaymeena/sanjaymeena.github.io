@@ -8,9 +8,9 @@ import { analyticsEnabled, ga4MeasurementId } from '../lib/integrations';
  * Analytics property, which stopped processing hits in 2023. It is deliberately
  * not carried over.
  *
- * TODO(sanjay): create a GA4 property and set PUBLIC_GA4_ID=G-XXXXXXXXXX in the
- * build environment (see .env.example, and the deploy workflow). Until then this
- * component renders nothing, so no page ships analytics bytes.
+ * The GA4 id comes from PUBLIC_GA4_ID, set per origin: a repository variable for
+ * the GitHub Pages workflow, and inline in amplify.yml for CloudFront. Unset or
+ * empty means this component renders nothing, so no page ships analytics bytes.
  *
  * Production builds only: `npm run dev` never loads GA.
  */

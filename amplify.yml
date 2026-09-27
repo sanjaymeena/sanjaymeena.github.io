@@ -25,10 +25,11 @@ frontend:
         # vars up from the environment at build time (verified locally).
         #
         # Ads were enabled on the Jekyll site (`ads.enabled: true`) and stay on.
-        # TODO(sanjay): set PUBLIC_GA4_ID=G-XXXXXXXXXX here, or in the Amplify
-        # console under App settings -> Environment variables, to switch GA4 on
-        # for this origin. Deliberately unset rather than given a placeholder id.
-        - PUBLIC_ADSENSE_ENABLED=true npm run build
+        # PUBLIC_GA4_ID is the GA4 measurement id for the "sanjaymeenaio"
+        # property. It is not a secret — gtag.js ships it in public page source —
+        # so it is safe to keep in-repo, and doing so keeps this origin's config
+        # in sync with the GitHub Pages workflow without a console step.
+        - PUBLIC_ADSENSE_ENABLED=true PUBLIC_GA4_ID=G-C381Y5N6L npm run build
   artifacts:
     # Astro's static output directory.
     baseDirectory: /dist
