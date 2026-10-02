@@ -11,19 +11,25 @@ import { getAiMlPosts } from '../lib/posts';
  */
 const posts = await getAiMlPosts();
 
+/**
+ * One string for the visible intro, the meta description and the JSON-LD, so the
+ * three cannot drift apart and search shows what the page actually says.
+ */
+const AI_INTRO =
+  'Notes on building machine learning systems — the models, and the less glamorous work of getting them into production. NLP, deep learning, MLOps and agents.';
+
 const collectionLd = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
   name: 'AI/ML Engineering',
-  description:
-    'AI and Machine Learning engineering posts: NLP, deep learning, neural networks, statistics and ML infrastructure.',
+  description: AI_INTRO,
   url: new URL('/ai/', Astro.site).toString(),
 };
 ---
 
 <PageLayout
   title="AI/ML Engineering"
-  description="AI and Machine Learning engineering posts: NLP, deep learning, neural networks, statistics, sentiment analysis and the ML infrastructure behind them."
+  description={AI_INTRO}
   keywords={[
     'AI',
     'machine learning',
