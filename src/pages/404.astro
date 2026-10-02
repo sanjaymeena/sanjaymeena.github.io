@@ -20,7 +20,9 @@ import { ARCHIVES } from '../lib/site';
       one of the sections below.
     </p>
     <ul class="notfound__links">
-      <li><a href="/">Home — all posts by year</a></li>
+      <li><a href="/">Home</a></li>
+      <li><a href="/ai/">AI/ML Engineering</a></li>
+      <li><a href="/posts/">All posts</a></li>
       {ARCHIVES.map((archive) => <li><a href={`/${archive.path}/`}>{archive.title}</a></li>)}
       <li><a href="/projects/">Tech Projects and Demos</a></li>
       <li><a href="/tags/">Tags</a></li>

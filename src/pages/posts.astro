@@ -1,0 +1,19 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import PostList from '../components/PostList.astro';
+import { getPublishedList } from '../lib/posts';
+
+/**
+ * The full archive: every published post, newest first, grouped by year. This is
+ * the "Browse all posts" target now that the homepage routes into lanes, and it
+ * keeps the Misc/Tools posts reachable outside the top nav.
+ */
+const posts = await getPublishedList();
+---
+
+<PageLayout
+  title="All Posts"
+  description="Every post on Seeking Wisdom — AI/ML, investing, book notes, tech, misc and tools — newest first, grouped by year."
+>
+  <PostList posts={posts} showCategory />
+</PageLayout>

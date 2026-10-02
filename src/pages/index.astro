@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostList from '../components/PostList.astro';
-import { getPublishedList } from '../lib/posts';
+import { getAiMlPosts, getPostsByCategory } from '../lib/posts';
 import { SITE } from '../lib/site';
 
 const HOME_KEYWORDS = [
@@ -21,7 +21,9 @@ const HOME_KEYWORDS = [
   'information retrieval',
 ];
 
-const posts = await getPublishedList();
+const aiPosts = await getAiMlPosts();
+const investingPosts = await getPostsByCategory('investing');
+const bookPosts = await getPostsByCategory('books');
 
 const websiteLd = {
   '@context': 'https://schema.org',
@@ -44,30 +46,30 @@ const websiteLd = {
     <div class="page__intro">
       <h2>Hello there!</h2>
       <p>I maintain this Blog to record my learnings from different fields of Investing and Technology.</p>
-      <p>Blog posts are divided into following categories.</p>
-      <ul>
-        <li>
-          <a href="/tech/">Tech Posts</a>: Posts related to Data Science, AI, Natural Language
-          Processing (NLP), Deep Learning and Machine Learning
-        </li>
-        <li>
-          <a href="/investment_notes/">Investing Posts</a>: Posts on various topics related to
-          Investing like Finance, Psychology, Investing Approaches
-        </li>
-        <li>
-          <a href="/book_notes/">Book Notes</a>: Notes from Various Books on topics like Investing,
-          Psychology, Nature etc.
-        </li>
-        <li><a href="/misc/">Misc</a> - Miscellaneous Posts</li>
-      </ul>
       <p>
         You can also have a look at some of the tech projects i have worked on the over the years:
         <a href="/projects/">Projects</a>
       </p>
     </div>
 
-    <p class="page__lede">Below are my posts sorted by Year.</p>
+    <section class="lane" aria-labelledby="lane-ai">
+      <h2 id="lane-ai">AI/ML Engineering</h2>
+      <PostList posts={aiPosts} limit={5} grouped={false} />
+      <p class="lane__more"><a href="/ai/">More in AI/ML &rarr;</a></p>
+    </section>
 
-    <PostList posts={posts} showCategory />
+    <section class="lane" aria-labelledby="lane-investing">
+      <h2 id="lane-investing">Investing</h2>
+      <PostList posts={investingPosts} limit={5} grouped={false} />
+      <p class="lane__more"><a href="/investment_notes/">More &rarr;</a></p>
+    </section>
+
+    <section class="lane" aria-labelledby="lane-books">
+      <h2 id="lane-books">Books</h2>
+      <PostList posts={bookPosts} limit={5} grouped={false} />
+      <p class="lane__more"><a href="/book_notes/">More &rarr;</a></p>
+    </section>
+
+    <p class="page__lede"><a href="/posts/">Browse all posts &rarr;</a></p>
   </main>
 </BaseLayout>

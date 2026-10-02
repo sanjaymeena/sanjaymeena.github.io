@@ -190,14 +190,21 @@ export const CATEGORY_LINKS: Record<string, string> = {
   demos: '/projects/',
 };
 
-/** _data/navigation.yml `main`. */
+/**
+ * External developer-tools site. Moved out of the top nav (site_v2): linked from
+ * the footer and the Projects page instead.
+ */
+export const DEVELOPER_TOOLS_URL = 'https://tools.sanjaymeena.io';
+
+/**
+ * Top navigation — tight domains, AI/ML first (site_v2). Developer Tools moved to
+ * the footer + Projects page; Misc is reachable via /categories/ and /posts/ only.
+ */
 export const NAV: ReadonlyArray<{ title: string; url: string; external?: boolean }> = [
+  { title: 'AI/ML Engineering', url: '/ai/' },
   { title: 'Investing', url: '/investment_notes/' },
-  { title: 'Developer Tools', url: 'https://tools.sanjaymeena.io', external: true },
   { title: 'Books', url: '/book_notes/' },
-  { title: 'Tech', url: '/tech/' },
   { title: 'Projects', url: '/projects/' },
-  { title: 'Misc', url: '/misc/' },
   { title: 'About', url: '/about/' },
 ];
 

@@ -1,6 +1,7 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
 import ProjectTables, { type Project } from '../components/ProjectTables.astro';
+import { DEVELOPER_TOOLS_URL } from '../lib/site';
 
 // Data transcribed from _pages/projects.md. The old page loaded jQuery 3.1.1,
 // Bootstrap 3 and jquery.dataTables to get a search box and sortable columns;
@@ -184,6 +185,11 @@ const coreNlpProjects: Project[] = [
   image="/images/demos.jpg"
 >
   <p>Demos and source code related to NLP, Data Science and Machine Learning.</p>
+
+  <p>
+    Looking for my free online tools (JSON, YAML, CSV, Base64, URL encoder, JWT)?
+    <a href={DEVELOPER_TOOLS_URL} target="_blank" rel="noopener noreferrer">Developer Tools &nearr;</a>
+  </p>
 
   <h2 id="data-science-nlp-projects">Data Science, Natural Language Processing (NLP) Projects</h2>
 

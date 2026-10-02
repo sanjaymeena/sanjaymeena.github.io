@@ -1,0 +1,46 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import PostList from '../components/PostList.astro';
+import { getAiMlPosts } from '../lib/posts';
+
+/**
+ * The AI/ML Engineering lane. Tag-driven (see getAiMlPosts / AI_ML_TAGS in
+ * src/lib/posts.ts) so the existing ML posts keep their /tech/ URLs — this page
+ * lists them without recategorizing anything. New AI/ML/engineering posts carry
+ * an AI/ML tag (or `categories: [ai]`) and land here.
+ */
+const posts = await getAiMlPosts();
+
+const collectionLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'AI/ML Engineering',
+  description:
+    'AI and Machine Learning engineering posts: NLP, deep learning, neural networks, statistics and ML infrastructure.',
+  url: new URL('/ai/', Astro.site).toString(),
+};
+---
+
+<PageLayout
+  title="AI/ML Engineering"
+  description="AI and Machine Learning engineering posts: NLP, deep learning, neural networks, statistics, sentiment analysis and the ML infrastructure behind them."
+  keywords={[
+    'AI',
+    'machine learning',
+    'deep learning',
+    'NLP',
+    'natural language processing',
+    'neural networks',
+    'MLOps',
+    'statistics',
+  ]}
+  image="/images/machine-learning.jpg"
+  jsonLd={[collectionLd]}
+>
+  <p class="page__intro-text">
+    Posts on AI models and ML engineering — NLP, deep learning, neural networks and statistics, plus
+    the infrastructure behind them (serving, MLOps, Kubernetes, agents). Older NLP/ML posts keep
+    their original <code>/tech/</code> URLs; newer engineering posts land here.
+  </p>
+  <PostList posts={posts} />
+</PageLayout>

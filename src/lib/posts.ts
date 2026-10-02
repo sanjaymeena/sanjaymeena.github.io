@@ -82,6 +82,55 @@ export async function getPostsByCategory(category: string): Promise<ListedPost[]
   return all.filter((post) => post.category === category);
 }
 
+/**
+ * Tags that place a post in the AI/ML Engineering lane (/ai/). Matching is case-
+ * and separator-insensitive (see normalizeTag) because the existing frontmatter
+ * is inconsistent: "NLP"/"nlp", "Deep Learning"/"deep-learning", "Sentiment"/
+ * "Sentiment Analysis". New AI/ML/engineering posts — including Kubernetes/MLOps
+ * framed via ML — should carry one of these tags so they surface in the lane.
+ */
+export const AI_ML_TAGS = [
+  'NLP',
+  'Deep Learning',
+  'Machine Learning',
+  'Neural Networks',
+  'Statistics',
+  'Word Embeddings',
+  'Sentiment',
+  'Sentiment Analysis',
+] as const;
+
+/** Lowercase with hyphens/underscores folded to spaces, so "Deep Learning" == "deep-learning". */
+function normalizeTag(tag: string): string {
+  return tag.trim().toLowerCase().replace(/[-_]+/g, ' ');
+}
+
+/**
+ * Published posts whose tags intersect `tagSet`, newest first. Tag comparison is
+ * case- and separator-insensitive. Generic and reusable — the AI/ML lane adds the
+ * `ai`-category rule on top via getAiMlPosts().
+ */
+export async function getPostsByTags(tagSet: readonly string[]): Promise<ListedPost[]> {
+  const wanted = new Set(tagSet.map(normalizeTag));
+  const all = await getPublishedList();
+  return all.filter((post) => post.tags.some((tag) => wanted.has(normalizeTag(tag))));
+}
+
+/**
+ * The AI/ML Engineering lane: every post matching AI_ML_TAGS, plus anything in a
+ * new `ai` category (forward-looking — no such post exists yet). Tag-driven on
+ * purpose so the existing ML posts keep their current /tech/ URLs; changing a
+ * post's `categories` would change its permalink and 404 the indexed URL.
+ */
+export async function getAiMlPosts(): Promise<ListedPost[]> {
+  const all = await getPublishedList();
+  const wanted = new Set(AI_ML_TAGS.map(normalizeTag));
+  return all.filter(
+    (post) =>
+      post.tags.some((tag) => wanted.has(normalizeTag(tag))) || normalizeTag(post.category) === 'ai',
+  );
+}
+
 /** Groups a newest-first list into `{ year, posts }` buckets, newest year first. */
 export function groupByYear(posts: ListedPost[]): Array<{ year: number; posts: ListedPost[] }> {
   const groups: Array<{ year: number; posts: ListedPost[] }> = [];
