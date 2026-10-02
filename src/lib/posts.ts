@@ -220,3 +220,20 @@ export function formatDateShort(date: Date): string {
     .toLocaleDateString('en-GB', { day: '2-digit', month: 'short', timeZone: 'UTC' })
     .replace(/^0/, '');
 }
+
+/**
+ * "15 Sep 2017" — formatDateShort plus the year, for lists that have no year
+ * heading. A bare "5 Jun" is only unambiguous when a "2017" heading sits above
+ * it; the flat lane lists on the homepage have no such heading, so they carry the
+ * year inline instead.
+ */
+export function formatDateShortWithYear(date: Date): string {
+  return date
+    .toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      timeZone: 'UTC',
+    })
+    .replace(/^0/, '');
+}
