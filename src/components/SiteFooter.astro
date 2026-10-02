@@ -1,5 +1,5 @@
 ---
-import { SITE, socialLinks } from '../lib/site';
+import { DEVELOPER_TOOLS_URL, SITE, socialLinks } from '../lib/site';
 
 const { author, feed } = SITE;
 const year = new Date().getFullYear();
@@ -20,6 +20,9 @@ const socials = socialLinks();
           </li>
         ))
       }
+      <li>
+        <a href={DEVELOPER_TOOLS_URL} target="_blank" rel="noopener noreferrer">Developer Tools</a>
+      </li>
       <li><a href={feed.path} rel="alternate">RSS</a></li>
     </ul>
   </div>

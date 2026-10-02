@@ -1,0 +1,53 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import PostList from '../components/PostList.astro';
+import { getAiMlPosts } from '../lib/posts';
+
+/**
+ * The AI/ML Engineering lane. Tag-driven (see getAiMlPosts / AI_ML_TAGS in
+ * src/lib/posts.ts) so the existing ML posts keep their /tech/ URLs — this page
+ * lists them without recategorizing anything. New AI/ML/engineering posts carry
+ * an AI/ML tag (or `categories: [ai]`) and land here.
+ */
+const posts = await getAiMlPosts();
+
+/**
+ * One string for the visible intro, the meta description and the JSON-LD, so the
+ * three cannot drift apart and search shows what the page actually says.
+ */
+const AI_INTRO =
+  'Notes on building machine learning systems — the models, and the less glamorous work of getting them into production. NLP, deep learning, MLOps and agents.';
+
+const collectionLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'AI/ML Engineering',
+  description: AI_INTRO,
+  url: new URL('/ai/', Astro.site).toString(),
+};
+---
+
+<PageLayout
+  title="AI/ML Engineering"
+  description={AI_INTRO}
+  keywords={[
+    'AI',
+    'machine learning',
+    'deep learning',
+    'NLP',
+    'natural language processing',
+    'neural networks',
+    'MLOps',
+    'statistics',
+  ]}
+  image="/images/machine-learning.jpg"
+  jsonLd={[collectionLd]}
+>
+  <p class="page__intro-text">
+    Notes on building machine learning systems — the models, and the less glamorous work of getting
+    them into production. Much of it starts with NLP and deep learning; the newer posts are about
+    serving, MLOps, Kubernetes and agents. Everything here is something I built, broke, or finally
+    understood well enough to write down.
+  </p>
+  <PostList posts={posts} />
+</PageLayout>

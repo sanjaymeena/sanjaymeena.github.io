@@ -9,8 +9,9 @@ import { SITE } from '../lib/site';
  *
  * `index.html` never referenced `paginator`, so the Jekyll build emitted twelve
  * pages that were each a byte-for-byte duplicate of the homepage — pure duplicate
- * content. These are real paginated slices instead. Page 1 stays at `/`, which is
- * the full year-grouped archive, so numbering starts at 2 as it did before.
+ * content. These are real paginated slices instead. The full year-grouped archive
+ * now lives at `/posts/`; these slices are kept so the old /pageN/ URLs still
+ * resolve, and numbering starts at 2 as it did before.
  *
  * NB: the pagination size is read inside getStaticPaths. Astro evaluates it in a
  * separate prerender scope, so frontmatter-level consts are not in scope there.

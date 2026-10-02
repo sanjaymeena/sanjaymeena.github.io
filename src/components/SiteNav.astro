@@ -13,8 +13,13 @@ const pathname = Astro.url.pathname;
 // "investing", "demos") rather than the archive page NAV links to
 // ("/book_notes/", "/investment_notes/", "/projects/"). Collapsing the first
 // segment through CATEGORY_LINKS is what lets a book post highlight "Books".
+//
+// NAV_HIGHLIGHT remaps segments whose old archive is no longer a nav item:
+// /tech/ posts belong to the AI/ML Engineering lane (site_v2), so they light up
+// "AI/ML Engineering" while their breadcrumb still links to the /tech/ archive.
+const NAV_HIGHLIGHT: Record<string, string> = { tech: '/ai/' };
 const firstSegment = pathname.split('/')[1] ?? '';
-const canonical = CATEGORY_LINKS[firstSegment] ?? pathname;
+const canonical = NAV_HIGHLIGHT[firstSegment] ?? CATEGORY_LINKS[firstSegment] ?? pathname;
 
 const isActive = (url: string) => url.startsWith('/') && canonical.startsWith(url);
 

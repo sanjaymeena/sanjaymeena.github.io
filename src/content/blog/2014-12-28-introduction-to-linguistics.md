@@ -8,6 +8,7 @@ categories:
   - tech
   - nlp
 tags:
+  - NLP
   - linguistics
   - morphology
   - phonetics
