@@ -1,5 +1,10 @@
 ---
-import { formatDateShort, groupByYear, type ListedPost } from '../lib/posts';
+import {
+  formatDateShort,
+  formatDateShortWithYear,
+  groupByYear,
+  type ListedPost,
+} from '../lib/posts';
 
 export interface Props {
   posts: ListedPost[];
@@ -39,10 +44,12 @@ const years = grouped ? groupByYear(visible) : [];
         </section>
       ))
     ) : (
+      /* Flat list: no year heading to supply context, so each date carries its
+         own year rather than reading as an ambiguous "5 Jun". */
       <ul class="posts">
         {visible.map((post) => (
           <li class="posts__item">
-            <time datetime={post.date.toISOString()}>{formatDateShort(post.date)}</time>
+            <time datetime={post.date.toISOString()}>{formatDateShortWithYear(post.date)}</time>
             <a href={post.url}>
               {showCategory && post.category && <span class="posts__category">[{post.category}]</span>}{' '}
               {post.title}
