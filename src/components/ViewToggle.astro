@@ -1,0 +1,93 @@
+---
+/**
+ * Cards/list switch for post listings.
+ *
+ * Rendered once per page that lists posts. The choice is site-wide (localStorage
+ * under VIEW_STORAGE_KEY), so one control changes every listing the reader
+ * visits — which is why it is a page-level control rather than something
+ * PostList renders per call site; the homepage has three lists and needs one
+ * switch, not three.
+ *
+ * Like .theme-toggle, the markup carries both icons and the stylesheet picks
+ * which is showing, so the control reads correctly even before the bundled
+ * script runs.
+ */
+---
+
+<div class="view-toggle" role="group" aria-label="Post list layout">
+  <button type="button" class="view-toggle__btn" data-view-toggle="cards" aria-pressed="true">
+    <svg
+      class="view-toggle__icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="3" y="3" width="7" height="7" rx="1" />
+      <rect x="14" y="3" width="7" height="7" rx="1" />
+      <rect x="3" y="14" width="7" height="7" rx="1" />
+      <rect x="14" y="14" width="7" height="7" rx="1" />
+    </svg>
+    <span>Cards</span>
+  </button>
+  <button type="button" class="view-toggle__btn" data-view-toggle="list" aria-pressed="false">
+    <svg
+      class="view-toggle__icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />
+    </svg>
+    <span>List</span>
+  </button>
+</div>
+
+<script>
+  import {
+    VIEW_CHANGE_EVENT,
+    VIEW_STORAGE_KEY,
+    applyView,
+    resolvedView,
+    storedView,
+    type ViewMode,
+  } from '../lib/view';
+
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-view-toggle]');
+
+  const announceView = () => {
+    const view = resolvedView();
+    for (const button of buttons) {
+      button.setAttribute('aria-pressed', String(button.dataset.viewToggle === view));
+    }
+    document.dispatchEvent(
+      new CustomEvent<{ view: ViewMode }>(VIEW_CHANGE_EVENT, { detail: { view } }),
+    );
+  };
+
+  for (const button of buttons) {
+    button.addEventListener('click', () => {
+      const next: ViewMode = button.dataset.viewToggle === 'list' ? 'list' : 'cards';
+      try {
+        localStorage.setItem(VIEW_STORAGE_KEY, next);
+      } catch {
+        // Private browsing: the choice still applies for this page view.
+      }
+      applyView(next);
+      announceView();
+    });
+  }
+
+  // The pre-paint script in BaseLayout already set data-view; this re-asserts it
+  // for readers who land here with the inline script blocked, and syncs the
+  // buttons' pressed state to match.
+  applyView(storedView());
+  announceView();
+</script>

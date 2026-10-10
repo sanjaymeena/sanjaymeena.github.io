@@ -74,19 +74,24 @@ const personLd = {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    {/* Applies a stored theme before first paint so a dark-mode reader never
-        sees a white flash. Inline and un-bundled on purpose: it must run before
-        the stylesheet applies, and its key must match THEME_STORAGE_KEY in
-        src/lib/theme.ts. */}
+    {/* Applies the stored theme and listing view before first paint, so a
+        dark-mode reader never sees a white flash and a list reader never sees
+        the card grid collapse into rows. Inline and un-bundled on purpose: both
+        must run before the stylesheet applies, and the keys must match
+        THEME_STORAGE_KEY in src/lib/theme.ts and VIEW_STORAGE_KEY in
+        src/lib/view.ts. */}
     <script is:inline>
       try {
         var storedTheme = localStorage.getItem('theme');
         if (storedTheme === 'dark' || storedTheme === 'light') {
           document.documentElement.dataset.theme = storedTheme;
         }
+        var storedView = localStorage.getItem('view');
+        document.documentElement.dataset.view = storedView === 'list' ? 'list' : 'cards';
       } catch (error) {
         /* localStorage throws in some private-browsing modes; the OS
-           preference then applies through the prefers-color-scheme query. */
+           preference then applies through the prefers-color-scheme query, and
+           the stylesheet's own default applies to the listing view. */
       }
     </script>
 

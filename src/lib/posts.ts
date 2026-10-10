@@ -17,11 +17,30 @@ export interface ListedPost {
   /** Lowercased frontmatter category, e.g. "books", "investing". */
   category: string;
   tags: string[];
+  /**
+   * Card thumbnail, root-relative (e.g. "/images/posts/tech/w2v/x.png"), or
+   * undefined when the post has no frontmatter image. Only 15 of 75 posts carry
+   * one, so card views must render well without it — see .post-card--plain.
+   */
+  image?: string;
 }
 
 /** Every post URL on this site is `/<slug>/`, taken verbatim from frontmatter. */
 export function postUrl(post: Post): string {
   return `/${post.data.slug}/`;
+}
+
+/**
+ * The post's display image as a root-relative URL, or undefined.
+ *
+ * Minimal Mistakes put the teaser/hero under `header:` with paths relative to
+ * /images/, and `teaser` was the listing image while `image` was the hero — so
+ * prefer the teaser. Both the card grid and PostLayout's og:image read this,
+ * which is why it lives here rather than being re-derived at each call site.
+ */
+export function postImage(post: Post): string | undefined {
+  const relative = post.data.header?.teaser ?? post.data.header?.image;
+  return relative ? `/images/${relative}` : undefined;
 }
 
 /** Newest first, drafts excluded. */
@@ -56,6 +75,7 @@ export async function getPublishedList(): Promise<ListedPost[]> {
     excerpt: listExcerpt(post.data.excerpt, post.data.description),
     category: post.data.categories[0] ?? archiveOf(post),
     tags: post.data.tags,
+    image: postImage(post),
   }));
 
   for (const entry of getStandalonePosts()) {

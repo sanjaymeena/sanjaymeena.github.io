@@ -1,6 +1,7 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
 import PostList from '../components/PostList.astro';
+import ViewToggle from '../components/ViewToggle.astro';
 import { getPublishedList } from '../lib/posts';
 
 /**
@@ -15,5 +16,6 @@ const posts = await getPublishedList();
   title="All Posts"
   description="Every post on Seeking Wisdom — AI/ML, investing, book notes, tech, misc and tools — newest first, grouped by year."
 >
+  <ViewToggle />
   <PostList posts={posts} showCategory />
 </PageLayout>

@@ -1,6 +1,7 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
 import PostList from '../components/PostList.astro';
+import ViewToggle from '../components/ViewToggle.astro';
 import { getAiMlPosts } from '../lib/posts';
 
 /**
@@ -49,5 +50,6 @@ const collectionLd = {
     serving, MLOps, Kubernetes and agents. Everything here is something I built, broke, or finally
     understood well enough to write down.
   </p>
+  <ViewToggle />
   <PostList posts={posts} />
 </PageLayout>

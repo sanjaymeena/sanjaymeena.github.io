@@ -105,6 +105,23 @@
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-pill: 999px;
+
+  /* ------------------------------------------------ category accents ---- */
+  /*
+   * One hue per archive, used for the card accent band and category label.
+   * These are deliberately *not* overridden in the dark palette blocks: each is
+   * blended toward --color-text where it is consumed (see --card-cat), and
+   * --color-text is near-black in light mode and near-white in dark, so one
+   * definition darkens on the light card and lightens on the dark one. That
+   * keeps the six hues out of the two must-stay-identical palette blocks.
+   */
+  --cat-investing: #2e8b57; /* sea green */
+  --cat-tech: #475dea; /* indigo, the light-mode accent */
+  --cat-books: #b5651d; /* ochre */
+  --cat-tools: #2a7fa8; /* steel blue */
+  --cat-demos: #8250a0; /* purple */
+  --cat-misc: #6b6b70; /* the muted grey — also the unknown-category fallback */
+  --cat-blend: 78%; /* how much hue survives the blend toward --color-text */
 }
 
 /* --------------------------------------------------------- dark palette -- */
@@ -957,6 +974,249 @@ a:focus {
   line-height: var(--leading-snug);
 }
 
+/* ------------------------------------------------------ cards/list views -- */
+
+/*
+ * PostList emits both modes and `:root[data-view]` picks one. The `:not()` form
+ * makes "no attribute yet" — JavaScript off, or the pre-paint script in
+ * BaseLayout blocked — fall through to cards, which is DEFAULT_VIEW in
+ * src/lib/view.ts. This mirrors the `:not([data-theme='light'])` guard the dark
+ * palette uses, for the same reason: the stylesheet and the module have to agree
+ * about the default without either one being able to run first.
+ *
+ * `display: none`, not a visibility or height trick, so the hidden mode leaves
+ * the accessibility tree and the tab order instead of being read twice.
+ *
+ * `.post-rows` rather than `.posts` because /tags/ has its own `<ul class="posts">`
+ * markup that must stay a list — a tag index is a lookup table, not a browse
+ * surface, and it never renders the toggle.
+ */
+:root[data-view='list'] .post-cards,
+:root:not([data-view='list']) .post-rows {
+  display: none;
+}
+
+/*
+ * Segmented cards/list switch, right-aligned above the listing so it reads as a
+ * control on the list rather than as page prose. Stays inside the 56rem shell
+ * with the grid: the h1, intro, pager and year headings all sit on that edge,
+ * and a control that lined up with a wider grid would line up with nothing else.
+ */
+.view-toggle {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-1);
+  margin: var(--space-4) 0 0;
+}
+
+.view-toggle__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  color: var(--color-muted);
+  font: inherit;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-snug);
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.view-toggle__btn:hover {
+  border-color: var(--color-link-line);
+  color: var(--color-link);
+}
+
+/* aria-pressed is written by the script in ViewToggle.astro. The pressed button
+   is the tinted pill, the same treatment .site-nav__link--active gets. */
+.view-toggle__btn[aria-pressed='true'] {
+  border-color: var(--color-link-line);
+  background: var(--color-surface-accent);
+  color: var(--color-link);
+}
+
+.view-toggle__icon {
+  width: var(--text-sm);
+  height: var(--text-sm);
+}
+
+/*
+ * Three columns at the desktop shell (~272px a card), two on a tablet, one on a
+ * phone — no media query, because auto-fill derives the count from the width.
+ * auto-fill, not auto-fit: auto-fit collapses the empty tracks, which would
+ * stretch a ragged last row's two cards wider than the ones above them.
+ */
+.post-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/*
+ * --card-accent is the category hue blended toward --color-text. Because
+ * --color-text is near-black in light mode and near-white in dark, the one
+ * definition darkens on a light card and lightens on a dark one, so the six
+ * hues need no counterpart in the dark palette blocks. Custom properties
+ * resolve against the element's own cascaded values, so the [data-category]
+ * overrides below re-resolve this expression rather than being ignored by it.
+ */
+.post-card {
+  --card-cat: var(--cat-misc);
+  --card-accent: color-mix(in oklab, var(--card-cat) var(--cat-blend), var(--color-text));
+  display: flex;
+}
+
+.post-card[data-category='investing'] {
+  --card-cat: var(--cat-investing);
+}
+
+.post-card[data-category='tech'] {
+  --card-cat: var(--cat-tech);
+}
+
+.post-card[data-category='books'] {
+  --card-cat: var(--cat-books);
+}
+
+.post-card[data-category='tools'] {
+  --card-cat: var(--cat-tools);
+}
+
+.post-card[data-category='demos'] {
+  --card-cat: var(--cat-demos);
+}
+
+/*
+ * One link wraps the whole card, so image, title and excerpt are a single tab
+ * stop. It is a flex column and fills the grid cell, which is what lets the
+ * body grow and the card bottoms line up across a row regardless of how many
+ * lines each title takes. `overflow: hidden` clips the accent band to the
+ * rounded corners; it does not clip the link's own focus outline.
+ */
+.post-card__link {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.post-card__link:hover,
+.post-card__link:focus-visible {
+  border-color: var(--color-link-line);
+  box-shadow: 0 0 0 var(--space-1) var(--color-surface-accent);
+  text-decoration: none;
+}
+
+.post-card__band {
+  flex: 0 0 auto;
+  height: var(--space-1);
+  background: var(--card-accent);
+}
+
+/*
+ * The fixed-ratio crop box. Teaser ratios run from 0.65 (a portrait book cover)
+ * to 2.86 (a wide word2vec diagram), so a shared 16/9 window with object-fit is
+ * what lets mismatched images form a straight row — and it reserves the height,
+ * so a lazy image arriving late shifts nothing.
+ */
+.post-card__media {
+  flex: 0 0 auto;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-block-end: 1px solid var(--color-border);
+  background: var(--color-code-bg);
+}
+
+.post-card__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.post-card__body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+  padding: var(--space-4);
+}
+
+.post-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.post-card__category {
+  color: var(--card-accent);
+  font-weight: var(--weight-medium);
+  text-transform: capitalize;
+}
+
+.post-card__title {
+  font-size: var(--text-h4);
+  font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  text-wrap: pretty;
+}
+
+.post-card__link:hover .post-card__title,
+.post-card__link:focus-visible .post-card__title {
+  color: var(--color-link);
+}
+
+/*
+ * Grows to absorb the slack in a row, which is what squares the card bottoms up.
+ * Clamped because listing excerpts run to 231 characters and an unclamped one
+ * would make its card twice the height of its neighbours.
+ */
+.post-card__excerpt {
+  display: -webkit-box;
+  flex: 1 1 auto;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+}
+
+/*
+ * 60 of 75 posts have no image, so the plain tile is the common case and has to
+ * look deliberate next to the 15 that crop one. A wash of the card's own accent
+ * over the surface is what ties the two kinds into one grid; the band stays the
+ * full-strength hue in both.
+ */
+.post-card--plain .post-card__body {
+  background: color-mix(in oklab, var(--card-accent) 7%, var(--color-surface));
+}
+
 /* --------------------------------------------------------------- tags -- */
 
 .tag-box {
@@ -1478,4 +1738,23 @@ a:focus {
   margin: var(--space-7) auto;
   max-width: 728px;
   text-align: center;
+}
+
+/* -------------------------------------------------------- reduced motion -- */
+
+/*
+ * Last in the file so it wins the cascade against every transition declared
+ * above it (.posts__item, .post-card__link, .view-toggle__btn). The durations
+ * are kept non-zero rather than `none` so a transition's end event still fires
+ * — anything scripted against it does not hang waiting.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
