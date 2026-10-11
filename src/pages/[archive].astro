@@ -1,6 +1,7 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
 import PostList from '../components/PostList.astro';
+import ViewToggle from '../components/ViewToggle.astro';
 import { getPostsByCategory } from '../lib/posts';
 import { ARCHIVES } from '../lib/site';
 
@@ -39,5 +40,6 @@ const collectionLd = {
   jsonLd={[collectionLd]}
 >
   {archive.intro && <p class="page__intro-text">{archive.intro}</p>}
+  <ViewToggle />
   <PostList posts={posts} />
 </PageLayout>

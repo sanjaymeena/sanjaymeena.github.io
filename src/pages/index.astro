@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostList from '../components/PostList.astro';
+import ViewToggle from '../components/ViewToggle.astro';
 import { getAiMlPosts, getPostsByCategory } from '../lib/posts';
 import { SITE } from '../lib/site';
 
@@ -24,6 +25,12 @@ const HOME_KEYWORDS = [
 const aiPosts = await getAiMlPosts();
 const investingPosts = await getPostsByCategory('investing');
 const bookPosts = await getPostsByCategory('books');
+
+/**
+ * Six, not five: the card grid is three columns wide, so six is two clean rows.
+ * Five left a ragged 3+2 tail on every lane.
+ */
+const LANE_SIZE = 6;
 
 const websiteLd = {
   '@context': 'https://schema.org',
@@ -56,21 +63,25 @@ const websiteLd = {
       </p>
     </div>
 
+    {/* One switch for all three lanes — the choice is site-wide, so a per-lane
+        control would only disagree with the other two. */}
+    <ViewToggle />
+
     <section class="lane" aria-labelledby="lane-ai">
       <h2 id="lane-ai">AI/ML Engineering</h2>
-      <PostList posts={aiPosts} limit={5} grouped={false} />
+      <PostList posts={aiPosts} limit={LANE_SIZE} grouped={false} />
       <p class="lane__more"><a href="/ai/">More in AI/ML &rarr;</a></p>
     </section>
 
     <section class="lane" aria-labelledby="lane-investing">
       <h2 id="lane-investing">Investing</h2>
-      <PostList posts={investingPosts} limit={5} grouped={false} />
+      <PostList posts={investingPosts} limit={LANE_SIZE} grouped={false} />
       <p class="lane__more"><a href="/investment_notes/">More &rarr;</a></p>
     </section>
 
     <section class="lane" aria-labelledby="lane-books">
       <h2 id="lane-books">Books</h2>
-      <PostList posts={bookPosts} limit={5} grouped={false} />
+      <PostList posts={bookPosts} limit={LANE_SIZE} grouped={false} />
       <p class="lane__more"><a href="/book_notes/">More &rarr;</a></p>
     </section>
 

@@ -18,46 +18,100 @@ export interface Props {
 
 const { posts, showCategory = false, limit, grouped = true } = Astro.props;
 const visible = limit === undefined ? posts : posts.slice(0, limit);
-const years = grouped ? groupByYear(visible) : [];
+
+/*
+ * Both view modes are emitted and the stylesheet shows one of them off
+ * `:root[data-view]`. With JavaScript disabled nothing sets that attribute, so
+ * the stylesheet's own default (cards) applies and the listing still works;
+ * toggling is then a pure attribute write with no re-render. `display: none`
+ * keeps the hidden mode out of the accessibility tree and the tab order, so no
+ * post is announced twice.
+ *
+ * The year section wraps *both* modes rather than each mode carrying its own
+ * copy, because the `${year}-ref` anchors are deep links into the old Jekyll
+ * archive (/#2016-ref) and an id may only appear once per page.
+ */
+const sections: Array<{ year?: number; posts: ListedPost[] }> = grouped
+  ? groupByYear(visible)
+  : [{ posts: visible }];
+
+/* Flat lists have no year heading to supply context, so each date carries its
+   own year rather than reading as an ambiguous "5 Jun". */
+const formatDate = grouped ? formatDateShort : formatDateShortWithYear;
+
+/**
+ * Tags shown on a card. Capped because the spread is wide — 33 posts carry one
+ * tag but one carries eleven — and an uncapped footer would make that card
+ * tower over its neighbours. The overflow is counted rather than dropped
+ * silently, so a reader can tell a 3-tag post from an 11-tag one.
+ */
+const CARD_TAG_LIMIT = 3;
 ---
 
 <div class="page_list">
   {
-    grouped ? (
-      years.map(({ year, posts: yearPosts }) => (
-        <section class="page_list__year">
-          {/* The `-ref` suffix on the year anchor matches the Jekyll templates, so
-              existing /#2016-ref links keep working. */}
-          <h2 id={`${year}-ref`}>{year}</h2>
-          <ul class="posts">
-            {yearPosts.map((post) => (
-              <li class="posts__item">
-                <time datetime={post.date.toISOString()}>{formatDateShort(post.date)}</time>
-                <a href={post.url}>
-                  {showCategory && post.category && <span class="posts__category">[{post.category}]</span>}{' '}
-                  {post.title}
-                </a>
-                {post.excerpt && <p class="posts__excerpt">{post.excerpt}</p>}
-              </li>
-            ))}
-          </ul>
-        </section>
-      ))
-    ) : (
-      /* Flat list: no year heading to supply context, so each date carries its
-         own year rather than reading as an ambiguous "5 Jun". */
-      <ul class="posts">
-        {visible.map((post) => (
-          <li class="posts__item">
-            <time datetime={post.date.toISOString()}>{formatDateShortWithYear(post.date)}</time>
-            <a href={post.url}>
-              {showCategory && post.category && <span class="posts__category">[{post.category}]</span>}{' '}
-              {post.title}
-            </a>
-            {post.excerpt && <p class="posts__excerpt">{post.excerpt}</p>}
-          </li>
-        ))}
-      </ul>
-    )
+    sections.map(({ year, posts: sectionPosts }) => (
+      <section class:list={[{ page_list__year: year !== undefined }]}>
+        {year !== undefined && <h2 id={`${year}-ref`}>{year}</h2>}
+
+        <ul class="posts post-rows">
+          {sectionPosts.map((post) => (
+            <li class="posts__item">
+              <time datetime={post.date.toISOString()}>{formatDate(post.date)}</time>
+              <a href={post.url}>
+                {showCategory && post.category && (
+                  <span class="posts__category">[{post.category}]</span>
+                )}{' '}
+                {post.title}
+              </a>
+              {post.excerpt && <p class="posts__excerpt">{post.excerpt}</p>}
+            </li>
+          ))}
+        </ul>
+
+        <ul class="post-cards">
+          {sectionPosts.map((post) => (
+            <li
+              class:list={['post-card', { 'post-card--plain': !post.image }]}
+              data-category={post.category || undefined}
+            >
+              {/* One link wraps the whole card, so the image, title and excerpt
+                  are a single tab stop. */}
+              <a class="post-card__link" href={post.url}>
+                <span class="post-card__band" aria-hidden="true" />
+                {post.image && (
+                  <span class="post-card__media">
+                    {/* Decorative: the card title already names the post, and
+                        the 16/9 crop box reserves the space so there is no
+                        layout shift when the file arrives. */}
+                    <img src={post.image} alt="" loading="lazy" decoding="async" />
+                  </span>
+                )}
+                <span class="post-card__body">
+                  <span class="post-card__meta">
+                    <time datetime={post.date.toISOString()}>{formatDate(post.date)}</time>
+                    {showCategory && post.category && (
+                      <span class="post-card__category">{post.category}</span>
+                    )}
+                  </span>
+                  <span class="post-card__title">{post.title}</span>
+                  {post.excerpt && <span class="post-card__excerpt">{post.excerpt}</span>}
+                  {post.tags.length > 0 && (
+                    <span class="post-card__tags">
+                      {post.tags.slice(0, CARD_TAG_LIMIT).map((tag) => (
+                        <span class="post-card__tag">{tag}</span>
+                      ))}
+                      {post.tags.length > CARD_TAG_LIMIT && (
+                        <span class="post-card__tag">+{post.tags.length - CARD_TAG_LIMIT}</span>
+                      )}
+                    </span>
+                  )}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
   }
 </div>
