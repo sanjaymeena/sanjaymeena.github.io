@@ -1217,6 +1217,36 @@ a:focus {
   background: color-mix(in oklab, var(--card-accent) 7%, var(--color-surface));
 }
 
+/*
+ * Tag footer. Deliberately not links: the card is one <a> around everything, so
+ * nested anchors would be invalid HTML, and a card that is a single tab stop
+ * would become four on /posts/ (65 cards). Styled as muted metadata rather than
+ * as .tag-box pills precisely so it does not read as clickable.
+ *
+ * It sits after the excerpt, which carries the flex-grow, so the row lands on
+ * the card's bottom edge whatever the title and excerpt lengths — the footer
+ * alignment that .post-card__body's flex column exists to produce. Natural
+ * casing, matching the tag cloud on /tags/.
+ */
+.post-card__tags {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+}
+
+.post-card__tag + .post-card__tag::before {
+  content: '\00B7'; /* middot separator, kept out of the markup */
+  margin-right: var(--space-1);
+  color: var(--color-border);
+}
+
 /* --------------------------------------------------------------- tags -- */
 
 .tag-box {

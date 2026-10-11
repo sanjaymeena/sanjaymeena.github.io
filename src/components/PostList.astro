@@ -38,6 +38,14 @@ const sections: Array<{ year?: number; posts: ListedPost[] }> = grouped
 /* Flat lists have no year heading to supply context, so each date carries its
    own year rather than reading as an ambiguous "5 Jun". */
 const formatDate = grouped ? formatDateShort : formatDateShortWithYear;
+
+/**
+ * Tags shown on a card. Capped because the spread is wide — 33 posts carry one
+ * tag but one carries eleven — and an uncapped footer would make that card
+ * tower over its neighbours. The overflow is counted rather than dropped
+ * silently, so a reader can tell a 3-tag post from an 11-tag one.
+ */
+const CARD_TAG_LIMIT = 3;
 ---
 
 <div class="page_list">
@@ -88,6 +96,16 @@ const formatDate = grouped ? formatDateShort : formatDateShortWithYear;
                   </span>
                   <span class="post-card__title">{post.title}</span>
                   {post.excerpt && <span class="post-card__excerpt">{post.excerpt}</span>}
+                  {post.tags.length > 0 && (
+                    <span class="post-card__tags">
+                      {post.tags.slice(0, CARD_TAG_LIMIT).map((tag) => (
+                        <span class="post-card__tag">{tag}</span>
+                      ))}
+                      {post.tags.length > CARD_TAG_LIMIT && (
+                        <span class="post-card__tag">+{post.tags.length - CARD_TAG_LIMIT}</span>
+                      )}
+                    </span>
+                  )}
                 </span>
               </a>
             </li>
