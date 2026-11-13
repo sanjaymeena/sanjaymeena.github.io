@@ -53,7 +53,7 @@ const SERIES_TITLE = 'Kubernetes by Example';
 // manifest order (index first, then chapters 01..14) is preserved among ties.
 const PUBLISH_DATE = '2026-11-13';
 
-const TAGS = ['Kubernetes'];
+const TAGS = ['Kubernetes', 'MLOps'];
 const CATEGORIES = ['tech'];
 
 /** Plain text from an HTML fragment: tags stripped, entities decoded, whitespace collapsed. */

@@ -33,6 +33,14 @@ const standalonePosts = getStandalonePosts();
 const seriesHub = standalonePosts.find((entry) => entry.slug === SERIES_HUB_SLUG);
 const seriesPartCount = standalonePosts.filter((entry) => entry.slug.startsWith(`${SERIES_HUB_SLUG}/`)).length;
 
+const techPosts = await getPostsByCategory('tech');
+/**
+ * The series already fronts the spotlight card and the AI/ML lane (via its
+ * MLOps tag); without this filter the tech lane would repeat the same six
+ * newest cards on one screen.
+ */
+const techLanePosts = techPosts.filter((post) => !post.url.startsWith(`/${SERIES_HUB_SLUG}/`));
+
 /**
  * Six, not five: the card grid is three columns wide, so six is two clean rows.
  * Five left a ragged 3+2 tail on every lane.
@@ -61,8 +69,8 @@ const websiteLd = {
       <h2>Hello there!</h2>
       <p>I maintain this Blog to record my learnings from different fields of Investing and Technology.</p>
       <p>
-        It falls into three areas: building machine learning systems, investing, and the books I have
-        read along the way. The newest posts from each are below.
+        It falls into four areas: building machine learning systems, the infrastructure they run on,
+        investing, and the books I have read along the way. The newest posts from each are below.
       </p>
       <p>
         You can also have a look at some of the tech projects i have worked on the over the years:
@@ -79,8 +87,8 @@ const websiteLd = {
       </a>
     )}
 
-    {/* One switch for all three lanes — the choice is site-wide, so a per-lane
-        control would only disagree with the other two. */}
+    {/* One switch for all four lanes — the choice is site-wide, so a per-lane
+        control would only disagree with the others. */}
     <ViewToggle />
 
     <section class="lane" aria-labelledby="lane-ai">
@@ -99,6 +107,12 @@ const websiteLd = {
       <h2 id="lane-books">Books</h2>
       <PostList posts={bookPosts} limit={LANE_SIZE} grouped={false} />
       <p class="lane__more"><a href="/book_notes/">More &rarr;</a></p>
+    </section>
+
+    <section class="lane" aria-labelledby="lane-tech">
+      <h2 id="lane-tech">Tech</h2>
+      <PostList posts={techLanePosts} limit={LANE_SIZE} grouped={false} />
+      <p class="lane__more"><a href="/tech/">More in Tech &rarr;</a></p>
     </section>
 
     <p class="page__lede"><a href="/posts/">Browse all posts &rarr;</a></p>
