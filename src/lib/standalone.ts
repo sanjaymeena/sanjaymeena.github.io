@@ -90,7 +90,15 @@ export function standaloneChrome(): string {
   return (
     '<div class="standalone-bar" style="padding:.6rem 1rem;border-bottom:1px solid;font-size:14px">' +
     `<strong><a href="/">${SITE.title}</a></strong> &middot; ${links}` +
-    '</div>'
+    // Theme toggle for documents the site nav cannot reach. Writes the same
+    // localStorage key THEME_STORAGE_KEY in src/lib/theme.ts uses, so a choice
+    // made here follows the reader back to the main site and vice versa.
+    ' &middot; <button type="button" data-standalone-theme aria-label="Toggle colour theme" style="background:none;border:1px solid;border-radius:3px;padding:2px 8px;font:inherit;font-size:12px;color:inherit;cursor:pointer">Theme</button>' +
+    '</div>' +
+    '<script>(function(){var b=document.querySelector("[data-standalone-theme]");if(!b)return;' +
+    'b.addEventListener("click",function(){var d=document.documentElement;' +
+    'var dark=d.dataset.theme?d.dataset.theme==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;' +
+    'var next=dark?"light":"dark";d.dataset.theme=next;try{localStorage.setItem("theme",next);}catch(e){}});})();</script>'
   );
 }
 

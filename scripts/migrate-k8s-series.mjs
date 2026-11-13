@@ -114,6 +114,9 @@ function buildDocument({ headExtra, body, title, description, canonical }) {
     '<html lang="en">',
     '<head>',
     '<meta charset="utf-8">',
+    // Mirrors BaseLayout's pre-paint script: same storage key and precedence,
+    // so the series opens in whichever theme the main site is using.
+    '<script>try{var t=localStorage.getItem("theme");if(t==="dark"||t==="light"){document.documentElement.dataset.theme=t;}}catch(e){}</script>',
     '<meta name="viewport" content="width=device-width, initial-scale=1">',
     `<title>${escapeAttr(title)}</title>`,
     `<meta name="description" content="${escapeAttr(description)}">`,
