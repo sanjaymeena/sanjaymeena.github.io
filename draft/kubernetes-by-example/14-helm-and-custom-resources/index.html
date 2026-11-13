@@ -1,0 +1,442 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=JetBrains+Mono:wght@400;500;700&family=Literata:opsz,wght@7..72,400;7..72,600;7..72,400italic&display=swap"><style>
+:root{
+  --bg:#F7F5F1; --surface:#FFFFFF; --surface-2:#EEEBE4; --sunken:#E7E3DA;
+  --ink:#1B1A15; --ink-2:#4B473E; --muted:#787365;
+  --line:#DEDACF; --line-strong:#BEB8A8;
+  --want:#30459E; --have:#A74B28; --ok:#36704A; --note:#6B4B8F;
+  --want-wash:#30459E14; --have-wash:#A74B2814; --ok-wash:#36704A14; --note-wash:#6B4B8F14;
+  --shadow:0 1px 2px #1B1A1510,0 10px 28px #1B1A150A;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#13130E; --surface:#1B1B15; --surface-2:#23231C; --sunken:#16160F;
+  --ink:#EFEDE4; --ink-2:#BEBAAD; --muted:#8E8A7C;
+  --line:#2E2E25; --line-strong:#464537;
+  --want:#8E9EF2; --have:#E08760; --ok:#75BA8F; --note:#B291D8;
+  --want-wash:#8E9EF21F; --have-wash:#E087601F; --ok-wash:#75BA8F1F; --note-wash:#B291D81F;
+  --shadow:0 1px 2px #0007,0 10px 28px #0005;
+}}
+:root[data-theme="dark"]{
+  --bg:#13130E; --surface:#1B1B15; --surface-2:#23231C; --sunken:#16160F;
+  --ink:#EFEDE4; --ink-2:#BEBAAD; --muted:#8E8A7C;
+  --line:#2E2E25; --line-strong:#464537;
+  --want:#8E9EF2; --have:#E08760; --ok:#75BA8F; --note:#B291D8;
+  --want-wash:#8E9EF21F; --have-wash:#E087601F; --ok-wash:#75BA8F1F; --note-wash:#B291D81F;
+  --shadow:0 1px 2px #0007,0 10px 28px #0005;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Literata,Georgia,serif;font-size:17.5px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;margin:0 auto;padding:0 26px 110px}
+.col{max-width:65ch}
+h1,h2,h3,h4,.eyebrow,.btn,.steptitle,.tag,.cardt,th,.tb-series,.tb-pos,.tocpanel,.anat,.pre-h{font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif}
+code,kbd,.mono,.tag,.tok{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace}
+h1{font-size:clamp(33px,5vw,55px);line-height:1.05;font-weight:700;letter-spacing:-.03em;margin:0 0 18px;text-wrap:balance}
+h2{font-size:clamp(24px,2.7vw,32px);line-height:1.15;font-weight:700;letter-spacing:-.02em;margin:0 0 16px;text-wrap:balance}
+h3{font-size:19.5px;font-weight:700;letter-spacing:-.01em;margin:0 0 9px}
+p{margin:0 0 18px}
+em{font-style:italic}
+a{color:var(--want)}
+.lede{font-size:20.5px;line-height:1.58;color:var(--ink-2);margin:0 0 22px}
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.17em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+header.top{padding:48px 0 0}
+section{padding:58px 0 0}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0}
+.tag{font-size:11.5px;padding:5px 10px;border:1px solid var(--line-strong);border-radius:3px;color:var(--ink-2);background:var(--surface)}
+.note{border-left:2px solid var(--line-strong);padding:2px 0 2px 18px;color:var(--ink-2);margin:0 0 18px}
+.note b{color:var(--ink)}
+.cw{border:1px solid var(--line);border-left:3px solid var(--note);border-radius:4px;background:var(--surface);padding:17px 19px;margin:24px 0 0}
+.cw h4{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--note);margin:0 0 9px}
+.cw p{margin:0 0 11px;color:var(--ink-2);font-size:16px;line-height:1.62}
+.cw p:last-child{margin:0}
+/* ---- top bar ---- */
+.topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tbin{max-width:1140px;margin:0 auto;padding:10px 26px;display:flex;align-items:center;gap:14px}
+.tb-series{font-size:13px;font-weight:700;letter-spacing:-.01em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.tb-series:hover{color:var(--want)}
+.tb-pos{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-left:auto;white-space:nowrap}
+.tb-btn{font:700 12px/1 "Bricolage Grotesque",sans-serif;padding:7px 11px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:3px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.tb-btn:hover{border-color:var(--want);color:var(--want)}
+.tb-btn:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.tb-btn[aria-disabled="true"]{opacity:.35;pointer-events:none}
+.tocpanel{position:absolute;left:0;right:0;top:100%;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:var(--shadow);max-height:72vh;overflow-y:auto}
+.tocpanel[hidden]{display:none}
+.tocin{max-width:1140px;margin:0 auto;padding:22px 26px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+.tocgrp h5{font:700 10.5px/1 "Bricolage Grotesque",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;padding:0 0 8px;border-bottom:1px solid var(--line)}
+.tocgrp ol{list-style:none;margin:0;padding:0}
+.tocgrp li{margin:0 0 2px}
+.tocgrp a,.tocgrp span{display:flex;gap:9px;padding:6px 8px;border-radius:3px;font-size:14px;text-decoration:none;color:var(--ink);font-family:Literata,serif}
+.tocgrp a:hover{background:var(--surface-2)}
+.tocgrp span{color:var(--muted)}
+.tocgrp .n{font:700 11px/1.6 "JetBrains Mono",monospace;color:var(--muted)}
+.tocgrp [aria-current="page"]{background:var(--want-wash);color:var(--want);font-weight:600}
+.soon{font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-left:auto;align-self:center;color:var(--muted);font-family:"Bricolage Grotesque",sans-serif}
+/* ---- stage ---- */
+.stage{margin:28px 0 0;border:1px solid var(--line);border-radius:5px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.stagefig{background:var(--sunken);padding:18px 20px;overflow-x:auto}
+.stagefig svg{display:block;width:100%;min-width:720px;height:auto}
+.scrub{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:12px 18px;border-top:1px solid var(--line);background:var(--surface-2)}
+.btn{font-size:12.5px;font-weight:700;padding:7px 13px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:3px;cursor:pointer;line-height:1.2}
+.btn:hover{border-color:var(--want);color:var(--want)}
+.btn:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.pips{display:flex;gap:5px;margin-left:auto;flex-wrap:wrap}
+.pip{width:21px;height:21px;border-radius:3px;border:1px solid var(--line-strong);background:var(--surface);color:var(--muted);font:700 11px/1 "Bricolage Grotesque",sans-serif;cursor:pointer;display:grid;place-items:center;padding:0}
+.pip[aria-current="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.pip:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.stagetext{padding:21px 23px 23px;border-top:1px solid var(--line)}
+.steptitle{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 7px}
+.stagetext h3{font-size:21.5px;margin:0 0 11px}
+.stagetext p{max-width:72ch;margin:0 0 13px;color:var(--ink-2)}
+.stagetext p:last-child{margin:0}
+.stagetext b{color:var(--ink)}
+/* ---- anatomy ---- */
+.anat{margin:26px 0 0;border:1px solid var(--line);border-radius:5px;background:var(--surface);overflow:hidden;box-shadow:var(--shadow)}
+.anat-h{padding:12px 18px;border-bottom:1px solid var(--line);background:var(--surface-2);font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.anat-cmd{padding:20px 18px 16px;background:var(--sunken);display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start;overflow-x:auto}
+.tok{font-size:14px;font-weight:500;padding:7px 10px;border:1px solid transparent;border-radius:3px;background:var(--surface);color:var(--ink);cursor:pointer;line-height:1.3;white-space:nowrap;position:relative;border-bottom:2px solid var(--line-strong)}
+.tok:hover{border-color:var(--want);color:var(--want)}
+.tok[aria-pressed="true"]{background:var(--want);border-color:var(--want);color:#fff}
+.tok:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.tok .kind{display:block;font:700 8.5px/1.4 "Bricolage Grotesque",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:3px 0 0}
+.tok[aria-pressed="true"] .kind{color:#ffffffcc}
+.anat-def{padding:18px 20px 20px;border-top:1px solid var(--line);min-height:96px}
+.anat-def h4{font-size:15px;margin:0 0 7px;font-family:"JetBrains Mono",monospace;color:var(--want)}
+.anat-def p{font-size:15.5px;line-height:1.62;color:var(--ink-2);margin:0 0 10px;max-width:70ch}
+.anat-def p:last-child{margin:0}
+.anat-def code{font-size:.9em}
+.anat-hint{font-size:13px;color:var(--muted);font-family:Literata,serif;font-style:italic}
+/* ---- tables, code ---- */
+.tbl{width:100%;border-collapse:collapse;margin:22px 0 0;font-size:15px}
+.tbl th{font-size:11px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 14px 9px 0;border-bottom:1px solid var(--line-strong)}
+.tbl td{padding:11px 14px 11px 0;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-2)}
+.tbl td:first-child{color:var(--ink);white-space:nowrap}
+.tbl td code{white-space:nowrap}
+.tblwrap{overflow-x:auto}
+code{font-size:.86em;background:var(--surface-2);border:1px solid var(--line);border-radius:3px;padding:1px 5px;color:var(--ink)}
+pre{background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:15px 17px;overflow-x:auto;font-size:13px;line-height:1.68;margin:16px 0 0}
+pre code{background:0 0;border:0;padding:0;color:var(--ink-2);font-size:inherit}
+.pre-h{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:24px 0 -6px}
+figure{margin:26px 0 0}
+figcaption{font-size:13.5px;line-height:1.55;color:var(--muted);margin:11px 0 0;max-width:76ch}
+.nextprev{display:flex;gap:14px;flex-wrap:wrap;margin:30px 0 0}
+.np{flex:1 1 230px;border:1px solid var(--line);border-radius:4px;padding:15px 17px;background:var(--surface);text-decoration:none;color:var(--ink)}
+.np:hover{border-color:var(--want)}
+.np span{display:block;font-size:10.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-family:"Bricolage Grotesque",sans-serif;margin:0 0 4px}
+footer{margin:76px 0 0;padding:26px 0 0;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+/* svg shared */
+.d-panel{fill:var(--surface);stroke:var(--line-strong)}
+.d-sunken{fill:var(--sunken);stroke:var(--line)}
+.d-box{fill:var(--surface);stroke:var(--line-strong)}
+.t{fill:var(--ink);font-family:"Bricolage Grotesque",sans-serif;font-size:12.5px;font-weight:700}
+.t-sm{fill:var(--ink-2);font-family:"JetBrains Mono",monospace;font-size:10.5px}
+.t-mut{fill:var(--muted);font-family:"JetBrains Mono",monospace;font-size:10px}
+.t-lbl{fill:var(--muted);font-family:"Bricolage Grotesque",sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.t-want{fill:var(--want)} .t-have{fill:var(--have)} .t-ok{fill:var(--ok)} .t-note{fill:var(--note)}
+.b-want{fill:var(--want-wash);stroke:var(--want)} .b-have{fill:var(--have-wash);stroke:var(--have)}
+.b-ok{fill:var(--ok-wash);stroke:var(--ok)} .b-note{fill:var(--note-wash);stroke:var(--note)}
+.cell{fill:var(--want-wash);stroke:var(--want);stroke-width:.8}
+.ah{fill:var(--ink-2)} .ah-want{fill:var(--want)} .ah-have{fill:var(--have)} .ah-ok{fill:var(--ok)}
+.flow{fill:none;stroke:var(--ink-2);stroke-width:1.4}
+.flow-want{stroke:var(--want)} .flow-have{stroke:var(--have)} .flow-ok{stroke:var(--ok)}
+.g{transition:opacity .4s ease}
+.dim{opacity:.13} .hide{opacity:0}
+.live{stroke-dasharray:5 5;animation:ants 1s linear infinite}
+@keyframes ants{to{stroke-dashoffset:-20}}
+@media (prefers-reduced-motion:reduce){.live{animation:none}.g{transition:none}}
+</style><title>Helm and Custom Resources</title>
+<nav class="topbar">
+  <div class="tbin">
+    <a class="tb-series" href="../00-index.html">Kubernetes by Example</a>
+    <button class="tb-btn" id="tocbtn" type="button" aria-expanded="false" aria-controls="tocpanel">Contents</button>
+    <span class="tb-pos">Part 14 of 14</span><div style="display:flex;gap:6px"><a class="tb-btn" href="../13-scaling-and-permissions/index.html" title="Scaling and permissions">&#8592;</a><span class="tb-btn" aria-disabled="true">&#8594;</span></div>
+  </div>
+  <div class="tocpanel" id="tocpanel" hidden><div class="tocin"><div class="tocgrp"><h5>Tier 0 · The model</h5><ol><li><a href="../01-the-object-model/index.html"><span class="n">01</span>The object model</a></li><li><a href="../02-pods-and-containers/index.html"><span class="n">02</span>Pods and containers</a></li><li><a href="../03-labels-selectors-namespaces/index.html"><span class="n">03</span>Labels, selectors, namespaces</a></li></ol></div><div class="tocgrp"><h5>Tier 1 · Workload kinds</h5><ol><li><a href="../04-deployments-and-rollouts/index.html"><span class="n">04</span>Deployments and rollouts</a></li><li><a href="../05-daemonsets/index.html"><span class="n">05</span>DaemonSets</a></li><li><a href="../06-statefulsets-jobs-cronjobs/index.html"><span class="n">06</span>StatefulSets, Jobs, CronJobs</a></li></ol></div><div class="tocgrp"><h5>Tier 2 · Wiring</h5><ol><li><a href="../07-services-and-ingress/index.html"><span class="n">07</span>Services and Ingress</a></li><li><a href="../08-config-and-secrets/index.html"><span class="n">08</span>Config and Secrets</a></li><li><a href="../09-storage/index.html"><span class="n">09</span>Storage</a></li></ol></div><div class="tocgrp"><h5>Tier 3 · Scheduling</h5><ol><li><a href="../10-requests-limits-qos/index.html"><span class="n">10</span>Requests, limits, QoS</a></li><li><a href="../11-placement-and-devices/index.html"><span class="n">11</span>Placement and devices</a></li></ol></div><div class="tocgrp"><h5>Tier 4 · Production</h5><ol><li><a href="../12-staying-up/index.html"><span class="n">12</span>Staying up</a></li><li><a href="../13-scaling-and-permissions/index.html"><span class="n">13</span>Scaling and permissions</a></li><li><a href="../14-helm-and-custom-resources/index.html" aria-current="page"><span class="n">14</span>Helm and custom resources</a></li></ol></div></div></div>
+</nav>
+<div class="wrap">
+<header class="top">
+  <div class="col">
+    <p class="eyebrow">Kubernetes by Example · Part 14</p>
+    <h1>Helm and Custom Resources</h1>
+    <p class="lede">Three copies of your YAML and a station list that changes at lunchtime. One of those is a templating problem. The other needs you to write a controller.</p>
+    <div class="meta"><span class="tag">assumes Parts 1–13</span><span class="tag">~20 minutes</span><span class="tag">the last one</span></div>
+  </div>
+</header>
+
+<section>
+  <div class="col">
+    <h2>The symptom</h2>
+    <p>Two problems that arrive together once <em>airwaves</em> is real.</p>
+    <p>The first is tedious. You have three environments and one directory of YAML, so you copied it three times. Last week you fixed a probe timeout in dev and forgot staging, and found out during a demo.</p>
+    <p>The second is more interesting, and templating cannot touch it. <b>The station list lives in a database and changes during the day.</b> Someone adds a station at eleven in the morning and expects a tuner for it.</p>
+    <p>No amount of YAML solves that. YAML is a snapshot, and you need something that keeps watching.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Packaging, and then extending</h2>
+    <p>These are different problems with different answers, and conflating them is common enough to be worth separating up front.</p>
+    <p><b>Helm renders text.</b> It runs when you run it and then stops. <b>A controller runs forever</b>, watching for differences and closing them — which is precisely what every component in Part 1 was doing.</p>
+  </div>  <div class="stage">
+    <div class="stagefig" id="stagefig"><svg viewBox="0 0 1000 420" role="img" aria-label="On the left, Helm renders templates and values into ordinary manifests and sends them to the API server. On the right, a CustomResourceDefinition teaches the API server a new kind called Station, and a controller you wrote watches Stations and creates tuner pods to match.">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-want" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-want" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-have" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-have" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-ok" d="M0,0 L10,5 L0,10 Z"/></marker>
+  </defs>
+  <g id="g-helm" class="g">
+    <rect class="d-panel" x="40" y="48" width="430" height="188" rx="4" stroke-width="1.5"/>
+    <text class="t-lbl t-want" x="56" y="68">Helm — a text templating engine</text>
+    <rect class="d-sunken" x="56" y="80" width="190" height="60" rx="3"/>
+    <text class="t-sm" x="68" y="100">templates/</text>
+    <text class="t-mut" x="68" y="118">the same YAML, with holes</text>
+    <rect class="d-sunken" x="262" y="80" width="192" height="60" rx="3"/>
+    <text class="t-sm" x="274" y="100">values.yaml</text>
+    <text class="t-mut" x="274" y="118">+ values-prod.yaml</text>
+    <rect class="b-want" x="56" y="158" width="398" height="56" rx="3" stroke-width="1.2"/>
+    <text class="t-sm t-want" x="68" y="178">plain Deployments, Services, ConfigMaps</text>
+    <text class="t-mut" x="68" y="196">nothing new. the cluster never hears of Helm.</text>
+  </g>
+  <g id="g-api" class="g">
+    <rect class="d-panel" x="40" y="268" width="920" height="60" rx="4" stroke-width="1.5"/>
+    <text class="t-lbl" x="56" y="288">api server</text>
+    <text class="t-mut" x="56" y="310">the only door — Part 1, still true on the last page</text>
+  </g>
+  <g id="g-crd" class="g">
+    <rect class="d-panel" x="530" y="48" width="430" height="188" rx="4" stroke-width="1.5"/>
+    <text class="t-lbl t-note" x="546" y="68">CRD — a new noun the cluster understands</text>
+    <rect class="b-note" x="546" y="80" width="398" height="56" rx="3" stroke-width="1.2"/>
+    <text class="t-sm t-note" x="558" y="100">kind: Station</text>
+    <text class="t-mut" x="558" y="118">kubectl get stations works immediately</text>
+    <rect class="d-sunken" x="546" y="152" width="398" height="62" rx="3"/>
+    <text class="t-sm" x="558" y="172">…and does absolutely nothing</text>
+    <text class="t-mut" x="558" y="190">a CRD is storage and validation only</text>
+    <text class="t-mut" x="558" y="208">no behaviour comes with it</text>
+  </g>
+  <g id="g-ctl" class="g">
+    <rect class="b-ok" x="530" y="348" width="430" height="60" rx="4" stroke-width="1.3"/>
+    <text class="t-lbl t-ok" x="546" y="368">conductor — the pedant you wrote</text>
+    <text class="t-mut" x="546" y="390">watch Stations · compare to pods · close the difference · repeat</text>
+  </g>
+  <g id="g-pods" class="g">
+    <rect class="d-sunken" x="40" y="348" width="430" height="60" rx="3"/>
+    <text class="t-sm" x="56" y="368">tuner pods</text>
+    <text class="t-mut" x="56" y="390">one per Station — because something makes it so</text>
+  </g>
+  <g id="f-render" class="g hide">
+    <path class="flow flow-want live" d="M255,240 V264" marker-end="url(#a-want)"/>
+    <text class="t-lbl t-want" x="268" y="256">renders, then applies</text>
+  </g>
+  <g id="f-store" class="g hide">
+    <path class="flow flow-note live" d="M745,240 V264" marker-end="url(#a-note)"/>
+    <text class="t-lbl t-note" x="758" y="256">stored and validated. nothing else.</text>
+  </g>
+  <g id="f-loop" class="g hide">
+    <path class="flow flow-ok live" d="M745,344 V332" marker-end="url(#a-ok)" marker-start="url(#a-ok)"/>
+    <path class="flow flow-ok live" d="M526,378 H474" marker-end="url(#a-ok)"/>
+    <text class="t-lbl t-ok" x="300" y="342">creates what the Station asked for</text>
+  </g>
+  <g id="x-dead" class="g hide">
+    <rect x="526" y="344" width="438" height="68" rx="4" fill="none" stroke="var(--have)" stroke-width="1.8" stroke-dasharray="6 4"/>
+    <rect x="560" y="412" width="380" height="16" fill="var(--bg)"/>
+    <text class="t-lbl t-have" x="564" y="424">no controller → Stations exist and nothing happens</text>
+  </g>
+</svg></div>
+    <div class="scrub">
+      <button class="btn" id="prev" type="button">&#9664; Back</button>
+      <button class="btn" id="play" type="button">&#9654; Play</button>
+      <button class="btn" id="next" type="button">Next &#9654;</button>
+      <div class="pips" id="pips"></div>
+    </div>
+    <div class="stagetext">
+      <p class="steptitle" id="stepn"></p>
+      <h3 id="stept"></h3>
+      <div id="stepp"></div>
+    </div>
+  </div>  <div class="col">
+    <div class="cw">
+      <h4>What Helm is not</h4>
+      <p>It is not a controller. Nothing reconciles your chart. Drift from a manual <code>kubectl edit</code> is invisible to Helm until the next upgrade overwrites it.</p>
+      <p>It is not a dependency manager for runtime — chart dependencies are install-time only, with no ordering guarantees beyond hooks.</p>
+      <p>It is a very good templating engine with a release history. That's enough, and expecting more leads to disappointment.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>The commands</h2>
+  </div><div class="anat" id="an-helm"><div class="anat-h">Helm, carefully</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-helm" data-i="0" aria-pressed="false">helm template<span class="kind">verb</span></button><button class="tok" type="button" data-w="an-helm" data-i="1" aria-pressed="false">helm upgrade --install<span class="kind">verb</span></button><button class="tok" type="button" data-w="an-helm" data-i="2" aria-pressed="false">-f values-prod.yaml<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-helm" data-i="3" aria-pressed="false">--atomic --wait<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-helm" data-i="4" aria-pressed="false">helm diff upgrade<span class="kind">plugin</span></button></div><div class="anat-def" data-def="an-helm"><p class="anat-hint">Click any piece of the command.</p></div></div><div class="anat" id="an-crd"><div class="anat-h">Custom resources</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-crd" data-i="0" aria-pressed="false">kubectl get crd<span class="kind">verb + type</span></button><button class="tok" type="button" data-w="an-crd" data-i="1" aria-pressed="false">kubectl explain station.spec<span class="kind">command</span></button><button class="tok" type="button" data-w="an-crd" data-i="2" aria-pressed="false">subresources.status<span class="kind">CRD field</span></button><button class="tok" type="button" data-w="an-crd" data-i="3" aria-pressed="false">additionalPrinterColumns<span class="kind">CRD field</span></button><button class="tok" type="button" data-w="an-crd" data-i="4" aria-pressed="false">ownerReferences<span class="kind">object metadata</span></button></div><div class="anat-def" data-def="an-crd"><p class="anat-hint">Click any piece of the command.</p></div></div><div class="anat" id="an-ctl"><div class="anat-h">Running a controller of your own</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-ctl" data-i="0" aria-pressed="false">kubectl get stations -w<span class="kind">command</span></button><button class="tok" type="button" data-w="an-ctl" data-i="1" aria-pressed="false">kubectl logs -f deploy/conductor<span class="kind">command</span></button><button class="tok" type="button" data-w="an-ctl" data-i="2" aria-pressed="false">kubectl auth can-i<span class="kind">command</span></button><button class="tok" type="button" data-w="an-ctl" data-i="3" aria-pressed="false">kubectl delete station jazz<span class="kind">command</span></button><button class="tok" type="button" data-w="an-ctl" data-i="4" aria-pressed="false">kubectl get events<span class="kind">command</span></button></div><div class="anat-def" data-def="an-ctl"><p class="anat-hint">Click any piece of the command.</p></div></div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Build it</h2>
+    <h3 style="margin-top:24px">First, the chart</h3>
+    <p>Everything from Parts 1–13, parameterised.</p>
+  </div><p class="pre-h">Render it, validate it, send nothing</p>
+<pre><code>helm template airwaves ./chart | head -40
+helm template airwaves ./chart -f chart/values-prod.yaml \
+  | kubectl apply --dry-run=server -f -</code></pre><p class="pre-h">Install it properly</p>
+<pre><code>helm upgrade --install airwaves ./chart \
+  -f chart/values-dev.yaml --wait --atomic
+helm list
+kubectl get all -l app.kubernetes.io/instance=airwaves</code></pre>  <div class="col">
+    <p style="margin-top:20px">Plain Deployments, Services and ConfigMaps. Nothing in that output knows it came from a chart.</p>
+    <h3 style="margin-top:34px">Then the new noun</h3>
+  </div><p class="pre-h">A CRD, and some Stations</p>
+<pre><code>kubectl apply -f manifests/station-crd.yaml
+kubectl explain station.spec
+kubectl apply -f manifests/stations.yaml
+kubectl get stations</code></pre>  <div class="col">
+    <p style="margin-top:20px">Three Stations, listed with your own printer columns, validated against your own schema. And <code>kubectl get pods</code> shows nothing new, because a CRD is storage and nothing else.</p>
+    <h3 style="margin-top:34px">Then the thing that makes it mean something</h3>
+  </div><p class="pre-h">The conductor</p>
+<pre><code>kubectl apply -f manifests/conductor-rbac.yaml
+kubectl apply -f manifests/conductor.yaml
+kubectl logs -f deploy/conductor</code></pre>  <div class="col">
+    <p style="margin-top:20px">Watch its log. It lists Stations, lists tuner pods, finds three Stations and zero pods, and creates three. Then it looks again and finds nothing to do — Part 1's description of a healthy cluster, now from the inside.</p>
+  </div><p class="pre-h">Add a station at eleven in the morning</p>
+<pre><code>kubectl apply -f manifests/station-classical.yaml
+kubectl get pods -l app=tuner -w</code></pre>  <div class="col">
+    <p style="margin-top:20px">A fourth pod, seconds later, with nobody editing a Deployment. <b>That is the problem from the top of the page, solved</b> — and it was never solvable by rendering better YAML.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Break it</h2>
+    <h3 style="margin-top:26px">1 · A noun with no meaning</h3>
+  </div><pre><code>kubectl scale deploy/conductor --replicas=0
+kubectl apply -f manifests/station-ambient.yaml
+kubectl get stations
+kubectl get pods -l app=tuner</code></pre>  <div class="col">
+    <p style="margin-top:20px">The Station exists, validates, lists cleanly. No pod. Nothing is broken and nothing will happen, because <b>the CRD was only ever the vocabulary</b> — the controller was the meaning, and you just switched it off.</p>
+  </div><pre><code>kubectl scale deploy/conductor --replicas=1
+kubectl get pods -l app=tuner -w</code></pre>  <div class="col">
+    <p style="margin-top:20px">It catches up immediately. It didn't miss an event — it recomputed from scratch, which is what makes reconcile loops robust. Part 1's claim that an idle cluster is machinery finding nothing to do, demonstrated by taking the machinery away.</p>
+    <h3 style="margin-top:34px">2 · Forget the binding, again</h3>
+  </div><pre><code>kubectl delete rolebinding conductor
+kubectl rollout restart deploy/conductor
+kubectl logs -f deploy/conductor
+
+kubectl auth can-i create pods \
+  --as=system:serviceaccount:airwaves:conductor -n airwaves</code></pre>  <div class="col">
+    <p style="margin-top:20px">Part 13's silent 403, now in code you wrote. The controller runs, watches, calculates correctly, and every create is refused. If your error handling is sloppy it looks exactly like doing nothing.</p>
+    <h3 style="margin-top:34px">3 · Leak a pod by getting ownership wrong</h3>
+  </div><pre><code>kubectl apply -f manifests/conductor-no-owner.yaml
+kubectl apply -f manifests/station-test.yaml
+kubectl delete station test
+kubectl get pods -l app=tuner</code></pre>  <div class="col">
+    <p style="margin-top:20px">The Station is gone; the pod is still running. Without <code>ownerReferences</code>, nothing connects them, so nothing cleans up. One orphan is trivial. Months of this is a cluster full of pods nobody can account for.</p>
+    <div class="note"><b>Put it back</b> and confirm: delete a Station and watch its pod vanish without the conductor doing anything. Garbage collection is handling it.</div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>What follows from this</h2>
+  </div>  <div class="tblwrap">
+  <table class="tbl">
+    <thead><tr><th>Because…</th><th>…this is what happens</th></tr></thead>
+    <tbody><tr><td>Helm only renders text</td><td>No reconciliation. Manual edits drift silently until the next upgrade overwrites them.</td></tr><tr><td>Values layer, lists replace</td><td>Overriding one list item replaces the whole list. The commonest values surprise.</td></tr><tr><td>Helm reports on acceptance</td><td>Without <code>--wait --atomic</code>, success means recorded, not running. Part 1, one layer up.</td></tr><tr><td>A CRD has no behaviour</td><td>Your resource validates, lists, and does nothing. The controller is the meaning.</td></tr><tr><td>Controllers need RBAC</td><td>A missing binding means silent 403s and a controller that appears to be idle.</td></tr><tr><td><code>ownerReferences</code> drive GC</td><td>Set them and deletion cascades for free. Omit them and you leak, slowly.</td></tr><tr><td>Status is separate from spec</td><td>Spec is intent, status is achievement. Use the subresource so <code>apply</code> can't clobber it.</td></tr></tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Cheat sheet</h2>
+    <div class="cw">
+      <h4>Part 14 · helm and custom resources</h4>
+      <p>• <b>Helm is a templating engine.</b> It renders YAML and applies it. The cluster never hears of it.</p>
+      <p>• <code>helm template</code> first, always. Most Helm bugs are templating bugs.</p>
+      <p>• <code>helm upgrade --install --wait --atomic</code> is the command for CI. Plain <code>install</code> isn't idempotent.</p>
+      <p>• Values layer; <b>lists are replaced, not merged</b>.</p>
+      <p>• A <b>checksum annotation</b> on the pod template turns a config change into a paced rollout — Parts 4 and 8, joined up.</p>
+      <p>• A <b>CRD</b> teaches the API server a new kind. You get validation, <code>explain</code>, RBAC and selectors free.</p>
+      <p>• <b>A CRD alone does nothing.</b> It is storage and schema; the controller supplies behaviour.</p>
+      <p>• A controller is Part 1's loop with your noun: watch, compare, close the difference, repeat.</p>
+      <p>• Set <b><code>ownerReferences</code></b> on everything you create, or you leak objects quietly.</p>
+      <p>• Write to <b>status</b>, never to spec. Spec is what they asked for; status is what you managed.</p>
+    </div>
+  </div>  <div class="col">
+    <div class="cw" style="border-left-color:var(--ok);margin-top:30px">
+      <h4 style="color:var(--ok)">That's the series</h4>
+      <p>Fourteen parts, and one idea underneath all of them: <b>declare what you want, have something watch the difference, and close it forever.</b></p>
+      <p>Everything that looked arbitrary turns out to follow. Pods are disposable, so Services select by label. Selectors are queries, so ownership is a label match and two Deployments can fight. The scheduler reads requests, so a node can be full and idle. <code>apply</code> only records, so you need <code>rollout status</code> to know anything actually worked.</p>
+      <p>And on the last page, you wrote the loop yourself.</p>
+    </div>
+  </div>  <div class="nextprev">
+    <a class="np" href="../13-scaling-and-permissions/index.html"><span>Previous · Part 13</span>Scaling and permissions</a>
+    <a class="np" href="../00-index.html"><span>Series</span>All 14 parts</a>
+  </div>
+</section>
+
+<footer>
+  <div class="col"><p>The end of <b>Kubernetes by Example</b>. The whole project — chart, CRD and conductor — is in <code>airwaves/</code>.</p></div>
+</footer>
+</div>
+<script>
+const STEPS = [{"t": "Thirteen parts of YAML is a lot of YAML", "on": ["g-helm"], "p": ["<em>airwaves</em> is now a few dozen objects across several files, and three environments that differ in small ways \u2014 image tags, replica counts, whether the GPU bits are switched on at all.", "Copying the directory per environment works until the day you fix a bug in one copy and not the others. Which is the day you learn why this part exists."], "n": 1}, {"t": "Helm is a text templating engine", "on": ["g-helm", "g-api", "f-render"], "p": ["That's the whole of it, and it's worth being blunt because people expect more. Helm takes <b>templates</b> with holes in them, fills them from <b>values</b>, and sends the resulting plain YAML to the API server.", "<b>The cluster never hears of Helm.</b> What arrives is ordinary Deployments and Services, indistinguishable from ones you wrote by hand. There is no Helm controller, nothing reconciling your chart, no Helm object in etcd beyond a record of what it installed.", "So every part of this series still applies underneath. Helm changes how the YAML is produced, not what any of it does."], "n": 2}, {"t": "Values layer, and the last one wins", "on": ["g-helm"], "p": ["<code>values.yaml</code> in the chart holds defaults. <code>-f values-prod.yaml</code> overrides some. <code>--set image.tag=1.4</code> overrides more. Merged in that order.", "This is where the one-image-many-environments idea from Part 8 finally gets a mechanism \u2014 the chart is identical everywhere and a small values file states the differences.", "<b>Watch out for lists:</b> they are replaced wholesale, not merged element by element. Override one item in a list of three and you get a list of one, which is rarely what anyone meant."], "n": 3}, {"t": "And it closes the config-change loop", "on": ["g-helm"], "p": ["Part 8 ended with the checksum annotation: hash the ConfigMap into the pod template so a config edit triggers a rollout.", "Templating is what makes that practical. One line computes a hash of the rendered ConfigMap and drops it into the Deployment's annotations. Change a value, the hash changes, the template changes, and Part 4's machinery rolls the Deployment.", "Doing that by hand means remembering to recompute a hash every time. Nobody remembers. This is a fair summary of what Helm is actually for."], "n": 4}, {"t": "But templating has a ceiling", "on": ["g-helm", "g-crd"], "p": ["Helm runs once, when you tell it to. It renders, applies, and stops caring.", "The station list lives in a database and changes during the day. Rendering a chart cannot help \u2014 you'd need something running continuously, watching for changes, creating and deleting pods to match.", "<b>That's a controller.</b> And we've spent thirteen parts watching them work; the last step is writing one."], "n": 5}, {"t": "A CRD teaches the API server a new noun", "on": ["g-crd", "g-api", "f-store"], "p": ["A <b>CustomResourceDefinition</b> adds a kind. Apply one defining <code>Station</code> and the API server immediately accepts <code>kubectl get stations</code>, <code>kubectl apply -f station.yaml</code>, labels, selectors, RBAC \u2014 the lot.", "Your new kind is a first-class citizen from the moment it exists. That's genuinely remarkable, and it costs about forty lines of YAML.", "You get an OpenAPI schema for validation, <code>kubectl explain station.spec</code>, printer columns in <code>get</code> output, and the status subresource. All free."], "n": 6}, {"t": "And then nothing happens", "on": ["g-crd", "x-dead"], "p": ["Create a Station. <code>kubectl get stations</code> lists it. No pod appears.", "<b>A CRD is storage and validation. It has no behaviour whatsoever.</b> You have taught the cluster a word and given it no meaning \u2014 the object sits in etcd being perfectly valid and completely inert.", "This catches everyone once. The CRD is the easy half, and it's the half that looks like it did something."], "n": 7}, {"t": "The controller is where meaning comes from", "on": ["g-crd", "g-ctl", "g-pods", "f-loop"], "p": ["The <b>conductor</b> watches Stations and watches tuner pods. It compares: which Stations have no pod, which pods have no Station. Then it creates and deletes to close the difference. Then it looks again.", "<b>That is exactly Part 1's loop, and now you're the one running it.</b> The deployment controller watching Deployments, the ReplicaSet controller counting pods \u2014 this is the same shape, with a noun you invented.", "Two details that matter in practice. Set <b>ownerReferences</b> on the pods you create, so deleting a Station garbage-collects its pod automatically. And write the result into the Station's <b>status</b> \u2014 spec is what the user wants, status is what you achieved, exactly as in Part 1."], "n": 8}, {"t": "Which is the whole series, in one object", "on": ["g-crd", "g-ctl", "g-pods", "f-loop"], "p": ["A Station is a <b>Pod template</b> (Part 2) with <b>labels</b> (Part 3) that a <b>Service</b> can select (Part 7). The conductor is a <b>Deployment</b> (Part 4) with a <b>ServiceAccount</b> and a <b>Role</b> letting it manage pods (Part 13). The tuners it creates carry <b>requests and limits</b> (Part 10), <b>probes</b> (Part 12), <b>config</b> (Part 8), and <b>affinity</b> putting them beside a decoder (Part 11) so they can share <b>memory</b> (Part 9).", "Nothing here is new. You have built, from the inside, the same machinery you've been using since the first page.", "<b>And the reason it's all one idea:</b> declare what you want, have something watch the difference, close it forever. Thirteen parts of consequences from a single sentence."], "n": 9}];
+const svg=document.querySelector('#stagefig svg');
+const groups=[...svg.querySelectorAll('g[id]')];
+const pips=document.getElementById('pips');
+let cur=0,timer=null;
+STEPS.forEach((s,i)=>{const b=document.createElement('button');b.className='pip';b.type='button';b.textContent=s.n;
+  b.setAttribute('aria-label','Step '+s.n+': '+s.t);b.addEventListener('click',()=>{stop();show(i);});pips.appendChild(b);});
+function show(i){
+  cur=(i+STEPS.length)%STEPS.length;
+  const s=STEPS[cur],on=new Set(s.on);
+  groups.forEach(g=>{
+    const isFlow=g.id.startsWith('f-')||g.id.startsWith('x-');
+    g.classList.remove('dim','hide');
+    if(on.has(g.id))return;
+    g.classList.add(isFlow?'hide':'dim');
+  });
+  document.getElementById('stepn').textContent='Step '+s.n+' of '+STEPS.length;
+  document.getElementById('stept').textContent=s.t;
+  document.getElementById('stepp').innerHTML=s.p.map(x=>'<p>'+x+'</p>').join('');
+  [...pips.children].forEach((b,j)=>b.setAttribute('aria-current',j===cur?'true':'false'));
+}
+function stop(){if(timer){clearInterval(timer);timer=null;document.getElementById('play').innerHTML='\u25B6 Play';}}
+document.getElementById('next').addEventListener('click',()=>{stop();show(cur+1);});
+document.getElementById('prev').addEventListener('click',()=>{stop();show(cur-1);});
+document.getElementById('play').addEventListener('click',e=>{
+  if(timer){stop();return;}
+  e.currentTarget.innerHTML='\u23F8 Pause';
+  timer=setInterval(()=>{if(cur===STEPS.length-1){stop();return;}show(cur+1);},6000);
+});
+document.addEventListener('keydown',e=>{
+  if(e.target.closest('input,textarea'))return;
+  if(e.key==='ArrowRight'){stop();show(cur+1);}
+  if(e.key==='ArrowLeft'){stop();show(cur-1);}
+});
+show(0);
+
+var ANAT = {"an-helm": [{"t": "see it before you send it", "b": "<p><code>helm template airwaves ./chart -f values-prod.yaml</code> renders to stdout and touches nothing.</p><p><b>The first command to reach for.</b> Nearly every Helm problem is a templating problem, and this shows you precisely what would be applied. Pipe it to <code>kubectl apply --dry-run=server -f -</code> to validate it too.</p>"}, {"t": "the one command to use", "b": "<p>Installs if absent, upgrades if present. Idempotent, which <code>helm install</code> is not.</p><p>This is what belongs in CI. <code>helm install</code> fails on the second run, which is a confusing way to learn the difference.</p>"}, {"t": "layering values", "b": "<p>Repeatable; later files win. <code>--set</code> wins over all files, and <code>--set-string</code> forces a string when you want <code>&quot;1.0&quot;</code> rather than the number 1.</p><p><b>Lists are replaced, not merged.</b> The most common surprise in Helm values.</p>"}, {"t": "not lying about success", "b": "<p><code>--wait</code> blocks until resources are ready; <code>--atomic</code> rolls the whole release back if they aren't.</p><p>Without these, Helm reports success the moment the API server accepts the YAML \u2014 Part 1's distinction between <em>recorded</em> and <em>running</em>, one layer up.</p>"}, {"t": "what would change", "b": "<p>A plugin, not built in, and worth installing on day one.</p><p>Shows the diff between what is deployed and what you are about to deploy. The nearest thing to a safety net Helm offers.</p>"}], "an-crd": [{"t": "what the cluster knows", "b": "<p>Lists every custom kind installed. On a real cluster this is long \u2014 cert-manager, Prometheus, your ingress controller and your service mesh all add theirs.</p><p><code>kubectl api-resources</code> shows them alongside built-ins, with short names and whether they are namespaced.</p>"}, {"t": "the schema, from the cluster", "b": "<p>Works on <em>your</em> CRD the moment it's applied, because the OpenAPI schema is part of the definition.</p><p><code>--recursive</code> prints the whole tree. This is why writing a proper schema is worth the effort \u2014 it documents itself and rejects nonsense at admission.</p>"}, {"t": "separating want from got", "b": "<p>Enables <code>/status</code>, so the controller can write status without being able to modify spec.</p><p><b>Spec is the user's intent; status is the controller's report.</b> Part 1's distinction, now in something you designed. It also means <code>kubectl apply</code> never clobbers status.</p>"}, {"t": "useful get output", "b": "<p>Choose what <code>kubectl get stations</code> shows \u2014 the URL, the phase, the pod name, age.</p><p>Cheap, and the difference between a resource people can operate and one they have to pipe through <code>jsonpath</code> every time.</p>"}, {"t": "automatic cleanup", "b": "<p>Set on every object your controller creates, pointing at the Station.</p><p>Delete the Station and Kubernetes garbage-collects the pod for you. <b>Skip this and you write deletion logic yourself</b>, and get it wrong, and leak pods.</p>"}], "an-ctl": [{"t": "the watch", "b": "<p><code>-w</code> streams changes as they happen. Your controller does the same thing through the API, which is how it reacts in milliseconds rather than polling.</p><p>Watching this beside <code>kubectl get pods -w</code> is the clearest view of your own reconcile loop working.</p>"}, {"t": "its reasoning", "b": "<p>A controller's logs are the only narration of why it did what it did.</p><p>Log the <em>difference</em> it found, not just the action: \u201cStation jazz has no pod, creating\u201d beats \u201ccreating pod\u201d. The first explains a decision; the second describes a side effect.</p>"}, {"t": "before blaming the code", "b": "<p>Your controller needs RBAC for every verb on every resource it touches \u2014 <code>list</code> and <code>watch</code> on Stations, <code>create</code> and <code>delete</code> on pods.</p><p>Part 13's silent 403 is the single most common reason a new controller does nothing. Check here first, always.</p>"}, {"t": "testing ownership", "b": "<p>If <code>ownerReferences</code> are right, the pod disappears on its own within a second or two.</p><p>If it doesn't, your owner reference is wrong \u2014 usually a missing UID or the wrong apiVersion \u2014 and you have a leak that only shows up over weeks.</p>"}, {"t": "what it told the cluster", "b": "<p>A well-behaved controller emits Events for decisions, which is how it explains itself in <code>kubectl describe station jazz</code>.</p><p>It's the difference between an operator people trust and a black box they work around.</p>"}]};
+document.querySelectorAll('.tok').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var w=btn.dataset.w, i=+btn.dataset.i, d=ANAT[w][i];
+    var panel=document.querySelector('[data-def="'+w+'"]');
+    document.querySelectorAll('.tok[data-w="'+w+'"]').forEach(function(o){o.setAttribute('aria-pressed',String(o===btn));});
+    panel.innerHTML='<h4>'+d.t+'</h4>'+d.b;
+  });
+});
+
+(function(){
+  var b=document.getElementById('tocbtn'),p=document.getElementById('tocpanel');
+  if(!b||!p)return;
+  b.addEventListener('click',function(){
+    var open=b.getAttribute('aria-expanded')==='true';
+    b.setAttribute('aria-expanded',String(!open)); p.hidden=open;
+  });
+  document.addEventListener('click',function(e){
+    if(!p.hidden && !p.contains(e.target) && e.target!==b){b.setAttribute('aria-expanded','false');p.hidden=true;}
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&!p.hidden){b.setAttribute('aria-expanded','false');p.hidden=true;b.focus();}
+  });
+})();
+</script>

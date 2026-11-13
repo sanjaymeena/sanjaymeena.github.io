@@ -1,0 +1,28 @@
+# Part 10 — numbers chosen rather than guessed.
+# memory request == limit  -> Guaranteed-ish, and no surprise kills
+# cpu request set, cpu limit generous -> no invisible throttling
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tuner
+  labels: {app: tuner}
+spec:
+  replicas: 2
+  selector:
+    matchLabels: {app: tuner}
+  template:
+    metadata:
+      labels: {app: tuner}
+    spec:
+      containers:
+        - name: tuner
+          image: busybox:1.36
+          command: ["/bin/sh","-c"]
+          args: ["while true; do sleep 10; done"]
+          resources:
+            requests:
+              cpu: 50m            # what the scheduler reserves -- the only number it reads
+              memory: 64Mi
+            limits:
+              cpu: 500m           # generous: a tight CPU limit throttles silently
+              memory: 64Mi        # equal to request: memory kills, so don't leave a gap

@@ -1,0 +1,31 @@
+# Part 9, break-it #2 — a memory-backed emptyDir counts against the memory
+# limit. Write 200Mi of files into a pod limited to 128Mi and the kernel kills
+# it for using memory the process never allocated.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tmpfs-demo
+  labels: {app: tmpfs-demo}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: tmpfs-demo}
+  template:
+    metadata:
+      labels: {app: tmpfs-demo}
+    spec:
+      volumes:
+        - name: cache
+          emptyDir:
+            medium: Memory
+            # sizeLimit: 64Mi    <-- uncomment to get a clean disk-full error
+      containers:
+        - name: app
+          image: busybox:1.36
+          command: ["/bin/sh","-c"]
+          args: ["while true; do sleep 10; done"]
+          volumeMounts:
+            - {name: cache, mountPath: /cache}
+          resources:
+            requests: {cpu: 10m, memory: 64Mi}
+            limits:   {cpu: 100m, memory: 128Mi}

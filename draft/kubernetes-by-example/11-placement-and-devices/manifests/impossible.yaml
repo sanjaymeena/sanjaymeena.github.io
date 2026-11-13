@@ -1,0 +1,26 @@
+# Part 11, break-it #3 — two separate reasons at once. Read the
+# FailedScheduling event: the counts total your cluster size, and fixing
+# only one clause changes nothing.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: impossible
+  labels: {app: impossible}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: impossible}
+  template:
+    metadata:
+      labels: {app: impossible}
+    spec:
+      nodeSelector:
+        pool: nonexistent         # reason 1: nothing matches
+      # reason 2: no toleration for the gpu taint either
+      containers:
+        - name: app
+          image: busybox:1.36
+          command: ["/bin/sh","-c"]
+          args: ["sleep 3600"]
+          resources:
+            requests: {cpu: 10m, memory: 16Mi}

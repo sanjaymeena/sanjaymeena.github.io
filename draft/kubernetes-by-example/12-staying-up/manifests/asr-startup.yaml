@@ -1,0 +1,44 @@
+# Part 12 — a slow boot handled properly: startupProbe holds liveness off
+# with a generous budget, then liveness can be strict.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: asr
+  labels: {app: asr}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: asr}
+  template:
+    metadata:
+      labels: {app: asr}
+    spec:
+      containers:
+        - name: asr
+          image: busybox:1.36
+          command: ["/bin/sh","-c"]
+          args:
+            - |
+              mkdir -p /www
+              echo "loading model (60s)..."
+              sleep 60
+              echo ok > /www/healthz
+              echo "model ready"
+              httpd -f -p 8080 -h /www
+          ports:
+            - {containerPort: 8080, name: http}
+          startupProbe:
+            httpGet: {path: /healthz, port: http}
+            periodSeconds: 10
+            failureThreshold: 30       # up to 5 minutes to boot
+          readinessProbe:
+            httpGet: {path: /healthz, port: http}
+            periodSeconds: 5
+            timeoutSeconds: 3
+          livenessProbe:
+            httpGet: {path: /healthz, port: http}
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3        # strict, because booting is over
+          resources:
+            requests: {cpu: 20m, memory: 32Mi}

@@ -1,0 +1,25 @@
+# Part 6, break-it #3 — runs every minute, takes 90 seconds, and the default
+# concurrencyPolicy lets the runs overlap. Two copies writing to one place.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: slow-cron
+  labels: {app: slow-cron}
+spec:
+  schedule: "* * * * *"
+  # concurrencyPolicy omitted on purpose -> defaults to Allow
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 600
+      template:
+        metadata:
+          labels: {app: slow-cron}
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: slow
+              image: busybox:1.36
+              command: ["/bin/sh","-c"]
+              args: ["echo start; sleep 90; echo end"]
+              resources:
+                requests: {cpu: 10m, memory: 16Mi}

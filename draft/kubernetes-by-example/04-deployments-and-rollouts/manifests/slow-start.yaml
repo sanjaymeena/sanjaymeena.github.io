@@ -1,0 +1,31 @@
+# Part 4, break-it #2 — ten seconds to become useful, and no readiness probe
+# to say so. The rollout replaces every pod in about two seconds and reports
+# complete success while nothing can serve. Part 12 fixes this properly.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: slow-start
+  labels: {app: slow-start}
+spec:
+  replicas: 3
+  selector:
+    matchLabels: {app: slow-start}
+  template:
+    metadata:
+      labels: {app: slow-start}
+    spec:
+      containers:
+        - name: app
+          image: busybox:1.36
+          env:
+            - name: V
+              value: "1"
+          command: ["/bin/sh","-c"]
+          args:
+            - |
+              echo "booting (10s)..."
+              sleep 10
+              echo "ready to serve v$V"
+              while true; do sleep 5; done
+          resources:
+            requests: {cpu: 10m, memory: 16Mi}

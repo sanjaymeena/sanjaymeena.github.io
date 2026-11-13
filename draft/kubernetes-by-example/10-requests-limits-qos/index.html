@@ -1,0 +1,419 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=JetBrains+Mono:wght@400;500;700&family=Literata:opsz,wght@7..72,400;7..72,600;7..72,400italic&display=swap"><style>
+:root{
+  --bg:#F7F5F1; --surface:#FFFFFF; --surface-2:#EEEBE4; --sunken:#E7E3DA;
+  --ink:#1B1A15; --ink-2:#4B473E; --muted:#787365;
+  --line:#DEDACF; --line-strong:#BEB8A8;
+  --want:#30459E; --have:#A74B28; --ok:#36704A; --note:#6B4B8F;
+  --want-wash:#30459E14; --have-wash:#A74B2814; --ok-wash:#36704A14; --note-wash:#6B4B8F14;
+  --shadow:0 1px 2px #1B1A1510,0 10px 28px #1B1A150A;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#13130E; --surface:#1B1B15; --surface-2:#23231C; --sunken:#16160F;
+  --ink:#EFEDE4; --ink-2:#BEBAAD; --muted:#8E8A7C;
+  --line:#2E2E25; --line-strong:#464537;
+  --want:#8E9EF2; --have:#E08760; --ok:#75BA8F; --note:#B291D8;
+  --want-wash:#8E9EF21F; --have-wash:#E087601F; --ok-wash:#75BA8F1F; --note-wash:#B291D81F;
+  --shadow:0 1px 2px #0007,0 10px 28px #0005;
+}}
+:root[data-theme="dark"]{
+  --bg:#13130E; --surface:#1B1B15; --surface-2:#23231C; --sunken:#16160F;
+  --ink:#EFEDE4; --ink-2:#BEBAAD; --muted:#8E8A7C;
+  --line:#2E2E25; --line-strong:#464537;
+  --want:#8E9EF2; --have:#E08760; --ok:#75BA8F; --note:#B291D8;
+  --want-wash:#8E9EF21F; --have-wash:#E087601F; --ok-wash:#75BA8F1F; --note-wash:#B291D81F;
+  --shadow:0 1px 2px #0007,0 10px 28px #0005;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Literata,Georgia,serif;font-size:17.5px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;margin:0 auto;padding:0 26px 110px}
+.col{max-width:65ch}
+h1,h2,h3,h4,.eyebrow,.btn,.steptitle,.tag,.cardt,th,.tb-series,.tb-pos,.tocpanel,.anat,.pre-h{font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif}
+code,kbd,.mono,.tag,.tok{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace}
+h1{font-size:clamp(33px,5vw,55px);line-height:1.05;font-weight:700;letter-spacing:-.03em;margin:0 0 18px;text-wrap:balance}
+h2{font-size:clamp(24px,2.7vw,32px);line-height:1.15;font-weight:700;letter-spacing:-.02em;margin:0 0 16px;text-wrap:balance}
+h3{font-size:19.5px;font-weight:700;letter-spacing:-.01em;margin:0 0 9px}
+p{margin:0 0 18px}
+em{font-style:italic}
+a{color:var(--want)}
+.lede{font-size:20.5px;line-height:1.58;color:var(--ink-2);margin:0 0 22px}
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.17em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+header.top{padding:48px 0 0}
+section{padding:58px 0 0}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0}
+.tag{font-size:11.5px;padding:5px 10px;border:1px solid var(--line-strong);border-radius:3px;color:var(--ink-2);background:var(--surface)}
+.note{border-left:2px solid var(--line-strong);padding:2px 0 2px 18px;color:var(--ink-2);margin:0 0 18px}
+.note b{color:var(--ink)}
+.cw{border:1px solid var(--line);border-left:3px solid var(--note);border-radius:4px;background:var(--surface);padding:17px 19px;margin:24px 0 0}
+.cw h4{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--note);margin:0 0 9px}
+.cw p{margin:0 0 11px;color:var(--ink-2);font-size:16px;line-height:1.62}
+.cw p:last-child{margin:0}
+/* ---- top bar ---- */
+.topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tbin{max-width:1140px;margin:0 auto;padding:10px 26px;display:flex;align-items:center;gap:14px}
+.tb-series{font-size:13px;font-weight:700;letter-spacing:-.01em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.tb-series:hover{color:var(--want)}
+.tb-pos{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-left:auto;white-space:nowrap}
+.tb-btn{font:700 12px/1 "Bricolage Grotesque",sans-serif;padding:7px 11px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:3px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.tb-btn:hover{border-color:var(--want);color:var(--want)}
+.tb-btn:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.tb-btn[aria-disabled="true"]{opacity:.35;pointer-events:none}
+.tocpanel{position:absolute;left:0;right:0;top:100%;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:var(--shadow);max-height:72vh;overflow-y:auto}
+.tocpanel[hidden]{display:none}
+.tocin{max-width:1140px;margin:0 auto;padding:22px 26px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+.tocgrp h5{font:700 10.5px/1 "Bricolage Grotesque",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;padding:0 0 8px;border-bottom:1px solid var(--line)}
+.tocgrp ol{list-style:none;margin:0;padding:0}
+.tocgrp li{margin:0 0 2px}
+.tocgrp a,.tocgrp span{display:flex;gap:9px;padding:6px 8px;border-radius:3px;font-size:14px;text-decoration:none;color:var(--ink);font-family:Literata,serif}
+.tocgrp a:hover{background:var(--surface-2)}
+.tocgrp span{color:var(--muted)}
+.tocgrp .n{font:700 11px/1.6 "JetBrains Mono",monospace;color:var(--muted)}
+.tocgrp [aria-current="page"]{background:var(--want-wash);color:var(--want);font-weight:600}
+.soon{font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-left:auto;align-self:center;color:var(--muted);font-family:"Bricolage Grotesque",sans-serif}
+/* ---- stage ---- */
+.stage{margin:28px 0 0;border:1px solid var(--line);border-radius:5px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.stagefig{background:var(--sunken);padding:18px 20px;overflow-x:auto}
+.stagefig svg{display:block;width:100%;min-width:720px;height:auto}
+.scrub{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:12px 18px;border-top:1px solid var(--line);background:var(--surface-2)}
+.btn{font-size:12.5px;font-weight:700;padding:7px 13px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:3px;cursor:pointer;line-height:1.2}
+.btn:hover{border-color:var(--want);color:var(--want)}
+.btn:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.pips{display:flex;gap:5px;margin-left:auto;flex-wrap:wrap}
+.pip{width:21px;height:21px;border-radius:3px;border:1px solid var(--line-strong);background:var(--surface);color:var(--muted);font:700 11px/1 "Bricolage Grotesque",sans-serif;cursor:pointer;display:grid;place-items:center;padding:0}
+.pip[aria-current="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.pip:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.stagetext{padding:21px 23px 23px;border-top:1px solid var(--line)}
+.steptitle{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 7px}
+.stagetext h3{font-size:21.5px;margin:0 0 11px}
+.stagetext p{max-width:72ch;margin:0 0 13px;color:var(--ink-2)}
+.stagetext p:last-child{margin:0}
+.stagetext b{color:var(--ink)}
+/* ---- anatomy ---- */
+.anat{margin:26px 0 0;border:1px solid var(--line);border-radius:5px;background:var(--surface);overflow:hidden;box-shadow:var(--shadow)}
+.anat-h{padding:12px 18px;border-bottom:1px solid var(--line);background:var(--surface-2);font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.anat-cmd{padding:20px 18px 16px;background:var(--sunken);display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start;overflow-x:auto}
+.tok{font-size:14px;font-weight:500;padding:7px 10px;border:1px solid transparent;border-radius:3px;background:var(--surface);color:var(--ink);cursor:pointer;line-height:1.3;white-space:nowrap;position:relative;border-bottom:2px solid var(--line-strong)}
+.tok:hover{border-color:var(--want);color:var(--want)}
+.tok[aria-pressed="true"]{background:var(--want);border-color:var(--want);color:#fff}
+.tok:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.tok .kind{display:block;font:700 8.5px/1.4 "Bricolage Grotesque",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:3px 0 0}
+.tok[aria-pressed="true"] .kind{color:#ffffffcc}
+.anat-def{padding:18px 20px 20px;border-top:1px solid var(--line);min-height:96px}
+.anat-def h4{font-size:15px;margin:0 0 7px;font-family:"JetBrains Mono",monospace;color:var(--want)}
+.anat-def p{font-size:15.5px;line-height:1.62;color:var(--ink-2);margin:0 0 10px;max-width:70ch}
+.anat-def p:last-child{margin:0}
+.anat-def code{font-size:.9em}
+.anat-hint{font-size:13px;color:var(--muted);font-family:Literata,serif;font-style:italic}
+/* ---- tables, code ---- */
+.tbl{width:100%;border-collapse:collapse;margin:22px 0 0;font-size:15px}
+.tbl th{font-size:11px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 14px 9px 0;border-bottom:1px solid var(--line-strong)}
+.tbl td{padding:11px 14px 11px 0;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-2)}
+.tbl td:first-child{color:var(--ink);white-space:nowrap}
+.tbl td code{white-space:nowrap}
+.tblwrap{overflow-x:auto}
+code{font-size:.86em;background:var(--surface-2);border:1px solid var(--line);border-radius:3px;padding:1px 5px;color:var(--ink)}
+pre{background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:15px 17px;overflow-x:auto;font-size:13px;line-height:1.68;margin:16px 0 0}
+pre code{background:0 0;border:0;padding:0;color:var(--ink-2);font-size:inherit}
+.pre-h{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:24px 0 -6px}
+figure{margin:26px 0 0}
+figcaption{font-size:13.5px;line-height:1.55;color:var(--muted);margin:11px 0 0;max-width:76ch}
+.nextprev{display:flex;gap:14px;flex-wrap:wrap;margin:30px 0 0}
+.np{flex:1 1 230px;border:1px solid var(--line);border-radius:4px;padding:15px 17px;background:var(--surface);text-decoration:none;color:var(--ink)}
+.np:hover{border-color:var(--want)}
+.np span{display:block;font-size:10.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-family:"Bricolage Grotesque",sans-serif;margin:0 0 4px}
+footer{margin:76px 0 0;padding:26px 0 0;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+/* svg shared */
+.d-panel{fill:var(--surface);stroke:var(--line-strong)}
+.d-sunken{fill:var(--sunken);stroke:var(--line)}
+.d-box{fill:var(--surface);stroke:var(--line-strong)}
+.t{fill:var(--ink);font-family:"Bricolage Grotesque",sans-serif;font-size:12.5px;font-weight:700}
+.t-sm{fill:var(--ink-2);font-family:"JetBrains Mono",monospace;font-size:10.5px}
+.t-mut{fill:var(--muted);font-family:"JetBrains Mono",monospace;font-size:10px}
+.t-lbl{fill:var(--muted);font-family:"Bricolage Grotesque",sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.t-want{fill:var(--want)} .t-have{fill:var(--have)} .t-ok{fill:var(--ok)} .t-note{fill:var(--note)}
+.b-want{fill:var(--want-wash);stroke:var(--want)} .b-have{fill:var(--have-wash);stroke:var(--have)}
+.b-ok{fill:var(--ok-wash);stroke:var(--ok)} .b-note{fill:var(--note-wash);stroke:var(--note)}
+.cell{fill:var(--want-wash);stroke:var(--want);stroke-width:.8}
+.ah{fill:var(--ink-2)} .ah-want{fill:var(--want)} .ah-have{fill:var(--have)} .ah-ok{fill:var(--ok)}
+.flow{fill:none;stroke:var(--ink-2);stroke-width:1.4}
+.flow-want{stroke:var(--want)} .flow-have{stroke:var(--have)} .flow-ok{stroke:var(--ok)}
+.g{transition:opacity .4s ease}
+.dim{opacity:.13} .hide{opacity:0}
+.live{stroke-dasharray:5 5;animation:ants 1s linear infinite}
+@keyframes ants{to{stroke-dashoffset:-20}}
+@media (prefers-reduced-motion:reduce){.live{animation:none}.g{transition:none}}
+</style><title>Requests, Limits and QoS</title>
+<nav class="topbar">
+  <div class="tbin">
+    <a class="tb-series" href="../00-index.html">Kubernetes by Example</a>
+    <button class="tb-btn" id="tocbtn" type="button" aria-expanded="false" aria-controls="tocpanel">Contents</button>
+    <span class="tb-pos">Part 10 of 14</span><div style="display:flex;gap:6px"><a class="tb-btn" href="../09-storage/index.html" title="Storage">&#8592;</a><a class="tb-btn" href="../11-placement-and-devices/index.html" title="Placement and devices">&#8594;</a></div>
+  </div>
+  <div class="tocpanel" id="tocpanel" hidden><div class="tocin"><div class="tocgrp"><h5>Tier 0 · The model</h5><ol><li><a href="../01-the-object-model/index.html"><span class="n">01</span>The object model</a></li><li><a href="../02-pods-and-containers/index.html"><span class="n">02</span>Pods and containers</a></li><li><a href="../03-labels-selectors-namespaces/index.html"><span class="n">03</span>Labels, selectors, namespaces</a></li></ol></div><div class="tocgrp"><h5>Tier 1 · Workload kinds</h5><ol><li><a href="../04-deployments-and-rollouts/index.html"><span class="n">04</span>Deployments and rollouts</a></li><li><a href="../05-daemonsets/index.html"><span class="n">05</span>DaemonSets</a></li><li><a href="../06-statefulsets-jobs-cronjobs/index.html"><span class="n">06</span>StatefulSets, Jobs, CronJobs</a></li></ol></div><div class="tocgrp"><h5>Tier 2 · Wiring</h5><ol><li><a href="../07-services-and-ingress/index.html"><span class="n">07</span>Services and Ingress</a></li><li><a href="../08-config-and-secrets/index.html"><span class="n">08</span>Config and Secrets</a></li><li><a href="../09-storage/index.html"><span class="n">09</span>Storage</a></li></ol></div><div class="tocgrp"><h5>Tier 3 · Scheduling</h5><ol><li><a href="../10-requests-limits-qos/index.html" aria-current="page"><span class="n">10</span>Requests, limits, QoS</a></li><li><a href="../11-placement-and-devices/index.html"><span class="n">11</span>Placement and devices</a></li></ol></div><div class="tocgrp"><h5>Tier 4 · Production</h5><ol><li><a href="../12-staying-up/index.html"><span class="n">12</span>Staying up</a></li><li><a href="../13-scaling-and-permissions/index.html"><span class="n">13</span>Scaling and permissions</a></li><li><a href="../14-helm-and-custom-resources/index.html"><span class="n">14</span>Helm and custom resources</a></li></ol></div></div></div>
+</nav>
+<div class="wrap">
+<header class="top">
+  <div class="col">
+    <p class="eyebrow">Kubernetes by Example · Part 10</p>
+    <h1>Requests, Limits and QoS</h1>
+    <p class="lede">A pod killed with no error, and a node that is full at ten percent. Both are the same misunderstanding.</p>
+    <div class="meta"><span class="tag">assumes Parts 1–9</span><span class="tag">~18 minutes</span><span class="tag">where 137 comes from</span></div>
+  </div>
+</header>
+
+<section>
+  <div class="col">
+    <h2>The symptom</h2>
+    <p>Two complaints arrive the same week, and they look unrelated.</p>
+    <p>The first: a tuner keeps dying. No crash in the logs, nothing wrong with the stream, and the pod restarts cleanly each time.</p>
+  </div><pre><code>$ kubectl describe pod tuner-6b8f4d9c7-mn4kp | grep -A3 'Last State'
+    Last State:     Terminated
+      Reason:       OOMKilled
+      Exit Code:    137</code></pre>  <div class="col">
+    <p style="margin-top:18px">The second: you try to add a fifth tuner and it will not schedule.</p>
+  </div><pre><code>$ kubectl describe pod tuner-6b8f4d9c7-x9k2w | tail -3
+  Warning  FailedScheduling  0/3 nodes are available:
+  3 Insufficient cpu.
+
+$ kubectl top nodes
+NAME       CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%
+node-1     412m         10%    1894Mi          24%</code></pre>  <div class="col">
+    <p style="margin-top:18px">Insufficient CPU on a node running at 10%.</p>
+    <p>Both of these are the same misunderstanding wearing different clothes. There are three different numbers people mean by “how much CPU this uses”, and Kubernetes cares about a different one than you probably do.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Three numbers, three audiences</h2>
+    <p><b>What it uses</b> is a measurement — real, observed, changing every second. <b>What it requested</b> is a reservation the scheduler honours. <b>What it's limited to</b> is a ceiling the kernel enforces.</p>
+    <p>Only the second one decides whether your pod fits anywhere. Only the third one decides whether it gets killed. The first decides neither.</p>
+  </div>  <div class="stage">
+    <div class="stagefig" id="stagefig"><svg viewBox="0 0 1000 420" role="img" aria-label="A node of four CPUs. Requests reserve a share and are all the scheduler reads; limits are a runtime ceiling that may add up to far more than the node has. CPU over its limit is throttled, memory over its limit is killed.">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-want" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-want" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-have" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-have" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-ok" d="M0,0 L10,5 L0,10 Z"/></marker>
+  </defs>
+  <g id="g-node" class="g">
+    <rect class="d-panel" x="40" y="48" width="920" height="150" rx="4" stroke-width="1.5"/>
+    <text class="t-lbl" x="56" y="68">node-1 · 4 CPU allocatable</text>
+    <rect class="d-sunken" x="56" y="80" width="888" height="30" rx="3"/>
+    <text class="t-mut" x="946" y="100" text-anchor="end">4000m</text>
+  </g>
+  <g id="g-req" class="g">
+    <rect x="56" y="80" width="222" height="30" rx="3" fill="var(--want-wash)" stroke="var(--want)" stroke-width="1.3"/>
+    <text class="t-sm t-want" x="68" y="100">requests 1000m</text>
+    <text class="t-lbl t-want" x="56" y="132">what the scheduler reserved — the only number it reads</text>
+    <text class="t-mut" x="56" y="150">4 pods × 250m. Room for 12 more, as far as it is concerned.</text>
+  </g>
+  <g id="g-lim" class="g">
+    <rect x="56" y="162" width="888" height="22" rx="3" fill="var(--have-wash)" stroke="var(--have)" stroke-width="1.2" stroke-dasharray="5 3"/>
+    <text class="t-sm t-have" x="68" y="178">limits add up to 8000m — twice the node</text>
+  </g>
+  <g id="g-cpu" class="g">
+    <rect class="b-want" x="40" y="230" width="440" height="150" rx="4" stroke-width="1.3"/>
+    <text class="t-lbl t-want" x="56" y="250">CPU is compressible</text>
+    <text class="t-sm" x="56" y="274">over the limit → throttled</text>
+    <text class="t-mut" x="56" y="294">the process keeps running, just slower</text>
+    <text class="t-mut" x="56" y="314">nothing is logged, no event, no restart</text>
+    <text class="t-mut" x="56" y="340">you see it only as latency —</text>
+    <text class="t-mut" x="56" y="358">or in container_cpu_cfs_throttled_seconds</text>
+  </g>
+  <g id="g-mem" class="g">
+    <rect class="b-have" x="520" y="230" width="440" height="150" rx="4" stroke-width="1.3"/>
+    <text class="t-lbl t-have" x="536" y="250">memory is not</text>
+    <text class="t-sm" x="536" y="274">over the limit → killed</text>
+    <text class="t-mut" x="536" y="294">no warning, no grace, exit code 137</text>
+    <text class="t-mut" x="536" y="314">OOMKilled in Last State</text>
+    <text class="t-mut" x="536" y="340">you cannot borrow memory back;</text>
+    <text class="t-mut" x="536" y="358">there is nothing to slow down</text>
+  </g>
+  <g id="x-sched" class="g hide">
+    <rect x="52" y="76" width="230" height="38" rx="4" fill="none" stroke="var(--want)" stroke-width="1.8"/>
+    <rect x="290" y="104" width="340" height="16" fill="var(--bg)"/>
+    <text class="t-lbl t-want" x="294" y="116">the scheduler sees this and nothing else</text>
+  </g>
+  <g id="x-over" class="g hide">
+    <rect x="52" y="158" width="896" height="30" rx="4" fill="none" stroke="var(--have)" stroke-width="1.8" stroke-dasharray="6 4"/>
+    <rect x="300" y="196" width="400" height="16" fill="var(--bg)"/>
+    <text class="t-lbl t-have" x="304" y="208">fine until they all burst at once</text>
+  </g>
+  <g id="g-qos" class="g hide">
+    <rect class="d-sunken" x="40" y="392" width="920" height="24" rx="3"/>
+    <text class="t-mut" x="56" y="409">evicted first  ·  BestEffort (no requests)  →  Burstable (requests &lt; limits)  →  Guaranteed (requests = limits)  ·  evicted last</text>
+  </g>
+</svg></div>
+    <div class="scrub">
+      <button class="btn" id="prev" type="button">&#9664; Back</button>
+      <button class="btn" id="play" type="button">&#9654; Play</button>
+      <button class="btn" id="next" type="button">Next &#9654;</button>
+      <div class="pips" id="pips"></div>
+    </div>
+    <div class="stagetext">
+      <p class="steptitle" id="stepn"></p>
+      <h3 id="stept"></h3>
+      <div id="stepp"></div>
+    </div>
+  </div>  <div class="col">
+    <div class="cw">
+      <h4>The asymmetry worth memorising</h4>
+      <p><b>CPU</b> is compressible. Over the limit, you get throttled — slower, still alive, and completely silent. No event, no restart, nothing in <code>kubectl</code>.</p>
+      <p><b>Memory</b> is not. Over the limit, you get killed. Immediately, exit 137, no grace.</p>
+      <p>Which is why a too-low memory limit announces itself and a too-low CPU limit hides for months.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>The commands</h2>
+  </div><div class="anat" id="an-top"><div class="anat-h">Measuring what is really used</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-top" data-i="0" aria-pressed="false">kubectl top pods<span class="kind">verb</span></button><button class="tok" type="button" data-w="an-top" data-i="1" aria-pressed="false">--containers<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-top" data-i="2" aria-pressed="false">--sort-by=memory<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-top" data-i="3" aria-pressed="false">kubectl top nodes<span class="kind">command</span></button><button class="tok" type="button" data-w="an-top" data-i="4" aria-pressed="false">kubectl describe node<span class="kind">command</span></button></div><div class="anat-def" data-def="an-top"><p class="anat-hint">Click any piece of the command.</p></div></div><div class="anat" id="an-oom"><div class="anat-h">Diagnosing a kill and a throttle</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-oom" data-i="0" aria-pressed="false">kubectl describe pod<span class="kind">command</span></button><button class="tok" type="button" data-w="an-oom" data-i="1" aria-pressed="false">-o jsonpath='{.status.qosClass}'<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-oom" data-i="2" aria-pressed="false">kubectl get events<span class="kind">command</span></button><button class="tok" type="button" data-w="an-oom" data-i="3" aria-pressed="false">kubectl get --raw /metrics<span class="kind">command</span></button><button class="tok" type="button" data-w="an-oom" data-i="4" aria-pressed="false">kubectl set resources<span class="kind">command</span></button></div><div class="anat-def" data-def="an-oom"><p class="anat-hint">Click any piece of the command.</p></div></div><div class="anat" id="an-quota"><div class="anat-h">Limits you don't set yourself</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-quota" data-i="0" aria-pressed="false">kubectl get limitrange<span class="kind">verb + type</span></button><button class="tok" type="button" data-w="an-quota" data-i="1" aria-pressed="false">kubectl get resourcequota<span class="kind">verb + type</span></button><button class="tok" type="button" data-w="an-quota" data-i="2" aria-pressed="false">kubectl describe quota<span class="kind">command</span></button><button class="tok" type="button" data-w="an-quota" data-i="3" aria-pressed="false">allocatable<span class="kind">node field</span></button><button class="tok" type="button" data-w="an-quota" data-i="4" aria-pressed="false">--dry-run=server<span class="kind">flag</span></button></div><div class="anat-def" data-def="an-quota"><p class="anat-hint">Click any piece of the command.</p></div></div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Build it</h2>
+    <p>Measure first, then set numbers that mean something. Guessing is how you get both of this page's symptoms.</p>
+  </div><p class="pre-h">What is it actually using?</p>
+<pre><code>kubectl top pods -l app=tuner --containers
+kubectl top pods -A --sort-by=memory | head</code></pre><p class="pre-h">Set them, and see the class you earned</p>
+<pre><code>kubectl apply -f manifests/tuner-resources.yaml
+kubectl rollout status deploy/tuner
+
+kubectl get pod -l app=tuner \
+  -o jsonpath='{.items[0].status.qosClass}{"\n"}'</code></pre><p class="pre-h">The number the scheduler reads</p>
+<pre><code>kubectl describe node | grep -A8 'Allocated resources'</code></pre>  <div class="col">
+    <p style="margin-top:20px">Compare that table with <code>kubectl top nodes</code>. The percentages will disagree, often wildly, and the one in <code>describe</code> is the one that decides whether anything else can land here.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Break it</h2>
+    <h3 style="margin-top:26px">1 · Earn a 137 on purpose</h3>
+  </div><pre><code>kubectl apply -f manifests/memory-hog.yaml
+sleep 20
+kubectl get pods -l app=memory-hog
+kubectl describe pod -l app=memory-hog | grep -A3 'Last State'</code></pre>  <div class="col">
+    <p style="margin-top:20px"><code>OOMKilled</code>, exit 137, and a restart count climbing. The container asked for more memory than its limit and the kernel ended the conversation. Nothing negotiated, nothing logged by the application — it simply stopped existing mid-instruction.</p>
+    <h3 style="margin-top:34px">2 · Throttle something, and watch nothing happen</h3>
+  </div><pre><code>kubectl apply -f manifests/cpu-throttle.yaml
+sleep 30
+kubectl get pods -l app=cpu-throttle      # Running, 0 restarts, perfectly healthy
+kubectl logs deploy/cpu-throttle | tail -5</code></pre>  <div class="col">
+    <p style="margin-top:20px">The pod is fine. Kubernetes says it's fine. The logs show work taking several times longer than it should, and <b>no object anywhere records that anything is wrong</b>.</p>
+    <p>This is the failure mode to fear. A memory limit that's too low wakes you up; a CPU limit that's too low just quietly makes everything worse until someone complains about latency months later.</p>
+    <h3 style="margin-top:34px">3 · Reproduce the unschedulable node</h3>
+  </div><pre><code>kubectl apply -f manifests/greedy-request.yaml
+kubectl get pods -l app=greedy
+kubectl describe pod -l app=greedy | tail -4
+kubectl top nodes</code></pre>  <div class="col">
+    <p style="margin-top:20px"><code>Insufficient cpu</code> while the node is nearly idle. The pod requested more than any node has left <em>in reservations</em>, and actual usage was never part of the calculation.</p>
+    <p>This is also Part 1's experiment, now with a proper explanation: the wish is recorded faithfully and can never be granted, so the loop keeps trying forever.</p>
+    <div class="note"><b>Clean up</b> all three before moving on — the memory hog will keep restarting indefinitely.</div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>What follows from this</h2>
+  </div>  <div class="tblwrap">
+  <table class="tbl">
+    <thead><tr><th>Because…</th><th>…this is what happens</th></tr></thead>
+    <tbody><tr><td>The scheduler reads requests only</td><td>An idle node can be unschedulable; a busy one can have room. <code>top</code> doesn't answer this question.</td></tr><tr><td>No requests means zero</td><td>The pod fits everywhere, backs nothing, and is evicted first under pressure.</td></tr><tr><td>CPU throttling is silent</td><td>Latency with no event, no restart, no status change. Only metrics show it.</td></tr><tr><td>Memory kills are immediate</td><td>Exit 137, no grace period, nothing flushed. The kernel, not Kubernetes.</td></tr><tr><td>Limits can be overcommitted</td><td>Normal and useful — until everything bursts at once.</td></tr><tr><td>QoS is derived</td><td>You never set it. Requests and limits decide your eviction order whether you meant them to or not.</td></tr><tr><td>LimitRange can inject defaults</td><td>A pod may have numbers you never wrote. Check before assuming your YAML is in force.</td></tr></tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Cheat sheet</h2>
+    <div class="cw">
+      <h4>Part 10 · requests, limits, qos</h4>
+      <p>• Three different numbers: <b>used</b> (observed), <b>requested</b> (reserved), <b>limited</b> (enforced).</p>
+      <p>• <b>The scheduler reads requests and nothing else.</b> Not usage, not limits.</p>
+      <p>• No requests = zero requested. Fits anywhere, evicted first.</p>
+      <p>• <b>CPU over limit → throttled, silently.</b> No event, no restart. Only <code>cfs_throttled_seconds</code> shows it.</p>
+      <p>• <b>Memory over limit → killed instantly.</b> Exit 137, <code>OOMKilled</code>, no grace.</p>
+      <p>• Limits may be overcommitted; requests may not. The gap is how much you're betting.</p>
+      <p>• QoS is <b>derived</b>: Guaranteed (req=lim), Burstable (req&lt;lim), BestEffort (nothing). It sets eviction order.</p>
+      <p>• CPU is millicores (<code>1000m</code> = 1 core). Memory: <code>Mi</code> is 1024-based, <code>M</code> is 1000-based.</p>
+      <p>• <b>Allocatable &lt; capacity.</b> The kubelet and OS take their cut first.</p>
+      <p>• Measure, then set. Memory request ≈ limit. Be careful with CPU limits — many teams omit them deliberately.</p>
+    </div>
+  </div>  <div class="nextprev">
+    <a class="np" href="../09-storage/index.html"><span>Previous · Part 9</span>Storage</a>
+    <a class="np" href="../00-index.html"><span>Series</span>All 14 parts</a>
+    <a class="np" href="../11-placement-and-devices/index.html"><span>Next · Part 11</span>Placement and devices</a>
+  </div>
+</section>
+
+<footer>
+  <div class="col"><p>Part of <b>Kubernetes by Example</b>. Next: getting a pod onto the machine you actually meant.</p></div>
+</footer>
+</div>
+<script>
+const STEPS = [{"t": "Two numbers that are not the same number", "on": ["g-node", "g-req", "g-lim"], "p": ["Every container can declare <b>requests</b> and <b>limits</b> for CPU and memory. They look like a pair \u2014 a minimum and a maximum \u2014 and they are not.", "<b>Requests</b> are a reservation used for placement. <b>Limits</b> are a ceiling enforced at runtime. Different consumers, different moments, different consequences.", "Conflating them is behind most capacity confusion, including the two symptoms that opened this page."], "n": 1}, {"t": "The scheduler only reads requests", "on": ["g-node", "g-req", "x-sched"], "p": ["When the scheduler asks \u201cdoes this fit?\u201d, it adds up the <b>requests</b> of everything already on the node and compares against allocatable capacity. It never looks at limits. It never looks at actual usage.", "So a node running at 12% CPU can be completely unschedulable, because the pods on it <em>reserved</em> everything. And a node at 95% can accept more, because nobody reserved much.", "<b>This is the answer to \u201cthe node is full but idle\u201d.</b> Full and busy are unrelated measurements, and only one of them is a scheduling input."], "n": 2}, {"t": "A request you don't set is a request for nothing", "on": ["g-req", "g-qos"], "p": ["Omit requests and the scheduler assumes zero. Your pod fits anywhere, always \u2014 including onto a node with nothing left.", "That isn't free capacity, it's an unbacked promise. The pod runs until the node runs short, and then it is among the first things evicted.", "<b>Setting requests is how you participate in scheduling at all.</b> Without them you're a stowaway."], "n": 3}, {"t": "CPU over the limit is throttled", "on": ["g-cpu"], "p": ["CPU is <b>compressible</b>: it can be rationed. Exceed your limit and the kernel simply gives you fewer slices. The process keeps running, more slowly.", "<b>Nothing is logged.</b> No event, no restart, no status change. Your service gets slower and every Kubernetes object continues to report perfect health.", "This is the most under-diagnosed problem in the whole system. The only direct evidence is <code>container_cpu_cfs_throttled_seconds_total</code> in metrics, and the symptom everyone notices first is latency with no apparent cause."], "n": 4}, {"t": "Memory over the limit is killed", "on": ["g-mem"], "p": ["Memory is <b>incompressible</b>. You cannot give a process less memory than it has already allocated \u2014 there's nothing to ration. So the kernel kills it.", "Immediately. No warning, no grace period, no chance to flush anything. The container restarts with exit code <b>137</b>, and <code>kubectl describe pod</code> shows <code>OOMKilled</code> in Last State.", "Part 2 mentioned 137 in passing. This is where it comes from \u2014 and note it's a kernel action, not a Kubernetes one, which is why it's so abrupt."], "n": 5}, {"t": "Overcommit is deliberate and usually fine", "on": ["g-node", "g-lim", "x-over"], "p": ["Limits can add up to far more than the node has, and routinely do. A node with 4 CPUs happily runs pods whose limits total 32.", "This works because pods don't peak together. It's the same bet an airline makes selling more seats than the plane has, and it's right nearly always.", "<b>Requests cannot be overcommitted</b> \u2014 the scheduler enforces that sum. So requests are your floor and limits are your optimism, and the gap between them is how much you're betting."], "n": 6}, {"t": "QoS class is assigned, not chosen", "on": ["g-qos", "g-mem"], "p": ["From your numbers, Kubernetes derives a <b>QoS class</b>. <b>Guaranteed</b>: requests equal limits for every resource. <b>Burstable</b>: requests set, limits higher or absent. <b>BestEffort</b>: nothing set at all.", "It matters when a node runs short of memory and the kubelet starts evicting. BestEffort goes first, then Burstable that exceeded its requests, and Guaranteed last.", "<b>You never set this field.</b> It's computed. Which means you influence eviction order by how you write requests and limits, whether or not you realise you're doing it."], "n": 7}, {"t": "What the numbers actually mean", "on": ["g-node", "g-req", "g-cpu"], "p": ["CPU is in <b>millicores</b>: <code>1000m</code> is one core, <code>250m</code> is a quarter. It's a rate, not a quantity \u2014 you can't save it up.", "Memory is bytes, and the suffixes are a trap: <code>Mi</code> is 1024-based (mebibytes), <code>M</code> is 1000-based. <code>512M</code> is about 24 MB less than <code>512Mi</code>, which is enough to matter at the edge.", "And <b>allocatable is less than capacity</b>. The kubelet, container runtime and OS reserve a slice before anything of yours is counted. A 4-CPU node might offer 3.86 to pods."], "n": 8}, {"t": "How to actually choose them", "on": ["g-node", "g-req", "g-lim", "g-qos"], "p": ["<b>Measure first.</b> <code>kubectl top</code> for a rough figure, metrics over a week for a real one. Guessing produces either waste or incidents.", "<b>Memory request \u2248 memory limit.</b> Memory usage is fairly stable, and the penalty for getting it wrong is a kill, so don't leave a gap you don't need.", "<b>CPU request at the steady state; be cautious with CPU limits.</b> A limit that's too tight throttles invisibly. Many teams deliberately set no CPU limit at all and rely on requests for fairness \u2014 a real and defensible position, not laziness.", "<b>Always set something.</b> A pod with no requests is a pod the scheduler cannot reason about and the kubelet will evict first."], "n": 9}];
+const svg=document.querySelector('#stagefig svg');
+const groups=[...svg.querySelectorAll('g[id]')];
+const pips=document.getElementById('pips');
+let cur=0,timer=null;
+STEPS.forEach((s,i)=>{const b=document.createElement('button');b.className='pip';b.type='button';b.textContent=s.n;
+  b.setAttribute('aria-label','Step '+s.n+': '+s.t);b.addEventListener('click',()=>{stop();show(i);});pips.appendChild(b);});
+function show(i){
+  cur=(i+STEPS.length)%STEPS.length;
+  const s=STEPS[cur],on=new Set(s.on);
+  groups.forEach(g=>{
+    const isFlow=g.id.startsWith('f-')||g.id.startsWith('x-');
+    g.classList.remove('dim','hide');
+    if(on.has(g.id))return;
+    g.classList.add(isFlow?'hide':'dim');
+  });
+  document.getElementById('stepn').textContent='Step '+s.n+' of '+STEPS.length;
+  document.getElementById('stept').textContent=s.t;
+  document.getElementById('stepp').innerHTML=s.p.map(x=>'<p>'+x+'</p>').join('');
+  [...pips.children].forEach((b,j)=>b.setAttribute('aria-current',j===cur?'true':'false'));
+}
+function stop(){if(timer){clearInterval(timer);timer=null;document.getElementById('play').innerHTML='\u25B6 Play';}}
+document.getElementById('next').addEventListener('click',()=>{stop();show(cur+1);});
+document.getElementById('prev').addEventListener('click',()=>{stop();show(cur-1);});
+document.getElementById('play').addEventListener('click',e=>{
+  if(timer){stop();return;}
+  e.currentTarget.innerHTML='\u23F8 Pause';
+  timer=setInterval(()=>{if(cur===STEPS.length-1){stop();return;}show(cur+1);},6000);
+});
+document.addEventListener('keydown',e=>{
+  if(e.target.closest('input,textarea'))return;
+  if(e.key==='ArrowRight'){stop();show(cur+1);}
+  if(e.key==='ArrowLeft'){stop();show(cur-1);}
+});
+show(0);
+
+var ANAT = {"an-top": [{"t": "kubectl top", "b": "<p>Actual current usage, from metrics-server. Not installed by default on <code>kind</code> \u2014 <code>error: Metrics API not available</code> means install it, not that something is broken.</p><p>An instantaneous sample, so it misses spikes. Fine for sizing, useless for catching a burst.</p>"}, {"t": "per container", "b": "<p>Breaks a multi-container pod down. Essential once sidecars are involved, since the pod total hides which container is actually responsible.</p>"}, {"t": "finding the big ones", "b": "<p>Also <code>cpu</code>. <code>kubectl top pods -A --sort-by=memory | head</code> is the fastest possible cluster-wide triage.</p>"}, {"t": "node level", "b": "<p>Shows usage and percentage of <b>capacity</b>.</p><p><b>Do not confuse this with how full the node is for scheduling.</b> That's requests, and it's in <code>describe node</code>. A node at 15% here can be entirely unschedulable.</p>"}, {"t": "the number that matters", "b": "<p>The <code>Allocated resources</code> section: total requests and limits with percentages.</p><p><b>This is what the scheduler sees.</b> When a pod won't schedule, this is the table that explains it \u2014 and it's usually a different story from <code>top</code>.</p>"}], "an-oom": [{"t": "Last State", "b": "<p><code>Last State: Terminated, Reason: OOMKilled, Exit Code: 137</code> is unambiguous \u2014 the kernel killed it for exceeding its memory limit.</p><p>Contrast with exit 1 (the program quit) and 143 (asked to stop politely). Part 2's triage, now with causes attached.</p>"}, {"t": "your QoS class", "b": "<p><code>kubectl get pod X -o jsonpath='{.status.qosClass}'</code> \u2192 <code>Guaranteed</code>, <code>Burstable</code> or <code>BestEffort</code>.</p><p>Computed from your numbers, never set by you. <code>BestEffort</code> on anything important is a bug.</p>"}, {"t": "evictions", "b": "<p><code>kubectl get events -A --field-selector reason=Evicted</code> finds pods the kubelet pushed off a node under pressure.</p><p>Eviction is not an OOM kill. Eviction is the kubelet protecting the <em>node</em> and the pod is rescheduled elsewhere; an OOM kill is the kernel protecting the node and the container restarts in place.</p>"}, {"t": "throttling", "b": "<p>Throttling appears nowhere in <code>kubectl</code>. You need <code>container_cpu_cfs_throttled_seconds_total</code> from cAdvisor.</p><p>Rising steadily while usage sits below the limit means your limit is too low. <b>This is the invisible one</b> \u2014 no event, no restart, just latency.</p>"}, {"t": "changing them", "b": "<p><code>kubectl set resources deploy/tuner --requests=cpu=100m --limits=memory=256Mi</code>.</p><p>Changes the pod template, so it triggers a rollout \u2014 Part 4. In-place resize without a restart exists in recent versions but is still gated behind a feature flag on most clusters.</p>"}], "an-quota": [{"t": "namespace defaults", "b": "<p>A LimitRange injects default requests and limits into pods that don't declare them, and can enforce minimums and maximums.</p><p><b>This is why a pod can have limits you never wrote.</b> If the numbers in <code>describe pod</code> don't match your YAML, look here first.</p>"}, {"t": "namespace ceilings", "b": "<p>Caps the total requests, limits, or object counts for a whole namespace.</p><p>With a quota in force, <b>every pod must declare requests</b> \u2014 one without them is rejected at creation with a message about quota. Surprising the first time, and a good discipline.</p>"}, {"t": "how full it is", "b": "<p>Used against hard limit for each resource. The thing to check when <code>apply</code> is rejected for reasons unrelated to your YAML.</p>"}, {"t": "capacity minus overhead", "b": "<p><code>kubectl get node X -o jsonpath='{.status.allocatable}'</code>.</p><p>Always less than capacity \u2014 the kubelet, runtime and OS reserve theirs first. Sizing against capacity gives you pods that never schedule.</p>"}, {"t": "checking before applying", "b": "<p>Runs admission, including LimitRange injection and quota checks, then discards.</p><p>The way to find out what your pod will <em>actually</em> be given, rather than what you asked for.</p>"}]};
+document.querySelectorAll('.tok').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var w=btn.dataset.w, i=+btn.dataset.i, d=ANAT[w][i];
+    var panel=document.querySelector('[data-def="'+w+'"]');
+    document.querySelectorAll('.tok[data-w="'+w+'"]').forEach(function(o){o.setAttribute('aria-pressed',String(o===btn));});
+    panel.innerHTML='<h4>'+d.t+'</h4>'+d.b;
+  });
+});
+
+(function(){
+  var b=document.getElementById('tocbtn'),p=document.getElementById('tocpanel');
+  if(!b||!p)return;
+  b.addEventListener('click',function(){
+    var open=b.getAttribute('aria-expanded')==='true';
+    b.setAttribute('aria-expanded',String(!open)); p.hidden=open;
+  });
+  document.addEventListener('click',function(e){
+    if(!p.hidden && !p.contains(e.target) && e.target!==b){b.setAttribute('aria-expanded','false');p.hidden=true;}
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&!p.hidden){b.setAttribute('aria-expanded','false');p.hidden=true;b.focus();}
+  });
+})();
+</script>

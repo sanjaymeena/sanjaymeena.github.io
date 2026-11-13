@@ -1,0 +1,366 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=JetBrains+Mono:wght@400;500;700&family=Literata:opsz,wght@7..72,400;7..72,600;7..72,400italic&display=swap"><style>
+:root{
+  --bg:#F7F5F1; --surface:#FFFFFF; --surface-2:#EEEBE4; --sunken:#E7E3DA;
+  --ink:#1B1A15; --ink-2:#4B473E; --muted:#787365;
+  --line:#DEDACF; --line-strong:#BEB8A8;
+  --want:#30459E; --have:#A74B28; --ok:#36704A; --note:#6B4B8F;
+  --want-wash:#30459E14; --have-wash:#A74B2814; --ok-wash:#36704A14; --note-wash:#6B4B8F14;
+  --shadow:0 1px 2px #1B1A1510,0 10px 28px #1B1A150A;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#13130E; --surface:#1B1B15; --surface-2:#23231C; --sunken:#16160F;
+  --ink:#EFEDE4; --ink-2:#BEBAAD; --muted:#8E8A7C;
+  --line:#2E2E25; --line-strong:#464537;
+  --want:#8E9EF2; --have:#E08760; --ok:#75BA8F; --note:#B291D8;
+  --want-wash:#8E9EF21F; --have-wash:#E087601F; --ok-wash:#75BA8F1F; --note-wash:#B291D81F;
+  --shadow:0 1px 2px #0007,0 10px 28px #0005;
+}}
+:root[data-theme="dark"]{
+  --bg:#13130E; --surface:#1B1B15; --surface-2:#23231C; --sunken:#16160F;
+  --ink:#EFEDE4; --ink-2:#BEBAAD; --muted:#8E8A7C;
+  --line:#2E2E25; --line-strong:#464537;
+  --want:#8E9EF2; --have:#E08760; --ok:#75BA8F; --note:#B291D8;
+  --want-wash:#8E9EF21F; --have-wash:#E087601F; --ok-wash:#75BA8F1F; --note-wash:#B291D81F;
+  --shadow:0 1px 2px #0007,0 10px 28px #0005;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Literata,Georgia,serif;font-size:17.5px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;margin:0 auto;padding:0 26px 110px}
+.col{max-width:65ch}
+h1,h2,h3,h4,.eyebrow,.btn,.steptitle,.tag,.cardt,th,.tb-series,.tb-pos,.tocpanel,.anat,.pre-h{font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif}
+code,kbd,.mono,.tag,.tok{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace}
+h1{font-size:clamp(33px,5vw,55px);line-height:1.05;font-weight:700;letter-spacing:-.03em;margin:0 0 18px;text-wrap:balance}
+h2{font-size:clamp(24px,2.7vw,32px);line-height:1.15;font-weight:700;letter-spacing:-.02em;margin:0 0 16px;text-wrap:balance}
+h3{font-size:19.5px;font-weight:700;letter-spacing:-.01em;margin:0 0 9px}
+p{margin:0 0 18px}
+em{font-style:italic}
+a{color:var(--want)}
+.lede{font-size:20.5px;line-height:1.58;color:var(--ink-2);margin:0 0 22px}
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.17em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+header.top{padding:48px 0 0}
+section{padding:58px 0 0}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0}
+.tag{font-size:11.5px;padding:5px 10px;border:1px solid var(--line-strong);border-radius:3px;color:var(--ink-2);background:var(--surface)}
+.note{border-left:2px solid var(--line-strong);padding:2px 0 2px 18px;color:var(--ink-2);margin:0 0 18px}
+.note b{color:var(--ink)}
+.cw{border:1px solid var(--line);border-left:3px solid var(--note);border-radius:4px;background:var(--surface);padding:17px 19px;margin:24px 0 0}
+.cw h4{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--note);margin:0 0 9px}
+.cw p{margin:0 0 11px;color:var(--ink-2);font-size:16px;line-height:1.62}
+.cw p:last-child{margin:0}
+/* ---- top bar ---- */
+.topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tbin{max-width:1140px;margin:0 auto;padding:10px 26px;display:flex;align-items:center;gap:14px}
+.tb-series{font-size:13px;font-weight:700;letter-spacing:-.01em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.tb-series:hover{color:var(--want)}
+.tb-pos{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-left:auto;white-space:nowrap}
+.tb-btn{font:700 12px/1 "Bricolage Grotesque",sans-serif;padding:7px 11px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:3px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.tb-btn:hover{border-color:var(--want);color:var(--want)}
+.tb-btn:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.tb-btn[aria-disabled="true"]{opacity:.35;pointer-events:none}
+.tocpanel{position:absolute;left:0;right:0;top:100%;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:var(--shadow);max-height:72vh;overflow-y:auto}
+.tocpanel[hidden]{display:none}
+.tocin{max-width:1140px;margin:0 auto;padding:22px 26px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+.tocgrp h5{font:700 10.5px/1 "Bricolage Grotesque",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;padding:0 0 8px;border-bottom:1px solid var(--line)}
+.tocgrp ol{list-style:none;margin:0;padding:0}
+.tocgrp li{margin:0 0 2px}
+.tocgrp a,.tocgrp span{display:flex;gap:9px;padding:6px 8px;border-radius:3px;font-size:14px;text-decoration:none;color:var(--ink);font-family:Literata,serif}
+.tocgrp a:hover{background:var(--surface-2)}
+.tocgrp span{color:var(--muted)}
+.tocgrp .n{font:700 11px/1.6 "JetBrains Mono",monospace;color:var(--muted)}
+.tocgrp [aria-current="page"]{background:var(--want-wash);color:var(--want);font-weight:600}
+.soon{font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-left:auto;align-self:center;color:var(--muted);font-family:"Bricolage Grotesque",sans-serif}
+/* ---- stage ---- */
+.stage{margin:28px 0 0;border:1px solid var(--line);border-radius:5px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.stagefig{background:var(--sunken);padding:18px 20px;overflow-x:auto}
+.stagefig svg{display:block;width:100%;min-width:720px;height:auto}
+.scrub{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:12px 18px;border-top:1px solid var(--line);background:var(--surface-2)}
+.btn{font-size:12.5px;font-weight:700;padding:7px 13px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:3px;cursor:pointer;line-height:1.2}
+.btn:hover{border-color:var(--want);color:var(--want)}
+.btn:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.pips{display:flex;gap:5px;margin-left:auto;flex-wrap:wrap}
+.pip{width:21px;height:21px;border-radius:3px;border:1px solid var(--line-strong);background:var(--surface);color:var(--muted);font:700 11px/1 "Bricolage Grotesque",sans-serif;cursor:pointer;display:grid;place-items:center;padding:0}
+.pip[aria-current="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.pip:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.stagetext{padding:21px 23px 23px;border-top:1px solid var(--line)}
+.steptitle{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 7px}
+.stagetext h3{font-size:21.5px;margin:0 0 11px}
+.stagetext p{max-width:72ch;margin:0 0 13px;color:var(--ink-2)}
+.stagetext p:last-child{margin:0}
+.stagetext b{color:var(--ink)}
+/* ---- anatomy ---- */
+.anat{margin:26px 0 0;border:1px solid var(--line);border-radius:5px;background:var(--surface);overflow:hidden;box-shadow:var(--shadow)}
+.anat-h{padding:12px 18px;border-bottom:1px solid var(--line);background:var(--surface-2);font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.anat-cmd{padding:20px 18px 16px;background:var(--sunken);display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start;overflow-x:auto}
+.tok{font-size:14px;font-weight:500;padding:7px 10px;border:1px solid transparent;border-radius:3px;background:var(--surface);color:var(--ink);cursor:pointer;line-height:1.3;white-space:nowrap;position:relative;border-bottom:2px solid var(--line-strong)}
+.tok:hover{border-color:var(--want);color:var(--want)}
+.tok[aria-pressed="true"]{background:var(--want);border-color:var(--want);color:#fff}
+.tok:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.tok .kind{display:block;font:700 8.5px/1.4 "Bricolage Grotesque",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:3px 0 0}
+.tok[aria-pressed="true"] .kind{color:#ffffffcc}
+.anat-def{padding:18px 20px 20px;border-top:1px solid var(--line);min-height:96px}
+.anat-def h4{font-size:15px;margin:0 0 7px;font-family:"JetBrains Mono",monospace;color:var(--want)}
+.anat-def p{font-size:15.5px;line-height:1.62;color:var(--ink-2);margin:0 0 10px;max-width:70ch}
+.anat-def p:last-child{margin:0}
+.anat-def code{font-size:.9em}
+.anat-hint{font-size:13px;color:var(--muted);font-family:Literata,serif;font-style:italic}
+/* ---- tables, code ---- */
+.tbl{width:100%;border-collapse:collapse;margin:22px 0 0;font-size:15px}
+.tbl th{font-size:11px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 14px 9px 0;border-bottom:1px solid var(--line-strong)}
+.tbl td{padding:11px 14px 11px 0;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-2)}
+.tbl td:first-child{color:var(--ink);white-space:nowrap}
+.tbl td code{white-space:nowrap}
+.tblwrap{overflow-x:auto}
+code{font-size:.86em;background:var(--surface-2);border:1px solid var(--line);border-radius:3px;padding:1px 5px;color:var(--ink)}
+pre{background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:15px 17px;overflow-x:auto;font-size:13px;line-height:1.68;margin:16px 0 0}
+pre code{background:0 0;border:0;padding:0;color:var(--ink-2);font-size:inherit}
+.pre-h{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:24px 0 -6px}
+figure{margin:26px 0 0}
+figcaption{font-size:13.5px;line-height:1.55;color:var(--muted);margin:11px 0 0;max-width:76ch}
+.nextprev{display:flex;gap:14px;flex-wrap:wrap;margin:30px 0 0}
+.np{flex:1 1 230px;border:1px solid var(--line);border-radius:4px;padding:15px 17px;background:var(--surface);text-decoration:none;color:var(--ink)}
+.np:hover{border-color:var(--want)}
+.np span{display:block;font-size:10.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-family:"Bricolage Grotesque",sans-serif;margin:0 0 4px}
+footer{margin:76px 0 0;padding:26px 0 0;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+/* svg shared */
+.d-panel{fill:var(--surface);stroke:var(--line-strong)}
+.d-sunken{fill:var(--sunken);stroke:var(--line)}
+.d-box{fill:var(--surface);stroke:var(--line-strong)}
+.t{fill:var(--ink);font-family:"Bricolage Grotesque",sans-serif;font-size:12.5px;font-weight:700}
+.t-sm{fill:var(--ink-2);font-family:"JetBrains Mono",monospace;font-size:10.5px}
+.t-mut{fill:var(--muted);font-family:"JetBrains Mono",monospace;font-size:10px}
+.t-lbl{fill:var(--muted);font-family:"Bricolage Grotesque",sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.t-want{fill:var(--want)} .t-have{fill:var(--have)} .t-ok{fill:var(--ok)} .t-note{fill:var(--note)}
+.b-want{fill:var(--want-wash);stroke:var(--want)} .b-have{fill:var(--have-wash);stroke:var(--have)}
+.b-ok{fill:var(--ok-wash);stroke:var(--ok)} .b-note{fill:var(--note-wash);stroke:var(--note)}
+.cell{fill:var(--want-wash);stroke:var(--want);stroke-width:.8}
+.ah{fill:var(--ink-2)} .ah-want{fill:var(--want)} .ah-have{fill:var(--have)} .ah-ok{fill:var(--ok)}
+.flow{fill:none;stroke:var(--ink-2);stroke-width:1.4}
+.flow-want{stroke:var(--want)} .flow-have{stroke:var(--have)} .flow-ok{stroke:var(--ok)}
+.g{transition:opacity .4s ease}
+.dim{opacity:.13} .hide{opacity:0}
+.live{stroke-dasharray:5 5;animation:ants 1s linear infinite}
+@keyframes ants{to{stroke-dashoffset:-20}}
+@media (prefers-reduced-motion:reduce){.live{animation:none}.g{transition:none}}
+</style><style>
+.tier{margin:0 0 30px}
+.tierh{border-bottom:1px solid var(--line);padding:0 0 9px;margin:0 0 14px}
+.tierh h3{margin:0;font-size:13px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.plist{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.pcard{display:flex;gap:13px;align-items:flex-start;width:100%;text-align:left;background:var(--surface);padding:15px 17px;cursor:pointer;text-decoration:none;color:inherit;height:100%}
+.pcard:hover,.pcard[aria-pressed="true"]{background:var(--surface-2)}
+.pcard:focus-visible{outline:2px solid var(--want);outline-offset:-2px}
+.pcard-soon{cursor:default;opacity:.72}
+.pcard-soon .cardt::after{content:" · soon";font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.pnum{font:700 12px/1.6 "JetBrains Mono",monospace;color:var(--muted);flex:0 0 auto}
+.pcard[aria-pressed="true"] .pnum{color:var(--want)}
+.cardt{display:block;font-size:16px;font-weight:700;letter-spacing:-.01em;margin:0 0 4px;font-family:"Bricolage Grotesque",sans-serif}
+.pdesc{display:block;font-size:14.5px;line-height:1.55;color:var(--muted)}
+.maphint{font-size:14px;color:var(--muted);font-style:italic}
+</style>
+<title>Kubernetes by Example</title>
+<nav class="topbar">
+  <div class="tbin">
+    <a class="tb-series" href="./00-index.html">Kubernetes by Example</a>
+    <button class="tb-btn" id="tocbtn" type="button" aria-expanded="false" aria-controls="tocpanel">Contents</button>
+    <span class="tb-pos">14 parts</span>
+  </div>
+  <div class="tocpanel" id="tocpanel" hidden><div class="tocin"><div class="tocgrp"><h5>Tier 0 · The model</h5><ol><li><a href="./01-the-object-model/index.html"><span class="n">01</span>The object model</a></li><li><a href="./02-pods-and-containers/index.html"><span class="n">02</span>Pods and containers</a></li><li><a href="./03-labels-selectors-namespaces/index.html"><span class="n">03</span>Labels, selectors, namespaces</a></li></ol></div><div class="tocgrp"><h5>Tier 1 · Workload kinds</h5><ol><li><a href="./04-deployments-and-rollouts/index.html"><span class="n">04</span>Deployments and rollouts</a></li><li><a href="./05-daemonsets/index.html"><span class="n">05</span>DaemonSets</a></li><li><a href="./06-statefulsets-jobs-cronjobs/index.html"><span class="n">06</span>StatefulSets, Jobs, CronJobs</a></li></ol></div><div class="tocgrp"><h5>Tier 2 · Wiring</h5><ol><li><a href="./07-services-and-ingress/index.html"><span class="n">07</span>Services and Ingress</a></li><li><a href="./08-config-and-secrets/index.html"><span class="n">08</span>Config and Secrets</a></li><li><a href="./09-storage/index.html"><span class="n">09</span>Storage</a></li></ol></div><div class="tocgrp"><h5>Tier 3 · Scheduling</h5><ol><li><a href="./10-requests-limits-qos/index.html"><span class="n">10</span>Requests, limits, QoS</a></li><li><a href="./11-placement-and-devices/index.html"><span class="n">11</span>Placement and devices</a></li></ol></div><div class="tocgrp"><h5>Tier 4 · Production</h5><ol><li><a href="./12-staying-up/index.html"><span class="n">12</span>Staying up</a></li><li><a href="./13-scaling-and-permissions/index.html"><span class="n">13</span>Scaling and permissions</a></li><li><a href="./14-helm-and-custom-resources/index.html"><span class="n">14</span>Helm and custom resources</a></li></ol></div></div></div>
+</nav>
+<div class="wrap">
+<header class="top">
+  <div class="col">
+    <p class="eyebrow">A series in fourteen parts</p>
+    <h1>Kubernetes by Example</h1>
+    <p class="lede">Everything you need to run something real, taught in order, against one project small enough to fit on a laptop and complete enough to break properly.</p>
+    <p>Most Kubernetes tutorials put <code>nginx</code> behind a Service and call it a day. That gets you through the first afternoon and then abandons you, because the questions that actually come up — why is this one a DaemonSet, where did my shared memory go, why won't this pod schedule, who keeps resurrecting the thing I deleted — never arise when the example has one container and nothing at stake.</p>
+    <p>So this series uses one project the whole way through. It starts in Part 1 as a single pod doing almost nothing, and finishes in Part 14 as a fleet run by a controller you wrote yourself. Nothing gets introduced before you've felt the problem it solves.</p>
+    <div class="meta"><span class="tag">starts from zero</span><span class="tag">runs on a laptop</span><span class="tag">GPU optional</span><span class="tag">every part has a break-it step</span></div>
+  </div>
+</header>
+
+<section>
+  <div class="col">
+    <h2>The project: <em>airwaves</em></h2>
+    <p><b>Transcribe a fleet of internet radio stations, live.</b> One pod per station pulls the audio down. A shared decoder on each machine turns compressed audio into raw samples. A speech model turns samples into words. The words go to a queue, into a database, and onto a small web page you can watch scroll past.</p>
+    <p>It was chosen for a boring but important reason: <b>audio is about a hundred times smaller than video</b>. Thirty stations run comfortably inside a pretend cluster on a laptop, while keeping the exact shape a serious fleet has — many identical workers, a couple of shared services they all depend on, and a control plane deciding who exists. The speech model is tiny and runs on a CPU, so every GPU section has a fallback you can actually try.</p>
+  </div>
+  <div class="stage">
+    <div class="stagefig" id="map"><svg viewBox="0 0 1000 400" role="img" aria-label="The airwaves project: a node holding thirty tuner pods plus decoder, speech-recognition and sweeper DaemonSets over a shared memory region, alongside a web front end, a conductor controller, a message bus, consumers, a batch worker, a catalogue database and a scheduled cleanup job.">
+  <g id="c-node" class="g">
+    <rect class="d-panel" x="40" y="84" width="520" height="288" rx="4" stroke-width="1.5"/>
+    <text class="t-lbl" x="56" y="104">one machine · your laptop, pretending</text>
+  </g>
+  <g id="c-tuner" class="g">
+    <text class="t-lbl t-want" x="62" y="128">30 × tuner — one pod per station</text>
+    <rect class="cell" x="62" y="136" width="18" height="18" rx="2"/>
+      <rect class="cell" x="84" y="136" width="18" height="18" rx="2"/>
+      <rect class="cell" x="106" y="136" width="18" height="18" rx="2"/>
+      <rect class="cell" x="128" y="136" width="18" height="18" rx="2"/>
+      <rect class="cell" x="150" y="136" width="18" height="18" rx="2"/>
+      <rect class="cell" x="172" y="136" width="18" height="18" rx="2"/>
+      <rect class="cell" x="194" y="136" width="18" height="18" rx="2"/>
+      <rect class="cell" x="216" y="136" width="18" height="18" rx="2"/>
+      <rect class="cell" x="238" y="136" width="18" height="18" rx="2"/>
+      <rect class="cell" x="260" y="136" width="18" height="18" rx="2"/>
+      <rect class="cell" x="62" y="158" width="18" height="18" rx="2"/>
+      <rect class="cell" x="84" y="158" width="18" height="18" rx="2"/>
+      <rect class="cell" x="106" y="158" width="18" height="18" rx="2"/>
+      <rect class="cell" x="128" y="158" width="18" height="18" rx="2"/>
+      <rect class="cell" x="150" y="158" width="18" height="18" rx="2"/>
+      <rect class="cell" x="172" y="158" width="18" height="18" rx="2"/>
+      <rect class="cell" x="194" y="158" width="18" height="18" rx="2"/>
+      <rect class="cell" x="216" y="158" width="18" height="18" rx="2"/>
+      <rect class="cell" x="238" y="158" width="18" height="18" rx="2"/>
+      <rect class="cell" x="260" y="158" width="18" height="18" rx="2"/>
+      <rect class="cell" x="62" y="180" width="18" height="18" rx="2"/>
+      <rect class="cell" x="84" y="180" width="18" height="18" rx="2"/>
+      <rect class="cell" x="106" y="180" width="18" height="18" rx="2"/>
+      <rect class="cell" x="128" y="180" width="18" height="18" rx="2"/>
+      <rect class="cell" x="150" y="180" width="18" height="18" rx="2"/>
+      <rect class="cell" x="172" y="180" width="18" height="18" rx="2"/>
+      <rect class="cell" x="194" y="180" width="18" height="18" rx="2"/>
+      <rect class="cell" x="216" y="180" width="18" height="18" rx="2"/>
+      <rect class="cell" x="238" y="180" width="18" height="18" rx="2"/>
+      <rect class="cell" x="260" y="180" width="18" height="18" rx="2"/>
+    <text class="t-mut" x="62" y="214">pulls a stream · publishes what was said</text>
+  </g>
+  <g id="c-decoder" class="g">
+    <rect class="b-have" x="300" y="132" width="240" height="42" rx="3" stroke-width="1.3"/>
+    <text class="t t-have" x="312" y="150">decoder</text>
+    <text class="t-mut" x="312" y="165">one per machine · audio → samples</text>
+  </g>
+  <g id="c-asr" class="g">
+    <rect class="b-note" x="300" y="182" width="240" height="42" rx="3" stroke-width="1.3"/>
+    <text class="t t-note" x="312" y="200">asr</text>
+    <text class="t-mut" x="312" y="215">one per machine · samples → words</text>
+  </g>
+  <g id="c-sweeper" class="g">
+    <rect class="d-box" x="300" y="232" width="240" height="28" rx="3"/>
+    <text class="t-sm" x="312" y="250">sweeper · clears up after the dead</text>
+  </g>
+  <g id="c-shm" class="g">
+    <rect class="d-sunken" x="62" y="296" width="478" height="46" rx="3"/>
+    <text class="t-lbl" x="76" y="314">shared memory on the machine itself</text>
+    <text class="t-sm" x="76" y="332">one ring per station — audio never travels down a socket</text>
+  </g>
+  <g id="c-web" class="g">
+    <rect class="d-box" x="590" y="84" width="370" height="46" rx="3"/>
+    <text class="t" x="602" y="103">web</text>
+    <text class="t-mut" x="602" y="119">a page showing what is being said, live</text>
+  </g>
+  <g id="c-conductor" class="g">
+    <rect class="b-want" x="590" y="142" width="370" height="46" rx="3" stroke-width="1.3"/>
+    <text class="t t-want" x="602" y="161">conductor</text>
+    <text class="t-mut" x="602" y="177">reads the station list · makes the pods</text>
+  </g>
+  <g id="c-bus" class="g">
+    <rect class="d-box" x="590" y="200" width="370" height="40" rx="3"/>
+    <text class="t-sm" x="602" y="218">bus<tspan class="t-mut" dx="10">a queue of things that were said</tspan></text>
+    <text class="t-mut" x="602" y="233">small and valuable goes here</text>
+  </g>
+  <g id="c-scribe" class="g">
+    <rect class="d-box" x="590" y="250" width="180" height="40" rx="3"/>
+    <text class="t-sm" x="602" y="268">scribe</text>
+    <text class="t-mut" x="602" y="283">queue → database</text>
+  </g>
+  <g id="c-rewind" class="g">
+    <rect class="d-box" x="780" y="250" width="180" height="40" rx="3"/>
+    <text class="t-sm" x="792" y="268">rewind</text>
+    <text class="t-mut" x="792" y="283">0 → many, on demand</text>
+  </g>
+  <g id="c-catalogue" class="g">
+    <rect class="d-box" x="590" y="300" width="180" height="40" rx="3"/>
+    <text class="t-sm" x="602" y="318">catalogue</text>
+    <text class="t-mut" x="602" y="333">which stations exist</text>
+  </g>
+  <g id="c-cron" class="g">
+    <rect class="d-box" x="780" y="300" width="180" height="40" rx="3"/>
+    <text class="t-sm" x="792" y="318">prune</text>
+    <text class="t-mut" x="792" y="333">nightly tidy-up</text>
+  </g>
+</svg></div>
+    <div class="scrub">
+      <button class="btn" id="showall" type="button">Show everything</button>
+      <span class="maphint" id="hint">Hover a part below to see which pieces it covers.</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>The parts</h2>
+    <p>Four tiers, in dependency order — each one assumes the ones above it and nothing else.</p>
+  </div>
+  <div class="tier"><div class="tierh"><h3>Tier 0 · The model</h3></div><ol class="plist"><li><a class="pcard" href="./01-the-object-model/index.html" data-comps="c-conductor,c-tuner" data-part="1"><span class="pnum">01</span><span class="pbody"><span class="cardt">The object model</span><span class="pdesc">What Kubernetes actually is. Why <code>apply</code> saying “created” tells you nothing about whether anything is running.</span></span></a></li><li><a class="pcard" href="./02-pods-and-containers/index.html" data-comps="c-tuner" data-part="2"><span class="pnum">02</span><span class="pbody"><span class="cardt">Pods and containers</span><span class="pdesc">The smallest unit, read line by line. Images, commands, environment, and the containers that run before the real one.</span></span></a></li><li><a class="pcard" href="./03-labels-selectors-namespaces/index.html" data-comps="c-tuner" data-part="3"><span class="pnum">03</span><span class="pbody"><span class="cardt">Labels, selectors, namespaces</span><span class="pdesc">How thirty identical pods stay distinguishable, and how everything else in the cluster finds the ones it wants.</span></span></a></li></ol></div>
+<div class="tier"><div class="tierh"><h3>Tier 1 · Workload kinds</h3></div><ol class="plist"><li><a class="pcard" href="./04-deployments-and-rollouts/index.html" data-comps="c-scribe,c-web" data-part="4"><span class="pnum">04</span><span class="pbody"><span class="cardt">Deployments and rollouts</span><span class="pdesc">Rolling out a new version without dropping what's in flight — and what <code>maxSurge</code> actually costs you.</span></span></a></li><li><a class="pcard" href="./05-daemonsets/index.html" data-comps="c-decoder,c-asr,c-sweeper" data-part="5"><span class="pnum">05</span><span class="pbody"><span class="cardt">DaemonSets</span><span class="pdesc">One copy on every machine. The three questions that tell you whether you need this instead of a Deployment.</span></span></a></li><li><a class="pcard" href="./06-statefulsets-jobs-cronjobs/index.html" data-comps="c-catalogue,c-bus,c-cron" data-part="6"><span class="pnum">06</span><span class="pbody"><span class="cardt">StatefulSets, Jobs, CronJobs</span><span class="pdesc">Things with names that survive restarts, things that run once, and things that run at four in the morning.</span></span></a></li></ol></div>
+<div class="tier"><div class="tierh"><h3>Tier 2 · Wiring</h3></div><ol class="plist"><li><a class="pcard" href="./07-services-and-ingress/index.html" data-comps="c-web,c-bus,c-asr" data-part="7"><span class="pnum">07</span><span class="pbody"><span class="cardt">Services and Ingress</span><span class="pdesc">How anything reaches anything else — and the case for deliberately using none of it.</span></span></a></li><li><a class="pcard" href="./08-config-and-secrets/index.html" data-comps="c-tuner,c-catalogue" data-part="8"><span class="pnum">08</span><span class="pbody"><span class="cardt">Config and Secrets</span><span class="pdesc">Where settings live, how a pod learns its own name, and what Secrets honestly do not protect you from.</span></span></a></li><li><a class="pcard" href="./09-storage/index.html" data-comps="c-shm,c-catalogue" data-part="9"><span class="pnum">09</span><span class="pbody"><span class="cardt">Storage</span><span class="pdesc">Disks that vanish, disks that persist, and the one that lets two pods look at the same memory.</span></span></a></li></ol></div>
+<div class="tier"><div class="tierh"><h3>Tier 3 · Scheduling</h3></div><ol class="plist"><li><a class="pcard" href="./10-requests-limits-qos/index.html" data-comps="c-tuner,c-node" data-part="10"><span class="pnum">10</span><span class="pbody"><span class="cardt">Requests, limits, QoS</span><span class="pdesc">Three completely different numbers for the same CPU, and which one the scheduler is actually reading.</span></span></a></li><li><a class="pcard" href="./11-placement-and-devices/index.html" data-comps="c-asr,c-decoder,c-node" data-part="11"><span class="pnum">11</span><span class="pbody"><span class="cardt">Placement and devices</span><span class="pdesc">Getting a pod onto the machine you meant, and getting a GPU to the pod that needs one.</span></span></a></li></ol></div>
+<div class="tier"><div class="tierh"><h3>Tier 4 · Production</h3></div><ol class="plist"><li><a class="pcard" href="./12-staying-up/index.html" data-comps="c-asr,c-decoder,c-tuner" data-part="12"><span class="pnum">12</span><span class="pbody"><span class="cardt">Staying up</span><span class="pdesc">Probes that help, probes that cause outages, and shutting down without losing work.</span></span></a></li><li><a class="pcard" href="./13-scaling-and-permissions/index.html" data-comps="c-rewind,c-bus,c-sweeper" data-part="13"><span class="pnum">13</span><span class="pbody"><span class="cardt">Scaling and permissions</span><span class="pdesc">Growing on demand, shrinking to nothing, and why a pod that asks the cluster questions needs permission.</span></span></a></li><li><a class="pcard" href="./14-helm-and-custom-resources/index.html" data-comps="c-conductor,c-tuner" data-part="14"><span class="pnum">14</span><span class="pbody"><span class="cardt">Helm and custom resources</span><span class="pdesc">Packaging all of it, then teaching Kubernetes a brand new kind of object that it manages for you.</span></span></a></li></ol></div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>How every part is built</h2>
+    <p>The same seven moves each time. Knowing the shape in advance means you can skip to the bit you came for.</p>
+  </div>
+  <div class="tblwrap">
+  <table class="tbl">
+    <thead><tr><th>Move</th><th>What it is</th></tr></thead>
+    <tbody>
+      <tr><td>The symptom</td><td>Something has gone wrong, or is about to. Usually something that happened to me.</td></tr>
+      <tr><td>The idea</td><td>The concept in plain words, with a diagram you step through one claim at a time.</td></tr>
+      <tr><td>Anatomy</td><td>The relevant commands pulled apart piece by piece, so you can build your own instead of copying mine.</td></tr>
+      <tr><td>Build it</td><td>The smallest thing that works. Runnable, not illustrative.</td></tr>
+      <tr><td>Break it</td><td>Reproduce the failure deliberately. This is the part people actually remember.</td></tr>
+      <tr><td>What follows</td><td>The consequences, including the ones that are inconvenient.</td></tr>
+      <tr><td>Cheat sheet</td><td>Eight or nine lines worth keeping.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<footer>
+  <div class="col"><p>Part 1 is written. The rest are outlined above and arrive in order.</p></div>
+</footer>
+</div>
+<script>
+const map=document.getElementById('map');
+const groups=[...map.querySelectorAll('g[id]')];
+const cards=[...document.querySelectorAll('.pcard')];
+const hint=document.getElementById('hint');
+function showAll(){
+  groups.forEach(g=>g.classList.remove('dim'));
+  cards.forEach(c=>c.setAttribute('aria-pressed','false'));
+  hint.textContent='Hover a part below to see which pieces it covers.';
+}
+function focusPart(card){
+  const comps=new Set(card.dataset.comps.split(','));
+  groups.forEach(g=>g.classList.toggle('dim',!comps.has(g.id)&&g.id!=='c-node'));
+  cards.forEach(c=>c.setAttribute('aria-pressed',String(c===card)));
+  hint.textContent='Part '+card.dataset.part+' — '+card.querySelector('.cardt').textContent;
+}
+cards.forEach(c=>{
+  c.setAttribute('aria-pressed','false');
+  c.addEventListener('mouseenter',()=>focusPart(c));
+  c.addEventListener('focus',()=>focusPart(c));
+});
+document.querySelector('.plist') && document.querySelectorAll('.tier').forEach(t=>t.addEventListener('mouseleave',showAll));
+document.getElementById('showall').addEventListener('click',showAll);
+
+(function(){
+  var b=document.getElementById('tocbtn'),p=document.getElementById('tocpanel');
+  if(!b||!p)return;
+  b.addEventListener('click',function(){
+    var open=b.getAttribute('aria-expanded')==='true';
+    b.setAttribute('aria-expanded',String(!open)); p.hidden=open;
+  });
+  document.addEventListener('click',function(e){
+    if(!p.hidden && !p.contains(e.target) && e.target!==b){b.setAttribute('aria-expanded','false');p.hidden=true;}
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&!p.hidden){b.setAttribute('aria-expanded','false');p.hidden=true;b.focus();}
+  });
+})();
+</script>

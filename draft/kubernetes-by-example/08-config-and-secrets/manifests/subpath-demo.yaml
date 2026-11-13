@@ -1,0 +1,28 @@
+# Part 8, break-it #2 — subPath looks tidier and silently freezes the file.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: subpath-demo
+  labels: {app: subpath-demo}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: subpath-demo}
+  template:
+    metadata:
+      labels: {app: subpath-demo}
+    spec:
+      volumes:
+        - name: stations
+          configMap: {name: stations}
+      containers:
+        - name: app
+          image: busybox:1.36
+          command: ["/bin/sh","-c"]
+          args: ["while true; do sleep 10; done"]
+          volumeMounts:
+            - name: stations
+              mountPath: /etc/jazz.url
+              subPath: jazz.url     # <-- never refreshes. this is the whole point.
+          resources:
+            requests: {cpu: 10m, memory: 16Mi}

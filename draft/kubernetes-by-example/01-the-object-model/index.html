@@ -1,0 +1,507 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=JetBrains+Mono:wght@400;500;700&family=Literata:opsz,wght@7..72,400;7..72,600;7..72,400italic&display=swap"><style>
+:root{
+  --bg:#F7F5F1; --surface:#FFFFFF; --surface-2:#EEEBE4; --sunken:#E7E3DA;
+  --ink:#1B1A15; --ink-2:#4B473E; --muted:#787365;
+  --line:#DEDACF; --line-strong:#BEB8A8;
+  --want:#30459E; --have:#A74B28; --ok:#36704A; --note:#6B4B8F;
+  --want-wash:#30459E14; --have-wash:#A74B2814; --ok-wash:#36704A14; --note-wash:#6B4B8F14;
+  --shadow:0 1px 2px #1B1A1510,0 10px 28px #1B1A150A;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#13130E; --surface:#1B1B15; --surface-2:#23231C; --sunken:#16160F;
+  --ink:#EFEDE4; --ink-2:#BEBAAD; --muted:#8E8A7C;
+  --line:#2E2E25; --line-strong:#464537;
+  --want:#8E9EF2; --have:#E08760; --ok:#75BA8F; --note:#B291D8;
+  --want-wash:#8E9EF21F; --have-wash:#E087601F; --ok-wash:#75BA8F1F; --note-wash:#B291D81F;
+  --shadow:0 1px 2px #0007,0 10px 28px #0005;
+}}
+:root[data-theme="dark"]{
+  --bg:#13130E; --surface:#1B1B15; --surface-2:#23231C; --sunken:#16160F;
+  --ink:#EFEDE4; --ink-2:#BEBAAD; --muted:#8E8A7C;
+  --line:#2E2E25; --line-strong:#464537;
+  --want:#8E9EF2; --have:#E08760; --ok:#75BA8F; --note:#B291D8;
+  --want-wash:#8E9EF21F; --have-wash:#E087601F; --ok-wash:#75BA8F1F; --note-wash:#B291D81F;
+  --shadow:0 1px 2px #0007,0 10px 28px #0005;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Literata,Georgia,serif;font-size:17.5px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;margin:0 auto;padding:0 26px 110px}
+.col{max-width:65ch}
+h1,h2,h3,h4,.eyebrow,.btn,.steptitle,.tag,.cardt,th,.tb-series,.tb-pos,.tocpanel,.anat,.pre-h{font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif}
+code,kbd,.mono,.tag,.tok{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace}
+h1{font-size:clamp(33px,5vw,55px);line-height:1.05;font-weight:700;letter-spacing:-.03em;margin:0 0 18px;text-wrap:balance}
+h2{font-size:clamp(24px,2.7vw,32px);line-height:1.15;font-weight:700;letter-spacing:-.02em;margin:0 0 16px;text-wrap:balance}
+h3{font-size:19.5px;font-weight:700;letter-spacing:-.01em;margin:0 0 9px}
+p{margin:0 0 18px}
+em{font-style:italic}
+a{color:var(--want)}
+.lede{font-size:20.5px;line-height:1.58;color:var(--ink-2);margin:0 0 22px}
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.17em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+header.top{padding:48px 0 0}
+section{padding:58px 0 0}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0}
+.tag{font-size:11.5px;padding:5px 10px;border:1px solid var(--line-strong);border-radius:3px;color:var(--ink-2);background:var(--surface)}
+.note{border-left:2px solid var(--line-strong);padding:2px 0 2px 18px;color:var(--ink-2);margin:0 0 18px}
+.note b{color:var(--ink)}
+.cw{border:1px solid var(--line);border-left:3px solid var(--note);border-radius:4px;background:var(--surface);padding:17px 19px;margin:24px 0 0}
+.cw h4{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--note);margin:0 0 9px}
+.cw p{margin:0 0 11px;color:var(--ink-2);font-size:16px;line-height:1.62}
+.cw p:last-child{margin:0}
+/* ---- top bar ---- */
+.topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tbin{max-width:1140px;margin:0 auto;padding:10px 26px;display:flex;align-items:center;gap:14px}
+.tb-series{font-size:13px;font-weight:700;letter-spacing:-.01em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.tb-series:hover{color:var(--want)}
+.tb-pos{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-left:auto;white-space:nowrap}
+.tb-btn{font:700 12px/1 "Bricolage Grotesque",sans-serif;padding:7px 11px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:3px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.tb-btn:hover{border-color:var(--want);color:var(--want)}
+.tb-btn:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.tb-btn[aria-disabled="true"]{opacity:.35;pointer-events:none}
+.tocpanel{position:absolute;left:0;right:0;top:100%;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:var(--shadow);max-height:72vh;overflow-y:auto}
+.tocpanel[hidden]{display:none}
+.tocin{max-width:1140px;margin:0 auto;padding:22px 26px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+.tocgrp h5{font:700 10.5px/1 "Bricolage Grotesque",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;padding:0 0 8px;border-bottom:1px solid var(--line)}
+.tocgrp ol{list-style:none;margin:0;padding:0}
+.tocgrp li{margin:0 0 2px}
+.tocgrp a,.tocgrp span{display:flex;gap:9px;padding:6px 8px;border-radius:3px;font-size:14px;text-decoration:none;color:var(--ink);font-family:Literata,serif}
+.tocgrp a:hover{background:var(--surface-2)}
+.tocgrp span{color:var(--muted)}
+.tocgrp .n{font:700 11px/1.6 "JetBrains Mono",monospace;color:var(--muted)}
+.tocgrp [aria-current="page"]{background:var(--want-wash);color:var(--want);font-weight:600}
+.soon{font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-left:auto;align-self:center;color:var(--muted);font-family:"Bricolage Grotesque",sans-serif}
+/* ---- stage ---- */
+.stage{margin:28px 0 0;border:1px solid var(--line);border-radius:5px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.stagefig{background:var(--sunken);padding:18px 20px;overflow-x:auto}
+.stagefig svg{display:block;width:100%;min-width:720px;height:auto}
+.scrub{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:12px 18px;border-top:1px solid var(--line);background:var(--surface-2)}
+.btn{font-size:12.5px;font-weight:700;padding:7px 13px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:3px;cursor:pointer;line-height:1.2}
+.btn:hover{border-color:var(--want);color:var(--want)}
+.btn:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.pips{display:flex;gap:5px;margin-left:auto;flex-wrap:wrap}
+.pip{width:21px;height:21px;border-radius:3px;border:1px solid var(--line-strong);background:var(--surface);color:var(--muted);font:700 11px/1 "Bricolage Grotesque",sans-serif;cursor:pointer;display:grid;place-items:center;padding:0}
+.pip[aria-current="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.pip:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.stagetext{padding:21px 23px 23px;border-top:1px solid var(--line)}
+.steptitle{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 7px}
+.stagetext h3{font-size:21.5px;margin:0 0 11px}
+.stagetext p{max-width:72ch;margin:0 0 13px;color:var(--ink-2)}
+.stagetext p:last-child{margin:0}
+.stagetext b{color:var(--ink)}
+/* ---- anatomy ---- */
+.anat{margin:26px 0 0;border:1px solid var(--line);border-radius:5px;background:var(--surface);overflow:hidden;box-shadow:var(--shadow)}
+.anat-h{padding:12px 18px;border-bottom:1px solid var(--line);background:var(--surface-2);font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.anat-cmd{padding:20px 18px 16px;background:var(--sunken);display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start;overflow-x:auto}
+.tok{font-size:14px;font-weight:500;padding:7px 10px;border:1px solid transparent;border-radius:3px;background:var(--surface);color:var(--ink);cursor:pointer;line-height:1.3;white-space:nowrap;position:relative;border-bottom:2px solid var(--line-strong)}
+.tok:hover{border-color:var(--want);color:var(--want)}
+.tok[aria-pressed="true"]{background:var(--want);border-color:var(--want);color:#fff}
+.tok:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.tok .kind{display:block;font:700 8.5px/1.4 "Bricolage Grotesque",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:3px 0 0}
+.tok[aria-pressed="true"] .kind{color:#ffffffcc}
+.anat-def{padding:18px 20px 20px;border-top:1px solid var(--line);min-height:96px}
+.anat-def h4{font-size:15px;margin:0 0 7px;font-family:"JetBrains Mono",monospace;color:var(--want)}
+.anat-def p{font-size:15.5px;line-height:1.62;color:var(--ink-2);margin:0 0 10px;max-width:70ch}
+.anat-def p:last-child{margin:0}
+.anat-def code{font-size:.9em}
+.anat-hint{font-size:13px;color:var(--muted);font-family:Literata,serif;font-style:italic}
+/* ---- tables, code ---- */
+.tbl{width:100%;border-collapse:collapse;margin:22px 0 0;font-size:15px}
+.tbl th{font-size:11px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 14px 9px 0;border-bottom:1px solid var(--line-strong)}
+.tbl td{padding:11px 14px 11px 0;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-2)}
+.tbl td:first-child{color:var(--ink);white-space:nowrap}
+.tbl td code{white-space:nowrap}
+.tblwrap{overflow-x:auto}
+code{font-size:.86em;background:var(--surface-2);border:1px solid var(--line);border-radius:3px;padding:1px 5px;color:var(--ink)}
+pre{background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:15px 17px;overflow-x:auto;font-size:13px;line-height:1.68;margin:16px 0 0}
+pre code{background:0 0;border:0;padding:0;color:var(--ink-2);font-size:inherit}
+.pre-h{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:24px 0 -6px}
+figure{margin:26px 0 0}
+figcaption{font-size:13.5px;line-height:1.55;color:var(--muted);margin:11px 0 0;max-width:76ch}
+.nextprev{display:flex;gap:14px;flex-wrap:wrap;margin:30px 0 0}
+.np{flex:1 1 230px;border:1px solid var(--line);border-radius:4px;padding:15px 17px;background:var(--surface);text-decoration:none;color:var(--ink)}
+.np:hover{border-color:var(--want)}
+.np span{display:block;font-size:10.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-family:"Bricolage Grotesque",sans-serif;margin:0 0 4px}
+footer{margin:76px 0 0;padding:26px 0 0;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+/* svg shared */
+.d-panel{fill:var(--surface);stroke:var(--line-strong)}
+.d-sunken{fill:var(--sunken);stroke:var(--line)}
+.d-box{fill:var(--surface);stroke:var(--line-strong)}
+.t{fill:var(--ink);font-family:"Bricolage Grotesque",sans-serif;font-size:12.5px;font-weight:700}
+.t-sm{fill:var(--ink-2);font-family:"JetBrains Mono",monospace;font-size:10.5px}
+.t-mut{fill:var(--muted);font-family:"JetBrains Mono",monospace;font-size:10px}
+.t-lbl{fill:var(--muted);font-family:"Bricolage Grotesque",sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.t-want{fill:var(--want)} .t-have{fill:var(--have)} .t-ok{fill:var(--ok)} .t-note{fill:var(--note)}
+.b-want{fill:var(--want-wash);stroke:var(--want)} .b-have{fill:var(--have-wash);stroke:var(--have)}
+.b-ok{fill:var(--ok-wash);stroke:var(--ok)} .b-note{fill:var(--note-wash);stroke:var(--note)}
+.cell{fill:var(--want-wash);stroke:var(--want);stroke-width:.8}
+.ah{fill:var(--ink-2)} .ah-want{fill:var(--want)} .ah-have{fill:var(--have)} .ah-ok{fill:var(--ok)}
+.flow{fill:none;stroke:var(--ink-2);stroke-width:1.4}
+.flow-want{stroke:var(--want)} .flow-have{stroke:var(--have)} .flow-ok{stroke:var(--ok)}
+.g{transition:opacity .4s ease}
+.dim{opacity:.13} .hide{opacity:0}
+.live{stroke-dasharray:5 5;animation:ants 1s linear infinite}
+@keyframes ants{to{stroke-dashoffset:-20}}
+@media (prefers-reduced-motion:reduce){.live{animation:none}.g{transition:none}}
+</style><title>The Object Model</title>
+<nav class="topbar">
+  <div class="tbin">
+    <a class="tb-series" href="../00-index.html">Kubernetes by Example</a>
+    <button class="tb-btn" id="tocbtn" type="button" aria-expanded="false" aria-controls="tocpanel">Contents</button>
+    <span class="tb-pos">Part 1 of 14</span><div style="display:flex;gap:6px"><span class="tb-btn" aria-disabled="true">&#8592;</span><a class="tb-btn" href="../02-pods-and-containers/index.html" title="Pods and containers">&#8594;</a></div>
+  </div>
+  <div class="tocpanel" id="tocpanel" hidden><div class="tocin"><div class="tocgrp"><h5>Tier 0 · The model</h5><ol><li><a href="../01-the-object-model/index.html" aria-current="page"><span class="n">01</span>The object model</a></li><li><a href="../02-pods-and-containers/index.html"><span class="n">02</span>Pods and containers</a></li><li><a href="../03-labels-selectors-namespaces/index.html"><span class="n">03</span>Labels, selectors, namespaces</a></li></ol></div><div class="tocgrp"><h5>Tier 1 · Workload kinds</h5><ol><li><a href="../04-deployments-and-rollouts/index.html"><span class="n">04</span>Deployments and rollouts</a></li><li><a href="../05-daemonsets/index.html"><span class="n">05</span>DaemonSets</a></li><li><a href="../06-statefulsets-jobs-cronjobs/index.html"><span class="n">06</span>StatefulSets, Jobs, CronJobs</a></li></ol></div><div class="tocgrp"><h5>Tier 2 · Wiring</h5><ol><li><a href="../07-services-and-ingress/index.html"><span class="n">07</span>Services and Ingress</a></li><li><a href="../08-config-and-secrets/index.html"><span class="n">08</span>Config and Secrets</a></li><li><a href="../09-storage/index.html"><span class="n">09</span>Storage</a></li></ol></div><div class="tocgrp"><h5>Tier 3 · Scheduling</h5><ol><li><a href="../10-requests-limits-qos/index.html"><span class="n">10</span>Requests, limits, QoS</a></li><li><a href="../11-placement-and-devices/index.html"><span class="n">11</span>Placement and devices</a></li></ol></div><div class="tocgrp"><h5>Tier 4 · Production</h5><ol><li><a href="../12-staying-up/index.html"><span class="n">12</span>Staying up</a></li><li><a href="../13-scaling-and-permissions/index.html"><span class="n">13</span>Scaling and permissions</a></li><li><a href="../14-helm-and-custom-resources/index.html"><span class="n">14</span>Helm and custom resources</a></li></ol></div></div></div>
+</nav>
+<div class="wrap">
+<header class="top">
+  <div class="col">
+    <p class="eyebrow">Kubernetes by Example · Part 1</p>
+    <h1>The Object Model</h1>
+    <p class="lede">Why <code>kubectl apply</code> saying “created” tells you almost nothing — and what is really going on in the ten seconds afterwards.</p>
+    <div class="meta"><span class="tag">starts from zero</span><span class="tag">~15 minutes</span><span class="tag">runs on a laptop</span></div>
+  </div>
+</header>
+
+<section>
+  <div class="col">
+    <h2>A bad first afternoon</h2>
+    <p>It's your first afternoon with Kubernetes. Someone sends you a YAML file and a command to run. You run it. It says:</p>
+<pre><code>deployment.apps/tuner created</code></pre>
+    <p style="margin-top:18px">Created. Lovely. You type <code>kubectl get pods</code> to admire your work, and there it is, with a word next to it you weren't expecting:</p>
+<pre><code>NAME                    READY   STATUS    AGE
+tuner-7d4f8b9c6-x2kmp   0/1     Pending   8s</code></pre>
+    <p style="margin-top:18px">You wait. You refresh. Still Pending. Nothing has gone red. Nothing has errored. And nothing is running.</p>
+    <p>Later the same afternoon you hit the mirror image of this. You delete a pod you don't want any more. It comes back. You delete it again, slightly more firmly this time. It comes back again, with a different name, looking entirely unbothered.</p>
+    <p>Both of these feel like the system is ignoring you. It isn't. It's doing exactly one thing, relentlessly and very literally, and neither behaviour makes the slightest sense until you can see what that one thing is. By the end of this page you'll be able to predict both.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Two words first</h2>
+    <p>If you've never touched any of this, here are the only two bits of vocabulary you need before we start.</p>
+    <p>A <b>container</b> is a program plus everything it needs to run — its libraries, its config, its own little slice of filesystem — wrapped up so it behaves the same on your laptop as on someone else's server. If you've used Docker, you've used containers. If you haven't: think of it as a program you can hand to a colleague without also handing them three pages of installation instructions.</p>
+    <p>A <b>cluster</b> is a pile of computers that have agreed to be told what to do by one thing. It might be three machines in a rack, three hundred in a datacentre, or one laptop pretending to be several — which is what we'll use. Each machine in the pile is called a <b>node</b>.</p>
+    <p>Kubernetes is what tells the pile what to do. The interesting question is <em>how</em>, and the answer is odd enough to be worth the rest of this page.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>The whole idea</h2>
+    <p>Here it is. Everything else in this series — every one of the thirteen parts after this — is a consequence of this one sentence.</p>
+    <p style="font-size:23px;line-height:1.45;color:var(--ink);margin:26px 0 24px;max-width:24ch;font-weight:600;letter-spacing:-.015em">Kubernetes is a list of wishes and a crowd of pedants.</p>
+    <p>You write down what you want the world to look like. Not the steps to get there — just the destination. <em>One tuner. This image. This much memory.</em></p>
+    <p>Then a crowd of small, extremely literal programs read your list, look at the world, and notice differences. Each one knows how to fix exactly one kind of difference and nothing else whatsoever. It makes its one small correction. Then it reads the list again. And again. Forever, until somebody turns the cluster off.</p>
+    <p>None of them talk to each other. They genuinely can't — there is no channel between them. The only thing any of them can do is read the list and scribble on it.</p>
+    <p>So when you run <code>kubectl apply</code>, you are not issuing a command. <b>There is no command.</b> You are editing a list. Everything that happens afterwards happens because somebody noticed that the list had changed and the world hadn't caught up.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Walking it through, once, slowly</h2>
+    <p>Let's follow a single wish from your keyboard to a running process. Nine steps, and only one of them involves anything actually happening.</p>
+  </div>
+  <div class="stage">
+    <div class="stagefig" id="stagefig"><svg viewBox="0 0 1000 410" role="img" aria-label="kubectl writes a wish to the API server, which stores it in etcd. Controllers, the scheduler and the kubelet all watch that same API server, and each closes one difference between what was asked for and what exists, until a container is finally running on a node.">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-want" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-want" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-ok" d="M0,0 L10,5 L0,10 Z"/></marker>
+  </defs>
+  <g id="g-you" class="g">
+    <rect class="b-want" x="40" y="56" width="170" height="48" rx="3" stroke-width="1.3"/>
+    <text class="t t-want" x="54" y="76">you</text>
+    <text class="t-mut" x="54" y="93">kubectl apply -f …</text>
+  </g>
+  <g id="g-api" class="g">
+    <rect class="d-panel" x="280" y="48" width="240" height="64" rx="4" stroke-width="1.5"/>
+    <text class="t-lbl" x="294" y="68">the only door</text>
+    <text class="t" x="294" y="86">api server</text>
+    <text class="t-mut" x="294" y="102">checks it · writes it · tells everyone</text>
+  </g>
+  <g id="g-etcd" class="g">
+    <rect class="d-sunken" x="380" y="126" width="140" height="44" rx="3"/>
+    <text class="t-sm" x="392" y="144">etcd</text>
+    <text class="t-mut" x="392" y="160">the list itself</text>
+  </g>
+  <g id="g-ctlpanel" class="g">
+    <rect class="d-panel" x="40" y="200" width="240" height="190" rx="4" stroke-width="1.5"/>
+    <text class="t-lbl" x="56" y="220">the pedants</text>
+  </g>
+  <g id="g-dep" class="g">
+    <rect class="d-box" x="56" y="228" width="208" height="40" rx="3"/>
+    <text class="t-sm" x="68" y="246">deployment controller</text>
+    <text class="t-mut" x="68" y="260">makes ReplicaSets</text>
+  </g>
+  <g id="g-rs" class="g">
+    <rect class="d-box" x="56" y="280" width="208" height="40" rx="3"/>
+    <text class="t-sm" x="68" y="298">replicaset controller</text>
+    <text class="t-mut" x="68" y="312">makes Pods, counts them</text>
+  </g>
+  <g id="g-sched" class="g">
+    <rect class="d-box" x="56" y="332" width="208" height="40" rx="3"/>
+    <text class="t-sm" x="68" y="350">scheduler</text>
+    <text class="t-mut" x="68" y="364">writes down a node name</text>
+  </g>
+  <g id="g-node" class="g">
+    <rect class="d-panel" x="600" y="48" width="360" height="342" rx="4" stroke-width="1.5"/>
+    <text class="t-lbl" x="616" y="68">a node — an actual computer</text>
+  </g>
+  <g id="g-kubelet" class="g">
+    <rect class="d-box" x="620" y="76" width="320" height="42" rx="3"/>
+    <text class="t-sm" x="632" y="94">kubelet</text>
+    <text class="t-mut" x="632" y="109">anything on the list for me?</text>
+  </g>
+  <g id="g-pod" class="g">
+    <rect class="b-ok" x="620" y="150" width="320" height="86" rx="3" stroke-width="1.3"/>
+    <text class="t t-ok" x="632" y="170">Pod · tuner</text>
+    <rect class="d-box" x="636" y="182" width="288" height="40" rx="3"/>
+    <text class="t-sm" x="648" y="200">container</text>
+    <text class="t-mut" x="648" y="214">image pulled · process alive</text>
+  </g>
+  <g id="f-apply" class="g hide">
+    <path class="flow flow-want live" d="M212,80 H276" marker-end="url(#a-want)"/>
+    <text class="t-lbl t-want" x="216" y="70">write it down</text>
+  </g>
+  <g id="f-etcd" class="g hide">
+    <path class="flow live" d="M450,114 V124" marker-end="url(#a)"/>
+  </g>
+  <g id="f-watch" class="g hide">
+    <path class="flow live" d="M300,376 V116" marker-end="url(#a)"/>
+    <path class="flow" d="M266,246 H300"/>
+    <path class="flow" d="M266,298 H300"/>
+    <path class="flow" d="M266,350 H300"/>
+    <text class="t-lbl" x="308" y="366">read · fix one thing · read again</text>
+  </g>
+  <g id="f-kubelet" class="g hide">
+    <path class="flow flow-ok live" d="M596,96 H524" marker-end="url(#a-ok)" marker-start="url(#a-ok)"/>
+    <text class="t-lbl t-ok" x="530" y="86">anything for me?</text>
+  </g>
+  <g id="f-start" class="g hide">
+    <path class="flow flow-ok live" d="M780,120 V146" marker-end="url(#a-ok)"/>
+    <text class="t-lbl t-ok" x="790" y="139">start it</text>
+  </g>
+  <g id="g-gap" class="g hide">
+    <rect x="616" y="146" width="328" height="94" rx="4" fill="none" stroke="var(--have)" stroke-width="1.6" stroke-dasharray="6 4"/>
+    <rect x="700" y="246" width="214" height="16" fill="var(--bg)"/>
+    <text class="t-lbl t-have" x="704" y="258">gone — so the list is wrong again</text>
+  </g>
+</svg></div>
+    <div class="scrub">
+      <button class="btn" id="prev" type="button">&#9664; Back</button>
+      <button class="btn" id="play" type="button">&#9654; Play</button>
+      <button class="btn" id="next" type="button">Next &#9654;</button>
+      <div class="pips" id="pips"></div>
+    </div>
+    <div class="stagetext">
+      <p class="steptitle" id="stepn"></p>
+      <h3 id="stept"></h3>
+      <div id="stepp"></div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="cw">
+      <h4>Three words, now that you've seen them work</h4>
+      <p><b>Spec</b> is the wish — what you asked for. <b>Status</b> is the world — what's actually true. Every object in Kubernetes carries both, side by side, and you can read them with <code>kubectl get pod X -o yaml</code>.</p>
+      <p><b>Reconciliation</b> is the name for the gap-closing. It's a loop, not an event. That's why the system recovers from failures nobody planned for — and equally, why it will cheerfully undo the clever manual fix you just made.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>The anatomy of a kubectl command</h2>
+    <p>Before we build anything, it's worth taking <code>kubectl</code> apart. Almost every command you will ever type has the same four-part shape, and once you can see the shape you can build complicated commands by assembling pieces rather than by hunting for someone else's one-liner.</p>
+<pre><code>kubectl  &lt;verb&gt;  &lt;type&gt;[/&lt;name&gt;]  [flags]
+         │       │                  │
+         │       │                  └─ narrow it, format it, point it somewhere
+         │       └─ what kind of thing, and optionally which one
+         └─ what to do: get, describe, apply, delete, logs, exec…</code></pre>
+    <p style="margin-top:20px">That's it. Three commands below, pulled apart piece by piece — click any part to see what it does and how far you can push it.</p>
+  </div>
+  <div class="anat" id="an-apply"><div class="anat-h">The command that starts everything</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-apply" data-i="0" aria-pressed="false">kubectl<span class="kind">the client</span></button><button class="tok" type="button" data-w="an-apply" data-i="1" aria-pressed="false">apply<span class="kind">verb</span></button><button class="tok" type="button" data-w="an-apply" data-i="2" aria-pressed="false">-f<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-apply" data-i="3" aria-pressed="false">manifests/tuner.yaml<span class="kind">value</span></button></div><div class="anat-def" data-def="an-apply"><p class="anat-hint">Click any piece of the command.</p></div></div><div class="anat" id="an-get"><div class="anat-h">The command you will type ten thousand times</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-get" data-i="0" aria-pressed="false">kubectl<span class="kind">the client</span></button><button class="tok" type="button" data-w="an-get" data-i="1" aria-pressed="false">get<span class="kind">verb</span></button><button class="tok" type="button" data-w="an-get" data-i="2" aria-pressed="false">pods<span class="kind">type</span></button><button class="tok" type="button" data-w="an-get" data-i="3" aria-pressed="false">-l app=tuner<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-get" data-i="4" aria-pressed="false">-o wide<span class="kind">flag</span></button></div><div class="anat-def" data-def="an-get"><p class="anat-hint">Click any piece of the command.</p></div></div><div class="anat" id="an-jsonpath"><div class="anat-h">Pulling one value out, for scripts</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-jsonpath" data-i="0" aria-pressed="false">kubectl get pod<span class="kind">verb + type</span></button><button class="tok" type="button" data-w="an-jsonpath" data-i="1" aria-pressed="false">-l app=tuner<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-jsonpath" data-i="2" aria-pressed="false">-o jsonpath=<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-jsonpath" data-i="3" aria-pressed="false">'{.items[0].spec.nodeName}'<span class="kind">value</span></button></div><div class="anat-def" data-def="an-jsonpath"><p class="anat-hint">Click any piece of the command.</p></div></div>
+  <div class="col">
+    <h3 style="margin-top:34px">The flags that work almost everywhere</h3>
+    <p>These compose with nearly every verb, which is what makes them worth memorising rather than looking up.</p>
+  </div>
+  <div class="tblwrap">
+  <table class="tbl">
+    <thead><tr><th>Flag</th><th>What it does</th><th>The reason you'll reach for it</th></tr></thead>
+    <tbody>
+      <tr><td><code>-n &lt;ns&gt;</code></td><td>Work in one namespace</td><td>Without it you're in <code>default</code> and wondering where everything went. <code>-A</code> means every namespace at once.</td></tr>
+      <tr><td><code>-l &lt;sel&gt;</code></td><td>Filter by label</td><td>The main way to say “all the pods belonging to this thing”.</td></tr>
+      <tr><td><code>-o &lt;fmt&gt;</code></td><td>Change output</td><td><code>wide</code> to read, <code>yaml</code> to understand, <code>jsonpath</code> to script, <code>name</code> to pipe.</td></tr>
+      <tr><td><code>-w</code></td><td>Watch, don't exit</td><td>Streams changes as they happen. The nicest way to actually see reconciliation occur.</td></tr>
+      <tr><td><code>--dry-run=client -o yaml</code></td><td>Build, don't send</td><td>Generates correct YAML without touching the cluster. The fastest way to write a manifest you haven't memorised.</td></tr>
+      <tr><td><code>--context &lt;c&gt;</code></td><td>Pick the cluster</td><td>Cheap insurance against the single most expensive mistake in this whole field.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="col">
+    <div class="note" style="margin-top:24px"><b>The trick worth stealing:</b> <code>--dry-run=client -o yaml</code> turns <code>kubectl</code> into a YAML generator. <code>kubectl create deployment tuner --image=busybox --dry-run=client -o yaml &gt; tuner.yaml</code> gives you a correct, complete starting point in one line, and you edit from there instead of from a blank file.</div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Build it</h2>
+    <p>A one-node cluster and the smallest tuner that can possibly exist. The container here is a placeholder that prints a line every second — we're watching the machinery, not the workload. The real one arrives in Part 2.</p>
+  </div>
+<p class="pre-h">Make a cluster out of your laptop</p>
+<pre><code>kind create cluster --name airwaves
+kubectl cluster-info --context kind-airwaves</code></pre>
+<p class="pre-h">Write the wish down</p>
+<pre><code>kubectl apply -f manifests/tuner.yaml
+
+# read back what the cluster now believes
+kubectl get deployment tuner -o yaml | head -40</code></pre>
+<p class="pre-h">See the chain you just stepped through</p>
+<pre><code># all three objects, in the order they were created
+kubectl get deployment,replicaset,pod -l app=tuner
+
+# who made this pod?
+kubectl get pod -l app=tuner \
+  -o jsonpath='{.items[0].metadata.ownerReferences[0].kind}{"\n"}'
+
+# the pedants, narrating themselves
+kubectl get events --sort-by=.lastTimestamp | tail -12</code></pre>
+  <div class="col">
+    <p style="margin-top:20px">That last one is the command to keep. The event stream is the controllers thinking out loud — <code>Scheduled</code>, then <code>Pulling</code>, then <code>Created</code>, then <code>Started</code> — and every line was written by a different program that noticed a different difference. You just watched the loop from the outside.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Break it</h2>
+    <p>Two experiments. The first shows the loop working for you. The second shows it working against you, which is by far the more useful half.</p>
+    <h3 style="margin-top:30px">1 · Delete the pod</h3>
+  </div>
+<pre><code>kubectl delete pod -l app=tuner
+kubectl get pods -l app=tuner -w</code></pre>
+  <div class="col">
+    <p style="margin-top:20px">A new pod shows up within a second or two, wearing a different random suffix. It is not your pod restarted. It is a <em>different pod</em>, created from scratch, because a program that can only count noticed that one did not equal zero.</p>
+    <h3 style="margin-top:30px">2 · Ask for something impossible</h3>
+    <p>Now let's reproduce the <code>Pending</code> from the top of the page on purpose.</p>
+  </div>
+<pre><code># demand more CPU than any node could ever have
+kubectl patch deployment tuner --type=json \
+  -p='[{"op":"replace",
+        "path":"/spec/template/spec/containers/0/resources/requests/cpu",
+        "value":"64"}]'
+
+kubectl get pods -l app=tuner
+kubectl describe pod -l app=tuner | tail -8</code></pre>
+  <div class="col">
+    <p style="margin-top:20px">The new pod sits at <code>Pending</code> and stays there, and <code>describe</code> ends with <code>FailedScheduling</code>. Nothing errored. Your <code>patch</code> succeeded — the wish was recorded perfectly — and the scheduler is doing its job correctly by refusing to pretend something fits when it doesn't.</p>
+    <p>That's the mystery from your first afternoon, solved. The <code>apply</code> was never the problem. The wish simply can't be granted, and the system will keep patiently trying to grant it until the heat death of the universe or you fix the list, whichever comes first.</p>
+    <div class="note"><b>Put it back:</b> run the same <code>patch</code> with <code>"value":"50m"</code> and watch the Pending pod get replaced by a running one without you touching anything else. You changed the list; the pedants did the rest.</div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>What follows from all this</h2>
+    <p>Four consequences that fall straight out of the model, and that most people learn one expensive afternoon at a time.</p>
+  </div>
+  <div class="tblwrap">
+  <table class="tbl">
+    <thead><tr><th>Because…</th><th>…this is what happens</th></tr></thead>
+    <tbody>
+      <tr><td>The list always wins</td><td>Hand-editing something a controller owns gets quietly reverted. Edit the thing that <em>asks</em> for it, not the thing you can see.</td></tr>
+      <tr><td>Pedants never talk to each other</td><td>There's no transaction spanning objects. A half-built state isn't a bug, it's Tuesday. Give it a few seconds.</td></tr>
+      <tr><td><code>apply</code> only writes</td><td>A green command is not a working deployment. If you need to <em>know</em>, ask separately: <code>kubectl rollout status deploy/tuner</code>.</td></tr>
+      <tr><td>Reconciling is a loop</td><td>Deleting something you don't want is usually the wrong move. Change what's asking for it, and let the loop clean up.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Cheat sheet</h2>
+    <div class="cw">
+      <h4>Part 1 · the object model</h4>
+      <p>• Kubernetes stores <b>what you want</b> and works toward it continuously. It does not execute your commands.</p>
+      <p>• The <b>API server</b> is the only door. Controllers, scheduler and kubelet all talk to it and never to each other.</p>
+      <p>• <b>Spec</b> is the wish, <b>status</b> is the world, and the gap between them is what everything here exists to close.</p>
+      <p>• A Deployment makes a ReplicaSet, which makes Pods. Three objects, three controllers, three differences.</p>
+      <p>• The <b>scheduler</b> only writes down a node name. The <b>kubelet</b> is the one that actually starts a container.</p>
+      <p>• <code>apply</code> returning success means <em>recorded</em>. Never <em>running</em>.</p>
+      <p>• Delete something a controller owns and it comes back. Change the owner instead.</p>
+      <p>• Every command is <code>kubectl &lt;verb&gt; &lt;type&gt; [flags]</code>. Learn the shape once, build the rest.</p>
+      <p>• An idle cluster is a healthy one — every pedant looking, and finding nothing to fix.</p>
+    </div>
+  </div>
+  <div class="nextprev">
+    <a class="np" href="../00-index.html"><span>Series</span>All 14 parts</a>
+    <a class="np" href="../02-pods-and-containers/index.html"><span>Next · Part 2</span>Pods and containers</a>
+  </div>
+</section>
+
+<footer>
+  <div class="col"><p>Part of <b>Kubernetes by Example</b>, a series that builds one project — <em>airwaves</em>, transcribing a fleet of internet radio stations — from a single pod to a fleet run by a controller you wrote yourself. Everything runs on a laptop.</p></div>
+</footer>
+</div>
+<script>
+const STEPS = [{"n": 1, "t": "You write down a wish", "on": ["g-you"], "p": ["Open the YAML and read it properly. There are no verbs in it. Nothing says <em>create</em>, nothing says <em>start</em>, nothing says <em>then</em>. It is a description of a world you would like to exist: one tuner, this image, this much memory.", "That is a strange thing to hand a computer. Most of programming is instructions. This is a destination with no route attached."]}, {"n": 2, "t": "apply just means write it down", "on": ["g-you", "g-api", "g-etcd", "f-apply", "f-etcd"], "p": ["Your description goes to the <b>API server</b>, which is the front desk for the whole cluster. It checks the description is well formed, then saves it in <b>etcd</b>, which is the list.", "And that's the transaction. Nothing has started. No image has been downloaded. A row has been written to a database, and the database is pleased with you."]}, {"n": 3, "t": "kubectl has already gone home", "on": ["g-api", "g-etcd"], "p": ["When <code>kubectl</code> prints <code>created</code> and hands you back your prompt, it is finished. It isn't waiting in the background. It isn't supervising. It will not ring you if things go badly.", "<b>This is the single most useful thing to understand about Kubernetes, and it is worth being annoying about.</b> The command succeeded means <em>the wish was recorded</em>. It does not mean the thing is running. Those are completely different claims, and mistaking one for the other is why people sit staring at a cheerful green <code>created</code> next to a pod that is never, ever going to start."]}, {"n": 4, "t": "The first pedant notices", "on": ["g-api", "g-ctlpanel", "g-dep", "f-watch"], "p": ["Somewhere in the cluster, a small program called the <b>deployment controller</b> is doing its only job: looking at Deployments. It sees yours. It sees that yours ought to have a ReplicaSet and doesn't.", "That mismatch \u2014 list says one thing, world says another \u2014 is the thing this entire system runs on. The controller fixes it the only way anything here can fix anything: it writes to the list. It adds a ReplicaSet.", "Note what it did <em>not</em> do. It did not start a container. It did not contact a machine. It wrote something down and went back to looking."]}, {"n": 5, "t": "Fixing one difference creates another", "on": ["g-api", "g-ctlpanel", "g-rs", "f-watch"], "p": ["A new ReplicaSet on the list wakes up a different pedant. The <b>replicaset controller</b> can count, and counting is all it does. The ReplicaSet asks for one Pod. It counts zero. Difference.", "So it writes down a Pod. Not a running pod \u2014 a Pod <em>written on the list</em>, with no machine attached to it yet. If you run <code>kubectl get pods</code> at this exact moment you'll catch it as <code>Pending</code>, which simply means nobody has decided where it goes."]}, {"n": 6, "t": "The scheduler picks a bed", "on": ["g-api", "g-ctlpanel", "g-sched", "f-watch"], "p": ["The <b>scheduler</b> watches for Pods with no machine written next to them. It takes your Pod, looks at every node in the cluster, and asks of each one: does this fit? Enough spare CPU? Enough memory? Right labels? Is it refusing new work?", "It picks a winner and then \u2014 you can probably guess \u2014 writes the answer on the list. It fills in the node name. That's it, that's the whole job.", "The scheduler never once speaks to a machine. It's a matchmaker, not a delivery driver. Which is worth knowing, because when a pod won't schedule, the machines are not where you look."]}, {"n": 7, "t": "Someone finally does some work", "on": ["g-api", "g-node", "g-kubelet", "g-pod", "f-kubelet", "f-start"], "p": ["On every node there's an agent called the <b>kubelet</b>, and it is checking the list for one thing: <em>is there anything on here with my name on it?</em>", "This time there is. It downloads the image, hands it to the container runtime, and a process starts.", "Seven steps in, something real finally happens. Everything before this was paperwork \u2014 and that isn't a complaint, it's the entire trick. The paperwork is what lets the system put itself back together when things go wrong at three in the morning."]}, {"n": 8, "t": "The world reports back, and it goes quiet", "on": ["g-api", "g-etcd", "g-node", "g-kubelet", "g-pod", "f-kubelet"], "p": ["The kubelet writes down what actually happened, next to what was asked for. The Pod's status becomes <code>Running</code>.", "And now every pedant in the cluster takes another look, finds nothing out of place, and does nothing at all. <b>A healthy Kubernetes cluster is mostly a lot of machinery checking carefully and finding nothing to do.</b>"]}, {"n": 9, "t": "Now delete it, and watch the difference come back", "on": ["g-api", "g-ctlpanel", "g-rs", "g-node", "g-pod", "g-gap", "f-watch"], "p": ["Delete the Pod. The ReplicaSet still says one. The world now says zero. The counting pedant spots that on its very next look and writes down a new Pod. A few seconds later you have a tuner again, with a different name and no memory of the one before it.", "Nothing restarted anything. There is no restart feature here. There is no supervisor watching over your pod. <b>The same loop that created it the first time simply found the same difference again</b>, because you made the world disagree with the list and the list always wins.", "Which also tells you how to actually get rid of it: change the list. Set the count to zero and don't delete anything at all \u2014 now the difference runs the other way, and the pedant tidies your pod away for you."]}];
+const svg=document.querySelector('#stagefig svg');
+const groups=[...svg.querySelectorAll('g[id]')];
+const pips=document.getElementById('pips');
+let cur=0,timer=null;
+STEPS.forEach((s,i)=>{const b=document.createElement('button');b.className='pip';b.type='button';b.textContent=s.n;
+  b.setAttribute('aria-label','Step '+s.n+': '+s.t);b.addEventListener('click',()=>{stop();show(i);});pips.appendChild(b);});
+function show(i){
+  cur=(i+STEPS.length)%STEPS.length;
+  const s=STEPS[cur],on=new Set(s.on);
+  groups.forEach(g=>{
+    const isFlow=g.id.startsWith('f-')||g.id==='g-gap';
+    g.classList.remove('dim','hide');
+    if(on.has(g.id))return;
+    g.classList.add(isFlow?'hide':'dim');
+  });
+  document.getElementById('stepn').textContent='Step '+s.n+' of '+STEPS.length;
+  document.getElementById('stept').textContent=s.t;
+  document.getElementById('stepp').innerHTML=s.p.map(x=>'<p>'+x+'</p>').join('');
+  [...pips.children].forEach((b,j)=>b.setAttribute('aria-current',j===cur?'true':'false'));
+}
+function stop(){if(timer){clearInterval(timer);timer=null;document.getElementById('play').innerHTML='\u25B6 Play';}}
+document.getElementById('next').addEventListener('click',()=>{stop();show(cur+1);});
+document.getElementById('prev').addEventListener('click',()=>{stop();show(cur-1);});
+document.getElementById('play').addEventListener('click',e=>{
+  if(timer){stop();return;}
+  e.currentTarget.innerHTML='\u23F8 Pause';
+  timer=setInterval(()=>{if(cur===STEPS.length-1){stop();return;}show(cur+1);},6000);
+});
+document.addEventListener('keydown',e=>{
+  if(e.target.closest('input,textarea'))return;
+  if(e.key==='ArrowRight'){stop();show(cur+1);}
+  if(e.key==='ArrowLeft'){stop();show(cur-1);}
+});
+show(0);
+
+var ANAT = {"an-apply": [{"t": "kubectl", "b": "<p>A program on your laptop that turns what you type into an HTTP request and sends it to the cluster's API server. That is genuinely all it is \u2014 a very well-dressed <code>curl</code>.</p><p>It reads a file called a <b>kubeconfig</b> (usually <code>~/.kube/config</code>) to find out which cluster to talk to and how to prove who you are. If you have several clusters, <code>--context</code> picks between them and saves you from the classic accident of deploying to the wrong one.</p>"}, {"t": "apply", "b": "<p>The verb. <code>apply</code> means <em>make the list look like this file</em> \u2014 create what's missing, change what differs, leave the rest alone.</p><p>Its older sibling <code>create</code> fails if the thing already exists, which makes it useless for anything you run twice. <code>apply</code> is safe to repeat, and repeating it should do nothing the second time. That property has a name \u2014 <b>idempotent</b> \u2014 and it's the reason this is the verb that ends up in everybody's CI pipeline.</p>"}, {"t": "-f, --filename", "b": "<p>Read the description from a file rather than from flags. Takes a path, a directory, a URL, or <code>-</code> for standard input.</p><p>Pointing it at a directory applies everything inside, which is the usual way to ship a set of related objects. Add <code>-R</code> to walk subdirectories too. And <code>-f -</code> is the one worth memorising: it lets you pipe generated YAML straight in, which is how most clever one-liners end.</p>"}, {"t": "the file", "b": "<p>A <b>manifest</b>: one or more Kubernetes objects written as YAML. Several objects can share a file, separated by a line containing <code>---</code>.</p><p>Every object in it has the same four top-level keys: <code>apiVersion</code> and <code>kind</code> (what sort of thing this is), <code>metadata</code> (its name, its labels), and <code>spec</code> (what you want). A fifth key, <code>status</code>, appears later \u2014 but the cluster writes that one, never you.</p>"}], "an-get": [{"t": "kubectl", "b": "<p>Same client, different verb. Everything below works the same way for every <code>kubectl</code> command, which is the point of learning the shape once.</p>"}, {"t": "get", "b": "<p>List things. Prints a table by default.</p><p>The family worth knowing: <code>get</code> lists, <code>describe</code> explains one thing in detail <em>including its recent events</em>, <code>logs</code> shows what a container printed, <code>delete</code> removes, <code>edit</code> opens it in your editor, and <code>explain</code> tells you what a field means without opening a browser. When something is wrong, <code>describe</code> is almost always the second command you should type.</p>"}, {"t": "the resource type", "b": "<p>What kind of thing you want. Singular, plural and short forms all work \u2014 <code>pod</code>, <code>pods</code>, <code>po</code> are identical.</p><p>You can ask for several at once by comma-separating them: <code>kubectl get deploy,rs,pod</code> shows the whole chain from Part 1 in one go. <code>kubectl api-resources</code> prints every type your cluster knows about, along with its short name \u2014 that's the list to skim once, early.</p>"}, {"t": "-l, --selector", "b": "<p>Only show objects carrying this <b>label</b>. Labels are arbitrary key/value tags you put in <code>metadata</code>, and they are how absolutely everything in Kubernetes finds everything else.</p><p>The grammar is richer than it looks. Comma means AND: <code>-l app=tuner,tier=edge</code>. There's also <code>!=</code>, set membership with <code>'app in (tuner,scribe)'</code>, and bare <code>-l '!canary'</code> for objects missing a label entirely. Quote anything containing brackets or spaces so your shell doesn't eat it.</p>"}, {"t": "-o, --output", "b": "<p>Change the output format. <code>wide</code> keeps the table but adds useful columns \u2014 for pods, the node and the pod IP.</p><p>This flag is the gateway to everything scriptable. <code>-o yaml</code> and <code>-o json</code> dump the whole object including the status the cluster wrote. <code>-o name</code> prints just identifiers, perfect for piping into another command. And <code>-o jsonpath=\u2026</code> pulls a single value out, which is the next widget.</p>"}], "an-jsonpath": [{"t": "the boring part", "b": "<p>Nothing new. Everything interesting in this command lives in the two flags after it.</p>"}, {"t": "narrowing first", "b": "<p>Always narrow before you extract. A selector that matches exactly one object turns a fragile command into a reliable one, because the index in the next flag stops being a guess.</p>"}, {"t": "-o jsonpath", "b": "<p>Treat the response as JSON and pull out the piece you name. This is how you get a value you can put in a shell variable instead of a table you have to squint at.</p><p>The syntax is small: <code>.</code> walks into a field, <code>[0]</code> takes an element, <code>[*]</code> takes all of them, and <code>{range .items[*]}\u2026{end}</code> loops. A literal <code>{\"\\n\"}</code> emits a newline, which you will want, because otherwise your shell prompt lands on the same line and everything looks broken.</p>"}, {"t": "the path itself", "b": "<p>Read it right to left: the node name, from the spec, of the first item in the list.</p><p><code>get</code> with a selector always returns a <b>List</b> object, so you start at <code>.items</code> even when there's only one match. Asking for a named object instead \u2014 <code>kubectl get pod tuner-abc</code> \u2014 returns the bare object, and then you'd write <code>'{.spec.nodeName}'</code> with no <code>.items</code> at all. That inconsistency catches everyone exactly once.</p><p>Don't know the path? <code>kubectl get pod X -o yaml</code> and read it, or <code>kubectl explain pod.spec.nodeName</code> for the official description.</p>"}]};
+document.querySelectorAll('.tok').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var w=btn.dataset.w, i=+btn.dataset.i, d=ANAT[w][i];
+    var panel=document.querySelector('[data-def="'+w+'"]');
+    document.querySelectorAll('.tok[data-w="'+w+'"]').forEach(function(o){o.setAttribute('aria-pressed',String(o===btn));});
+    panel.innerHTML='<h4>'+d.t+'</h4>'+d.b;
+  });
+});
+(function(){
+  var b=document.getElementById('tocbtn'),p=document.getElementById('tocpanel');
+  if(!b||!p)return;
+  b.addEventListener('click',function(){
+    var open=b.getAttribute('aria-expanded')==='true';
+    b.setAttribute('aria-expanded',String(!open)); p.hidden=open;
+  });
+  document.addEventListener('click',function(e){
+    if(!p.hidden && !p.contains(e.target) && e.target!==b){b.setAttribute('aria-expanded','false');p.hidden=true;}
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&!p.hidden){b.setAttribute('aria-expanded','false');p.hidden=true;b.focus();}
+  });
+})();
+</script>
