@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PostList from '../components/PostList.astro';
 import ViewToggle from '../components/ViewToggle.astro';
 import { getAiMlPosts, getPostsByCategory } from '../lib/posts';
+import { getStandalonePosts } from '../lib/standalone';
 import { SITE } from '../lib/site';
 
 const HOME_KEYWORDS = [
@@ -25,6 +26,12 @@ const HOME_KEYWORDS = [
 const aiPosts = await getAiMlPosts();
 const investingPosts = await getPostsByCategory('investing');
 const bookPosts = await getPostsByCategory('books');
+
+/** Homepage spotlight: the series hub entry, plus how many chapters it fronts. */
+const SERIES_HUB_SLUG = 'tech/kubernetes-by-example';
+const standalonePosts = getStandalonePosts();
+const seriesHub = standalonePosts.find((entry) => entry.slug === SERIES_HUB_SLUG);
+const seriesPartCount = standalonePosts.filter((entry) => entry.slug.startsWith(`${SERIES_HUB_SLUG}/`)).length;
 
 /**
  * Six, not five: the card grid is three columns wide, so six is two clean rows.
@@ -62,6 +69,15 @@ const websiteLd = {
         <a href="/projects/">Projects</a>
       </p>
     </div>
+
+    {seriesHub && (
+      <a class="series-spot" href={`/${seriesHub.slug}/`}>
+        <p class="series-spot__eyebrow">New series &middot; {seriesPartCount} parts</p>
+        <h2 class="series-spot__title">{seriesHub.title}</h2>
+        <p class="series-spot__lede">{seriesHub.excerpt}</p>
+        <p class="series-spot__cta">Start reading &rarr;</p>
+      </a>
+    )}
 
     {/* One switch for all three lanes — the choice is site-wide, so a per-lane
         control would only disagree with the other two. */}

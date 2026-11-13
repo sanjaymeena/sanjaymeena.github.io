@@ -907,6 +907,56 @@ a:focus {
   font-weight: var(--weight-medium);
 }
 
+/* Homepage spotlight card for the flagship series (see index.astro). */
+.series-spot {
+  display: block;
+  margin: var(--space-7) 0 0;
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-link);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: inherit;
+  text-decoration: none;
+}
+
+.series-spot:hover {
+  border-color: var(--color-link);
+}
+
+.series-spot__eyebrow {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* Overrides .page h2, whose section spacing would burst the card. */
+.series-spot__title {
+  margin: 0 0 var(--space-2);
+  padding: 0;
+  border: 0;
+  font-size: var(--text-h2);
+  font-weight: var(--weight-heading);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+}
+
+.series-spot__lede {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-base);
+  line-height: var(--leading-snug);
+  color: var(--color-muted);
+}
+
+.series-spot__cta {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-link);
+}
+
 .page_list {
   margin-top: var(--space-7);
 }
