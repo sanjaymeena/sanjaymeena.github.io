@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StatefulSets and Jobs - Kubernetes by Example - Seeking Wisdom</title>
+<meta name="description" content="Three database replicas with random names, fighting over one disk. Some pods need to be somebody — and some workloads aren't servers at all.">
+<link rel="canonical" href="https://www.sanjaymeena.io/tech/kubernetes-by-example/06-statefulsets-jobs-cronjobs/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=JetBrains+Mono:wght@400;500;700&family=Literata:opsz,wght@7..72,400;7..72,600;7..72,400italic&display=swap"><style>
+:root{
+  --bg:#F7F5F1; --surface:#FFFFFF; --surface-2:#EEEBE4; --sunken:#E7E3DA;
+  --ink:#1B1A15; --ink-2:#4B473E; --muted:#787365;
+  --line:#DEDACF; --line-strong:#BEB8A8;
+  --want:#30459E; --have:#A74B28; --ok:#36704A; --note:#6B4B8F;
+  --want-wash:#30459E14; --have-wash:#A74B2814; --ok-wash:#36704A14; --note-wash:#6B4B8F14;
+  --shadow:0 1px 2px #1B1A1510,0 10px 28px #1B1A150A;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#13130E; --surface:#1B1B15; --surface-2:#23231C; --sunken:#16160F;
+  --ink:#EFEDE4; --ink-2:#BEBAAD; --muted:#8E8A7C;
+  --line:#2E2E25; --line-strong:#464537;
+  --want:#8E9EF2; --have:#E08760; --ok:#75BA8F; --note:#B291D8;
+  --want-wash:#8E9EF21F; --have-wash:#E087601F; --ok-wash:#75BA8F1F; --note-wash:#B291D81F;
+  --shadow:0 1px 2px #0007,0 10px 28px #0005;
+}}
+:root[data-theme="dark"]{
+  --bg:#13130E; --surface:#1B1B15; --surface-2:#23231C; --sunken:#16160F;
+  --ink:#EFEDE4; --ink-2:#BEBAAD; --muted:#8E8A7C;
+  --line:#2E2E25; --line-strong:#464537;
+  --want:#8E9EF2; --have:#E08760; --ok:#75BA8F; --note:#B291D8;
+  --want-wash:#8E9EF21F; --have-wash:#E087601F; --ok-wash:#75BA8F1F; --note-wash:#B291D81F;
+  --shadow:0 1px 2px #0007,0 10px 28px #0005;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Literata,Georgia,serif;font-size:17.5px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;margin:0 auto;padding:0 26px 110px}
+.col{max-width:65ch}
+h1,h2,h3,h4,.eyebrow,.btn,.steptitle,.tag,.cardt,th,.tb-series,.tb-pos,.tocpanel,.anat,.pre-h{font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif}
+code,kbd,.mono,.tag,.tok{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace}
+h1{font-size:clamp(33px,5vw,55px);line-height:1.05;font-weight:700;letter-spacing:-.03em;margin:0 0 18px;text-wrap:balance}
+h2{font-size:clamp(24px,2.7vw,32px);line-height:1.15;font-weight:700;letter-spacing:-.02em;margin:0 0 16px;text-wrap:balance}
+h3{font-size:19.5px;font-weight:700;letter-spacing:-.01em;margin:0 0 9px}
+p{margin:0 0 18px}
+em{font-style:italic}
+a{color:var(--want)}
+.lede{font-size:20.5px;line-height:1.58;color:var(--ink-2);margin:0 0 22px}
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.17em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+header.top{padding:48px 0 0}
+section{padding:58px 0 0}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0}
+.tag{font-size:11.5px;padding:5px 10px;border:1px solid var(--line-strong);border-radius:3px;color:var(--ink-2);background:var(--surface)}
+.note{border-left:2px solid var(--line-strong);padding:2px 0 2px 18px;color:var(--ink-2);margin:0 0 18px}
+.note b{color:var(--ink)}
+.cw{border:1px solid var(--line);border-left:3px solid var(--note);border-radius:4px;background:var(--surface);padding:17px 19px;margin:24px 0 0}
+.cw h4{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--note);margin:0 0 9px}
+.cw p{margin:0 0 11px;color:var(--ink-2);font-size:16px;line-height:1.62}
+.cw p:last-child{margin:0}
+/* ---- top bar ---- */
+.topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tbin{max-width:1140px;margin:0 auto;padding:10px 26px;display:flex;align-items:center;gap:14px}
+.tb-series{font-size:13px;font-weight:700;letter-spacing:-.01em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.tb-series:hover{color:var(--want)}
+.tb-pos{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-left:auto;white-space:nowrap}
+.tb-btn{font:700 12px/1 "Bricolage Grotesque",sans-serif;padding:7px 11px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:3px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.tb-btn:hover{border-color:var(--want);color:var(--want)}
+.tb-btn:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.tb-btn[aria-disabled="true"]{opacity:.35;pointer-events:none}
+.tocpanel{position:absolute;left:0;right:0;top:100%;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:var(--shadow);max-height:72vh;overflow-y:auto}
+.tocpanel[hidden]{display:none}
+.tocin{max-width:1140px;margin:0 auto;padding:22px 26px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+.tocgrp h5{font:700 10.5px/1 "Bricolage Grotesque",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;padding:0 0 8px;border-bottom:1px solid var(--line)}
+.tocgrp ol{list-style:none;margin:0;padding:0}
+.tocgrp li{margin:0 0 2px}
+.tocgrp a,.tocgrp span{display:flex;gap:9px;padding:6px 8px;border-radius:3px;font-size:14px;text-decoration:none;color:var(--ink);font-family:Literata,serif}
+.tocgrp a:hover{background:var(--surface-2)}
+.tocgrp span{color:var(--muted)}
+.tocgrp .n{font:700 11px/1.6 "JetBrains Mono",monospace;color:var(--muted)}
+.tocgrp [aria-current="page"]{background:var(--want-wash);color:var(--want);font-weight:600}
+.soon{font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-left:auto;align-self:center;color:var(--muted);font-family:"Bricolage Grotesque",sans-serif}
+/* ---- stage ---- */
+.stage{margin:28px 0 0;border:1px solid var(--line);border-radius:5px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.stagefig{background:var(--sunken);padding:18px 20px;overflow-x:auto}
+.stagefig svg{display:block;width:100%;min-width:720px;height:auto}
+.scrub{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:12px 18px;border-top:1px solid var(--line);background:var(--surface-2)}
+.btn{font-size:12.5px;font-weight:700;padding:7px 13px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:3px;cursor:pointer;line-height:1.2}
+.btn:hover{border-color:var(--want);color:var(--want)}
+.btn:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.pips{display:flex;gap:5px;margin-left:auto;flex-wrap:wrap}
+.pip{width:21px;height:21px;border-radius:3px;border:1px solid var(--line-strong);background:var(--surface);color:var(--muted);font:700 11px/1 "Bricolage Grotesque",sans-serif;cursor:pointer;display:grid;place-items:center;padding:0}
+.pip[aria-current="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.pip:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.stagetext{padding:21px 23px 23px;border-top:1px solid var(--line)}
+.steptitle{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 7px}
+.stagetext h3{font-size:21.5px;margin:0 0 11px}
+.stagetext p{max-width:72ch;margin:0 0 13px;color:var(--ink-2)}
+.stagetext p:last-child{margin:0}
+.stagetext b{color:var(--ink)}
+/* ---- anatomy ---- */
+.anat{margin:26px 0 0;border:1px solid var(--line);border-radius:5px;background:var(--surface);overflow:hidden;box-shadow:var(--shadow)}
+.anat-h{padding:12px 18px;border-bottom:1px solid var(--line);background:var(--surface-2);font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.anat-cmd{padding:20px 18px 16px;background:var(--sunken);display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start;overflow-x:auto}
+.tok{font-size:14px;font-weight:500;padding:7px 10px;border:1px solid transparent;border-radius:3px;background:var(--surface);color:var(--ink);cursor:pointer;line-height:1.3;white-space:nowrap;position:relative;border-bottom:2px solid var(--line-strong)}
+.tok:hover{border-color:var(--want);color:var(--want)}
+.tok[aria-pressed="true"]{background:var(--want);border-color:var(--want);color:#fff}
+.tok:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.tok .kind{display:block;font:700 8.5px/1.4 "Bricolage Grotesque",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:3px 0 0}
+.tok[aria-pressed="true"] .kind{color:#ffffffcc}
+.anat-def{padding:18px 20px 20px;border-top:1px solid var(--line);min-height:96px}
+.anat-def h4{font-size:15px;margin:0 0 7px;font-family:"JetBrains Mono",monospace;color:var(--want)}
+.anat-def p{font-size:15.5px;line-height:1.62;color:var(--ink-2);margin:0 0 10px;max-width:70ch}
+.anat-def p:last-child{margin:0}
+.anat-def code{font-size:.9em}
+.anat-hint{font-size:13px;color:var(--muted);font-family:Literata,serif;font-style:italic}
+/* ---- tables, code ---- */
+.tbl{width:100%;border-collapse:collapse;margin:22px 0 0;font-size:15px}
+.tbl th{font-size:11px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 14px 9px 0;border-bottom:1px solid var(--line-strong)}
+.tbl td{padding:11px 14px 11px 0;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-2)}
+.tbl td:first-child{color:var(--ink);white-space:nowrap}
+.tbl td code{white-space:nowrap}
+.tblwrap{overflow-x:auto}
+code{font-size:.86em;background:var(--surface-2);border:1px solid var(--line);border-radius:3px;padding:1px 5px;color:var(--ink)}
+pre{background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:15px 17px;overflow-x:auto;font-size:13px;line-height:1.68;margin:16px 0 0}
+pre code{background:0 0;border:0;padding:0;color:var(--ink-2);font-size:inherit}
+.pre-h{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:24px 0 -6px}
+figure{margin:26px 0 0}
+figcaption{font-size:13.5px;line-height:1.55;color:var(--muted);margin:11px 0 0;max-width:76ch}
+.nextprev{display:flex;gap:14px;flex-wrap:wrap;margin:30px 0 0}
+.np{flex:1 1 230px;border:1px solid var(--line);border-radius:4px;padding:15px 17px;background:var(--surface);text-decoration:none;color:var(--ink)}
+.np:hover{border-color:var(--want)}
+.np span{display:block;font-size:10.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-family:"Bricolage Grotesque",sans-serif;margin:0 0 4px}
+footer{margin:76px 0 0;padding:26px 0 0;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+/* svg shared */
+.d-panel{fill:var(--surface);stroke:var(--line-strong)}
+.d-sunken{fill:var(--sunken);stroke:var(--line)}
+.d-box{fill:var(--surface);stroke:var(--line-strong)}
+.t{fill:var(--ink);font-family:"Bricolage Grotesque",sans-serif;font-size:12.5px;font-weight:700}
+.t-sm{fill:var(--ink-2);font-family:"JetBrains Mono",monospace;font-size:10.5px}
+.t-mut{fill:var(--muted);font-family:"JetBrains Mono",monospace;font-size:10px}
+.t-lbl{fill:var(--muted);font-family:"Bricolage Grotesque",sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.t-want{fill:var(--want)} .t-have{fill:var(--have)} .t-ok{fill:var(--ok)} .t-note{fill:var(--note)}
+.b-want{fill:var(--want-wash);stroke:var(--want)} .b-have{fill:var(--have-wash);stroke:var(--have)}
+.b-ok{fill:var(--ok-wash);stroke:var(--ok)} .b-note{fill:var(--note-wash);stroke:var(--note)}
+.cell{fill:var(--want-wash);stroke:var(--want);stroke-width:.8}
+.ah{fill:var(--ink-2)} .ah-want{fill:var(--want)} .ah-have{fill:var(--have)} .ah-ok{fill:var(--ok)}
+.flow{fill:none;stroke:var(--ink-2);stroke-width:1.4}
+.flow-want{stroke:var(--want)} .flow-have{stroke:var(--have)} .flow-ok{stroke:var(--ok)}
+.g{transition:opacity .4s ease}
+.dim{opacity:.13} .hide{opacity:0}
+.live{stroke-dasharray:5 5;animation:ants 1s linear infinite}
+@keyframes ants{to{stroke-dashoffset:-20}}
+@media (prefers-reduced-motion:reduce){.live{animation:none}.g{transition:none}}
+</style>
+</head>
+<body>
+<nav class="topbar">
+  <div class="tbin">
+    <a class="tb-series" href="/tech/kubernetes-by-example/">Kubernetes by Example</a>
+    <button class="tb-btn" id="tocbtn" type="button" aria-expanded="false" aria-controls="tocpanel">Contents</button>
+    <span class="tb-pos">Part 6 of 14</span><div style="display:flex;gap:6px"><a class="tb-btn" href="/tech/kubernetes-by-example/05-daemonsets/" title="DaemonSets">&#8592;</a><a class="tb-btn" href="/tech/kubernetes-by-example/07-services-and-ingress/" title="Services and Ingress">&#8594;</a></div>
+  </div>
+  <div class="tocpanel" id="tocpanel" hidden><div class="tocin"><div class="tocgrp"><h5>Tier 0 · The model</h5><ol><li><a href="/tech/kubernetes-by-example/01-the-object-model/"><span class="n">01</span>The object model</a></li><li><a href="/tech/kubernetes-by-example/02-pods-and-containers/"><span class="n">02</span>Pods and containers</a></li><li><a href="/tech/kubernetes-by-example/03-labels-selectors-namespaces/"><span class="n">03</span>Labels, selectors, namespaces</a></li></ol></div><div class="tocgrp"><h5>Tier 1 · Workload kinds</h5><ol><li><a href="/tech/kubernetes-by-example/04-deployments-and-rollouts/"><span class="n">04</span>Deployments and rollouts</a></li><li><a href="/tech/kubernetes-by-example/05-daemonsets/"><span class="n">05</span>DaemonSets</a></li><li><a href="/tech/kubernetes-by-example/06-statefulsets-jobs-cronjobs/" aria-current="page"><span class="n">06</span>StatefulSets, Jobs, CronJobs</a></li></ol></div><div class="tocgrp"><h5>Tier 2 · Wiring</h5><ol><li><a href="/tech/kubernetes-by-example/07-services-and-ingress/"><span class="n">07</span>Services and Ingress</a></li><li><a href="/tech/kubernetes-by-example/08-config-and-secrets/"><span class="n">08</span>Config and Secrets</a></li><li><a href="/tech/kubernetes-by-example/09-storage/"><span class="n">09</span>Storage</a></li></ol></div><div class="tocgrp"><h5>Tier 3 · Scheduling</h5><ol><li><a href="/tech/kubernetes-by-example/10-requests-limits-qos/"><span class="n">10</span>Requests, limits, QoS</a></li><li><a href="/tech/kubernetes-by-example/11-placement-and-devices/"><span class="n">11</span>Placement and devices</a></li></ol></div><div class="tocgrp"><h5>Tier 4 · Production</h5><ol><li><a href="/tech/kubernetes-by-example/12-staying-up/"><span class="n">12</span>Staying up</a></li><li><a href="/tech/kubernetes-by-example/13-scaling-and-permissions/"><span class="n">13</span>Scaling and permissions</a></li><li><a href="/tech/kubernetes-by-example/14-helm-and-custom-resources/"><span class="n">14</span>Helm and custom resources</a></li></ol></div></div></div>
+</nav>
+<div class="wrap">
+<header class="top">
+  <div class="col">
+    <p class="eyebrow">Kubernetes by Example · Part 6</p>
+    <h1>StatefulSets and Jobs</h1>
+    <p class="lede">Three database replicas with random names, fighting over one disk. Some pods need to be somebody — and some workloads aren't servers at all.</p>
+    <div class="meta"><span class="tag">assumes Parts 1–5</span><span class="tag">~18 minutes</span><span class="tag">storage appears</span></div>
+  </div>
+</header>
+
+<section>
+  <div class="col">
+    <h2>The symptom</h2>
+    <p><em>airwaves</em> needs somewhere to keep the station list and the transcripts. You reach for what you know — a Deployment with three replicas — and it goes wrong in a way that's hard to even describe.</p>
+  </div><pre><code>$ kubectl get pods -l app=catalogue
+NAME                         READY   STATUS             RESTARTS
+catalogue-6f9d4b7c8-k2mp4    0/1     CrashLoopBackOff   5
+catalogue-6f9d4b7c8-qw8xn    1/1     Running            0
+catalogue-6f9d4b7c8-z4lr9    0/1     Error              3</code></pre>  <div class="col">
+    <p style="margin-top:18px">The logs are a mess of replicas failing to find each other, two of them claiming to be primary, and at least one complaining that its data directory is locked by someone else.</p>
+    <p>Delete the broken ones and the replacements have new names, so whatever they'd agreed among themselves is void and they start arguing again.</p>
+    <p>Every one of these problems traces to the same root. A Deployment's model is that its pods are identical and disposable — and a database replica is neither.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>When a pod needs to be somebody</h2>
+    <p>Three things a Deployment deliberately refuses to give you, because for most workloads they'd be dead weight: a <b>name that survives</b> a restart, a <b>disk that follows that name</b>, and a <b>predictable order</b> of starting and stopping.</p>
+    <p>A StatefulSet gives you all three. And while we're here, the two workloads that aren't servers at all.</p>
+  </div>  <div class="stage">
+    <div class="stagefig" id="stagefig"><svg viewBox="0 0 1000 420" role="img" aria-label="On the left, Deployment pods with random names and no identity. On the right, StatefulSet pods numbered zero to two, each with its own disk that follows its name. Below, a Job that runs once and a CronJob that runs on a schedule.">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-want" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-want" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-have" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-have" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-ok" d="M0,0 L10,5 L0,10 Z"/></marker>
+  </defs>
+  <g id="g-dep" class="g">
+    <rect class="d-panel" x="40" y="64" width="400" height="188" rx="4" stroke-width="1.5"/>
+    <text class="t-lbl t-have" x="56" y="84">Deployment — pods are interchangeable</text>
+    <rect class="b-have" x="56" y="94" width="368" height="40" rx="3" stroke-width="1.2"/>
+    <text class="t-sm t-have" x="68" y="112">scribe-7d4f8b-x2kmp</text>
+    <text class="t-mut" x="68" y="127">random name · no disk of its own</text>
+    <rect class="b-have" x="56" y="142" width="368" height="40" rx="3" stroke-width="1.2"/>
+    <text class="t-sm t-have" x="68" y="160">scribe-7d4f8b-m9q4p</text>
+    <text class="t-mut" x="68" y="175">dies → replacement has a different name</text>
+    <rect class="d-sunken" x="56" y="192" width="368" height="46" rx="3"/>
+    <text class="t-mut" x="68" y="210">started in any order, deleted in any order</text>
+    <text class="t-mut" x="68" y="228">nothing addresses one of them specifically</text>
+  </g>
+  <g id="g-sts" class="g">
+    <rect class="d-panel" x="476" y="64" width="484" height="188" rx="4" stroke-width="1.5"/>
+    <text class="t-lbl t-ok" x="492" y="84">StatefulSet — pods have identity</text>
+    <rect class="b-ok" x="492" y="94" width="300" height="40" rx="3" stroke-width="1.2"/>
+    <text class="t-sm t-ok" x="504" y="112">catalogue-0</text>
+    <text class="t-mut" x="504" y="127">catalogue-0.catalogue.airwaves.svc</text>
+    <rect class="b-ok" x="492" y="142" width="300" height="40" rx="3" stroke-width="1.2"/>
+    <text class="t-sm t-ok" x="504" y="160">catalogue-1</text>
+    <text class="t-mut" x="504" y="175">same name after every restart</text>
+    <rect class="b-ok" x="492" y="190" width="300" height="40" rx="3" stroke-width="1.2"/>
+    <text class="t-sm t-ok" x="504" y="208">catalogue-2</text>
+    <text class="t-mut" x="504" y="223">created last, deleted first</text>
+  </g>
+  <g id="g-pvc" class="g">
+    <rect class="d-sunken" x="804" y="94" width="142" height="136" rx="3"/>
+    <text class="t-lbl" x="814" y="112">its own disk</text>
+    <text class="t-mut" x="814" y="132">data-catalogue-0</text>
+    <text class="t-mut" x="814" y="152">data-catalogue-1</text>
+    <text class="t-mut" x="814" y="172">data-catalogue-2</text>
+    <text class="t-mut" x="814" y="200">follows the name,</text>
+    <text class="t-mut" x="814" y="216">not the pod</text>
+  </g>
+  <g id="f-bind" class="g hide">
+    <path class="flow flow-ok live" d="M796,114 H800" marker-end="url(#a-ok)"/>
+    <path class="flow flow-ok live" d="M796,162 H800" marker-end="url(#a-ok)"/>
+    <path class="flow flow-ok live" d="M796,210 H800" marker-end="url(#a-ok)"/>
+  </g>
+  <g id="g-job" class="g">
+    <rect class="d-panel" x="40" y="284" width="400" height="104" rx="4" stroke-width="1.5"/>
+    <text class="t-lbl t-note" x="56" y="304">Job — runs until it succeeds, then stops</text>
+    <rect class="b-note" x="56" y="314" width="176" height="36" rx="3" stroke-width="1.2"/>
+    <text class="t-sm t-note" x="68" y="337">backfill-x7k2</text>
+    <rect class="d-sunken" x="244" y="314" width="180" height="36" rx="3"/>
+    <text class="t-mut" x="256" y="337">Completed — and kept</text>
+    <text class="t-mut" x="56" y="372">retries up to backoffLimit, then gives up for good</text>
+  </g>
+  <g id="g-cron" class="g">
+    <rect class="d-panel" x="476" y="284" width="484" height="104" rx="4" stroke-width="1.5"/>
+    <text class="t-lbl t-note" x="492" y="304">CronJob — makes a Job on a schedule</text>
+    <text class="t-sm" x="492" y="326">schedule: &quot;0 3 * * *&quot;<tspan class="t-mut" dx="12">in the cluster&apos;s timezone, not yours</tspan></text>
+    <text class="t-mut" x="492" y="346">concurrencyPolicy: Forbid — skip if the last one is still going</text>
+    <text class="t-mut" x="492" y="366">startingDeadlineSeconds — how late is too late to bother</text>
+  </g>
+  <g id="x-order" class="g hide">
+    <path class="flow flow-ok live" d="M470,114 H486" marker-end="url(#a-ok)"/>
+    <path class="flow flow-ok live" d="M470,162 H486" marker-end="url(#a-ok)"/>
+    <rect x="300" y="256" width="340" height="16" fill="var(--bg)"/>
+    <text class="t-lbl t-ok" x="304" y="268">0 is ready before 1 starts. Always.</text>
+  </g>
+  <g id="x-keep" class="g hide">
+    <rect x="800" y="90" width="150" height="144" rx="4" fill="none" stroke="var(--have)" stroke-width="1.7" stroke-dasharray="6 4"/>
+    <rect x="690" y="240" width="270" height="16" fill="var(--bg)"/>
+    <text class="t-lbl t-have" x="694" y="252">delete the StatefulSet — these stay</text>
+  </g>
+</svg></div>
+    <div class="scrub">
+      <button class="btn" id="prev" type="button">&#9664; Back</button>
+      <button class="btn" id="play" type="button">&#9654; Play</button>
+      <button class="btn" id="next" type="button">Next &#9654;</button>
+      <div class="pips" id="pips"></div>
+    </div>
+    <div class="stagetext">
+      <p class="steptitle" id="stepn"></p>
+      <h3 id="stept"></h3>
+      <div id="stepp"></div>
+    </div>
+  </div>  <div class="col">
+    <div class="cw">
+      <h4>Picking the right one</h4>
+      <p><b>Deployment</b> — pods are interchangeable. Almost everything.</p>
+      <p><b>DaemonSet</b> — one per node, placed by locality. Part 5.</p>
+      <p><b>StatefulSet</b> — pods have names and their own disks. Databases, queues, anything that forms a cluster.</p>
+      <p><b>Job</b> — runs until it succeeds, then stops. <b>CronJob</b> — makes Jobs on a schedule.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>The commands</h2>
+  </div><div class="anat" id="an-sts"><div class="anat-h">Reading a StatefulSet and its disks</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-sts" data-i="0" aria-pressed="false">kubectl get sts<span class="kind">verb + type</span></button><button class="tok" type="button" data-w="an-sts" data-i="1" aria-pressed="false">kubectl get pvc<span class="kind">command</span></button><button class="tok" type="button" data-w="an-sts" data-i="2" aria-pressed="false">kubectl describe pvc<span class="kind">command</span></button><button class="tok" type="button" data-w="an-sts" data-i="3" aria-pressed="false">--cascade=orphan<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-sts" data-i="4" aria-pressed="false">kubectl scale sts<span class="kind">command</span></button></div><div class="anat-def" data-def="an-sts"><p class="anat-hint">Click any piece of the command.</p></div></div><div class="anat" id="an-job"><div class="anat-h">Jobs, and running one on demand</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-job" data-i="0" aria-pressed="false">kubectl get jobs<span class="kind">verb + type</span></button><button class="tok" type="button" data-w="an-job" data-i="1" aria-pressed="false">kubectl create job<span class="kind">verb</span></button><button class="tok" type="button" data-w="an-job" data-i="2" aria-pressed="false">--from=cronjob/prune<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-job" data-i="3" aria-pressed="false">backoffLimit<span class="kind">spec field</span></button><button class="tok" type="button" data-w="an-job" data-i="4" aria-pressed="false">ttlSecondsAfterFinished<span class="kind">spec field</span></button></div><div class="anat-def" data-def="an-job"><p class="anat-hint">Click any piece of the command.</p></div></div><div class="anat" id="an-cron"><div class="anat-h">Scheduling, and the ways it surprises you</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-cron" data-i="0" aria-pressed="false">kubectl get cronjob<span class="kind">verb + type</span></button><button class="tok" type="button" data-w="an-cron" data-i="1" aria-pressed="false">schedule<span class="kind">spec field</span></button><button class="tok" type="button" data-w="an-cron" data-i="2" aria-pressed="false">timeZone<span class="kind">spec field</span></button><button class="tok" type="button" data-w="an-cron" data-i="3" aria-pressed="false">concurrencyPolicy<span class="kind">spec field</span></button><button class="tok" type="button" data-w="an-cron" data-i="4" aria-pressed="false">kubectl patch cj … suspend<span class="kind">flag</span></button></div><div class="anat-def" data-def="an-cron"><p class="anat-hint">Click any piece of the command.</p></div></div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Build it</h2>
+    <p>The catalogue as a StatefulSet with its own storage, plus the nightly prune that keeps transcripts from growing forever.</p>
+  </div><p class="pre-h">The catalogue</p>
+<pre><code>kubectl apply -f manifests/catalogue.yaml
+kubectl get sts,pods,pvc -l app=catalogue -w</code></pre>  <div class="col">
+    <p style="margin-top:20px">Watch the order. <code>catalogue-0</code> appears alone and must go Ready before <code>catalogue-1</code> is created at all. On a Deployment all three would have appeared at once.</p>
+  </div><p class="pre-h">One disk each</p>
+<pre><code>kubectl get pvc -l app=catalogue
+kubectl exec catalogue-0 -- sh -c 'echo "jazz-fm" > /data/stations.txt'
+kubectl exec catalogue-0 -- cat /data/stations.txt</code></pre><p class="pre-h">The nightly prune, run now</p>
+<pre><code>kubectl apply -f manifests/prune.yaml
+kubectl get cronjob prune
+
+# do not wait until 3am
+kubectl create job prune-now --from=cronjob/prune
+kubectl logs job/prune-now</code></pre>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Break it</h2>
+    <h3 style="margin-top:26px">1 · Kill a pod and watch it come back as itself</h3>
+  </div><pre><code>kubectl delete pod catalogue-0
+kubectl get pods -l app=catalogue -w
+
+# once it is Running again
+kubectl exec catalogue-0 -- cat /data/stations.txt</code></pre>  <div class="col">
+    <p style="margin-top:20px">Same name, same data. Compare with Part 2, where a deleted pod was replaced by a stranger that remembered nothing. The disk did not follow the pod — it followed the <em>ordinal</em>, and the new pod inherited both.</p>
+    <h3 style="margin-top:34px">2 · Scale down and find the leftovers</h3>
+  </div><pre><code>kubectl scale sts catalogue --replicas=1
+kubectl get pods -l app=catalogue
+kubectl get pvc -l app=catalogue</code></pre>  <div class="col">
+    <p style="margin-top:20px">Two pods gone, <b>three PVCs still there</b>. Kubernetes will not delete storage to satisfy a scale-down, and it is right not to.</p>
+    <p>Scale back up and the old data reappears:</p>
+  </div><pre><code>kubectl scale sts catalogue --replicas=3
+kubectl exec catalogue-2 -- ls -la /data</code></pre>  <div class="col">
+    <p style="margin-top:20px">That's either a relief or a shock. Either way, cleaning up a StatefulSet properly means deleting its PVCs by hand, and nothing will prompt you.</p>
+    <h3 style="margin-top:34px">3 · Make a CronJob overlap itself</h3>
+  </div><pre><code>kubectl apply -f manifests/slow-cron.yaml   # runs every minute, takes 90s
+sleep 150
+kubectl get jobs -l app=slow-cron</code></pre>  <div class="col">
+    <p style="margin-top:20px">Two Jobs running at once, because <code>concurrencyPolicy</code> defaults to <code>Allow</code> and nobody chose it. For a prune job writing to shared storage, that's two processes deleting the same rows.</p>
+    <div class="note"><b>The fix</b> is <code>concurrencyPolicy: Forbid</code>, and the lesson is that this default is wrong for most real jobs.</div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>What follows from this</h2>
+  </div>  <div class="tblwrap">
+  <table class="tbl">
+    <thead><tr><th>Because…</th><th>…this is what happens</th></tr></thead>
+    <tbody><tr><td>Names are stable</td><td>Other things can depend on <code>catalogue-0</code> specifically. That is what makes clustering possible.</td></tr><tr><td>Claims follow the ordinal</td><td>A replaced pod reattaches to the same data. The disk belongs to the slot, not the instance.</td></tr><tr><td>Startup is ordered</td><td>Pod 0 must be ready before 1 exists. A stuck low ordinal blocks everything above it.</td></tr><tr><td>PVCs are never auto-deleted</td><td>Scaling down and deleting leave storage behind. Clean-up is manual and unprompted.</td></tr><tr><td>Jobs are kept when finished</td><td>Logs survive for inspection, and Jobs pile up until <code>ttlSecondsAfterFinished</code> removes them.</td></tr><tr><td>CronJobs default to Allow</td><td>Slow runs overlap silently. Set <code>Forbid</code> for anything touching shared state.</td></tr><tr><td>Schedules use the cluster's clock</td><td>Set <code>timeZone</code> explicitly or your nightly job runs at someone else's night.</td></tr></tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Cheat sheet</h2>
+    <div class="cw">
+      <h4>Part 6 · statefulsets, jobs, cronjobs</h4>
+      <p>• Use a StatefulSet when pods need <b>identity</b>: a stable name, their own disk, or a defined start order.</p>
+      <p>• Names are ordinals — <code>catalogue-0</code>, <code>-1</code>, <code>-2</code> — and they survive restarts.</p>
+      <p>• <code>volumeClaimTemplates</code> gives each pod its own PVC, bound to the <em>ordinal</em>, not the instance.</p>
+      <p>• Creation is 0→N, deletion is N→0, and each waits for the last. <code>podManagementPolicy: Parallel</code> opts out.</p>
+      <p>• A <b>headless</b> Service (<code>clusterIP: None</code>) gives per-pod DNS. StatefulSets require a <code>serviceName</code>.</p>
+      <p>• <b>PVCs are never deleted automatically.</b> Scale down, delete the set — the storage stays. Clean up by hand.</p>
+      <p>• <code>--cascade=orphan</code> lets you recreate a StatefulSet without the pods ever going down.</p>
+      <p>• A <b>Job</b> runs to success, retries to <code>backoffLimit</code>, and is kept afterwards. Use <code>ttlSecondsAfterFinished</code>.</p>
+      <p>• <code>kubectl create job X --from=cronjob/Y</code> runs a scheduled job right now. Learn this one.</p>
+      <p>• <code>concurrencyPolicy</code> defaults to <code>Allow</code> — usually wrong. Set <code>timeZone</code> too.</p>
+    </div>
+  </div>  <div class="nextprev">
+    <a class="np" href="/tech/kubernetes-by-example/05-daemonsets/"><span>Previous · Part 5</span>DaemonSets</a>
+    <a class="np" href="/tech/kubernetes-by-example/"><span>Series</span>All 14 parts</a>
+    <a class="np" href="/tech/kubernetes-by-example/07-services-and-ingress/"><span>Next · Part 7</span>Services and Ingress</a>
+  </div>
+</section>
+
+<footer>
+  <div class="col"><p>Part of <b>Kubernetes by Example</b>. Next: how anything finds anything, now that we know pod IPs are worthless.</p></div>
+</footer>
+</div>
+<script>
+const STEPS = [{"t": "Most pods are interchangeable, and that is the point", "on": ["g-dep"], "p": ["Everything so far has relied on pods being anonymous. A ReplicaSet counts them without caring which is which. A Service sends traffic to any of them. The random suffix on the name isn't untidiness \u2014 it's a declaration that the name carries no meaning.", "That works because a tuner is a tuner. If one dies and another takes its place, nothing was lost."], "n": 1}, {"t": "Some pods are emphatically not", "on": ["g-dep", "g-sts"], "p": ["Now try running the catalogue \u2014 a database with three replicas \u2014 as a Deployment. It falls apart immediately.", "Replica two has different data from replica one and needs to keep it. They need to find each other by name to form a cluster. One of them is the primary and the others need to know which. The order they start in matters.", "<b>None of that can be expressed with a count.</b> A Deployment's entire model is that its pods are identical and disposable, and here they are neither."], "n": 2}, {"t": "Names that survive", "on": ["g-sts"], "p": ["A <b>StatefulSet</b> numbers its pods: <code>catalogue-0</code>, <code>catalogue-1</code>, <code>catalogue-2</code>. Stable, predictable, no random suffix.", "Delete <code>catalogue-1</code> and what comes back is <code>catalogue-1</code> \u2014 the same name, in the same slot. Compare that with a Deployment, where you get a stranger with a new name.", "The name is now a fact about the pod's role, which means other things can be written to depend on it."], "n": 3}, {"t": "Each one gets its own disk, permanently", "on": ["g-sts", "g-pvc", "f-bind"], "p": ["<code>volumeClaimTemplates</code> is where the real work happens. Instead of one shared volume, it creates <b>one PersistentVolumeClaim per pod</b>, named after the pod: <code>data-catalogue-0</code>, <code>data-catalogue-1</code>.", "The claim belongs to the <em>ordinal</em>, not to the pod instance. Kill <code>catalogue-1</code>, and its replacement \u2014 also called <code>catalogue-1</code> \u2014 mounts the same disk with the same data.", "That pairing of stable name to stable storage is the whole reason this object exists."], "n": 4}, {"t": "One at a time, in order, both ways", "on": ["g-sts", "x-order"], "p": ["<code>catalogue-0</code> must be Running and Ready before <code>catalogue-1</code> is even created. Scaling down reverses it: the highest ordinal goes first.", "This is what lets a cluster bootstrap itself \u2014 pod 0 comes up alone and initialises, then 1 joins an existing cluster rather than racing it.", "It also makes StatefulSets slow, and makes a stuck pod block everything behind it. <code>podManagementPolicy: Parallel</code> turns the ordering off while keeping names and disks, for the cases where you don't need it."], "n": 5}, {"t": "A headless Service for addressing one directly", "on": ["g-sts"], "p": ["An ordinary Service load-balances across backends, which is the opposite of what you want when you need to talk to <em>that specific replica</em>.", "A <b>headless</b> Service \u2014 <code>clusterIP: None</code> \u2014 does no balancing. Instead it gives every pod a DNS name: <code>catalogue-0.catalogue.airwaves.svc.cluster.local</code>.", "This is why a StatefulSet requires a <code>serviceName</code>. Services proper are Part 7; the thing to carry forward is that stable names are useless without stable addresses, and this is how you get them."], "n": 6}, {"t": "The disks outlive everything", "on": ["g-sts", "g-pvc", "x-keep"], "p": ["Delete the StatefulSet and the PersistentVolumeClaims <b>stay</b>. Scale from three to one and the two discarded claims stay too.", "This is deliberate, and it's the right default \u2014 the alternative is a typo that silently destroys your data. Recreate the StatefulSet and the pods reattach to their old disks as if nothing happened.", "It's also a surprise the first time: you delete everything, redeploy clean, and find yesterday's data. Cleaning up properly means deleting the PVCs by hand, and nothing will remind you."], "n": 7}, {"t": "A Job runs once and stops", "on": ["g-job"], "p": ["Not everything is a server. A <b>Job</b> runs a pod until it exits successfully, then stops \u2014 no restarts, no reconciling back to N.", "If it fails, the Job makes a new pod and tries again, up to <code>backoffLimit</code> (default 6), with growing delay. Exhaust that and the Job is marked Failed and stops for good.", "Two knobs for bulk work: <code>completions</code> is how many successes you need, <code>parallelism</code> is how many at once. Both at 1 is a single task; completions 100 with parallelism 5 is a work queue.", "<b>Finished Jobs are kept</b>, with their pods, so you can read the logs. They accumulate until something deletes them \u2014 <code>ttlSecondsAfterFinished</code> is that something."], "n": 8}, {"t": "A CronJob makes Jobs on a schedule", "on": ["g-cron"], "p": ["A <b>CronJob</b> is a factory for Jobs. Standard five-field cron syntax, evaluated in the <b>cluster's</b> timezone unless you set <code>timeZone</code> \u2014 which is a classic three-in-the-morning surprise.", "<code>concurrencyPolicy</code> decides what happens when the last run is still going: <code>Allow</code> (overlap), <code>Forbid</code> (skip), or <code>Replace</code> (kill the old one). The default is <code>Allow</code>, and for anything touching shared data that default is usually wrong.", "If the controller is down past <code>startingDeadlineSeconds</code>, the run is skipped rather than fired late. Miss 100 deadlines in a row and it stops scheduling entirely \u2014 which is a real outage mode worth knowing exists."], "n": 9}];
+const svg=document.querySelector('#stagefig svg');
+const groups=[...svg.querySelectorAll('g[id]')];
+const pips=document.getElementById('pips');
+let cur=0,timer=null;
+STEPS.forEach((s,i)=>{const b=document.createElement('button');b.className='pip';b.type='button';b.textContent=s.n;
+  b.setAttribute('aria-label','Step '+s.n+': '+s.t);b.addEventListener('click',()=>{stop();show(i);});pips.appendChild(b);});
+function show(i){
+  cur=(i+STEPS.length)%STEPS.length;
+  const s=STEPS[cur],on=new Set(s.on);
+  groups.forEach(g=>{
+    const isFlow=g.id.startsWith('f-')||g.id.startsWith('x-');
+    g.classList.remove('dim','hide');
+    if(on.has(g.id))return;
+    g.classList.add(isFlow?'hide':'dim');
+  });
+  document.getElementById('stepn').textContent='Step '+s.n+' of '+STEPS.length;
+  document.getElementById('stept').textContent=s.t;
+  document.getElementById('stepp').innerHTML=s.p.map(x=>'<p>'+x+'</p>').join('');
+  [...pips.children].forEach((b,j)=>b.setAttribute('aria-current',j===cur?'true':'false'));
+}
+function stop(){if(timer){clearInterval(timer);timer=null;document.getElementById('play').innerHTML='\u25B6 Play';}}
+document.getElementById('next').addEventListener('click',()=>{stop();show(cur+1);});
+document.getElementById('prev').addEventListener('click',()=>{stop();show(cur-1);});
+document.getElementById('play').addEventListener('click',e=>{
+  if(timer){stop();return;}
+  e.currentTarget.innerHTML='\u23F8 Pause';
+  timer=setInterval(()=>{if(cur===STEPS.length-1){stop();return;}show(cur+1);},6000);
+});
+document.addEventListener('keydown',e=>{
+  if(e.target.closest('input,textarea'))return;
+  if(e.key==='ArrowRight'){stop();show(cur+1);}
+  if(e.key==='ArrowLeft'){stop();show(cur-1);}
+});
+show(0);
+
+var ANAT = {"an-sts": [{"t": "kubectl get statefulset", "b": "<p>READY shows <code>2/3</code> style progress. Because startup is ordered, a StatefulSet stuck at <code>1/3</code> means pod 1 never became ready and pod 2 was never created.</p><p>Always check the <em>lowest</em> unready ordinal first. Everything above it is blocked, not broken.</p>"}, {"t": "the claims", "b": "<p>One per pod, named <code>&lt;volumeClaimTemplate&gt;-&lt;pod&gt;</code>. They appear as pods are created and are never removed automatically.</p><p><code>kubectl get pvc -l app=catalogue</code> after scaling down shows the orphans still sitting there holding storage.</p>"}, {"t": "why it is Pending", "b": "<p>A <code>Pending</code> PVC means no PersistentVolume satisfies it. The events explain which part \u2014 no StorageClass, no capacity, or an access mode nothing can provide.</p><p>On a fresh <code>kind</code> cluster the usual answer is that the default StorageClass only does ReadWriteOnce, and you asked for ReadWriteMany.</p>"}, {"t": "keeping the pods", "b": "<p><code>kubectl delete sts catalogue --cascade=orphan</code> removes the StatefulSet and leaves the pods running.</p><p>The escape hatch for changing an immutable field: orphan, edit, recreate, and the pods reattach without the database ever going down.</p>"}, {"t": "scaling", "b": "<p>Scaling up creates new ordinals and new claims. Scaling down removes pods highest-first and <b>keeps their claims</b>.</p><p>Scale back up and the old data is still there waiting. Convenient, or alarming, depending on what you expected.</p>"}], "an-job": [{"t": "kubectl get job", "b": "<p>COMPLETIONS reads <code>1/1</code> when done. DURATION is how long it took, which is the cheapest performance signal you have.</p><p>Finished Jobs persist. <code>kubectl get jobs</code> on an old cluster is often a list of everything that ever ran.</p>"}, {"t": "making one now", "b": "<p>Creates a Job from flags, with <code>--image</code>.</p><p>The genuinely useful form is <code>--from</code>, below.</p>"}, {"t": "running a CronJob now", "b": "<p><b>The command worth memorising from this part.</b> <code>kubectl create job prune-now --from=cronjob/prune</code> runs a scheduled job immediately, using its exact definition.</p><p>How you test a CronJob without waiting until 3am, and how you re-run last night's job after fixing whatever broke it.</p>"}, {"t": "how many tries", "b": "<p>Pod-level retries before the Job gives up, default 6, with exponential backoff.</p><p>Set it to 0 for something that must not be attempted twice. Note it counts <em>pod</em> failures \u2014 a container with <code>restartPolicy: OnFailure</code> restarting in place doesn't increment it.</p>"}, {"t": "automatic cleanup", "b": "<p>Deletes the Job, and its pods, this many seconds after it finishes.</p><p>Without it, Jobs accumulate forever. With it set too low, the logs are gone before you knew you wanted them. A few hours is usually the right order of magnitude.</p>"}], "an-cron": [{"t": "kubectl get cj", "b": "<p>SCHEDULE, SUSPEND, ACTIVE and LAST SCHEDULE. If LAST SCHEDULE is old and SUSPEND is False, something is wrong with scheduling rather than with your job.</p>"}, {"t": "the five fields", "b": "<p>Minute, hour, day-of-month, month, day-of-week. <code>&quot;0 3 * * *&quot;</code> is 3am daily.</p><p>Quote it in YAML \u2014 <code>*</code> at the start of a scalar is not valid unquoted, and the error does not mention cron.</p>"}, {"t": "whose 3am", "b": "<p>Without it, the schedule runs in whatever timezone the controller has \u2014 usually UTC. Your nightly job fires at a time you did not intend, and twice a year it moves.</p><p><code>timeZone: &quot;Asia/Dubai&quot;</code> makes it explicit. Available since 1.27 and worth setting on anything a human reasons about.</p>"}, {"t": "overlap", "b": "<p><code>Allow</code> (default) lets runs overlap. <code>Forbid</code> skips the new one. <code>Replace</code> kills the old one.</p><p>The default is wrong for most real jobs. If yours writes anywhere shared, <code>Forbid</code> is almost certainly what you meant.</p>"}, {"t": "stopping it", "b": "<p><code>kubectl patch cronjob prune -p '{&quot;spec&quot;:{&quot;suspend&quot;:true}}'</code> stops future runs without deleting anything.</p><p>The correct move during an incident. Deleting a CronJob to stop it loses the definition; suspending keeps it, and resuming is one command.</p>"}]};
+document.querySelectorAll('.tok').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var w=btn.dataset.w, i=+btn.dataset.i, d=ANAT[w][i];
+    var panel=document.querySelector('[data-def="'+w+'"]');
+    document.querySelectorAll('.tok[data-w="'+w+'"]').forEach(function(o){o.setAttribute('aria-pressed',String(o===btn));});
+    panel.innerHTML='<h4>'+d.t+'</h4>'+d.b;
+  });
+});
+
+(function(){
+  var b=document.getElementById('tocbtn'),p=document.getElementById('tocpanel');
+  if(!b||!p)return;
+  b.addEventListener('click',function(){
+    var open=b.getAttribute('aria-expanded')==='true';
+    b.setAttribute('aria-expanded',String(!open)); p.hidden=open;
+  });
+  document.addEventListener('click',function(e){
+    if(!p.hidden && !p.contains(e.target) && e.target!==b){b.setAttribute('aria-expanded','false');p.hidden=true;}
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&!p.hidden){b.setAttribute('aria-expanded','false');p.hidden=true;b.focus();}
+  });
+})();
+</script>
+</body>
+</html>

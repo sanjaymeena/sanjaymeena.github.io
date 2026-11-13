@@ -1,0 +1,12 @@
+# Part 9, break-it #3 — ReadWriteMany on a cluster whose only StorageClass
+# does ReadWriteOnce. The PVC sits Pending; any pod using it sits in
+# ContainerCreating with no mention of storage anywhere.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: rwx-demo
+spec:
+  accessModes: ["ReadWriteMany"]
+  resources:
+    requests:
+      storage: 128Mi

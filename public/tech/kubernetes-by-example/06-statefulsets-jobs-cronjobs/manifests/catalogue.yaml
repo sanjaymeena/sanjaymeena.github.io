@@ -1,0 +1,57 @@
+# Part 6 — the catalogue: stable names, one disk each, started in order.
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalogue
+  labels: {app: catalogue}
+spec:
+  clusterIP: None                 # headless: per-pod DNS, no load balancing
+  selector: {app: catalogue}
+  ports:
+    - port: 5432
+      name: db
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: catalogue
+  labels: {app: catalogue}
+spec:
+  serviceName: catalogue          # required: supplies the per-pod DNS names
+  replicas: 3
+  selector:
+    matchLabels: {app: catalogue}
+  template:
+    metadata:
+      labels: {app: catalogue}
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: catalogue
+          image: busybox:1.36
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef: {fieldPath: metadata.name}
+          command: ["/bin/sh","-c"]
+          args:
+            - |
+              echo "$POD_NAME starting, data dir:"
+              ls -la /data
+              while true; do sleep 10; done
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          resources:
+            requests: {cpu: 20m, memory: 32Mi}
+  # One PVC per pod, named data-catalogue-0, -1, -2.
+  # These are NEVER deleted automatically -- not on scale-down, not on delete.
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+        labels: {app: catalogue}
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 128Mi

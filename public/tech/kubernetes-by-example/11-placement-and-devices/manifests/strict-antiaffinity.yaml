@@ -1,0 +1,29 @@
+# Part 11, break-it #2 — REQUIRED anti-affinity turns a resilience feature
+# into a hard capacity ceiling. Scale past your node count and the extra
+# pods sit Pending forever.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: strict
+  labels: {app: strict}
+spec:
+  replicas: 3
+  selector:
+    matchLabels: {app: strict}
+  template:
+    metadata:
+      labels: {app: strict}
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels: {app: strict}
+              topologyKey: kubernetes.io/hostname
+      containers:
+        - name: app
+          image: busybox:1.36
+          command: ["/bin/sh","-c"]
+          args: ["sleep 3600"]
+          resources:
+            requests: {cpu: 10m, memory: 16Mi}

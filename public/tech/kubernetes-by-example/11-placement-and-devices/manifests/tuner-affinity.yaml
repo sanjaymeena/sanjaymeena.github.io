@@ -1,0 +1,37 @@
+# Part 11 — a tuner must land on a node that has a decoder, because Part 9's
+# shared memory only exists on that node. topologyKey: hostname means
+# "the same machine", not "the same zone".
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tuner
+  labels: {app: tuner}
+spec:
+  replicas: 3
+  selector:
+    matchLabels: {app: tuner}
+  template:
+    metadata:
+      labels: {app: tuner}
+    spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels: {app: decoder}
+              topologyKey: kubernetes.io/hostname
+        podAntiAffinity:
+          # PREFERRED, not required: required would cap replicas at node count.
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels: {app: tuner}
+                topologyKey: kubernetes.io/hostname
+      containers:
+        - name: tuner
+          image: busybox:1.36
+          command: ["/bin/sh","-c"]
+          args: ["while true; do sleep 10; done"]
+          resources:
+            requests: {cpu: 10m, memory: 16Mi}

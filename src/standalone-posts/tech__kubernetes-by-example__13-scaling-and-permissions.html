@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scaling and Permissions - Kubernetes by Example - Seeking Wisdom</title>
+<meta name="description" content="An autoscaler that will never scale, and a pod quietly forbidden from doing its job. Both report perfect health.">
+<link rel="canonical" href="https://www.sanjaymeena.io/tech/kubernetes-by-example/13-scaling-and-permissions/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=JetBrains+Mono:wght@400;500;700&family=Literata:opsz,wght@7..72,400;7..72,600;7..72,400italic&display=swap"><style>
+:root{
+  --bg:#F7F5F1; --surface:#FFFFFF; --surface-2:#EEEBE4; --sunken:#E7E3DA;
+  --ink:#1B1A15; --ink-2:#4B473E; --muted:#787365;
+  --line:#DEDACF; --line-strong:#BEB8A8;
+  --want:#30459E; --have:#A74B28; --ok:#36704A; --note:#6B4B8F;
+  --want-wash:#30459E14; --have-wash:#A74B2814; --ok-wash:#36704A14; --note-wash:#6B4B8F14;
+  --shadow:0 1px 2px #1B1A1510,0 10px 28px #1B1A150A;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#13130E; --surface:#1B1B15; --surface-2:#23231C; --sunken:#16160F;
+  --ink:#EFEDE4; --ink-2:#BEBAAD; --muted:#8E8A7C;
+  --line:#2E2E25; --line-strong:#464537;
+  --want:#8E9EF2; --have:#E08760; --ok:#75BA8F; --note:#B291D8;
+  --want-wash:#8E9EF21F; --have-wash:#E087601F; --ok-wash:#75BA8F1F; --note-wash:#B291D81F;
+  --shadow:0 1px 2px #0007,0 10px 28px #0005;
+}}
+:root[data-theme="dark"]{
+  --bg:#13130E; --surface:#1B1B15; --surface-2:#23231C; --sunken:#16160F;
+  --ink:#EFEDE4; --ink-2:#BEBAAD; --muted:#8E8A7C;
+  --line:#2E2E25; --line-strong:#464537;
+  --want:#8E9EF2; --have:#E08760; --ok:#75BA8F; --note:#B291D8;
+  --want-wash:#8E9EF21F; --have-wash:#E087601F; --ok-wash:#75BA8F1F; --note-wash:#B291D81F;
+  --shadow:0 1px 2px #0007,0 10px 28px #0005;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Literata,Georgia,serif;font-size:17.5px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;margin:0 auto;padding:0 26px 110px}
+.col{max-width:65ch}
+h1,h2,h3,h4,.eyebrow,.btn,.steptitle,.tag,.cardt,th,.tb-series,.tb-pos,.tocpanel,.anat,.pre-h{font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif}
+code,kbd,.mono,.tag,.tok{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace}
+h1{font-size:clamp(33px,5vw,55px);line-height:1.05;font-weight:700;letter-spacing:-.03em;margin:0 0 18px;text-wrap:balance}
+h2{font-size:clamp(24px,2.7vw,32px);line-height:1.15;font-weight:700;letter-spacing:-.02em;margin:0 0 16px;text-wrap:balance}
+h3{font-size:19.5px;font-weight:700;letter-spacing:-.01em;margin:0 0 9px}
+p{margin:0 0 18px}
+em{font-style:italic}
+a{color:var(--want)}
+.lede{font-size:20.5px;line-height:1.58;color:var(--ink-2);margin:0 0 22px}
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.17em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+header.top{padding:48px 0 0}
+section{padding:58px 0 0}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0}
+.tag{font-size:11.5px;padding:5px 10px;border:1px solid var(--line-strong);border-radius:3px;color:var(--ink-2);background:var(--surface)}
+.note{border-left:2px solid var(--line-strong);padding:2px 0 2px 18px;color:var(--ink-2);margin:0 0 18px}
+.note b{color:var(--ink)}
+.cw{border:1px solid var(--line);border-left:3px solid var(--note);border-radius:4px;background:var(--surface);padding:17px 19px;margin:24px 0 0}
+.cw h4{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--note);margin:0 0 9px}
+.cw p{margin:0 0 11px;color:var(--ink-2);font-size:16px;line-height:1.62}
+.cw p:last-child{margin:0}
+/* ---- top bar ---- */
+.topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tbin{max-width:1140px;margin:0 auto;padding:10px 26px;display:flex;align-items:center;gap:14px}
+.tb-series{font-size:13px;font-weight:700;letter-spacing:-.01em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.tb-series:hover{color:var(--want)}
+.tb-pos{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-left:auto;white-space:nowrap}
+.tb-btn{font:700 12px/1 "Bricolage Grotesque",sans-serif;padding:7px 11px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:3px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.tb-btn:hover{border-color:var(--want);color:var(--want)}
+.tb-btn:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.tb-btn[aria-disabled="true"]{opacity:.35;pointer-events:none}
+.tocpanel{position:absolute;left:0;right:0;top:100%;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:var(--shadow);max-height:72vh;overflow-y:auto}
+.tocpanel[hidden]{display:none}
+.tocin{max-width:1140px;margin:0 auto;padding:22px 26px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+.tocgrp h5{font:700 10.5px/1 "Bricolage Grotesque",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;padding:0 0 8px;border-bottom:1px solid var(--line)}
+.tocgrp ol{list-style:none;margin:0;padding:0}
+.tocgrp li{margin:0 0 2px}
+.tocgrp a,.tocgrp span{display:flex;gap:9px;padding:6px 8px;border-radius:3px;font-size:14px;text-decoration:none;color:var(--ink);font-family:Literata,serif}
+.tocgrp a:hover{background:var(--surface-2)}
+.tocgrp span{color:var(--muted)}
+.tocgrp .n{font:700 11px/1.6 "JetBrains Mono",monospace;color:var(--muted)}
+.tocgrp [aria-current="page"]{background:var(--want-wash);color:var(--want);font-weight:600}
+.soon{font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-left:auto;align-self:center;color:var(--muted);font-family:"Bricolage Grotesque",sans-serif}
+/* ---- stage ---- */
+.stage{margin:28px 0 0;border:1px solid var(--line);border-radius:5px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.stagefig{background:var(--sunken);padding:18px 20px;overflow-x:auto}
+.stagefig svg{display:block;width:100%;min-width:720px;height:auto}
+.scrub{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:12px 18px;border-top:1px solid var(--line);background:var(--surface-2)}
+.btn{font-size:12.5px;font-weight:700;padding:7px 13px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:3px;cursor:pointer;line-height:1.2}
+.btn:hover{border-color:var(--want);color:var(--want)}
+.btn:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.pips{display:flex;gap:5px;margin-left:auto;flex-wrap:wrap}
+.pip{width:21px;height:21px;border-radius:3px;border:1px solid var(--line-strong);background:var(--surface);color:var(--muted);font:700 11px/1 "Bricolage Grotesque",sans-serif;cursor:pointer;display:grid;place-items:center;padding:0}
+.pip[aria-current="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.pip:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.stagetext{padding:21px 23px 23px;border-top:1px solid var(--line)}
+.steptitle{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 7px}
+.stagetext h3{font-size:21.5px;margin:0 0 11px}
+.stagetext p{max-width:72ch;margin:0 0 13px;color:var(--ink-2)}
+.stagetext p:last-child{margin:0}
+.stagetext b{color:var(--ink)}
+/* ---- anatomy ---- */
+.anat{margin:26px 0 0;border:1px solid var(--line);border-radius:5px;background:var(--surface);overflow:hidden;box-shadow:var(--shadow)}
+.anat-h{padding:12px 18px;border-bottom:1px solid var(--line);background:var(--surface-2);font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.anat-cmd{padding:20px 18px 16px;background:var(--sunken);display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start;overflow-x:auto}
+.tok{font-size:14px;font-weight:500;padding:7px 10px;border:1px solid transparent;border-radius:3px;background:var(--surface);color:var(--ink);cursor:pointer;line-height:1.3;white-space:nowrap;position:relative;border-bottom:2px solid var(--line-strong)}
+.tok:hover{border-color:var(--want);color:var(--want)}
+.tok[aria-pressed="true"]{background:var(--want);border-color:var(--want);color:#fff}
+.tok:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.tok .kind{display:block;font:700 8.5px/1.4 "Bricolage Grotesque",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:3px 0 0}
+.tok[aria-pressed="true"] .kind{color:#ffffffcc}
+.anat-def{padding:18px 20px 20px;border-top:1px solid var(--line);min-height:96px}
+.anat-def h4{font-size:15px;margin:0 0 7px;font-family:"JetBrains Mono",monospace;color:var(--want)}
+.anat-def p{font-size:15.5px;line-height:1.62;color:var(--ink-2);margin:0 0 10px;max-width:70ch}
+.anat-def p:last-child{margin:0}
+.anat-def code{font-size:.9em}
+.anat-hint{font-size:13px;color:var(--muted);font-family:Literata,serif;font-style:italic}
+/* ---- tables, code ---- */
+.tbl{width:100%;border-collapse:collapse;margin:22px 0 0;font-size:15px}
+.tbl th{font-size:11px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 14px 9px 0;border-bottom:1px solid var(--line-strong)}
+.tbl td{padding:11px 14px 11px 0;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-2)}
+.tbl td:first-child{color:var(--ink);white-space:nowrap}
+.tbl td code{white-space:nowrap}
+.tblwrap{overflow-x:auto}
+code{font-size:.86em;background:var(--surface-2);border:1px solid var(--line);border-radius:3px;padding:1px 5px;color:var(--ink)}
+pre{background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:15px 17px;overflow-x:auto;font-size:13px;line-height:1.68;margin:16px 0 0}
+pre code{background:0 0;border:0;padding:0;color:var(--ink-2);font-size:inherit}
+.pre-h{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:24px 0 -6px}
+figure{margin:26px 0 0}
+figcaption{font-size:13.5px;line-height:1.55;color:var(--muted);margin:11px 0 0;max-width:76ch}
+.nextprev{display:flex;gap:14px;flex-wrap:wrap;margin:30px 0 0}
+.np{flex:1 1 230px;border:1px solid var(--line);border-radius:4px;padding:15px 17px;background:var(--surface);text-decoration:none;color:var(--ink)}
+.np:hover{border-color:var(--want)}
+.np span{display:block;font-size:10.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-family:"Bricolage Grotesque",sans-serif;margin:0 0 4px}
+footer{margin:76px 0 0;padding:26px 0 0;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+/* svg shared */
+.d-panel{fill:var(--surface);stroke:var(--line-strong)}
+.d-sunken{fill:var(--sunken);stroke:var(--line)}
+.d-box{fill:var(--surface);stroke:var(--line-strong)}
+.t{fill:var(--ink);font-family:"Bricolage Grotesque",sans-serif;font-size:12.5px;font-weight:700}
+.t-sm{fill:var(--ink-2);font-family:"JetBrains Mono",monospace;font-size:10.5px}
+.t-mut{fill:var(--muted);font-family:"JetBrains Mono",monospace;font-size:10px}
+.t-lbl{fill:var(--muted);font-family:"Bricolage Grotesque",sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.t-want{fill:var(--want)} .t-have{fill:var(--have)} .t-ok{fill:var(--ok)} .t-note{fill:var(--note)}
+.b-want{fill:var(--want-wash);stroke:var(--want)} .b-have{fill:var(--have-wash);stroke:var(--have)}
+.b-ok{fill:var(--ok-wash);stroke:var(--ok)} .b-note{fill:var(--note-wash);stroke:var(--note)}
+.cell{fill:var(--want-wash);stroke:var(--want);stroke-width:.8}
+.ah{fill:var(--ink-2)} .ah-want{fill:var(--want)} .ah-have{fill:var(--have)} .ah-ok{fill:var(--ok)}
+.flow{fill:none;stroke:var(--ink-2);stroke-width:1.4}
+.flow-want{stroke:var(--want)} .flow-have{stroke:var(--have)} .flow-ok{stroke:var(--ok)}
+.g{transition:opacity .4s ease}
+.dim{opacity:.13} .hide{opacity:0}
+.live{stroke-dasharray:5 5;animation:ants 1s linear infinite}
+@keyframes ants{to{stroke-dashoffset:-20}}
+@media (prefers-reduced-motion:reduce){.live{animation:none}.g{transition:none}}
+</style>
+</head>
+<body>
+<nav class="topbar">
+  <div class="tbin">
+    <a class="tb-series" href="/tech/kubernetes-by-example/">Kubernetes by Example</a>
+    <button class="tb-btn" id="tocbtn" type="button" aria-expanded="false" aria-controls="tocpanel">Contents</button>
+    <span class="tb-pos">Part 13 of 14</span><div style="display:flex;gap:6px"><a class="tb-btn" href="/tech/kubernetes-by-example/12-staying-up/" title="Staying up">&#8592;</a><a class="tb-btn" href="/tech/kubernetes-by-example/14-helm-and-custom-resources/" title="Helm and custom resources">&#8594;</a></div>
+  </div>
+  <div class="tocpanel" id="tocpanel" hidden><div class="tocin"><div class="tocgrp"><h5>Tier 0 · The model</h5><ol><li><a href="/tech/kubernetes-by-example/01-the-object-model/"><span class="n">01</span>The object model</a></li><li><a href="/tech/kubernetes-by-example/02-pods-and-containers/"><span class="n">02</span>Pods and containers</a></li><li><a href="/tech/kubernetes-by-example/03-labels-selectors-namespaces/"><span class="n">03</span>Labels, selectors, namespaces</a></li></ol></div><div class="tocgrp"><h5>Tier 1 · Workload kinds</h5><ol><li><a href="/tech/kubernetes-by-example/04-deployments-and-rollouts/"><span class="n">04</span>Deployments and rollouts</a></li><li><a href="/tech/kubernetes-by-example/05-daemonsets/"><span class="n">05</span>DaemonSets</a></li><li><a href="/tech/kubernetes-by-example/06-statefulsets-jobs-cronjobs/"><span class="n">06</span>StatefulSets, Jobs, CronJobs</a></li></ol></div><div class="tocgrp"><h5>Tier 2 · Wiring</h5><ol><li><a href="/tech/kubernetes-by-example/07-services-and-ingress/"><span class="n">07</span>Services and Ingress</a></li><li><a href="/tech/kubernetes-by-example/08-config-and-secrets/"><span class="n">08</span>Config and Secrets</a></li><li><a href="/tech/kubernetes-by-example/09-storage/"><span class="n">09</span>Storage</a></li></ol></div><div class="tocgrp"><h5>Tier 3 · Scheduling</h5><ol><li><a href="/tech/kubernetes-by-example/10-requests-limits-qos/"><span class="n">10</span>Requests, limits, QoS</a></li><li><a href="/tech/kubernetes-by-example/11-placement-and-devices/"><span class="n">11</span>Placement and devices</a></li></ol></div><div class="tocgrp"><h5>Tier 4 · Production</h5><ol><li><a href="/tech/kubernetes-by-example/12-staying-up/"><span class="n">12</span>Staying up</a></li><li><a href="/tech/kubernetes-by-example/13-scaling-and-permissions/" aria-current="page"><span class="n">13</span>Scaling and permissions</a></li><li><a href="/tech/kubernetes-by-example/14-helm-and-custom-resources/"><span class="n">14</span>Helm and custom resources</a></li></ol></div></div></div>
+</nav>
+<div class="wrap">
+<header class="top">
+  <div class="col">
+    <p class="eyebrow">Kubernetes by Example · Part 13</p>
+    <h1>Scaling and Permissions</h1>
+    <p class="lede">An autoscaler that will never scale, and a pod quietly forbidden from doing its job. Both report perfect health.</p>
+    <div class="meta"><span class="tag">assumes Parts 1–12</span><span class="tag">~19 minutes</span><span class="tag">two silent failures</span></div>
+  </div>
+</header>
+
+<section>
+  <div class="col">
+    <h2>The symptom</h2>
+    <p>Two problems, both of which look like nothing happening.</p>
+    <p>The first: somebody queues two thousand hours of archive for re-transcription. The backlog climbs. The rewind worker sits at one replica, serenely.</p>
+  </div><pre><code>$ kubectl get hpa rewind
+NAME     REFERENCE           TARGETS         MINPODS   MAXPODS   REPLICAS
+rewind   Deployment/rewind   <unknown>/70%   1         10        1</code></pre>  <div class="col">
+    <p style="margin-top:18px">The second: the sweeper is meant to clean up shared memory for departed stations. It isn't. Its logs are clean. The pod is healthy. The rings pile up until the node runs out.</p>
+  </div><pre><code>$ kubectl logs deploy/sweeper | tail -2
+sweeper: starting
+sweeper: listing pods on node airwaves-worker</code></pre>  <div class="col">
+    <p style="margin-top:18px">It says it's listing pods, and then says nothing ever again.</p>
+    <p>One of these is an autoscaler that cannot see its metric. The other is a pod that is not allowed to ask the question it's asking — and neither failure is reported anywhere you'd think to look.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Growing, shrinking, and being allowed</h2>
+    <p>These two topics sit together because they're both about a pod's relationship with the cluster rather than with its own work. One changes how many of you there are. The other decides what you may ask.</p>
+    <p>And both fail silently in the same irritating way: the system reports perfect health while doing nothing at all.</p>
+  </div>  <div class="stage">
+    <div class="stagefig" id="stagefig"><svg viewBox="0 0 1000 420" role="img" aria-label="An autoscaler reading a metric and writing a replica count, which is just another controller. Beside it, a queue-depth scaler that can reach zero. Below, the permission chain: a pod runs as a ServiceAccount, bound by a RoleBinding to a Role that lists what it may do.">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-want" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-want" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-have" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-have" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-ok" d="M0,0 L10,5 L0,10 Z"/></marker>
+  </defs>
+  <g id="g-hpa" class="g">
+    <rect class="b-want" x="40" y="56" width="440" height="128" rx="4" stroke-width="1.3"/>
+    <text class="t-lbl t-want" x="56" y="76">HorizontalPodAutoscaler</text>
+    <text class="t-sm" x="56" y="98">reads: CPU at 70% of requested</text>
+    <text class="t-sm" x="56" y="118">writes: spec.replicas</text>
+    <text class="t-mut" x="56" y="140">it is a controller. nothing more.</text>
+    <text class="t-mut" x="56" y="160">needs metrics-server, and needs requests set</text>
+  </g>
+  <g id="g-keda" class="g">
+    <rect class="b-ok" x="520" y="56" width="440" height="128" rx="4" stroke-width="1.3"/>
+    <text class="t-lbl t-ok" x="536" y="76">queue-depth scaling · KEDA</text>
+    <text class="t-sm" x="536" y="98">reads: messages waiting on the bus</text>
+    <text class="t-sm" x="536" y="118">writes: spec.replicas — and can reach 0</text>
+    <text class="t-mut" x="536" y="140">scale to zero costs a cold start</text>
+    <text class="t-mut" x="536" y="160">the first message waits for a pod to boot</text>
+  </g>
+  <g id="g-sa" class="g">
+    <rect class="d-panel" x="40" y="218" width="920" height="186" rx="4" stroke-width="1.5"/>
+    <text class="t-lbl" x="56" y="238">every pod runs as somebody — whether you chose or not</text>
+    <rect class="d-sunken" x="56" y="250" width="212" height="76" rx="3"/>
+    <text class="t-sm" x="68" y="270">Pod</text>
+    <text class="t-mut" x="68" y="288">serviceAccountName:</text>
+    <text class="t-mut" x="68" y="306">sweeper</text>
+    <rect class="b-note" x="296" y="250" width="212" height="76" rx="3" stroke-width="1.2"/>
+    <text class="t-sm t-note" x="308" y="270">ServiceAccount</text>
+    <text class="t-mut" x="308" y="288">an identity, and nothing else</text>
+    <text class="t-mut" x="308" y="306">by itself it can do nothing</text>
+    <rect class="b-want" x="536" y="250" width="212" height="76" rx="3" stroke-width="1.2"/>
+    <text class="t-sm t-want" x="548" y="270">RoleBinding</text>
+    <text class="t-mut" x="548" y="288">joins an identity</text>
+    <text class="t-mut" x="548" y="306">to a set of permissions</text>
+    <rect class="b-ok" x="776" y="250" width="168" height="76" rx="3" stroke-width="1.2"/>
+    <text class="t-sm t-ok" x="788" y="270">Role</text>
+    <text class="t-mut" x="788" y="288">verbs on resources</text>
+    <text class="t-mut" x="788" y="306">get, list, watch…</text>
+    <text class="t-mut" x="56" y="352">Role is namespaced · ClusterRole is cluster-wide · RoleBinding can grant a ClusterRole inside one namespace</text>
+    <text class="t-mut" x="56" y="378">nothing is granted by default. the default ServiceAccount can do essentially nothing, and that is correct.</text>
+  </g>
+  <g id="f-chain" class="g hide">
+    <path class="flow flow-want live" d="M272,288 H292" marker-end="url(#a-want)"/>
+    <path class="flow flow-want live" d="M512,288 H532" marker-end="url(#a-want)"/>
+    <path class="flow flow-want live" d="M752,288 H772" marker-end="url(#a-want)"/>
+  </g>
+  <g id="f-loop" class="g hide">
+    <path class="flow flow-want live" d="M260,188 V206" marker-end="url(#a-want)"/>
+    <rect x="276" y="186" width="330" height="16" fill="var(--bg)"/>
+    <text class="t-lbl t-want" x="280" y="198">read a number, write a number, repeat</text>
+  </g>
+  <g id="x-nometrics" class="g hide">
+    <rect x="36" y="52" width="448" height="136" rx="4" fill="none" stroke="var(--have)" stroke-width="1.7" stroke-dasharray="6 4"/>
+    <rect x="60" y="196" width="400" height="16" fill="var(--bg)"/>
+    <text class="t-lbl t-have" x="64" y="208">no requests set → target is a percentage of nothing → &lt;unknown&gt;</text>
+  </g>
+  <g id="x-403" class="g hide">
+    <rect x="292" y="246" width="220" height="84" rx="4" fill="none" stroke="var(--have)" stroke-width="1.7" stroke-dasharray="6 4"/>
+    <rect x="300" y="336" width="330" height="16" fill="var(--bg)"/>
+    <text class="t-lbl t-have" x="304" y="348">no binding → 403, and only your pod&apos;s logs say so</text>
+  </g>
+</svg></div>
+    <div class="scrub">
+      <button class="btn" id="prev" type="button">&#9664; Back</button>
+      <button class="btn" id="play" type="button">&#9654; Play</button>
+      <button class="btn" id="next" type="button">Next &#9654;</button>
+      <div class="pips" id="pips"></div>
+    </div>
+    <div class="stagetext">
+      <p class="steptitle" id="stepn"></p>
+      <h3 id="stept"></h3>
+      <div id="stepp"></div>
+    </div>
+  </div>  <div class="col">
+    <div class="cw">
+      <h4>Two silent failures to recognise</h4>
+      <p><b><code>TARGETS: &lt;unknown&gt;</code></b> — no metrics-server, or no CPU request on the pod. The HPA exists, is healthy, and will never act.</p>
+      <p><b>A 403 in your pod's logs and nowhere else.</b> No event, no status, no describe output. <code>kubectl auth can-i</code> answers it instantly.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>The commands</h2>
+  </div><div class="anat" id="an-hpa"><div class="anat-h">Autoscaling, and why it says unknown</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-hpa" data-i="0" aria-pressed="false">kubectl get hpa<span class="kind">verb + type</span></button><button class="tok" type="button" data-w="an-hpa" data-i="1" aria-pressed="false">kubectl autoscale<span class="kind">verb</span></button><button class="tok" type="button" data-w="an-hpa" data-i="2" aria-pressed="false">--cpu-percent=70<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-hpa" data-i="3" aria-pressed="false">kubectl describe hpa<span class="kind">command</span></button><button class="tok" type="button" data-w="an-hpa" data-i="4" aria-pressed="false">behavior<span class="kind">spec field</span></button></div><div class="anat-def" data-def="an-hpa"><p class="anat-hint">Click any piece of the command.</p></div></div><div class="anat" id="an-rbac"><div class="anat-h">Permissions, and proving you have them</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-rbac" data-i="0" aria-pressed="false">kubectl auth can-i<span class="kind">verb</span></button><button class="tok" type="button" data-w="an-rbac" data-i="1" aria-pressed="false">--as=system:serviceaccount:ns:name<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-rbac" data-i="2" aria-pressed="false">--list<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-rbac" data-i="3" aria-pressed="false">kubectl create role<span class="kind">verb</span></button><button class="tok" type="button" data-w="an-rbac" data-i="4" aria-pressed="false">kubectl create rolebinding<span class="kind">verb</span></button></div><div class="anat-def" data-def="an-rbac"><p class="anat-hint">Click any piece of the command.</p></div></div><div class="anat" id="an-keda"><div class="anat-h">Scaling on things Kubernetes cannot see</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-keda" data-i="0" aria-pressed="false">kubectl get scaledobject<span class="kind">verb + type</span></button><button class="tok" type="button" data-w="an-keda" data-i="1" aria-pressed="false">triggers<span class="kind">spec field</span></button><button class="tok" type="button" data-w="an-keda" data-i="2" aria-pressed="false">minReplicaCount: 0<span class="kind">spec field</span></button><button class="tok" type="button" data-w="an-keda" data-i="3" aria-pressed="false">TriggerAuthentication<span class="kind">object</span></button><button class="tok" type="button" data-w="an-keda" data-i="4" aria-pressed="false">kubectl get hpa<span class="kind">command</span></button></div><div class="anat-def" data-def="an-keda"><p class="anat-hint">Click any piece of the command.</p></div></div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Build it</h2>
+    <p>The web front end scaling on CPU, the rewind worker scaling on backlog down to zero, and the sweeper finally allowed to do its job.</p>
+  </div><p class="pre-h">CPU scaling</p>
+<pre><code>kubectl apply -f manifests/metrics-server.yaml   # kind needs this
+kubectl top nodes                                # confirm it works
+kubectl apply -f manifests/web-hpa.yaml
+kubectl get hpa web</code></pre>  <div class="col">
+    <p style="margin-top:20px">If TARGETS shows a percentage, you're fine. If it shows <code>&lt;unknown&gt;</code>, stop here — nothing below will work, and the cause is one of exactly two things.</p>
+  </div><p class="pre-h">Queue scaling, down to zero</p>
+<pre><code>kubectl apply -f manifests/keda.yaml
+kubectl apply -f manifests/rewind-scaledobject.yaml
+kubectl get scaledobject,hpa,pods -l app=rewind</code></pre>  <div class="col">
+    <p style="margin-top:20px">No rewind pods at all, and that's correct — the queue is empty. KEDA created an HPA underneath; the mechanism is the same, only the metric is better.</p>
+  </div><p class="pre-h">Permission for the sweeper</p>
+<pre><code>kubectl apply -f manifests/sweeper-rbac.yaml
+kubectl auth can-i list pods \
+  --as=system:serviceaccount:airwaves:sweeper -n airwaves</code></pre>  <div class="col">
+    <p style="margin-top:20px"><code>yes</code>. Three objects — ServiceAccount, Role, RoleBinding — and the pod can finally ask its question. Open <code>sweeper-rbac.yaml</code> and notice how narrow the Role is: <code>list</code> and <code>watch</code> on <code>pods</code>, nothing else. It needs nothing else.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Break it</h2>
+    <h3 style="margin-top:26px">1 · Reproduce the unknown target</h3>
+  </div><pre><code>kubectl apply -f manifests/no-requests.yaml
+kubectl autoscale deploy/no-requests --min=1 --max=5 --cpu-percent=70
+sleep 60
+kubectl get hpa no-requests
+kubectl describe hpa no-requests | tail -5</code></pre>  <div class="col">
+    <p style="margin-top:20px"><code>&lt;unknown&gt;</code>, and the events say <code>missing request for cpu</code>. The HPA is perfectly healthy and structurally incapable of acting, because 70% of an unspecified request is not a number.</p>
+    <p>Add a request and it starts working within a minute, with no other change.</p>
+    <h3 style="margin-top:34px">2 · Take the sweeper's permission away</h3>
+  </div><pre><code>kubectl delete rolebinding sweeper
+kubectl logs -f deploy/sweeper</code></pre>  <div class="col">
+    <p style="margin-top:20px">If you're lucky the client logs the 403. If it swallows errors — and plenty do — you get silence, which is the symptom from the top of this page.</p>
+    <p>Confirm it properly instead of guessing:</p>
+  </div><pre><code>kubectl auth can-i list pods \
+  --as=system:serviceaccount:airwaves:sweeper -n airwaves    # no
+
+kubectl auth can-i --list \
+  --as=system:serviceaccount:airwaves:sweeper -n airwaves</code></pre>  <div class="col">
+    <p style="margin-top:20px">Two seconds, and unambiguous. The ServiceAccount still exists, the Role still exists, and without the binding between them the pod can do nothing — which is precisely the shape of the most common RBAC mistake.</p>
+    <h3 style="margin-top:34px">3 · Find out what the default account can reach</h3>
+  </div><pre><code>kubectl auth can-i --list \
+  --as=system:serviceaccount:airwaves:default -n airwaves</code></pre>  <div class="col">
+    <p style="margin-top:20px">On a stock cluster this is a short and reassuring list. On one where somebody once bound <code>cluster-admin</code> to the default account to make something work, it is not — and <b>every pod in the namespace inherits it</b>, including anything that ever gets compromised.</p>
+    <div class="note"><b>Put it back:</b> reapply <code>sweeper-rbac.yaml</code>.</div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>What follows from this</h2>
+  </div>  <div class="tblwrap">
+  <table class="tbl">
+    <thead><tr><th>Because…</th><th>…this is what happens</th></tr></thead>
+    <tbody><tr><td>An HPA just writes <code>replicas</code></td><td>Your <code>apply</code> fights it. Remove <code>replicas</code> from manifests an HPA owns.</td></tr><tr><td>CPU targets are % of request</td><td>No request means no scaling, ever. <code>TARGETS: &lt;unknown&gt;</code>.</td></tr><tr><td>Scale-down is stabilised</td><td>Up is fast, down waits five minutes. Deliberate, and tunable via <code>behavior</code>.</td></tr><tr><td>HPAs stop at 1</td><td>Scale-to-zero needs KEDA or similar — and CPU was the wrong metric for a queue worker anyway.</td></tr><tr><td>Zero has a cold start</td><td>The first message waits for a pod to boot. Keep one warm if a human is waiting.</td></tr><tr><td>A ServiceAccount grants nothing</td><td>It is identity only. Role + RoleBinding + ServiceAccount, and the binding is the one forgotten.</td></tr><tr><td>403s are returned, not recorded</td><td>No event, no status. <code>kubectl auth can-i --as=…</code> is the diagnostic.</td></tr></tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Cheat sheet</h2>
+    <div class="cw">
+      <h4>Part 13 · scaling and permissions</h4>
+      <p>• An <b>HPA is a controller</b> that writes <code>replicas</code>. Everything downstream is Part 1's loop.</p>
+      <p>• <b>CPU targets are a percentage of the request.</b> No request → <code>&lt;unknown&gt;</code> → never scales.</p>
+      <p>• Needs <b>metrics-server</b>. Not installed by default on <code>kind</code>.</p>
+      <p>• Up is quick; down waits ~5 minutes. Tune with <code>behavior</code>.</p>
+      <p>• Remove <code>replicas</code> from any manifest an HPA owns, or they will fight.</p>
+      <p>• <b>HPAs can't reach zero.</b> KEDA can — and queue depth beats CPU for workers anyway.</p>
+      <p>• Scale-to-zero costs a <b>cold start</b>. <code>minReplicaCount: 1</code> buys it back.</p>
+      <p>• Every pod runs as a <b>ServiceAccount</b>; by itself it can do nothing, which is correct.</p>
+      <p>• <b>Three objects: ServiceAccount + Role + RoleBinding.</b> The binding is the one people forget.</p>
+      <p>• <code>kubectl auth can-i --as=system:serviceaccount:ns:name</code> before debugging any application code.</p>
+    </div>
+  </div>  <div class="nextprev">
+    <a class="np" href="/tech/kubernetes-by-example/12-staying-up/"><span>Previous · Part 12</span>Staying up</a>
+    <a class="np" href="/tech/kubernetes-by-example/"><span>Series</span>All 14 parts</a>
+    <a class="np" href="/tech/kubernetes-by-example/14-helm-and-custom-resources/"><span>Next · Part 14</span>Helm and custom resources</a>
+  </div>
+</section>
+
+<footer>
+  <div class="col"><p>Part of <b>Kubernetes by Example</b>. Next, and last: packaging all of it, then teaching the cluster a noun of your own.</p></div>
+</footer>
+</div>
+<script>
+const STEPS = [{"t": "An autoscaler is just another pedant", "on": ["g-hpa", "f-loop"], "p": ["A <b>HorizontalPodAutoscaler</b> sounds like infrastructure and is nothing of the sort. It's a controller, exactly like the ones in Part 1: it reads a number, compares it to a target, and writes <code>spec.replicas</code>.", "Everything downstream is unchanged. The Deployment notices its count differs from reality and does what it always does. The HPA never creates a pod and never deletes one.", "Which also means <b>anything else writing <code>replicas</code> will fight it</b> \u2014 your <code>kubectl apply</code> included. Once an HPA owns a Deployment, remove <code>replicas</code> from the manifest entirely."], "n": 1}, {"t": "It needs two things people forget", "on": ["g-hpa", "x-nometrics"], "p": ["First, <b>metrics-server</b> must be installed. Not standard on <code>kind</code>, and the symptom is <code>TARGETS: &lt;unknown&gt;</code> with no scaling ever.", "Second, and more subtly: <b>CPU targets are a percentage of the request.</b> <code>averageUtilization: 70</code> means 70% of what the pod <em>requested</em>, not of a core and not of the node.", "<b>So a pod with no CPU request can never be scaled on CPU.</b> Seventy percent of nothing is nothing. Part 10's advice to always set requests has a second payoff here."], "n": 2}, {"t": "Scaling down is deliberately reluctant", "on": ["g-hpa"], "p": ["Up is quick \u2014 within a cycle or two of crossing the target. Down waits five minutes by default, and takes the highest recommendation from that whole window.", "That asymmetry is correct. Scaling up too eagerly costs money; scaling down too eagerly costs an outage, because you remove capacity right before the next spike.", "<code>behavior</code> lets you tune both directions separately \u2014 stabilisation windows, and policies capping how many pods or what percentage may move per interval. Worth setting for anything with a slow start."], "n": 3}, {"t": "But an HPA cannot reach zero", "on": ["g-hpa", "g-keda"], "p": ["<code>minReplicas</code> must be at least 1. For a web service that's fine \u2014 you always want someone listening.", "For <em>airwaves</em>' rewind worker, which re-transcribes archived audio when somebody asks, it's pure waste. Most of the time there is nothing to do, and a pod sits there costing memory in order to poll an empty queue.", "<b>And CPU is the wrong signal anyway.</b> A worker waiting on an empty queue uses no CPU \u2014 so by the only metric the HPA understands, it is perfectly idle and should be scaled down. The thing you actually care about is the backlog, which the HPA cannot see."], "n": 4}, {"t": "Queue depth is the metric that fits", "on": ["g-keda"], "p": ["<b>KEDA</b> (or a custom metrics adapter) scales on things outside the cluster: queue length, topic lag, rows pending, a value in a database.", "A <code>ScaledObject</code> names the workload, the trigger, and the thresholds \u2014 and underneath it creates an ordinary HPA. It isn't a replacement for the mechanism, it's a better source of numbers for it.", "The important capability is <b>scale to zero</b>. KEDA keeps the workload at nothing until the trigger fires, then scales from 0 to 1 itself and hands over to the HPA from there."], "n": 5}, {"t": "Zero is not free", "on": ["g-keda"], "p": ["<b>The first message after idle waits for a pod to start.</b> Image pull if it's not cached, container start, your app's boot, and then the startup probe from Part 12 before it does any work.", "For a batch worker that's irrelevant \u2014 nobody notices thirty seconds on a job that takes ten minutes. For anything a human is waiting on, it's unacceptable.", "<code>minReplicaCount: 1</code> keeps one warm. That's the whole trade: a pod's worth of cost against a cold start, and which side you want depends entirely on who is waiting."], "n": 6}, {"t": "Now the other half \u2014 every pod is somebody", "on": ["g-sa", "f-chain"], "p": ["Our sweeper needs to ask the API server which pods are on its node, so it knows which shared memory rings to clean up. The moment a pod talks to Kubernetes, identity starts to matter.", "Every pod runs as a <b>ServiceAccount</b> \u2014 the one you named, or <code>default</code> if you didn't. A token is mounted into the pod automatically, and the API server knows exactly who is calling.", "<b>A ServiceAccount on its own can do essentially nothing.</b> It's a name, not a permission. That it's useless by default is the single best thing about this design."], "n": 7}, {"t": "Permission is three objects in a chain", "on": ["g-sa", "f-chain"], "p": ["A <b>Role</b> is a list of allowed verbs on resources: <code>get</code>, <code>list</code>, <code>watch</code> on <code>pods</code>. It names no one.", "A <b>RoleBinding</b> joins a Role to a subject \u2014 a ServiceAccount, a user, a group. It grants no permissions itself.", "A <b>ServiceAccount</b> is the identity a pod runs as.", "All three are needed, and <b>the usual mistake is creating two of them</b>. A ServiceAccount and a Role with no binding looks completely correct and grants nothing at all.", "<code>Role</code> and <code>RoleBinding</code> are namespaced. <code>ClusterRole</code> and <code>ClusterRoleBinding</code> are cluster-wide \u2014 and a RoleBinding can grant a ClusterRole within one namespace, which is the usual way to reuse a standard role safely."], "n": 8}, {"t": "A 403 only shows up in your own logs", "on": ["g-sa", "x-403"], "p": ["Permission failures are returned to the caller and nowhere else. No Kubernetes event, nothing in <code>describe</code>, nothing a dashboard will show you.", "Your pod gets <code>403 Forbidden</code>, and whether anybody ever learns of it depends on how your code handles errors. A library that retries silently turns a missing RoleBinding into a mystery.", "<b><code>kubectl auth can-i</code> answers it in one command</b>, including <code>--as</code> to ask on behalf of a ServiceAccount. Check with that before reading any more application logs.", "And while you're there: <code>kubectl auth can-i get secrets --as=system:serviceaccount:airwaves:default</code>. If that says yes, Part 8's warning about Secrets has teeth."], "n": 9}];
+const svg=document.querySelector('#stagefig svg');
+const groups=[...svg.querySelectorAll('g[id]')];
+const pips=document.getElementById('pips');
+let cur=0,timer=null;
+STEPS.forEach((s,i)=>{const b=document.createElement('button');b.className='pip';b.type='button';b.textContent=s.n;
+  b.setAttribute('aria-label','Step '+s.n+': '+s.t);b.addEventListener('click',()=>{stop();show(i);});pips.appendChild(b);});
+function show(i){
+  cur=(i+STEPS.length)%STEPS.length;
+  const s=STEPS[cur],on=new Set(s.on);
+  groups.forEach(g=>{
+    const isFlow=g.id.startsWith('f-')||g.id.startsWith('x-');
+    g.classList.remove('dim','hide');
+    if(on.has(g.id))return;
+    g.classList.add(isFlow?'hide':'dim');
+  });
+  document.getElementById('stepn').textContent='Step '+s.n+' of '+STEPS.length;
+  document.getElementById('stept').textContent=s.t;
+  document.getElementById('stepp').innerHTML=s.p.map(x=>'<p>'+x+'</p>').join('');
+  [...pips.children].forEach((b,j)=>b.setAttribute('aria-current',j===cur?'true':'false'));
+}
+function stop(){if(timer){clearInterval(timer);timer=null;document.getElementById('play').innerHTML='\u25B6 Play';}}
+document.getElementById('next').addEventListener('click',()=>{stop();show(cur+1);});
+document.getElementById('prev').addEventListener('click',()=>{stop();show(cur-1);});
+document.getElementById('play').addEventListener('click',e=>{
+  if(timer){stop();return;}
+  e.currentTarget.innerHTML='\u23F8 Pause';
+  timer=setInterval(()=>{if(cur===STEPS.length-1){stop();return;}show(cur+1);},6000);
+});
+document.addEventListener('keydown',e=>{
+  if(e.target.closest('input,textarea'))return;
+  if(e.key==='ArrowRight'){stop();show(cur+1);}
+  if(e.key==='ArrowLeft'){stop();show(cur-1);}
+});
+show(0);
+
+var ANAT = {"an-hpa": [{"t": "the status line", "b": "<p>TARGETS reads <code>45%/70%</code> when healthy. <b><code>&lt;unknown&gt;/70%</code> means it cannot read the metric</b> \u2014 either metrics-server is missing or the pod has no CPU request.</p><p>MINPODS, MAXPODS and REPLICAS show where it currently sits.</p>"}, {"t": "making one quickly", "b": "<p><code>kubectl autoscale deploy/rewind --min=1 --max=10 --cpu-percent=70</code>.</p><p>Fine for a demo. Real ones want <code>behavior</code> tuning, which needs YAML.</p>"}, {"t": "percent of what", "b": "<p><b>Of the request, not of a core.</b> A pod requesting 100m at 70% target scales up past 70m of actual use.</p><p>This is the field people misread. Set requests honestly or the target means nothing.</p>"}, {"t": "what it decided", "b": "<p>Events narrate every scaling decision and its reason. <code>ScalingLimited</code> means it wanted to go further and hit <code>maxReplicas</code>.</p><p>The first place to look when scaling happens but not as much as you expected.</p>"}, {"t": "pacing it", "b": "<p><code>scaleDown.stabilizationWindowSeconds</code> defaults to 300 \u2014 five minutes of reluctance.</p><p>Policies cap movement per interval: at most N pods, or at most X percent. Essential when start-up is slow, since otherwise a burst creates pods faster than they can become useful.</p>"}], "an-rbac": [{"t": "the one command", "b": "<p><code>kubectl auth can-i list pods</code> \u2192 <code>yes</code> or <code>no</code>. Asks the API server to evaluate the real rules.</p><p><b>Always check here before debugging application code.</b> A 403 from inside a pod and a <code>no</code> from this command are the same fact, and this one takes two seconds.</p>"}, {"t": "asking as a pod", "b": "<p>Impersonation. <code>kubectl auth can-i list pods --as=system:serviceaccount:airwaves:sweeper -n airwaves</code>.</p><p>The exact question your pod is asking. You need impersonation rights yourself, which cluster admins have.</p>"}, {"t": "everything at once", "b": "<p><code>kubectl auth can-i --list --as=system:serviceaccount:airwaves:default</code> prints the full permission set.</p><p>Run it against <code>default</code> in your namespace. If it can read Secrets, every pod you have can read every Secret.</p>"}, {"t": "making one", "b": "<p><code>kubectl create role pod-reader --verb=get,list,watch --resource=pods</code>.</p><p>With <code>--dry-run=client -o yaml</code>, the fastest way to write RBAC without remembering the shape. <code>--resource-name</code> narrows it to specific objects.</p>"}, {"t": "the step people miss", "b": "<p><code>kubectl create rolebinding sweeper --role=pod-reader --serviceaccount=airwaves:sweeper</code>.</p><p><b>The chain is three objects and the binding is the one that gets forgotten.</b> A Role and a ServiceAccount with no binding is a very convincing-looking nothing.</p>"}], "an-keda": [{"t": "KEDA's object", "b": "<p>READY and ACTIVE. <b>ACTIVE False means the trigger is quiet</b> \u2014 which, with <code>minReplicaCount: 0</code>, means zero pods and an empty <code>get pods</code>.</p><p>That emptiness is correct behaviour and looks exactly like a broken deployment.</p>"}, {"t": "where the number comes from", "b": "<p>A type and its config \u2014 RabbitMQ queue length, Kafka lag, Postgres row count, Prometheus query.</p><p><code>queueLength: 20</code> means roughly one pod per twenty waiting messages. It's a ratio, not a threshold.</p>"}, {"t": "scale to zero", "b": "<p>The capability a plain HPA does not have.</p><p>Set it to 1 if a cold start would be noticed. The whole decision is cost versus first-request latency.</p>"}, {"t": "credentials for the trigger", "b": "<p>KEDA needs to read your queue, which usually needs a password. This object points at a Secret rather than inlining it.</p><p>Which means KEDA's own ServiceAccount needs permission to read that Secret \u2014 the RBAC from this part, applied to the scaler itself.</p>"}, {"t": "what KEDA made", "b": "<p>A <code>ScaledObject</code> creates an ordinary HPA underneath, named <code>keda-hpa-&lt;name&gt;</code>.</p><p>Worth knowing when debugging: KEDA supplies the metric, and everything after that is the standard machinery from the first half of this part.</p>"}]};
+document.querySelectorAll('.tok').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var w=btn.dataset.w, i=+btn.dataset.i, d=ANAT[w][i];
+    var panel=document.querySelector('[data-def="'+w+'"]');
+    document.querySelectorAll('.tok[data-w="'+w+'"]').forEach(function(o){o.setAttribute('aria-pressed',String(o===btn));});
+    panel.innerHTML='<h4>'+d.t+'</h4>'+d.b;
+  });
+});
+
+(function(){
+  var b=document.getElementById('tocbtn'),p=document.getElementById('tocpanel');
+  if(!b||!p)return;
+  b.addEventListener('click',function(){
+    var open=b.getAttribute('aria-expanded')==='true';
+    b.setAttribute('aria-expanded',String(!open)); p.hidden=open;
+  });
+  document.addEventListener('click',function(e){
+    if(!p.hidden && !p.contains(e.target) && e.target!==b){b.setAttribute('aria-expanded','false');p.hidden=true;}
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&!p.hidden){b.setAttribute('aria-expanded','false');p.hidden=true;b.focus();}
+  });
+})();
+</script>
+</body>
+</html>

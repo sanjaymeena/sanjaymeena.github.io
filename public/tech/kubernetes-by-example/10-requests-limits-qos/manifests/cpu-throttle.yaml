@@ -1,0 +1,30 @@
+# Part 10, break-it #2 — a 50m CPU limit on work that wants a whole core.
+# The pod stays Running with 0 restarts. Nothing in kubectl says a word.
+# Only container_cpu_cfs_throttled_seconds_total knows.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cpu-throttle
+  labels: {app: cpu-throttle}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: cpu-throttle}
+  template:
+    metadata:
+      labels: {app: cpu-throttle}
+    spec:
+      containers:
+        - name: busy
+          image: busybox:1.36
+          command: ["/bin/sh","-c"]
+          args:
+            - |
+              while true; do
+                S=$(date +%s)
+                i=0; while [ $i -lt 200000 ]; do i=$((i+1)); done
+                echo "batch took $(( $(date +%s) - S ))s"
+              done
+          resources:
+            requests: {cpu: 50m, memory: 16Mi}
+            limits:   {cpu: 50m, memory: 32Mi}   # the whole bug, in one line

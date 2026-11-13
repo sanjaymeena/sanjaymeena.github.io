@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Placement and Devices - Kubernetes by Example - Seeking Wisdom</title>
+<meta name="description" content="You gave the pod permission to use the GPU node, and it went somewhere else. Permission is not direction.">
+<link rel="canonical" href="https://www.sanjaymeena.io/tech/kubernetes-by-example/11-placement-and-devices/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=JetBrains+Mono:wght@400;500;700&family=Literata:opsz,wght@7..72,400;7..72,600;7..72,400italic&display=swap"><style>
+:root{
+  --bg:#F7F5F1; --surface:#FFFFFF; --surface-2:#EEEBE4; --sunken:#E7E3DA;
+  --ink:#1B1A15; --ink-2:#4B473E; --muted:#787365;
+  --line:#DEDACF; --line-strong:#BEB8A8;
+  --want:#30459E; --have:#A74B28; --ok:#36704A; --note:#6B4B8F;
+  --want-wash:#30459E14; --have-wash:#A74B2814; --ok-wash:#36704A14; --note-wash:#6B4B8F14;
+  --shadow:0 1px 2px #1B1A1510,0 10px 28px #1B1A150A;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#13130E; --surface:#1B1B15; --surface-2:#23231C; --sunken:#16160F;
+  --ink:#EFEDE4; --ink-2:#BEBAAD; --muted:#8E8A7C;
+  --line:#2E2E25; --line-strong:#464537;
+  --want:#8E9EF2; --have:#E08760; --ok:#75BA8F; --note:#B291D8;
+  --want-wash:#8E9EF21F; --have-wash:#E087601F; --ok-wash:#75BA8F1F; --note-wash:#B291D81F;
+  --shadow:0 1px 2px #0007,0 10px 28px #0005;
+}}
+:root[data-theme="dark"]{
+  --bg:#13130E; --surface:#1B1B15; --surface-2:#23231C; --sunken:#16160F;
+  --ink:#EFEDE4; --ink-2:#BEBAAD; --muted:#8E8A7C;
+  --line:#2E2E25; --line-strong:#464537;
+  --want:#8E9EF2; --have:#E08760; --ok:#75BA8F; --note:#B291D8;
+  --want-wash:#8E9EF21F; --have-wash:#E087601F; --ok-wash:#75BA8F1F; --note-wash:#B291D81F;
+  --shadow:0 1px 2px #0007,0 10px 28px #0005;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Literata,Georgia,serif;font-size:17.5px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;margin:0 auto;padding:0 26px 110px}
+.col{max-width:65ch}
+h1,h2,h3,h4,.eyebrow,.btn,.steptitle,.tag,.cardt,th,.tb-series,.tb-pos,.tocpanel,.anat,.pre-h{font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif}
+code,kbd,.mono,.tag,.tok{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace}
+h1{font-size:clamp(33px,5vw,55px);line-height:1.05;font-weight:700;letter-spacing:-.03em;margin:0 0 18px;text-wrap:balance}
+h2{font-size:clamp(24px,2.7vw,32px);line-height:1.15;font-weight:700;letter-spacing:-.02em;margin:0 0 16px;text-wrap:balance}
+h3{font-size:19.5px;font-weight:700;letter-spacing:-.01em;margin:0 0 9px}
+p{margin:0 0 18px}
+em{font-style:italic}
+a{color:var(--want)}
+.lede{font-size:20.5px;line-height:1.58;color:var(--ink-2);margin:0 0 22px}
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.17em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+header.top{padding:48px 0 0}
+section{padding:58px 0 0}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0}
+.tag{font-size:11.5px;padding:5px 10px;border:1px solid var(--line-strong);border-radius:3px;color:var(--ink-2);background:var(--surface)}
+.note{border-left:2px solid var(--line-strong);padding:2px 0 2px 18px;color:var(--ink-2);margin:0 0 18px}
+.note b{color:var(--ink)}
+.cw{border:1px solid var(--line);border-left:3px solid var(--note);border-radius:4px;background:var(--surface);padding:17px 19px;margin:24px 0 0}
+.cw h4{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--note);margin:0 0 9px}
+.cw p{margin:0 0 11px;color:var(--ink-2);font-size:16px;line-height:1.62}
+.cw p:last-child{margin:0}
+/* ---- top bar ---- */
+.topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tbin{max-width:1140px;margin:0 auto;padding:10px 26px;display:flex;align-items:center;gap:14px}
+.tb-series{font-size:13px;font-weight:700;letter-spacing:-.01em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.tb-series:hover{color:var(--want)}
+.tb-pos{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-left:auto;white-space:nowrap}
+.tb-btn{font:700 12px/1 "Bricolage Grotesque",sans-serif;padding:7px 11px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:3px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.tb-btn:hover{border-color:var(--want);color:var(--want)}
+.tb-btn:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.tb-btn[aria-disabled="true"]{opacity:.35;pointer-events:none}
+.tocpanel{position:absolute;left:0;right:0;top:100%;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:var(--shadow);max-height:72vh;overflow-y:auto}
+.tocpanel[hidden]{display:none}
+.tocin{max-width:1140px;margin:0 auto;padding:22px 26px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+.tocgrp h5{font:700 10.5px/1 "Bricolage Grotesque",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;padding:0 0 8px;border-bottom:1px solid var(--line)}
+.tocgrp ol{list-style:none;margin:0;padding:0}
+.tocgrp li{margin:0 0 2px}
+.tocgrp a,.tocgrp span{display:flex;gap:9px;padding:6px 8px;border-radius:3px;font-size:14px;text-decoration:none;color:var(--ink);font-family:Literata,serif}
+.tocgrp a:hover{background:var(--surface-2)}
+.tocgrp span{color:var(--muted)}
+.tocgrp .n{font:700 11px/1.6 "JetBrains Mono",monospace;color:var(--muted)}
+.tocgrp [aria-current="page"]{background:var(--want-wash);color:var(--want);font-weight:600}
+.soon{font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-left:auto;align-self:center;color:var(--muted);font-family:"Bricolage Grotesque",sans-serif}
+/* ---- stage ---- */
+.stage{margin:28px 0 0;border:1px solid var(--line);border-radius:5px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.stagefig{background:var(--sunken);padding:18px 20px;overflow-x:auto}
+.stagefig svg{display:block;width:100%;min-width:720px;height:auto}
+.scrub{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:12px 18px;border-top:1px solid var(--line);background:var(--surface-2)}
+.btn{font-size:12.5px;font-weight:700;padding:7px 13px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:3px;cursor:pointer;line-height:1.2}
+.btn:hover{border-color:var(--want);color:var(--want)}
+.btn:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.pips{display:flex;gap:5px;margin-left:auto;flex-wrap:wrap}
+.pip{width:21px;height:21px;border-radius:3px;border:1px solid var(--line-strong);background:var(--surface);color:var(--muted);font:700 11px/1 "Bricolage Grotesque",sans-serif;cursor:pointer;display:grid;place-items:center;padding:0}
+.pip[aria-current="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.pip:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.stagetext{padding:21px 23px 23px;border-top:1px solid var(--line)}
+.steptitle{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 7px}
+.stagetext h3{font-size:21.5px;margin:0 0 11px}
+.stagetext p{max-width:72ch;margin:0 0 13px;color:var(--ink-2)}
+.stagetext p:last-child{margin:0}
+.stagetext b{color:var(--ink)}
+/* ---- anatomy ---- */
+.anat{margin:26px 0 0;border:1px solid var(--line);border-radius:5px;background:var(--surface);overflow:hidden;box-shadow:var(--shadow)}
+.anat-h{padding:12px 18px;border-bottom:1px solid var(--line);background:var(--surface-2);font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.anat-cmd{padding:20px 18px 16px;background:var(--sunken);display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start;overflow-x:auto}
+.tok{font-size:14px;font-weight:500;padding:7px 10px;border:1px solid transparent;border-radius:3px;background:var(--surface);color:var(--ink);cursor:pointer;line-height:1.3;white-space:nowrap;position:relative;border-bottom:2px solid var(--line-strong)}
+.tok:hover{border-color:var(--want);color:var(--want)}
+.tok[aria-pressed="true"]{background:var(--want);border-color:var(--want);color:#fff}
+.tok:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.tok .kind{display:block;font:700 8.5px/1.4 "Bricolage Grotesque",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:3px 0 0}
+.tok[aria-pressed="true"] .kind{color:#ffffffcc}
+.anat-def{padding:18px 20px 20px;border-top:1px solid var(--line);min-height:96px}
+.anat-def h4{font-size:15px;margin:0 0 7px;font-family:"JetBrains Mono",monospace;color:var(--want)}
+.anat-def p{font-size:15.5px;line-height:1.62;color:var(--ink-2);margin:0 0 10px;max-width:70ch}
+.anat-def p:last-child{margin:0}
+.anat-def code{font-size:.9em}
+.anat-hint{font-size:13px;color:var(--muted);font-family:Literata,serif;font-style:italic}
+/* ---- tables, code ---- */
+.tbl{width:100%;border-collapse:collapse;margin:22px 0 0;font-size:15px}
+.tbl th{font-size:11px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 14px 9px 0;border-bottom:1px solid var(--line-strong)}
+.tbl td{padding:11px 14px 11px 0;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-2)}
+.tbl td:first-child{color:var(--ink);white-space:nowrap}
+.tbl td code{white-space:nowrap}
+.tblwrap{overflow-x:auto}
+code{font-size:.86em;background:var(--surface-2);border:1px solid var(--line);border-radius:3px;padding:1px 5px;color:var(--ink)}
+pre{background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:15px 17px;overflow-x:auto;font-size:13px;line-height:1.68;margin:16px 0 0}
+pre code{background:0 0;border:0;padding:0;color:var(--ink-2);font-size:inherit}
+.pre-h{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:24px 0 -6px}
+figure{margin:26px 0 0}
+figcaption{font-size:13.5px;line-height:1.55;color:var(--muted);margin:11px 0 0;max-width:76ch}
+.nextprev{display:flex;gap:14px;flex-wrap:wrap;margin:30px 0 0}
+.np{flex:1 1 230px;border:1px solid var(--line);border-radius:4px;padding:15px 17px;background:var(--surface);text-decoration:none;color:var(--ink)}
+.np:hover{border-color:var(--want)}
+.np span{display:block;font-size:10.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-family:"Bricolage Grotesque",sans-serif;margin:0 0 4px}
+footer{margin:76px 0 0;padding:26px 0 0;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+/* svg shared */
+.d-panel{fill:var(--surface);stroke:var(--line-strong)}
+.d-sunken{fill:var(--sunken);stroke:var(--line)}
+.d-box{fill:var(--surface);stroke:var(--line-strong)}
+.t{fill:var(--ink);font-family:"Bricolage Grotesque",sans-serif;font-size:12.5px;font-weight:700}
+.t-sm{fill:var(--ink-2);font-family:"JetBrains Mono",monospace;font-size:10.5px}
+.t-mut{fill:var(--muted);font-family:"JetBrains Mono",monospace;font-size:10px}
+.t-lbl{fill:var(--muted);font-family:"Bricolage Grotesque",sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.t-want{fill:var(--want)} .t-have{fill:var(--have)} .t-ok{fill:var(--ok)} .t-note{fill:var(--note)}
+.b-want{fill:var(--want-wash);stroke:var(--want)} .b-have{fill:var(--have-wash);stroke:var(--have)}
+.b-ok{fill:var(--ok-wash);stroke:var(--ok)} .b-note{fill:var(--note-wash);stroke:var(--note)}
+.cell{fill:var(--want-wash);stroke:var(--want);stroke-width:.8}
+.ah{fill:var(--ink-2)} .ah-want{fill:var(--want)} .ah-have{fill:var(--have)} .ah-ok{fill:var(--ok)}
+.flow{fill:none;stroke:var(--ink-2);stroke-width:1.4}
+.flow-want{stroke:var(--want)} .flow-have{stroke:var(--have)} .flow-ok{stroke:var(--ok)}
+.g{transition:opacity .4s ease}
+.dim{opacity:.13} .hide{opacity:0}
+.live{stroke-dasharray:5 5;animation:ants 1s linear infinite}
+@keyframes ants{to{stroke-dashoffset:-20}}
+@media (prefers-reduced-motion:reduce){.live{animation:none}.g{transition:none}}
+</style>
+</head>
+<body>
+<nav class="topbar">
+  <div class="tbin">
+    <a class="tb-series" href="/tech/kubernetes-by-example/">Kubernetes by Example</a>
+    <button class="tb-btn" id="tocbtn" type="button" aria-expanded="false" aria-controls="tocpanel">Contents</button>
+    <span class="tb-pos">Part 11 of 14</span><div style="display:flex;gap:6px"><a class="tb-btn" href="/tech/kubernetes-by-example/10-requests-limits-qos/" title="Requests, limits, QoS">&#8592;</a><a class="tb-btn" href="/tech/kubernetes-by-example/12-staying-up/" title="Staying up">&#8594;</a></div>
+  </div>
+  <div class="tocpanel" id="tocpanel" hidden><div class="tocin"><div class="tocgrp"><h5>Tier 0 · The model</h5><ol><li><a href="/tech/kubernetes-by-example/01-the-object-model/"><span class="n">01</span>The object model</a></li><li><a href="/tech/kubernetes-by-example/02-pods-and-containers/"><span class="n">02</span>Pods and containers</a></li><li><a href="/tech/kubernetes-by-example/03-labels-selectors-namespaces/"><span class="n">03</span>Labels, selectors, namespaces</a></li></ol></div><div class="tocgrp"><h5>Tier 1 · Workload kinds</h5><ol><li><a href="/tech/kubernetes-by-example/04-deployments-and-rollouts/"><span class="n">04</span>Deployments and rollouts</a></li><li><a href="/tech/kubernetes-by-example/05-daemonsets/"><span class="n">05</span>DaemonSets</a></li><li><a href="/tech/kubernetes-by-example/06-statefulsets-jobs-cronjobs/"><span class="n">06</span>StatefulSets, Jobs, CronJobs</a></li></ol></div><div class="tocgrp"><h5>Tier 2 · Wiring</h5><ol><li><a href="/tech/kubernetes-by-example/07-services-and-ingress/"><span class="n">07</span>Services and Ingress</a></li><li><a href="/tech/kubernetes-by-example/08-config-and-secrets/"><span class="n">08</span>Config and Secrets</a></li><li><a href="/tech/kubernetes-by-example/09-storage/"><span class="n">09</span>Storage</a></li></ol></div><div class="tocgrp"><h5>Tier 3 · Scheduling</h5><ol><li><a href="/tech/kubernetes-by-example/10-requests-limits-qos/"><span class="n">10</span>Requests, limits, QoS</a></li><li><a href="/tech/kubernetes-by-example/11-placement-and-devices/" aria-current="page"><span class="n">11</span>Placement and devices</a></li></ol></div><div class="tocgrp"><h5>Tier 4 · Production</h5><ol><li><a href="/tech/kubernetes-by-example/12-staying-up/"><span class="n">12</span>Staying up</a></li><li><a href="/tech/kubernetes-by-example/13-scaling-and-permissions/"><span class="n">13</span>Scaling and permissions</a></li><li><a href="/tech/kubernetes-by-example/14-helm-and-custom-resources/"><span class="n">14</span>Helm and custom resources</a></li></ol></div></div></div>
+</nav>
+<div class="wrap">
+<header class="top">
+  <div class="col">
+    <p class="eyebrow">Kubernetes by Example · Part 11</p>
+    <h1>Placement and Devices</h1>
+    <p class="lede">You gave the pod permission to use the GPU node, and it went somewhere else. Permission is not direction.</p>
+    <div class="meta"><span class="tag">assumes Parts 1–10</span><span class="tag">~18 minutes</span><span class="tag">GPUs appear</span></div>
+  </div>
+</header>
+
+<section>
+  <div class="col">
+    <h2>The symptom</h2>
+    <p><em>airwaves</em> is getting a speech model, and it wants a GPU. One node has one. You add a toleration for the GPU taint, apply, and the pod schedules immediately.</p>
+    <p>Onto node-1. Which has no GPU.</p>
+  </div><pre><code>$ kubectl get pods -o wide -l app=asr
+NAME                  READY   STATUS             NODE
+asr-5d8c9b4f7-qt2mx   0/1     CrashLoopBackOff   node-1
+
+$ kubectl logs deploy/asr --previous | tail -2
+CUDA error: no CUDA-capable device is detected</code></pre>  <div class="col">
+    <p style="margin-top:18px">You gave it permission to use the GPU node and it went somewhere else entirely — which, once you see it, is exactly what you asked for.</p>
+    <p>A toleration is an exemption, not a destination. You told the scheduler the GPU node wouldn't reject your pod. You never told it to go there.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Pulling, pushing, and counting</h2>
+    <p>Three independent mechanisms, and most placement bugs come from using one where you needed two.</p>
+    <p><b>Pod-side rules pull</b> toward nodes: <code>nodeSelector</code>, <code>nodeAffinity</code>, <code>podAffinity</code>. <b>Node-side taints push</b> everything away unless tolerated. <b>Extended resources</b> are simply counted, like CPU.</p>
+  </div>  <div class="stage">
+    <div class="stagefig" id="stagefig"><svg viewBox="0 0 1000 420" role="img" aria-label="Three nodes with different labels and taints. A nodeSelector filters hard, node affinity can prefer rather than require, pod affinity pulls a pod next to another, anti-affinity pushes copies apart, and a GPU is an extended resource counted like CPU.">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-want" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-want" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-have" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-have" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-ok" d="M0,0 L10,5 L0,10 Z"/></marker>
+  </defs>
+  <g id="g-n1" class="g">
+    <rect class="d-panel" x="40" y="56" width="288" height="152" rx="4" stroke-width="1.5"/>
+    <text class="t-lbl" x="56" y="76">node-1</text>
+    <text class="t-sm" x="56" y="96">pool=general</text>
+    <text class="t-mut" x="56" y="116">no taints — anything may land</text>
+  </g>
+  <g id="g-n2" class="g">
+    <rect class="d-panel" x="356" y="56" width="288" height="152" rx="4" stroke-width="1.5"/>
+    <text class="t-lbl" x="372" y="76">node-2</text>
+    <text class="t-sm" x="372" y="96">pool=general</text>
+    <text class="t-mut" x="372" y="116">no taints</text>
+  </g>
+  <g id="g-n3" class="g">
+    <rect class="b-note" x="672" y="56" width="288" height="152" rx="4" stroke-width="1.4"/>
+    <text class="t-lbl t-note" x="688" y="76">node-3</text>
+    <text class="t-sm t-note" x="688" y="96">pool=gpu · gpu=true</text>
+    <text class="t-mut" x="688" y="116">taint: gpu=true:NoSchedule</text>
+    <text class="t-sm" x="688" y="142">nvidia.com/gpu: 1</text>
+    <text class="t-mut" x="688" y="160">an extended resource, counted like CPU</text>
+    <text class="t-mut" x="688" y="186">whole units only — no fractions</text>
+  </g>
+  <g id="g-sel" class="g">
+    <rect class="d-sunken" x="40" y="232" width="288" height="76" rx="3"/>
+    <text class="t-lbl t-want" x="56" y="252">nodeSelector</text>
+    <text class="t-sm" x="56" y="272">pool: gpu</text>
+    <text class="t-mut" x="56" y="292">a hard filter. no match → Pending forever</text>
+  </g>
+  <g id="g-aff" class="g">
+    <rect class="d-sunken" x="356" y="232" width="288" height="76" rx="3"/>
+    <text class="t-lbl t-want" x="372" y="252">nodeAffinity</text>
+    <text class="t-sm" x="372" y="272">required… or preferred</text>
+    <text class="t-mut" x="372" y="292">preferred bends instead of blocking</text>
+  </g>
+  <g id="g-pod" class="g">
+    <rect class="d-sunken" x="672" y="232" width="288" height="76" rx="3"/>
+    <text class="t-lbl t-ok" x="688" y="252">podAffinity / anti-affinity</text>
+    <text class="t-sm" x="688" y="272">near that pod · away from my twins</text>
+    <text class="t-mut" x="688" y="292">placement relative to other pods</text>
+  </g>
+  <g id="g-tol" class="g">
+    <rect class="d-sunken" x="40" y="330" width="920" height="68" rx="3"/>
+    <text class="t-lbl t-have" x="56" y="350">taint and toleration — the other direction</text>
+    <text class="t-sm" x="56" y="370">the node repels; the pod carries an exemption</text>
+    <text class="t-mut" x="56" y="390">a toleration lets you land. it never pulls you there. you need both halves.</text>
+  </g>
+  <g id="f-pull" class="g hide">
+    <path class="flow flow-ok live" d="M816,228 V212" marker-end="url(#a-ok)"/>
+    <text class="t-lbl t-ok" x="700" y="224">co-locate with the decoder on this node</text>
+  </g>
+  <g id="f-spread" class="g hide">
+    <path class="flow flow-want live" d="M184,228 V212" marker-end="url(#a-want)"/>
+    <path class="flow flow-want live" d="M500,228 V212" marker-end="url(#a-want)"/>
+    <rect x="200" y="200" width="290" height="16" fill="var(--bg)"/>
+    <text class="t-lbl t-want" x="204" y="212">one copy each — never both here</text>
+  </g>
+  <g id="x-stuck" class="g hide">
+    <rect x="36" y="228" width="296" height="84" rx="4" fill="none" stroke="var(--have)" stroke-width="1.7" stroke-dasharray="6 4"/>
+    <rect x="60" y="316" width="330" height="16" fill="var(--bg)"/>
+    <text class="t-lbl t-have" x="64" y="328">selector matches, taint still refuses → Pending</text>
+  </g>
+</svg></div>
+    <div class="scrub">
+      <button class="btn" id="prev" type="button">&#9664; Back</button>
+      <button class="btn" id="play" type="button">&#9654; Play</button>
+      <button class="btn" id="next" type="button">Next &#9654;</button>
+      <div class="pips" id="pips"></div>
+    </div>
+    <div class="stagetext">
+      <p class="steptitle" id="stepn"></p>
+      <h3 id="stept"></h3>
+      <div id="stepp"></div>
+    </div>
+  </div>  <div class="col">
+    <div class="cw">
+      <h4>Reserving hardware properly needs both halves</h4>
+      <p><b>Taint the node</b> so nothing else drifts onto your expensive GPUs.</p>
+      <p><b>Tolerate it</b> on the pods that are allowed there.</p>
+      <p><b>And select or request</b> so they actually go. The GPU request does this for you; a plain toleration does not.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>The commands</h2>
+  </div><div class="anat" id="an-nodes"><div class="anat-h">Looking at nodes the way the scheduler does</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-nodes" data-i="0" aria-pressed="false">kubectl get nodes<span class="kind">verb + type</span></button><button class="tok" type="button" data-w="an-nodes" data-i="1" aria-pressed="false">--show-labels<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-nodes" data-i="2" aria-pressed="false">-L pool,gpu<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-nodes" data-i="3" aria-pressed="false">kubectl label node<span class="kind">verb</span></button><button class="tok" type="button" data-w="an-nodes" data-i="4" aria-pressed="false">kubectl describe node<span class="kind">command</span></button></div><div class="anat-def" data-def="an-nodes"><p class="anat-hint">Click any piece of the command.</p></div></div><div class="anat" id="an-place"><div class="anat-h">Expressing where a pod should go</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-place" data-i="0" aria-pressed="false">nodeSelector<span class="kind">pod field</span></button><button class="tok" type="button" data-w="an-place" data-i="1" aria-pressed="false">requiredDuringScheduling…<span class="kind">affinity</span></button><button class="tok" type="button" data-w="an-place" data-i="2" aria-pressed="false">preferredDuringScheduling…<span class="kind">affinity</span></button><button class="tok" type="button" data-w="an-place" data-i="3" aria-pressed="false">topologyKey<span class="kind">pod affinity field</span></button><button class="tok" type="button" data-w="an-place" data-i="4" aria-pressed="false">topologySpreadConstraints<span class="kind">pod field</span></button></div><div class="anat-def" data-def="an-place"><p class="anat-hint">Click any piece of the command.</p></div></div><div class="anat" id="an-gpu"><div class="anat-h">Devices, and why a pod can't find one</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-gpu" data-i="0" aria-pressed="false">kubectl describe node | grep -A6 Capacity<span class="kind">command</span></button><button class="tok" type="button" data-w="an-gpu" data-i="1" aria-pressed="false">resources.limits<span class="kind">pod field</span></button><button class="tok" type="button" data-w="an-gpu" data-i="2" aria-pressed="false">kubectl get pods -o wide<span class="kind">command</span></button><button class="tok" type="button" data-w="an-gpu" data-i="3" aria-pressed="false">FailedScheduling<span class="kind">event</span></button><button class="tok" type="button" data-w="an-gpu" data-i="4" aria-pressed="false">runtimeClassName<span class="kind">pod field</span></button></div><div class="anat-def" data-def="an-gpu"><p class="anat-hint">Click any piece of the command.</p></div></div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Build it</h2>
+    <p>Label a node, taint it, and put the speech model where it belongs — then pin a tuner beside the decoder it shares memory with.</p>
+  </div><p class="pre-h">Set the node up</p>
+<pre><code>kubectl label node airwaves-worker2 pool=gpu gpu=true
+kubectl taint node airwaves-worker2 gpu=true:NoSchedule
+kubectl get nodes -L pool,gpu</code></pre><p class="pre-h">The model, with all three halves</p>
+<pre><code>kubectl apply -f manifests/asr.yaml
+kubectl get pods -o wide -l app=asr</code></pre>  <div class="col">
+    <p style="margin-top:20px">That manifest has a toleration <em>and</em> a <code>nodeSelector</code>. Remove either and it goes wrong in a different way — without the toleration it can't land, without the selector it lands anywhere.</p>
+  </div><p class="pre-h">Tuner beside its decoder</p>
+<pre><code>kubectl apply -f manifests/tuner-affinity.yaml
+kubectl get pods -o wide -l 'app in (tuner,decoder)'</code></pre>  <div class="col">
+    <p style="margin-top:20px">Every tuner is on a node that has a decoder, because <code>podAffinity</code> with <code>topologyKey: kubernetes.io/hostname</code> made that a condition of scheduling. The shared memory from Part 9 only works because of this rule.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Break it</h2>
+    <h3 style="margin-top:26px">1 · Toleration without attraction — the opening symptom</h3>
+  </div><pre><code>kubectl apply -f manifests/asr-toleration-only.yaml
+kubectl get pods -o wide -l app=asr-wrong</code></pre>  <div class="col">
+    <p style="margin-top:20px">Scheduled instantly, onto a node with no GPU. The toleration worked perfectly: it removed an obstacle. Obstacles removed are not directions given.</p>
+    <h3 style="margin-top:34px">2 · Required anti-affinity as a capacity ceiling</h3>
+  </div><pre><code>kubectl apply -f manifests/strict-antiaffinity.yaml
+kubectl scale deploy/strict --replicas=4     # on a 3-node cluster
+kubectl get pods -l app=strict
+kubectl describe pod -l app=strict | tail -4</code></pre>  <div class="col">
+    <p style="margin-top:20px">Three running, one Pending forever. <code>didn't match pod anti-affinity rules</code>. You asked for replicas never to share a node, and there are only three nodes — so four replicas is arithmetically impossible.</p>
+    <p>This is fine on a quiet Tuesday and catastrophic during an incident, when you scale up for load and the extra pods silently refuse to exist. <code>preferredDuringScheduling</code> would have spread them and still allowed the fourth.</p>
+    <h3 style="margin-top:34px">3 · Read a refusal properly</h3>
+  </div><pre><code>kubectl apply -f manifests/impossible.yaml
+kubectl describe pod -l app=impossible | grep -A4 Events</code></pre>  <div class="col">
+    <p style="margin-top:20px">The numbers in that message total your node count, and each clause is a separate reason. Fix only the taint and the pods that lacked the label still won't take it.</p>
+    <div class="note"><b>Clean up:</b> remove the taint with <code>kubectl taint node airwaves-worker2 gpu=true:NoSchedule-</code> when you're done.</div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>What follows from this</h2>
+  </div>  <div class="tblwrap">
+  <table class="tbl">
+    <thead><tr><th>Because…</th><th>…this is what happens</th></tr></thead>
+    <tbody><tr><td>A toleration is only permission</td><td>It lets a pod land somewhere; it never sends it there. Pair it with a selector.</td></tr><tr><td><code>nodeSelector</code> is a hard filter</td><td>No matching node means Pending forever — not an error, just an ungrantable wish.</td></tr><tr><td>Required means required</td><td><code>requiredDuringScheduling</code> anti-affinity caps replicas at the node count. Prefer <code>preferred</code>.</td></tr><tr><td>Affinity is ignored during execution</td><td>Change a node's labels and running pods stay. Only new scheduling decisions see it.</td></tr><tr><td><code>topologyKey</code> defines togetherness</td><td>Hostname for same-machine (shared memory), zone for same-region resilience.</td></tr><tr><td>GPUs are whole and uncommittable</td><td>Request equals limit, integers only. One pod owns the device.</td></tr><tr><td>No device plugin, no resource</td><td>A node with a GPU that doesn't advertise one is invisible to the scheduler.</td></tr></tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Cheat sheet</h2>
+    <div class="cw">
+      <h4>Part 11 · placement and devices</h4>
+      <p>• Default is best: let the scheduler choose unless you have a real reason not to.</p>
+      <p>• <b>Pods pull</b> (<code>nodeSelector</code>, affinity); <b>nodes push</b> (taints). Reserving hardware needs both.</p>
+      <p>• <b>A toleration never attracts.</b> It only removes an objection.</p>
+      <p>• <code>required</code> filters and can leave a pod Pending; <code>preferred</code> scores and always schedules somewhere.</p>
+      <p>• <b>Required anti-affinity caps your replica count at your node count.</b> Nearly always use preferred.</p>
+      <p>• <code>topologySpreadConstraints</code> is the proper tool for even distribution.</p>
+      <p>• <code>topologyKey: kubernetes.io/hostname</code> is how you demand same-machine co-location.</p>
+      <p>• Affinity is <code>IgnoredDuringExecution</code> — label changes never evict a running pod.</p>
+      <p>• GPUs are <b>extended resources</b>: whole units, request = limit, no overcommit.</p>
+      <p>• Read the <code>FailedScheduling</code> event. It counts every node and says why each refused.</p>
+    </div>
+  </div>  <div class="nextprev">
+    <a class="np" href="/tech/kubernetes-by-example/10-requests-limits-qos/"><span>Previous · Part 10</span>Requests, limits, QoS</a>
+    <a class="np" href="/tech/kubernetes-by-example/"><span>Series</span>All 14 parts</a>
+    <a class="np" href="/tech/kubernetes-by-example/12-staying-up/"><span>Next · Part 12</span>Staying up</a>
+  </div>
+</section>
+
+<footer>
+  <div class="col"><p>Part of <b>Kubernetes by Example</b>. Next: probes, disruption budgets, and shutting down without losing work.</p></div>
+</footer>
+</div>
+<script>
+const STEPS = [{"t": "By default the scheduler decides and you don't", "on": ["g-n1", "g-n2", "g-n3"], "p": ["Every pod so far has landed wherever the scheduler liked. It filters nodes that can't fit the pod \u2014 Part 10's requests \u2014 then scores the survivors and picks a winner.", "That's the right default. Caring where a pod runs is a constraint, and constraints make placement harder, slower and more fragile.", "<b>So the question for the rest of this part is not how to pin things down. It's which of these tools is the weakest one that still gets you what you need.</b>"], "n": 1}, {"t": "nodeSelector is the blunt one", "on": ["g-n3", "g-sel"], "p": ["<code>nodeSelector: {pool: gpu}</code> on a pod means: only nodes carrying that label are even considered. A hard filter, evaluated before scoring.", "It's exact-match only \u2014 no ranges, no sets, no negation. For \u201cthis must run on a GPU node\u201d that's sufficient and readable, and you should prefer it on those grounds.", "<b>No matching node means Pending forever.</b> Not an error, not a failure \u2014 Part 1's loop, patiently waiting for a wish that cannot be granted."], "n": 2}, {"t": "nodeAffinity is the same idea with grammar", "on": ["g-n3", "g-aff"], "p": ["<code>nodeAffinity</code> does what <code>nodeSelector</code> does and more: set membership with <code>In</code> and <code>NotIn</code>, existence with <code>Exists</code>, and several alternative rules ORed together.", "The real addition is <b>preferred</b> alongside <b>required</b>. A preferred rule carries a weight and contributes to scoring rather than filtering \u2014 if nothing matches, the pod still schedules somewhere.", "<b>That distinction is the most important one on this page.</b> Required means \u201cI would rather not run than run in the wrong place\u201d. Preferred means \u201ctry, but don't leave me stranded\u201d. Most people write required and meant preferred."], "n": 3}, {"t": "Taints push, and tolerations are permission", "on": ["g-n3", "g-tol", "x-stuck"], "p": ["Part 5 introduced these for DaemonSets; here's the full picture. A <b>taint</b> is on the node and repels everything that doesn't tolerate it. A <b>toleration</b> is on the pod and exempts it.", "The direction matters. <code>nodeSelector</code> is the pod <em>reaching toward</em> nodes; a taint is the node <em>pushing away</em> pods. They're independent mechanisms and you frequently need both.", "<b>A toleration never attracts.</b> Tolerate the GPU taint and your pod may land on the GPU node \u2014 or on any other node, since nothing told it to prefer one. Reserving expensive hardware takes a taint to keep others off <em>and</em> a selector to pull yours on."], "n": 4}, {"t": "podAffinity places relative to other pods", "on": ["g-n3", "g-pod", "f-pull"], "p": ["Sometimes the constraint isn't about the machine, it's about the company. <b>podAffinity</b> says \u201cschedule me where a pod matching this selector already runs\u201d.", "<code>topologyKey</code> defines what \u201cwhere\u201d means \u2014 <code>kubernetes.io/hostname</code> for the same machine, <code>topology.kubernetes.io/zone</code> for the same availability zone.", "This is how a workload gets pinned beside its node-local dependency. In <em>airwaves</em>, a tuner that needs the shared-memory rings from Part 9 must be on a node that has a decoder, and podAffinity with a hostname topology key is how you say that."], "n": 5}, {"t": "And anti-affinity keeps copies apart", "on": ["g-n1", "g-n2", "g-pod", "f-spread"], "p": ["<b>podAntiAffinity</b> is the inverse, and far more commonly useful: don't put me where another pod like me already is.", "Without it, three replicas can all land on one node, and that node becomes a single point of failure for a workload you specifically replicated. Part 5 showed exactly this with the decoder.", "<b>Use <code>preferredDuringScheduling</code> for this nearly always.</b> Required anti-affinity means replica four cannot schedule on a three-node cluster \u2014 you've converted a resilience feature into a hard capacity ceiling, and you'll discover it during an incident."], "n": 6}, {"t": "topologySpread is the modern way to spread", "on": ["g-n1", "g-n2", "f-spread"], "p": ["<code>topologySpreadConstraints</code> does what anti-affinity was being abused for, but properly: keep the count per zone or per node within <code>maxSkew</code> of each other.", "It expresses \u201croughly even\u201d rather than \u201cnever together\u201d, which is almost always the real requirement, and it degrades sensibly when perfect balance is impossible.", "<code>whenUnsatisfiable: ScheduleAnyway</code> makes it a preference; <code>DoNotSchedule</code> makes it a rule. Same trap as before \u2014 pick the soft one unless you're certain."], "n": 7}, {"t": "A GPU is just a resource you can count", "on": ["g-n3"], "p": ["GPUs are not special in the scheduler. A <b>device plugin</b> runs on the node, finds the hardware, and advertises <code>nvidia.com/gpu: 1</code> as an <b>extended resource</b>.", "You then request it exactly like CPU \u2014 in <code>resources.limits</code>. The scheduler counts it, reserves it, and places you on a node that has one free.", "Two rules that differ from CPU: <b>whole units only</b>, no fractions, and <b>request must equal limit</b> \u2014 you cannot overcommit a GPU. Which means one pod holds the whole device, and splitting it needs vendor-specific tooling like MIG or time-slicing."], "n": 8}, {"t": "A pod that can't be placed says so clearly", "on": ["g-sel", "x-stuck"], "p": ["When placement fails, <code>kubectl describe pod</code> ends with a <code>FailedScheduling</code> event that counts every node and says why each was rejected.", "<code>3 node(s) didn't match Pod's node affinity/selector</code>. <code>1 node(s) had untolerated taint</code>. <code>2 Insufficient nvidia.com/gpu</code>. The arithmetic adds up to your cluster size, and the reason with the biggest number is where to start.", "<b>That message is the best diagnostic in Kubernetes</b> and people routinely scroll past it to stare at the pod list instead."], "n": 9}];
+const svg=document.querySelector('#stagefig svg');
+const groups=[...svg.querySelectorAll('g[id]')];
+const pips=document.getElementById('pips');
+let cur=0,timer=null;
+STEPS.forEach((s,i)=>{const b=document.createElement('button');b.className='pip';b.type='button';b.textContent=s.n;
+  b.setAttribute('aria-label','Step '+s.n+': '+s.t);b.addEventListener('click',()=>{stop();show(i);});pips.appendChild(b);});
+function show(i){
+  cur=(i+STEPS.length)%STEPS.length;
+  const s=STEPS[cur],on=new Set(s.on);
+  groups.forEach(g=>{
+    const isFlow=g.id.startsWith('f-')||g.id.startsWith('x-');
+    g.classList.remove('dim','hide');
+    if(on.has(g.id))return;
+    g.classList.add(isFlow?'hide':'dim');
+  });
+  document.getElementById('stepn').textContent='Step '+s.n+' of '+STEPS.length;
+  document.getElementById('stept').textContent=s.t;
+  document.getElementById('stepp').innerHTML=s.p.map(x=>'<p>'+x+'</p>').join('');
+  [...pips.children].forEach((b,j)=>b.setAttribute('aria-current',j===cur?'true':'false'));
+}
+function stop(){if(timer){clearInterval(timer);timer=null;document.getElementById('play').innerHTML='\u25B6 Play';}}
+document.getElementById('next').addEventListener('click',()=>{stop();show(cur+1);});
+document.getElementById('prev').addEventListener('click',()=>{stop();show(cur-1);});
+document.getElementById('play').addEventListener('click',e=>{
+  if(timer){stop();return;}
+  e.currentTarget.innerHTML='\u23F8 Pause';
+  timer=setInterval(()=>{if(cur===STEPS.length-1){stop();return;}show(cur+1);},6000);
+});
+document.addEventListener('keydown',e=>{
+  if(e.target.closest('input,textarea'))return;
+  if(e.key==='ArrowRight'){stop();show(cur+1);}
+  if(e.key==='ArrowLeft'){stop();show(cur-1);}
+});
+show(0);
+
+var ANAT = {"an-nodes": [{"t": "the basics", "b": "<p>Name, status, roles, version. Enough to know they exist and not much else.</p>"}, {"t": "everything they carry", "b": "<p>Every label, including the built-ins: <code>kubernetes.io/hostname</code>, <code>topology.kubernetes.io/zone</code>, <code>node.kubernetes.io/instance-type</code>.</p><p>Noisy, but it's where you discover the labels you can select on without inventing new ones.</p>"}, {"t": "chosen labels as columns", "b": "<p>Far more readable than <code>--show-labels</code> when you know what you're after. <code>kubectl get nodes -L pool,gpu</code> gives a tidy table of exactly the facts you care about.</p>"}, {"t": "adding a label", "b": "<p><code>kubectl label node node-3 pool=gpu</code>. Takes effect immediately \u2014 a DaemonSet with a matching selector gets a pod within seconds, as Part 5 demonstrated.</p><p>For anything permanent, set it on the node pool in your cloud or in the <code>kind</code> config. Labels applied by hand vanish when the node is replaced.</p>"}, {"t": "taints, allocatable, pods", "b": "<p>The whole picture: taints, capacity, allocatable, allocated requests, and everything currently running.</p><p>When a pod won't land, read this for the <em>target</em> node and the <code>FailedScheduling</code> event for the pod. Between them the answer is always there.</p>"}], "an-place": [{"t": "the simple hard filter", "b": "<p>Exact label matches, ANDed. Nothing else.</p><p><b>Prefer it when it's enough.</b> Affinity can express the same thing in fifteen lines of nesting, and fifteen lines nobody can read is a cost.</p>"}, {"t": "the hard version", "b": "<p>Checked at scheduling time only. <code>\u2026IgnoredDuringExecution</code> is the rest of the name, and it means what it says: if the node's labels change later, a running pod is not evicted.</p><p>There is no <code>RequiredDuringExecution</code>. It has been planned for years.</p>"}, {"t": "the soft version", "b": "<p>Carries a <code>weight</code> from 1 to 100 and influences scoring rather than filtering.</p><p><b>This is the one you usually want</b>, particularly for anti-affinity. Required anti-affinity turns \u201cspread my replicas\u201d into \u201ccap my replicas at the node count\u201d.</p>"}, {"t": "what 'together' means", "b": "<p><code>kubernetes.io/hostname</code> = same machine. <code>topology.kubernetes.io/zone</code> = same zone.</p><p>A pod affinity rule with a hostname key is how you say \u201cnext to the decoder on this exact node\u201d \u2014 which is what shared memory requires.</p>"}, {"t": "even distribution", "b": "<p><code>maxSkew</code>, a <code>topologyKey</code>, and <code>whenUnsatisfiable</code>.</p><p>The right tool for \u201cspread my replicas evenly\u201d \u2014 which is what most anti-affinity rules were trying and failing to say.</p>"}], "an-gpu": [{"t": "what the node advertises", "b": "<p>Extended resources appear beside <code>cpu</code> and <code>memory</code>: <code>nvidia.com/gpu: 1</code>.</p><p><b>Missing entirely means the device plugin isn't running</b> \u2014 not that the hardware is absent. The node has a GPU and the cluster doesn't know.</p>"}, {"t": "asking for one", "b": "<p><code>limits: {nvidia.com/gpu: 1}</code>. Setting the limit sets the request implicitly, and they must be equal.</p><p>Whole numbers only. <code>0.5</code> is rejected \u2014 there is no such thing as half a GPU to the scheduler.</p>"}, {"t": "where it landed", "b": "<p>Confirm it's on the node you expected. A pod requesting a GPU and running on a CPU node means the resource name is wrong and nothing noticed.</p>"}, {"t": "reading the refusal", "b": "<p><code>0/3 nodes are available: 2 Insufficient nvidia.com/gpu, 1 node(s) had untolerated taint</code>.</p><p>The counts total your cluster size, and each clause is a separate problem. Two nodes have no GPU; one has a GPU and a taint you didn't tolerate. Fixing only one of those changes nothing.</p>"}, {"t": "a different runtime", "b": "<p>Selects an alternative container runtime \u2014 <code>nvidia</code> for GPU passthrough on some setups, or gVisor or Kata for stronger isolation.</p><p>Naming one that isn't installed gives a pod stuck in <code>ContainerCreating</code> with a runtime error, which looks nothing like a scheduling problem.</p>"}]};
+document.querySelectorAll('.tok').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var w=btn.dataset.w, i=+btn.dataset.i, d=ANAT[w][i];
+    var panel=document.querySelector('[data-def="'+w+'"]');
+    document.querySelectorAll('.tok[data-w="'+w+'"]').forEach(function(o){o.setAttribute('aria-pressed',String(o===btn));});
+    panel.innerHTML='<h4>'+d.t+'</h4>'+d.b;
+  });
+});
+
+(function(){
+  var b=document.getElementById('tocbtn'),p=document.getElementById('tocpanel');
+  if(!b||!p)return;
+  b.addEventListener('click',function(){
+    var open=b.getAttribute('aria-expanded')==='true';
+    b.setAttribute('aria-expanded',String(!open)); p.hidden=open;
+  });
+  document.addEventListener('click',function(e){
+    if(!p.hidden && !p.contains(e.target) && e.target!==b){b.setAttribute('aria-expanded','false');p.hidden=true;}
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&!p.hidden){b.setAttribute('aria-expanded','false');p.hidden=true;b.focus();}
+  });
+})();
+</script>
+</body>
+</html>

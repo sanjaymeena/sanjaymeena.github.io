@@ -1,0 +1,27 @@
+# Part 3 — four tuners, told apart by labels rather than by name.
+# The selector is minimal on purpose: app=tuner and nothing else.
+# Everything that varies lives in the template labels, where it is free to move.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tuner
+  labels: {app: tuner}
+spec:
+  replicas: 4
+  selector:
+    matchLabels: {app: tuner}      # immutable. keep it minimal.
+  template:
+    metadata:
+      labels:
+        app: tuner
+        station: jazz              # overwritten per-pod in the exercises
+        tier: edge
+    spec:
+      containers:
+        - name: tuner
+          image: busybox:1.36
+          command: ["/bin/sh","-c"]
+          args: ["while true; do echo \"$(date -Iseconds) tuner\"; sleep 5; done"]
+          resources:
+            requests: {cpu: 20m, memory: 24Mi}
+            limits:   {cpu: 100m, memory: 48Mi}
