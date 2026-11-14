@@ -1,0 +1,242 @@
+[
+  {
+    "slug": "tech/kubernetes-by-example",
+    "file": "tech__kubernetes-by-example.html",
+    "title": "Kubernetes by Example",
+    "date": "2026-11-13",
+    "description": "Everything you need to run something real, taught in order, against one project small enough to fit on a laptop and complete enough to break properly.",
+    "excerpt": "Everything you need to run something real, taught in order, against one project small enough to fit on a laptop and complete enough to break properly.",
+    "categories": [
+      "tech"
+    ],
+    "tags": [
+      "Kubernetes",
+      "MLOps"
+    ],
+    "draft": false
+  },
+  {
+    "slug": "tech/kubernetes-by-example/01-the-object-model",
+    "file": "tech__kubernetes-by-example__01-the-object-model.html",
+    "title": "Kubernetes by Example 01: The Object Model",
+    "date": "2026-11-13",
+    "description": "Why kubectl apply saying “created” tells you almost nothing — and what is really going on in the ten seconds afterwards.",
+    "excerpt": "Why kubectl apply saying “created” tells you almost nothing — and what is really going on in the ten seconds afterwards.",
+    "categories": [
+      "tech"
+    ],
+    "tags": [
+      "Kubernetes",
+      "MLOps"
+    ],
+    "draft": false
+  },
+  {
+    "slug": "tech/kubernetes-by-example/02-pods-and-containers",
+    "file": "tech__kubernetes-by-example__02-pods-and-containers.html",
+    "title": "Kubernetes by Example 02: Pods and Containers",
+    "date": "2026-11-13",
+    "description": "It ran perfectly in Docker. You put it in a Pod and it died. Here is what a Pod actually is, and why that difference matters more than it looks.",
+    "excerpt": "It ran perfectly in Docker. You put it in a Pod and it died. Here is what a Pod actually is, and why that difference matters more than it looks.",
+    "categories": [
+      "tech"
+    ],
+    "tags": [
+      "Kubernetes",
+      "MLOps"
+    ],
+    "draft": false
+  },
+  {
+    "slug": "tech/kubernetes-by-example/03-labels-selectors-namespaces",
+    "file": "tech__kubernetes-by-example__03-labels-selectors-namespaces.html",
+    "title": "Kubernetes by Example 03: Labels and Selectors",
+    "date": "2026-11-13",
+    "description": "Nothing in Kubernetes finds anything by name. Once you know what it does instead, half the surprising behaviour stops being surprising.",
+    "excerpt": "Nothing in Kubernetes finds anything by name. Once you know what it does instead, half the surprising behaviour stops being surprising.",
+    "categories": [
+      "tech"
+    ],
+    "tags": [
+      "Kubernetes",
+      "MLOps"
+    ],
+    "draft": false
+  },
+  {
+    "slug": "tech/kubernetes-by-example/04-deployments-and-rollouts",
+    "file": "tech__kubernetes-by-example__04-deployments-and-rollouts.html",
+    "title": "Kubernetes by Example 04: Deployments and Rollouts",
+    "date": "2026-11-13",
+    "description": "You asked for a rolling update and got a gap anyway. Here is what actually moves during a deploy, and what sets its pace.",
+    "excerpt": "You asked for a rolling update and got a gap anyway. Here is what actually moves during a deploy, and what sets its pace.",
+    "categories": [
+      "tech"
+    ],
+    "tags": [
+      "Kubernetes",
+      "MLOps"
+    ],
+    "draft": false
+  },
+  {
+    "slug": "tech/kubernetes-by-example/05-daemonsets",
+    "file": "tech__kubernetes-by-example__05-daemonsets.html",
+    "title": "Kubernetes by Example 05: DaemonSets",
+    "date": "2026-11-13",
+    "description": "Three replicas gave you two pods on one machine and none on another. When the whole point is to be there , you need a different question.",
+    "excerpt": "Three replicas gave you two pods on one machine and none on another. When the whole point is to be there , you need a different question.",
+    "categories": [
+      "tech"
+    ],
+    "tags": [
+      "Kubernetes",
+      "MLOps"
+    ],
+    "draft": false
+  },
+  {
+    "slug": "tech/kubernetes-by-example/06-statefulsets-jobs-cronjobs",
+    "file": "tech__kubernetes-by-example__06-statefulsets-jobs-cronjobs.html",
+    "title": "Kubernetes by Example 06: StatefulSets and Jobs",
+    "date": "2026-11-13",
+    "description": "Three database replicas with random names, fighting over one disk. Some pods need to be somebody — and some workloads aren't servers at all.",
+    "excerpt": "Three database replicas with random names, fighting over one disk. Some pods need to be somebody — and some workloads aren't servers at all.",
+    "categories": [
+      "tech"
+    ],
+    "tags": [
+      "Kubernetes",
+      "MLOps"
+    ],
+    "draft": false
+  },
+  {
+    "slug": "tech/kubernetes-by-example/07-services-and-ingress",
+    "file": "tech__kubernetes-by-example__07-services-and-ingress.html",
+    "title": "Kubernetes by Example 07: Services and Ingress",
+    "date": "2026-11-13",
+    "description": "Every component is healthy, and nothing can reach anything. The object that knows why is one most people never look at.",
+    "excerpt": "Every component is healthy, and nothing can reach anything. The object that knows why is one most people never look at.",
+    "categories": [
+      "tech"
+    ],
+    "tags": [
+      "Kubernetes",
+      "MLOps"
+    ],
+    "draft": false
+  },
+  {
+    "slug": "tech/kubernetes-by-example/08-config-and-secrets",
+    "file": "tech__kubernetes-by-example__08-config-and-secrets.html",
+    "title": "Kubernetes by Example 08: Config and Secrets",
+    "date": "2026-11-13",
+    "description": "You edited the ConfigMap. You confirmed it changed. The pod carried on with the old value, and will do so forever.",
+    "excerpt": "You edited the ConfigMap. You confirmed it changed. The pod carried on with the old value, and will do so forever.",
+    "categories": [
+      "tech"
+    ],
+    "tags": [
+      "Kubernetes",
+      "MLOps"
+    ],
+    "draft": false
+  },
+  {
+    "slug": "tech/kubernetes-by-example/09-storage",
+    "file": "tech__kubernetes-by-example__09-storage.html",
+    "title": "Kubernetes by Example 09: Storage",
+    "date": "2026-11-13",
+    "description": "Three restarts overnight and the buffer was empty every time. The container filesystem is writable, and that is exactly the problem.",
+    "excerpt": "Three restarts overnight and the buffer was empty every time. The container filesystem is writable, and that is exactly the problem.",
+    "categories": [
+      "tech"
+    ],
+    "tags": [
+      "Kubernetes",
+      "MLOps"
+    ],
+    "draft": false
+  },
+  {
+    "slug": "tech/kubernetes-by-example/10-requests-limits-qos",
+    "file": "tech__kubernetes-by-example__10-requests-limits-qos.html",
+    "title": "Kubernetes by Example 10: Requests, Limits and QoS",
+    "date": "2026-11-13",
+    "description": "A pod killed with no error, and a node that is full at ten percent. Both are the same misunderstanding.",
+    "excerpt": "A pod killed with no error, and a node that is full at ten percent. Both are the same misunderstanding.",
+    "categories": [
+      "tech"
+    ],
+    "tags": [
+      "Kubernetes",
+      "MLOps"
+    ],
+    "draft": false
+  },
+  {
+    "slug": "tech/kubernetes-by-example/11-placement-and-devices",
+    "file": "tech__kubernetes-by-example__11-placement-and-devices.html",
+    "title": "Kubernetes by Example 11: Placement and Devices",
+    "date": "2026-11-13",
+    "description": "You gave the pod permission to use the GPU node, and it went somewhere else. Permission is not direction.",
+    "excerpt": "You gave the pod permission to use the GPU node, and it went somewhere else. Permission is not direction.",
+    "categories": [
+      "tech"
+    ],
+    "tags": [
+      "Kubernetes",
+      "MLOps"
+    ],
+    "draft": false
+  },
+  {
+    "slug": "tech/kubernetes-by-example/12-staying-up",
+    "file": "tech__kubernetes-by-example__12-staying-up.html",
+    "title": "Kubernetes by Example 12: Staying Up",
+    "date": "2026-11-13",
+    "description": "You added a health check and it killed every pod you had. Only one of the three probes can do that, and it was the one you picked.",
+    "excerpt": "You added a health check and it killed every pod you had. Only one of the three probes can do that, and it was the one you picked.",
+    "categories": [
+      "tech"
+    ],
+    "tags": [
+      "Kubernetes",
+      "MLOps"
+    ],
+    "draft": false
+  },
+  {
+    "slug": "tech/kubernetes-by-example/13-scaling-and-permissions",
+    "file": "tech__kubernetes-by-example__13-scaling-and-permissions.html",
+    "title": "Kubernetes by Example 13: Scaling and Permissions",
+    "date": "2026-11-13",
+    "description": "An autoscaler that will never scale, and a pod quietly forbidden from doing its job. Both report perfect health.",
+    "excerpt": "An autoscaler that will never scale, and a pod quietly forbidden from doing its job. Both report perfect health.",
+    "categories": [
+      "tech"
+    ],
+    "tags": [
+      "Kubernetes",
+      "MLOps"
+    ],
+    "draft": false
+  },
+  {
+    "slug": "tech/kubernetes-by-example/14-helm-and-custom-resources",
+    "file": "tech__kubernetes-by-example__14-helm-and-custom-resources.html",
+    "title": "Kubernetes by Example 14: Helm and Custom Resources",
+    "date": "2026-11-13",
+    "description": "Three copies of your YAML and a station list that changes at lunchtime. One of those is a templating problem. The other needs you to write a controller.",
+    "excerpt": "Three copies of your YAML and a station list that changes at lunchtime. One of those is a templating problem. The other needs you to write a controller.",
+    "categories": [
+      "tech"
+    ],
+    "tags": [
+      "Kubernetes",
+      "MLOps"
+    ],
+    "draft": false
+  }
+]

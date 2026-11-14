@@ -1,0 +1,6 @@
+apiVersion: airwaves.example/v1alpha1
+kind: Station
+metadata:
+  name: ambient
+spec:
+  url: "http://ambient.example/stream"

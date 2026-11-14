@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>try{var t=localStorage.getItem("theme");if(t==="dark"||t==="light"){document.documentElement.dataset.theme=t;}}catch(e){}</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deployments and Rollouts - Kubernetes by Example - Seeking Wisdom</title>
+<meta name="description" content="You asked for a rolling update and got a gap anyway. Here is what actually moves during a deploy, and what sets its pace.">
+<link rel="canonical" href="https://www.sanjaymeena.io/tech/kubernetes-by-example/04-deployments-and-rollouts/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=JetBrains+Mono:wght@400;500;700&family=Literata:opsz,wght@7..72,400;7..72,600;7..72,400italic&display=swap"><style>
+:root{
+  --bg:#F7F5F1; --surface:#FFFFFF; --surface-2:#EEEBE4; --sunken:#E7E3DA;
+  --ink:#1B1A15; --ink-2:#4B473E; --muted:#787365;
+  --line:#DEDACF; --line-strong:#BEB8A8;
+  --want:#30459E; --have:#A74B28; --ok:#36704A; --note:#6B4B8F;
+  --want-wash:#30459E14; --have-wash:#A74B2814; --ok-wash:#36704A14; --note-wash:#6B4B8F14;
+  --shadow:0 1px 2px #1B1A1510,0 10px 28px #1B1A150A;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#13130E; --surface:#1B1B15; --surface-2:#23231C; --sunken:#16160F;
+  --ink:#EFEDE4; --ink-2:#BEBAAD; --muted:#8E8A7C;
+  --line:#2E2E25; --line-strong:#464537;
+  --want:#8E9EF2; --have:#E08760; --ok:#75BA8F; --note:#B291D8;
+  --want-wash:#8E9EF21F; --have-wash:#E087601F; --ok-wash:#75BA8F1F; --note-wash:#B291D81F;
+  --shadow:0 1px 2px #0007,0 10px 28px #0005;
+}}
+:root[data-theme="dark"]{
+  --bg:#13130E; --surface:#1B1B15; --surface-2:#23231C; --sunken:#16160F;
+  --ink:#EFEDE4; --ink-2:#BEBAAD; --muted:#8E8A7C;
+  --line:#2E2E25; --line-strong:#464537;
+  --want:#8E9EF2; --have:#E08760; --ok:#75BA8F; --note:#B291D8;
+  --want-wash:#8E9EF21F; --have-wash:#E087601F; --ok-wash:#75BA8F1F; --note-wash:#B291D81F;
+  --shadow:0 1px 2px #0007,0 10px 28px #0005;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Literata,Georgia,serif;font-size:17.5px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;margin:0 auto;padding:0 26px 110px}
+.col{max-width:65ch}
+h1,h2,h3,h4,.eyebrow,.btn,.steptitle,.tag,.cardt,th,.tb-series,.tb-pos,.tocpanel,.anat,.pre-h{font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif}
+code,kbd,.mono,.tag,.tok{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace}
+h1{font-size:clamp(33px,5vw,55px);line-height:1.05;font-weight:700;letter-spacing:-.03em;margin:0 0 18px;text-wrap:balance}
+h2{font-size:clamp(24px,2.7vw,32px);line-height:1.15;font-weight:700;letter-spacing:-.02em;margin:0 0 16px;text-wrap:balance}
+h3{font-size:19.5px;font-weight:700;letter-spacing:-.01em;margin:0 0 9px}
+p{margin:0 0 18px}
+em{font-style:italic}
+a{color:var(--want)}
+.lede{font-size:20.5px;line-height:1.58;color:var(--ink-2);margin:0 0 22px}
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.17em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+header.top{padding:48px 0 0}
+section{padding:58px 0 0}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0}
+.tag{font-size:11.5px;padding:5px 10px;border:1px solid var(--line-strong);border-radius:3px;color:var(--ink-2);background:var(--surface)}
+.note{border-left:2px solid var(--line-strong);padding:2px 0 2px 18px;color:var(--ink-2);margin:0 0 18px}
+.note b{color:var(--ink)}
+.cw{border:1px solid var(--line);border-left:3px solid var(--note);border-radius:4px;background:var(--surface);padding:17px 19px;margin:24px 0 0}
+.cw h4{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--note);margin:0 0 9px}
+.cw p{margin:0 0 11px;color:var(--ink-2);font-size:16px;line-height:1.62}
+.cw p:last-child{margin:0}
+/* ---- top bar ---- */
+.topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tbin{max-width:1140px;margin:0 auto;padding:10px 26px;display:flex;align-items:center;gap:14px}
+.tb-series{font-size:13px;font-weight:700;letter-spacing:-.01em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.tb-series:hover{color:var(--want)}
+.tb-pos{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-left:auto;white-space:nowrap}
+.tb-btn{font:700 12px/1 "Bricolage Grotesque",sans-serif;padding:7px 11px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:3px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.tb-btn:hover{border-color:var(--want);color:var(--want)}
+.tb-btn:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.tb-btn[aria-disabled="true"]{opacity:.35;pointer-events:none}
+.tocpanel{position:absolute;left:0;right:0;top:100%;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:var(--shadow);max-height:72vh;overflow-y:auto}
+.tocpanel[hidden]{display:none}
+.tocin{max-width:1140px;margin:0 auto;padding:22px 26px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+.tocgrp h5{font:700 10.5px/1 "Bricolage Grotesque",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;padding:0 0 8px;border-bottom:1px solid var(--line)}
+.tocgrp ol{list-style:none;margin:0;padding:0}
+.tocgrp li{margin:0 0 2px}
+.tocgrp a,.tocgrp span{display:flex;gap:9px;padding:6px 8px;border-radius:3px;font-size:14px;text-decoration:none;color:var(--ink);font-family:Literata,serif}
+.tocgrp a:hover{background:var(--surface-2)}
+.tocgrp span{color:var(--muted)}
+.tocgrp .n{font:700 11px/1.6 "JetBrains Mono",monospace;color:var(--muted)}
+.tocgrp [aria-current="page"]{background:var(--want-wash);color:var(--want);font-weight:600}
+.soon{font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-left:auto;align-self:center;color:var(--muted);font-family:"Bricolage Grotesque",sans-serif}
+/* ---- stage ---- */
+.stage{margin:28px 0 0;border:1px solid var(--line);border-radius:5px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.stagefig{background:var(--sunken);padding:18px 20px;overflow-x:auto}
+.stagefig svg{display:block;width:100%;min-width:720px;height:auto}
+.scrub{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:12px 18px;border-top:1px solid var(--line);background:var(--surface-2)}
+.btn{font-size:12.5px;font-weight:700;padding:7px 13px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:3px;cursor:pointer;line-height:1.2}
+.btn:hover{border-color:var(--want);color:var(--want)}
+.btn:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.pips{display:flex;gap:5px;margin-left:auto;flex-wrap:wrap}
+.pip{width:21px;height:21px;border-radius:3px;border:1px solid var(--line-strong);background:var(--surface);color:var(--muted);font:700 11px/1 "Bricolage Grotesque",sans-serif;cursor:pointer;display:grid;place-items:center;padding:0}
+.pip[aria-current="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.pip:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.stagetext{padding:21px 23px 23px;border-top:1px solid var(--line)}
+.steptitle{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 7px}
+.stagetext h3{font-size:21.5px;margin:0 0 11px}
+.stagetext p{max-width:72ch;margin:0 0 13px;color:var(--ink-2)}
+.stagetext p:last-child{margin:0}
+.stagetext b{color:var(--ink)}
+/* ---- anatomy ---- */
+.anat{margin:26px 0 0;border:1px solid var(--line);border-radius:5px;background:var(--surface);overflow:hidden;box-shadow:var(--shadow)}
+.anat-h{padding:12px 18px;border-bottom:1px solid var(--line);background:var(--surface-2);font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.anat-cmd{padding:20px 18px 16px;background:var(--sunken);display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start;overflow-x:auto}
+.tok{font-size:14px;font-weight:500;padding:7px 10px;border:1px solid transparent;border-radius:3px;background:var(--surface);color:var(--ink);cursor:pointer;line-height:1.3;white-space:nowrap;position:relative;border-bottom:2px solid var(--line-strong)}
+.tok:hover{border-color:var(--want);color:var(--want)}
+.tok[aria-pressed="true"]{background:var(--want);border-color:var(--want);color:#fff}
+.tok:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.tok .kind{display:block;font:700 8.5px/1.4 "Bricolage Grotesque",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:3px 0 0}
+.tok[aria-pressed="true"] .kind{color:#ffffffcc}
+.anat-def{padding:18px 20px 20px;border-top:1px solid var(--line);min-height:96px}
+.anat-def h4{font-size:15px;margin:0 0 7px;font-family:"JetBrains Mono",monospace;color:var(--want)}
+.anat-def p{font-size:15.5px;line-height:1.62;color:var(--ink-2);margin:0 0 10px;max-width:70ch}
+.anat-def p:last-child{margin:0}
+.anat-def code{font-size:.9em}
+.anat-hint{font-size:13px;color:var(--muted);font-family:Literata,serif;font-style:italic}
+/* ---- tables, code ---- */
+.tbl{width:100%;border-collapse:collapse;margin:22px 0 0;font-size:15px}
+.tbl th{font-size:11px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 14px 9px 0;border-bottom:1px solid var(--line-strong)}
+.tbl td{padding:11px 14px 11px 0;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-2)}
+.tbl td:first-child{color:var(--ink);white-space:nowrap}
+.tbl td code{white-space:nowrap}
+.tblwrap{overflow-x:auto}
+code{font-size:.86em;background:var(--surface-2);border:1px solid var(--line);border-radius:3px;padding:1px 5px;color:var(--ink)}
+pre{background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:15px 17px;overflow-x:auto;font-size:13px;line-height:1.68;margin:16px 0 0}
+pre code{background:0 0;border:0;padding:0;color:var(--ink-2);font-size:inherit}
+.pre-h{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:24px 0 -6px}
+figure{margin:26px 0 0}
+figcaption{font-size:13.5px;line-height:1.55;color:var(--muted);margin:11px 0 0;max-width:76ch}
+.nextprev{display:flex;gap:14px;flex-wrap:wrap;margin:30px 0 0}
+.np{flex:1 1 230px;border:1px solid var(--line);border-radius:4px;padding:15px 17px;background:var(--surface);text-decoration:none;color:var(--ink)}
+.np:hover{border-color:var(--want)}
+.np span{display:block;font-size:10.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-family:"Bricolage Grotesque",sans-serif;margin:0 0 4px}
+footer{margin:76px 0 0;padding:26px 0 0;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+/* svg shared */
+.d-panel{fill:var(--surface);stroke:var(--line-strong)}
+.d-sunken{fill:var(--sunken);stroke:var(--line)}
+.d-box{fill:var(--surface);stroke:var(--line-strong)}
+.t{fill:var(--ink);font-family:"Bricolage Grotesque",sans-serif;font-size:12.5px;font-weight:700}
+.t-sm{fill:var(--ink-2);font-family:"JetBrains Mono",monospace;font-size:10.5px}
+.t-mut{fill:var(--muted);font-family:"JetBrains Mono",monospace;font-size:10px}
+.t-lbl{fill:var(--muted);font-family:"Bricolage Grotesque",sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.t-want{fill:var(--want)} .t-have{fill:var(--have)} .t-ok{fill:var(--ok)} .t-note{fill:var(--note)}
+.b-want{fill:var(--want-wash);stroke:var(--want)} .b-have{fill:var(--have-wash);stroke:var(--have)}
+.b-ok{fill:var(--ok-wash);stroke:var(--ok)} .b-note{fill:var(--note-wash);stroke:var(--note)}
+.cell{fill:var(--want-wash);stroke:var(--want);stroke-width:.8}
+.ah{fill:var(--ink-2)} .ah-want{fill:var(--want)} .ah-have{fill:var(--have)} .ah-ok{fill:var(--ok)}
+.flow{fill:none;stroke:var(--ink-2);stroke-width:1.4}
+.flow-want{stroke:var(--want)} .flow-have{stroke:var(--have)} .flow-ok{stroke:var(--ok)}
+.g{transition:opacity .4s ease}
+.dim{opacity:.13} .hide{opacity:0}
+.live{stroke-dasharray:5 5;animation:ants 1s linear infinite}
+@keyframes ants{to{stroke-dashoffset:-20}}
+@media (prefers-reduced-motion:reduce){.live{animation:none}.g{transition:none}}
+</style>
+</head>
+<body>
+<nav class="topbar">
+  <div class="tbin">
+    <a class="tb-series" href="/tech/kubernetes-by-example/">Kubernetes by Example</a>
+    <button class="tb-btn" id="tocbtn" type="button" aria-expanded="false" aria-controls="tocpanel">Contents</button>
+    <span class="tb-pos">Part 4 of 14</span><div style="display:flex;gap:6px"><a class="tb-btn" href="/tech/kubernetes-by-example/03-labels-selectors-namespaces/" title="Labels, selectors, namespaces">&#8592;</a><a class="tb-btn" href="/tech/kubernetes-by-example/05-daemonsets/" title="DaemonSets">&#8594;</a></div>
+  </div>
+  <div class="tocpanel" id="tocpanel" hidden><div class="tocin"><div class="tocgrp"><h5>Tier 0 · The model</h5><ol><li><a href="/tech/kubernetes-by-example/01-the-object-model/"><span class="n">01</span>The object model</a></li><li><a href="/tech/kubernetes-by-example/02-pods-and-containers/"><span class="n">02</span>Pods and containers</a></li><li><a href="/tech/kubernetes-by-example/03-labels-selectors-namespaces/"><span class="n">03</span>Labels, selectors, namespaces</a></li></ol></div><div class="tocgrp"><h5>Tier 1 · Workload kinds</h5><ol><li><a href="/tech/kubernetes-by-example/04-deployments-and-rollouts/" aria-current="page"><span class="n">04</span>Deployments and rollouts</a></li><li><a href="/tech/kubernetes-by-example/05-daemonsets/"><span class="n">05</span>DaemonSets</a></li><li><a href="/tech/kubernetes-by-example/06-statefulsets-jobs-cronjobs/"><span class="n">06</span>StatefulSets, Jobs, CronJobs</a></li></ol></div><div class="tocgrp"><h5>Tier 2 · Wiring</h5><ol><li><a href="/tech/kubernetes-by-example/07-services-and-ingress/"><span class="n">07</span>Services and Ingress</a></li><li><a href="/tech/kubernetes-by-example/08-config-and-secrets/"><span class="n">08</span>Config and Secrets</a></li><li><a href="/tech/kubernetes-by-example/09-storage/"><span class="n">09</span>Storage</a></li></ol></div><div class="tocgrp"><h5>Tier 3 · Scheduling</h5><ol><li><a href="/tech/kubernetes-by-example/10-requests-limits-qos/"><span class="n">10</span>Requests, limits, QoS</a></li><li><a href="/tech/kubernetes-by-example/11-placement-and-devices/"><span class="n">11</span>Placement and devices</a></li></ol></div><div class="tocgrp"><h5>Tier 4 · Production</h5><ol><li><a href="/tech/kubernetes-by-example/12-staying-up/"><span class="n">12</span>Staying up</a></li><li><a href="/tech/kubernetes-by-example/13-scaling-and-permissions/"><span class="n">13</span>Scaling and permissions</a></li><li><a href="/tech/kubernetes-by-example/14-helm-and-custom-resources/"><span class="n">14</span>Helm and custom resources</a></li></ol></div></div></div>
+</nav>
+<div class="wrap">
+<header class="top">
+  <div class="col">
+    <p class="eyebrow">Kubernetes by Example · Part 4</p>
+    <h1>Deployments and Rollouts</h1>
+    <p class="lede">You asked for a rolling update and got a gap anyway. Here is what actually moves during a deploy, and what sets its pace.</p>
+    <div class="meta"><span class="tag">assumes Parts 1–3</span><span class="tag">~17 minutes</span><span class="tag">the middle layer earns its keep</span></div>
+  </div>
+</header>
+
+<section>
+  <div class="col">
+    <h2>The symptom</h2>
+    <p>You ship a new tuner image. The command returns instantly and cheerfully. Thirty seconds later someone asks why the transcripts stopped.</p>
+    <p>They stopped for about forty seconds, then came back. Nothing crashed. No pod shows a restart. <code>kubectl get deployment</code> says 4/4 ready and has said so the whole time, including during the gap.</p>
+    <p>You did a rolling update specifically to avoid this. It rolled. There was still a gap.</p>
+    <p>The answer is that a rolling update is only as careful as your definition of “ready”, and by default that definition is “the process has started”, which is not the same thing at all.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>What a Deployment is actually for</h2>
+    <p>If all you ever did was run N copies of one unchanging thing, you would not need a Deployment. A ReplicaSet does that by itself.</p>
+    <p>The Deployment exists for the moment you change your mind. It's a <b>supervisor of versions</b>: it keeps one ReplicaSet per version of your pod template and moves pods between them according to rules you set.</p>
+  </div>  <div class="stage">
+    <div class="stagefig" id="stagefig"><svg viewBox="0 0 1000 400" role="img" aria-label="A Deployment owning two ReplicaSets: an old one scaling down and a new one scaling up. Pods move from one to the other a few at a time, governed by maxSurge and maxUnavailable.">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-want" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-want" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-have" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-have" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-ok" d="M0,0 L10,5 L0,10 Z"/></marker>
+  </defs>
+  <g id="g-dep" class="g">
+    <rect class="d-panel" x="350" y="40" width="300" height="56" rx="4" stroke-width="1.5"/>
+    <text class="t-lbl" x="366" y="60">Deployment · tuner</text>
+    <text class="t-sm" x="366" y="80">replicas: 4<tspan class="t-mut" dx="12">strategy: RollingUpdate</tspan></text>
+  </g>
+  <g id="g-rs1" class="g">
+    <rect class="d-box" x="48" y="140" width="420" height="52" rx="4"/>
+    <text class="t-sm" x="64" y="160">ReplicaSet · tuner-7d4f8b <tspan class="t-mut" dx="8">revision 1</tspan></text>
+    <text class="t-mut" x="64" y="178">image: tuner:1.2</text>
+    <rect x="48" y="206" width="76" height="34" rx="3" fill="var(--want-wash)" stroke="var(--want)" stroke-width="1.2"/>
+    <rect x="140" y="206" width="76" height="34" rx="3" fill="var(--want-wash)" stroke="var(--want)" stroke-width="1.2"/>
+    <rect x="232" y="206" width="76" height="34" rx="3" fill="var(--want-wash)" stroke="var(--want)" stroke-width="1.2"/>
+    <rect x="324" y="206" width="76" height="34" rx="3" fill="var(--want-wash)" stroke="var(--want)" stroke-width="1.2"/>
+    <text class="t-lbl t-want" x="48" y="258">4 running, all ready</text>
+  </g>
+  <g id="g-rs2" class="g">
+    <rect class="b-ok" x="532" y="140" width="420" height="52" rx="4" stroke-width="1.3"/>
+    <text class="t-sm t-ok" x="548" y="160">ReplicaSet · tuner-9c2e1a <tspan class="t-mut" dx="8">revision 2</tspan></text>
+    <text class="t-mut" x="548" y="178">image: tuner:1.3</text>
+    <rect x="532" y="206" width="76" height="34" rx="3" fill="var(--sunken)" stroke="var(--line)" stroke-width="1.2"/>
+    <rect x="624" y="206" width="76" height="34" rx="3" fill="var(--sunken)" stroke="var(--line)" stroke-width="1.2"/>
+    <rect x="716" y="206" width="76" height="34" rx="3" fill="var(--sunken)" stroke="var(--line)" stroke-width="1.2"/>
+    <rect x="808" y="206" width="76" height="34" rx="3" fill="var(--sunken)" stroke="var(--line)" stroke-width="1.2"/>
+    <text class="t-lbl" x="532" y="258">0 running — nothing has started yet</text>
+  </g>
+  <g id="f-own" class="g hide">
+    <path class="flow live" d="M392,100 V120 H258 V136" marker-end="url(#a)"/>
+    <path class="flow live" d="M608,100 V120 H742 V136" marker-end="url(#a)"/>
+    <text class="t-lbl" x="430" y="116">one Deployment, many ReplicaSets</text>
+  </g>
+  <g id="f-roll" class="g hide">
+    <path class="flow flow-ok live" d="M472,223 H528" marker-end="url(#a-ok)"/>
+    <rect x="300" y="286" width="400" height="16" fill="var(--bg)"/>
+    <text class="t-lbl t-ok" x="304" y="298">a few at a time, never all at once</text>
+  </g>
+  <g id="g-gate" class="g hide">
+    <rect class="d-sunken" x="48" y="312" width="904" height="58" rx="3"/>
+    <text class="t-lbl" x="64" y="331">the two numbers that set the pace</text>
+    <text class="t-sm" x="64" y="349">maxUnavailable: 25%<tspan class="t-mut" dx="10">never fewer than 3 of 4 serving</tspan></text>
+    <text class="t-sm" x="520" y="349">maxSurge: 25%<tspan class="t-mut" dx="10">never more than 5 of 4 existing</tspan></text>
+  </g>
+  <g id="x-stuck" class="g hide">
+    <rect x="528" y="136" width="428" height="128" rx="5" fill="none" stroke="var(--have)" stroke-width="1.7" stroke-dasharray="6 4"/>
+    <rect x="560" y="274" width="330" height="16" fill="var(--bg)"/>
+    <text class="t-lbl t-have" x="564" y="286">new pods never become ready → it stops here</text>
+  </g>
+  <g id="x-safe" class="g hide">
+    <rect x="44" y="136" width="428" height="128" rx="5" fill="none" stroke="var(--ok)" stroke-width="1.7"/>
+    <rect x="80" y="274" width="320" height="16" fill="var(--bg)"/>
+    <text class="t-lbl t-ok" x="84" y="286">…and the old ones keep serving. That is the feature.</text>
+  </g>
+</svg></div>
+    <div class="scrub">
+      <button class="btn" id="prev" type="button">&#9664; Back</button>
+      <button class="btn" id="play" type="button">&#9654; Play</button>
+      <button class="btn" id="next" type="button">Next &#9654;</button>
+      <div class="pips" id="pips"></div>
+    </div>
+    <div class="stagetext">
+      <p class="steptitle" id="stepn"></p>
+      <h3 id="stept"></h3>
+      <div id="stepp"></div>
+    </div>
+  </div>  <div class="col">
+    <div class="cw">
+      <h4>Which edits cause a rollout</h4>
+      <p><b>Inside <code>spec.template</code></b> — image, env, resources, labels, probes, volumes. Changes the template hash, so a new ReplicaSet appears and pods roll.</p>
+      <p><b>Outside it</b> — <code>replicas</code>, <code>strategy</code>, <code>revisionHistoryLimit</code>. No new ReplicaSet, no rollout, takes effect immediately.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>The commands</h2>
+  </div><div class="anat" id="an-rollout"><div class="anat-h">Driving and watching a rollout</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-rollout" data-i="0" aria-pressed="false">kubectl rollout<span class="kind">verb group</span></button><button class="tok" type="button" data-w="an-rollout" data-i="1" aria-pressed="false">status<span class="kind">subcommand</span></button><button class="tok" type="button" data-w="an-rollout" data-i="2" aria-pressed="false">deploy/tuner<span class="kind">type/name</span></button><button class="tok" type="button" data-w="an-rollout" data-i="3" aria-pressed="false">--revision=3<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-rollout" data-i="4" aria-pressed="false">undo<span class="kind">subcommand</span></button></div><div class="anat-def" data-def="an-rollout"><p class="anat-hint">Click any piece of the command.</p></div></div><div class="anat" id="an-set"><div class="anat-h">Changing a Deployment without editing YAML</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-set" data-i="0" aria-pressed="false">kubectl set image<span class="kind">verb</span></button><button class="tok" type="button" data-w="an-set" data-i="1" aria-pressed="false">deploy/tuner<span class="kind">type/name</span></button><button class="tok" type="button" data-w="an-set" data-i="2" aria-pressed="false">tuner=tuner:1.3<span class="kind">assignment</span></button><button class="tok" type="button" data-w="an-set" data-i="3" aria-pressed="false">--record<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-set" data-i="4" aria-pressed="false">kubectl rollout restart<span class="kind">command</span></button></div><div class="anat-def" data-def="an-set"><p class="anat-hint">Click any piece of the command.</p></div></div><div class="anat" id="an-scale"><div class="anat-h">Counting, and pausing</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-scale" data-i="0" aria-pressed="false">kubectl scale<span class="kind">verb</span></button><button class="tok" type="button" data-w="an-scale" data-i="1" aria-pressed="false">--replicas=6<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-scale" data-i="2" aria-pressed="false">--current-replicas=4<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-scale" data-i="3" aria-pressed="false">kubectl rollout pause<span class="kind">command</span></button></div><div class="anat-def" data-def="an-scale"><p class="anat-hint">Click any piece of the command.</p></div></div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Build it</h2>
+    <p>Four tuners from Part 3, now with a rollout you can actually watch happen.</p>
+  </div><p class="pre-h">Apply and wait properly</p>
+<pre><code>kubectl apply -f manifests/tuner.yaml
+kubectl rollout status deploy/tuner</code></pre><p class="pre-h">Roll it</p>
+<pre><code># in one terminal, watch pods come and go
+kubectl get pods -l app=tuner -w
+
+# in another, change the template
+kubectl set env deploy/tuner TUNER_VERSION=2
+kubectl rollout status deploy/tuner</code></pre>  <div class="col">
+    <p style="margin-top:20px">In the watch window you'll see new pods appear before old ones leave — that's <code>maxSurge</code> — and never more than one missing at a time, which is <code>maxUnavailable</code>. Both ReplicaSets exist simultaneously throughout.</p>
+  </div><p class="pre-h">See both versions</p>
+<pre><code>kubectl get rs -l app=tuner
+kubectl rollout history deploy/tuner</code></pre>  <div class="col">
+    <p style="margin-top:20px">Two ReplicaSets: the old one at 0, the new one at 4. The old one is your rollback, sitting there costing nothing.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Break it</h2>
+    <h3 style="margin-top:26px">1 · Deploy something that cannot start</h3>
+  </div><pre><code>kubectl set image deploy/tuner tuner=busybox:does-not-exist
+kubectl rollout status deploy/tuner --timeout=60s   # fails
+
+kubectl get pods -l app=tuner
+kubectl get rs -l app=tuner</code></pre>  <div class="col">
+    <p style="margin-top:20px">Look carefully at that pod list. There's an <code>ImagePullBackOff</code> pod that will never start — and <b>four healthy old pods still serving</b>. The rollout took one step, couldn't take another, and stopped.</p>
+    <p>This is the system working. It will not trade a working fleet for a broken one just because you asked.</p>
+  </div><p class="pre-h">Undo it</p>
+<pre><code>kubectl rollout undo deploy/tuner
+kubectl rollout status deploy/tuner</code></pre>  <div class="col">
+    <h3 style="margin-top:34px">2 · Reproduce the gap from the top of the page</h3>
+    <p>A container that takes ten seconds to be useful, and no readiness probe to say so.</p>
+  </div><pre><code>kubectl apply -f manifests/slow-start.yaml
+kubectl rollout status deploy/slow-start
+
+# now roll it, and watch how fast every pod is replaced
+kubectl set env deploy/slow-start V=2
+kubectl get pods -l app=slow-start -w</code></pre>  <div class="col">
+    <p style="margin-top:20px">Every pod is replaced in a couple of seconds, because the kubelet reports <code>Running</code> the moment the process exists and the Deployment believes it. For ten seconds afterwards, none of them can do anything useful. Your rollout reported complete success.</p>
+    <div class="note"><b>The fix is a readiness probe</b>, which is Part 12. For now the lesson is narrower and more important: <em>ready</em> means whatever you define it to mean, and the default definition is nearly worthless.</div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>What follows from this</h2>
+  </div>  <div class="tblwrap">
+  <table class="tbl">
+    <thead><tr><th>Because…</th><th>…this is what happens</th></tr></thead>
+    <tbody><tr><td>Deployments manage ReplicaSets</td><td>Old versions sit at zero, costing nothing, ready to be scaled back up. That is what makes rollback instant.</td></tr><tr><td>Template changes make new ReplicaSets</td><td>Any edit inside <code>template</code> triggers a rollout. Edits outside it don't.</td></tr><tr><td>Rollouts wait for readiness</td><td>Without a readiness probe, the pace is set by process startup, which is almost never the right moment.</td></tr><tr><td>A failed rollout stops</td><td>Old pods keep serving. A stuck rollout is protection, not breakage.</td></tr><tr><td>History is finite</td><td><code>revisionHistoryLimit</code> bounds how far back you can undo. Keeping old ReplicaSets is free.</td></tr><tr><td><code>set</code> edits live objects</td><td>Convenient during incidents, reverted by the next <code>apply</code>. Change the file for anything permanent.</td></tr></tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Cheat sheet</h2>
+    <div class="cw">
+      <h4>Part 4 · deployments and rollouts</h4>
+      <p>• A Deployment manages <b>ReplicaSets</b>; a ReplicaSet manages Pods. The middle layer is what makes change safe.</p>
+      <p>• Change anything in <code>spec.template</code> → new ReplicaSet → rollout. Change <code>replicas</code> → no rollout.</p>
+      <p>• <code>maxSurge</code> is how far above your count you'll go; <code>maxUnavailable</code> how far below. Both can't be zero.</p>
+      <p>• The rollout waits for <b>readiness</b>. No probe means “ready when the process exists”, which is usually a lie.</p>
+      <p>• A failed rollout stops and leaves the old pods serving. That's the feature, not the bug.</p>
+      <p>• <code>rollout undo</code> is fast because the old ReplicaSet never went away.</p>
+      <p>• <code>rollout status</code> is the command that tells you a deploy actually worked — <code>apply</code> never did.</p>
+      <p>• <code>rollout restart</code> rolls fresh pods without changing the image. Use it instead of deleting pods.</p>
+      <p>• <code>rollout pause</code> for a manual canary, or to batch several edits into one rollout.</p>
+      <p>• <code>Recreate</code> means downtime on purpose — for when two versions genuinely cannot coexist.</p>
+    </div>
+  </div>  <div class="nextprev">
+    <a class="np" href="/tech/kubernetes-by-example/03-labels-selectors-namespaces/"><span>Previous · Part 3</span>Labels, selectors, namespaces</a>
+    <a class="np" href="/tech/kubernetes-by-example/"><span>Series</span>All 14 parts</a>
+    <a class="np" href="/tech/kubernetes-by-example/05-daemonsets/"><span>Next · Part 5</span>DaemonSets</a>
+  </div>
+</section>
+
+<footer>
+  <div class="col"><p>Part of <b>Kubernetes by Example</b>. Next: the workloads that aren't counted in replicas at all.</p></div>
+</footer>
+</div>
+<script>
+const STEPS = [{"t": "A Deployment does not manage pods", "on": ["g-dep", "g-rs1", "f-own"], "p": ["In Part 1 we watched a Deployment make a ReplicaSet which made Pods, and treated the middle layer as bureaucratic padding. It isn't. It's the entire mechanism for changing things safely.", "<b>A Deployment manages ReplicaSets.</b> Each ReplicaSet owns one version of your pod template and is responsible for exactly one job: keeping N copies of that version alive."], "n": 1}, {"t": "Change the template, get a new ReplicaSet", "on": ["g-dep", "g-rs1", "g-rs2", "f-own"], "p": ["Edit anything inside <code>spec.template</code> \u2014 the image, an environment variable, a resource limit \u2014 and the Deployment controller notices the template hash has changed and creates a <b>brand new ReplicaSet</b>.", "The old one is not deleted. It's scaled to zero and kept, which is what makes rollback nearly instant.", "Edit something <em>outside</em> the template, like <code>replicas</code>, and no new ReplicaSet appears \u2014 you've changed how many, not what."], "n": 2}, {"t": "The rollout is just two counters moving", "on": ["g-dep", "g-rs1", "g-rs2", "f-roll"], "p": ["A rolling update is less clever than it sounds. The Deployment controller nudges the new ReplicaSet's count up by a little, waits, nudges the old one down by a little, waits, repeats.", "There is no traffic draining, no handover, no coordination between the two. Two independent counters, moved alternately by a third party, until one is at zero."], "n": 3}, {"t": "Two numbers decide how violent it is", "on": ["g-rs1", "g-rs2", "g-gate"], "p": ["<b>maxUnavailable</b> is how far below your replica count you'll allow things to drop. <b>maxSurge</b> is how far above you'll allow it to go. Both default to 25%.", "<code>maxUnavailable: 0</code> means capacity never dips \u2014 but you need room for extra pods, which with a scarce resource like a GPU may simply not exist. <code>maxSurge: 0</code> means you never exceed your count, but you go down to fewer while replacing.", "<b>You cannot set both to zero.</b> Nothing could ever move. Kubernetes rejects it."], "n": 4}, {"t": "Readiness is what paces the whole thing", "on": ["g-rs2", "g-gate"], "p": ["The waiting in step 3 isn't a timer. The controller waits for new pods to report <b>ready</b>, and only then takes another step.", "Which means a pod with no readiness probe is considered ready the instant its process starts. Your careful rolling update then replaces everything as fast as the kubelet can launch processes \u2014 and if those processes need thirty seconds to load a model, you have just dropped your entire fleet while reporting a successful rollout.", "<b>Rolling updates without readiness probes are theatre.</b> We'll fix that properly in Part 12."], "n": 5}, {"t": "A stuck rollout is doing its job", "on": ["g-rs1", "g-rs2", "x-stuck", "x-safe"], "p": ["Push a broken image and the new pods never become ready. The rollout takes its first step and stops. <code>kubectl rollout status</code> hangs. After <code>progressDeadlineSeconds</code> (600 by default) it's marked failed.", "<b>And your old pods are still running and still serving.</b> That's not the system failing to deploy \u2014 it's the system refusing to replace something that works with something that doesn't.", "A stuck rollout looks alarming on a dashboard and is almost always the kindest possible outcome."], "n": 6}, {"t": "Rollback is just scaling the old one back", "on": ["g-rs1", "g-rs2", "f-roll"], "p": ["<code>kubectl rollout undo</code> does something anticlimactic: it scales the previous ReplicaSet back up and the current one down.", "No image is rebuilt, nothing is fetched, nothing is re-templated. The old ReplicaSet has been sitting there at zero the whole time, holding a complete and known-good pod template. That is why rollback takes seconds while deploying takes minutes.", "It also means rollback only works as far back as your kept history."], "n": 7}, {"t": "How much history you keep", "on": ["g-dep", "g-rs1", "g-rs2"], "p": ["<code>revisionHistoryLimit</code>, default 10, is how many old ReplicaSets are retained. Beyond that they're deleted and those revisions become unrollbackable.", "They cost nothing to keep \u2014 a scaled-to-zero ReplicaSet is a row in a database, not a running thing. Setting it to 0 or 1 to tidy up is a false economy you'll regret exactly once.", "One wrinkle worth knowing: <code>kubectl rollout history</code> shows a useful CHANGE-CAUSE column only if something recorded one. An annotation does it \u2014 most teams set it in CI."], "n": 8}, {"t": "Recreate, for when overlap is impossible", "on": ["g-dep", "g-rs1", "g-rs2"], "p": ["The other strategy is <code>Recreate</code>: kill everything, then start the new version. Guaranteed downtime, and occasionally the only correct choice.", "You need it when two versions genuinely cannot coexist \u2014 an exclusive lock on a volume, a schema migration that isn't backward compatible, a licence that permits one instance.", "For everything else, rolling. And note that neither strategy applies to a <b>DaemonSet</b>, which has its own update mechanics for the very good reason that it has no replica count at all. Which is Part 5."], "n": 9}];
+const svg=document.querySelector('#stagefig svg');
+const groups=[...svg.querySelectorAll('g[id]')];
+const pips=document.getElementById('pips');
+let cur=0,timer=null;
+STEPS.forEach((s,i)=>{const b=document.createElement('button');b.className='pip';b.type='button';b.textContent=s.n;
+  b.setAttribute('aria-label','Step '+s.n+': '+s.t);b.addEventListener('click',()=>{stop();show(i);});pips.appendChild(b);});
+function show(i){
+  cur=(i+STEPS.length)%STEPS.length;
+  const s=STEPS[cur],on=new Set(s.on);
+  groups.forEach(g=>{
+    const isFlow=g.id.startsWith('f-')||g.id.startsWith('x-');
+    g.classList.remove('dim','hide');
+    if(on.has(g.id))return;
+    g.classList.add(isFlow?'hide':'dim');
+  });
+  document.getElementById('stepn').textContent='Step '+s.n+' of '+STEPS.length;
+  document.getElementById('stept').textContent=s.t;
+  document.getElementById('stepp').innerHTML=s.p.map(x=>'<p>'+x+'</p>').join('');
+  [...pips.children].forEach((b,j)=>b.setAttribute('aria-current',j===cur?'true':'false'));
+}
+function stop(){if(timer){clearInterval(timer);timer=null;document.getElementById('play').innerHTML='\u25B6 Play';}}
+document.getElementById('next').addEventListener('click',()=>{stop();show(cur+1);});
+document.getElementById('prev').addEventListener('click',()=>{stop();show(cur-1);});
+document.getElementById('play').addEventListener('click',e=>{
+  if(timer){stop();return;}
+  e.currentTarget.innerHTML='\u23F8 Pause';
+  timer=setInterval(()=>{if(cur===STEPS.length-1){stop();return;}show(cur+1);},6000);
+});
+document.addEventListener('keydown',e=>{
+  if(e.target.closest('input,textarea'))return;
+  if(e.key==='ArrowRight'){stop();show(cur+1);}
+  if(e.key==='ArrowLeft'){stop();show(cur-1);}
+});
+show(0);
+
+var ANAT = {"an-rollout": [{"t": "kubectl rollout", "b": "<p>A small family of subcommands for Deployments, DaemonSets and StatefulSets: <code>status</code>, <code>history</code>, <code>undo</code>, <code>restart</code>, <code>pause</code>, <code>resume</code>.</p><p>They are the only commands that understand a rollout as a <em>process</em> rather than as a set of objects.</p>"}, {"t": "rollout status", "b": "<p>Blocks until the rollout finishes, then exits 0 \u2014 or exits non-zero if it fails. That exit code is the point: it's what makes a deploy step in CI actually mean something.</p><p><code>--timeout=5m</code> stops it hanging forever. <code>-w=false</code> prints the current state and returns immediately.</p><p>Remember Part 1: <code>apply</code> only recorded your wish. <b>This</b> is the command that tells you whether it came true.</p>"}, {"t": "the target", "b": "<p>Works on <code>deploy/</code>, <code>ds/</code> and <code>sts/</code>. Not on a ReplicaSet \u2014 a ReplicaSet has no concept of a rollout, it only has a count.</p>"}, {"t": "picking a revision", "b": "<p>With <code>history</code>, shows the full pod template of one revision. With <code>undo</code>, goes to that specific revision instead of simply the previous one.</p><p><code>kubectl rollout history deploy/tuner --revision=3</code> before undoing is a cheap way to confirm you're going where you think.</p>"}, {"t": "rollout undo", "b": "<p>Scales the previous ReplicaSet back up. Seconds, not minutes, because nothing is built.</p><p>Note it creates a <em>new</em> revision number rather than rewinding the counter \u2014 so undoing twice returns you to where you started, which surprises people mid-incident.</p>"}], "an-set": [{"t": "kubectl set", "b": "<p>Targeted edits to common fields: <code>set image</code>, <code>set env</code>, <code>set resources</code>, <code>set serviceaccount</code>.</p><p>Fine for experiments and incidents. For anything that should persist, change the file \u2014 otherwise the next <code>apply</code> silently reverts you, which is Part 1's loop doing exactly what it promised.</p>"}, {"t": "the target", "b": "<p>Can be a selector instead: <code>kubectl set image deploy -l app=tuner \u2026</code> to update several at once.</p>"}, {"t": "container=image", "b": "<p>The container's <b>name</b>, not the image's. Getting this wrong is a no-op with a cheerful success message \u2014 a real trap.</p><p><code>*=tuner:1.3</code> applies to every container in the pod.</p>"}, {"t": "recording why", "b": "<p>Deprecated, but the problem it solved is real: without a CHANGE-CAUSE, <code>rollout history</code> is a list of numbers with no meaning.</p><p>The modern way is an annotation, usually set by CI: <code>kubectl annotate deploy/tuner kubernetes.io/change-cause=&quot;image 1.3, PR 412&quot;</code>.</p>"}, {"t": "forcing a restart", "b": "<p>No image change, but you want fresh pods \u2014 a rotated secret, a changed ConfigMap mounted as a volume.</p><p>It stamps a timestamp annotation into the template, which changes the hash, which creates a new ReplicaSet, which rolls normally. A restart that respects maxSurge and maxUnavailable, rather than <code>delete pod</code> in a loop.</p>"}], "an-scale": [{"t": "kubectl scale", "b": "<p>Changes <code>replicas</code> and nothing else. No new ReplicaSet, because the template is untouched.</p><p>Gets overwritten by your next <code>apply</code> unless the manifest agrees \u2014 or unless an autoscaler owns the field, which is Part 13.</p>"}, {"t": "the count", "b": "<p>Scaling to 0 is legitimate and useful: it keeps the Deployment, its history and its config, while running nothing.</p>"}, {"t": "a safety check", "b": "<p>Only apply if the count is currently 4. An optimistic lock, so two people scaling at once don't silently undo each other.</p><p>Pairs with <code>--resource-version</code> for the same reason. Rare, and exactly what you want during an incident with several people typing.</p>"}, {"t": "stopping mid-flight", "b": "<p>Freezes a rollout where it stands. Useful for a manual canary: push a new image, let one pod through, pause, go and look at it.</p><p>It also batches changes \u2014 pause, make five edits, resume, and you get <em>one</em> rollout instead of five. <code>resume</code> continues.</p><p>Careful: a paused Deployment ignores further template changes until resumed, which is bewildering if you've forgotten it's paused.</p>"}]};
+document.querySelectorAll('.tok').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var w=btn.dataset.w, i=+btn.dataset.i, d=ANAT[w][i];
+    var panel=document.querySelector('[data-def="'+w+'"]');
+    document.querySelectorAll('.tok[data-w="'+w+'"]').forEach(function(o){o.setAttribute('aria-pressed',String(o===btn));});
+    panel.innerHTML='<h4>'+d.t+'</h4>'+d.b;
+  });
+});
+
+(function(){
+  var b=document.getElementById('tocbtn'),p=document.getElementById('tocpanel');
+  if(!b||!p)return;
+  b.addEventListener('click',function(){
+    var open=b.getAttribute('aria-expanded')==='true';
+    b.setAttribute('aria-expanded',String(!open)); p.hidden=open;
+  });
+  document.addEventListener('click',function(e){
+    if(!p.hidden && !p.contains(e.target) && e.target!==b){b.setAttribute('aria-expanded','false');p.hidden=true;}
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&!p.hidden){b.setAttribute('aria-expanded','false');p.hidden=true;b.focus();}
+  });
+})();
+</script>
+</body>
+</html>

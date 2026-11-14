@@ -1,0 +1,41 @@
+# Part 1 — the smallest wish that is still interesting.
+#
+# There is no radio in here yet. The container prints a line a second,
+# because in Part 1 we are watching the machinery, not the workload.
+# The real tuner arrives in Part 2.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tuner
+  labels:
+    app: tuner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tuner
+  template:
+    metadata:
+      labels:
+        app: tuner
+    spec:
+      containers:
+        - name: tuner
+          image: busybox:1.36
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              echo "tuner up, pretending to listen"
+              while true; do
+                echo "$(date -Iseconds)  ...still listening to nothing in particular"
+                sleep 1
+              done
+          # Needed by the "ask for something impossible" experiment:
+          # kubectl patch replaces this exact path, so it has to exist first.
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              cpu: 200m
+              memory: 64Mi

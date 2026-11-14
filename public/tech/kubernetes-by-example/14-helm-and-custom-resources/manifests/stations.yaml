@@ -1,0 +1,21 @@
+# Part 14 — three Stations. Valid, listed, and inert until the conductor runs.
+apiVersion: airwaves.example/v1alpha1
+kind: Station
+metadata:
+  name: jazz
+spec:
+  url: "http://jazz.example/stream"
+---
+apiVersion: airwaves.example/v1alpha1
+kind: Station
+metadata:
+  name: news
+spec:
+  url: "http://news.example/stream"
+---
+apiVersion: airwaves.example/v1alpha1
+kind: Station
+metadata:
+  name: talk
+spec:
+  url: "http://talk.example/stream"

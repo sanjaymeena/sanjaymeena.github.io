@@ -1,0 +1,55 @@
+# Part 14 — teaching the API server a new noun.
+# Apply this and `kubectl get stations` works immediately. It will also do
+# absolutely nothing, because a CRD is storage and validation only.
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: stations.airwaves.example
+spec:
+  group: airwaves.example
+  scope: Namespaced
+  names:
+    plural: stations
+    singular: station
+    kind: Station
+    shortNames: [st]
+  versions:
+    - name: v1alpha1
+      served: true
+      storage: true
+      subresources:
+        status: {}          # spec is intent; status is what the controller achieved
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              required: [url]
+              properties:
+                url:
+                  type: string
+                  description: Where to pull the audio from.
+                enabled:
+                  type: boolean
+                  default: true
+            status:
+              type: object
+              properties:
+                phase:
+                  type: string
+                podName:
+                  type: string
+      additionalPrinterColumns:
+        - name: URL
+          type: string
+          jsonPath: .spec.url
+        - name: Phase
+          type: string
+          jsonPath: .status.phase
+        - name: Pod
+          type: string
+          jsonPath: .status.podName
+        - name: Age
+          type: date
+          jsonPath: .metadata.creationTimestamp

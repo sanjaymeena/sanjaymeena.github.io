@@ -1,0 +1,72 @@
+# Part 14 — the pedant you wrote.
+#
+# Watch Stations, watch tuner pods, compare, close the difference, repeat.
+# That is Part 1's loop, with a noun you invented.
+#
+# Written in shell against kubectl so the loop is readable rather than hidden
+# in a framework. A real controller uses a watch instead of a poll and an
+# informer cache instead of two list calls, but the shape is exactly this.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conductor
+  labels: {app: conductor}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: conductor}
+  template:
+    metadata:
+      labels: {app: conductor}
+    spec:
+      serviceAccountName: conductor
+      containers:
+        - name: conductor
+          image: bitnami/kubectl:latest
+          command: ["/bin/sh","-c"]
+          args:
+            - |
+              echo "conductor: starting reconcile loop"
+              while true; do
+                STATIONS=$(kubectl get stations -o jsonpath='{range .items[*]}{.metadata.name} {.metadata.uid} {.spec.url}{"\n"}{end}' 2>/dev/null)
+                PODS=$(kubectl get pods -l app=tuner,managed-by=conductor -o jsonpath='{range .items[*]}{.metadata.labels.station}{"\n"}{end}' 2>/dev/null)
+
+                # Stations with no pod -> create one
+                echo "$STATIONS" | while read NAME UID URL; do
+                  [ -z "$NAME" ] && continue
+                  if ! echo "$PODS" | grep -qx "$NAME"; then
+                    echo "conductor: station '$NAME' has no pod, creating"
+                    cat <<EOF | kubectl apply -f - >/dev/null
+              apiVersion: v1
+              kind: Pod
+              metadata:
+                name: tuner-$NAME
+                labels:
+                  app: tuner
+                  station: $NAME
+                  managed-by: conductor
+                ownerReferences:
+                  - apiVersion: airwaves.example/v1alpha1
+                    kind: Station
+                    name: $NAME
+                    uid: $UID
+                    controller: true
+                    blockOwnerDeletion: true
+              spec:
+                containers:
+                  - name: tuner
+                    image: busybox:1.36
+                    command: ["/bin/sh","-c"]
+                    args: ["echo tuning $URL; while true; do sleep 10; done"]
+                    resources:
+                      requests: {cpu: 10m, memory: 16Mi}
+              EOF
+                    kubectl patch station "$NAME" --subresource=status --type=merge \
+                      -p "{\"status\":{\"phase\":\"Running\",\"podName\":\"tuner-$NAME\"}}" >/dev/null 2>&1 || true
+                  fi
+                done
+
+                sleep 5
+              done
+          resources:
+            requests: {cpu: 20m, memory: 48Mi}

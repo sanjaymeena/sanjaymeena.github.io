@@ -1,0 +1,38 @@
+# Part 9 — the tuner reading the same memory. Same node, by construction.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tuner
+  labels: {app: tuner}
+spec:
+  replicas: 2
+  selector:
+    matchLabels: {app: tuner}
+  template:
+    metadata:
+      labels: {app: tuner}
+    spec:
+      volumes:
+        - name: shm
+          hostPath: {path: /dev/shm, type: Directory}
+        - name: work
+          emptyDir: {}            # pod-lifetime scratch; survives restarts
+      containers:
+        - name: tuner
+          image: busybox:1.36
+          command: ["/bin/sh","-c"]
+          args:
+            - |
+              while true; do
+                if [ -f /dev/shm/ring-jazz ]; then
+                  echo "ring says: $(cat /dev/shm/ring-jazz)"
+                else
+                  echo "no ring on this node — is a decoder here?"
+                fi
+                sleep 5
+              done
+          volumeMounts:
+            - {name: shm, mountPath: /dev/shm}
+            - {name: work, mountPath: /work}
+          resources:
+            requests: {cpu: 10m, memory: 16Mi}

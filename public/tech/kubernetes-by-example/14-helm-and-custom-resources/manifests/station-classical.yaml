@@ -1,0 +1,7 @@
+# Part 14 — the station someone adds at eleven in the morning.
+apiVersion: airwaves.example/v1alpha1
+kind: Station
+metadata:
+  name: classical
+spec:
+  url: "http://classical.example/stream"

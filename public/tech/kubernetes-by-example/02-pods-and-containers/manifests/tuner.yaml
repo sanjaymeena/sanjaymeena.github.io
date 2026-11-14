@@ -1,0 +1,108 @@
+# Part 2 — the real tuner.
+#
+# Two containers, one after the other:
+#   resolve-station  decides WHICH stream, writes the answer to a volume
+#   tuner            reads that answer and reports how much audio arrives
+#
+# Runs offline by default: STATION_SOURCE=synthetic makes the init container
+# generate a local stream instead of reaching for the internet.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tuner
+  labels:
+    app: tuner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tuner
+  template:
+    metadata:
+      labels:
+        app: tuner
+    spec:
+      volumes:
+        # The only thing the two containers share besides the network.
+        # Remove this and resolve-station's work becomes invisible to tuner.
+        - name: work
+          emptyDir: {}
+
+      initContainers:
+        - name: resolve-station
+          image: busybox:1.36
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              set -e
+              echo "resolving station: $STATION_NAME"
+              echo "source: $STATION_SOURCE"
+
+              if [ "$STATION_SOURCE" = "synthetic" ]; then
+                # No internet needed. Make ~2 MB of stand-in audio.
+                dd if=/dev/urandom of=/work/stream.bin bs=64k count=32 2>/dev/null
+                echo "file:///work/stream.bin" > /work/station.txt
+                echo "synthesised $(wc -c < /work/stream.bin) bytes"
+              else
+                # A real URL. Fail here rather than halfway through a shift.
+                wget -q --spider --timeout=5 "$STATION_SOURCE" \
+                  || { echo "cannot reach $STATION_SOURCE"; exit 1; }
+                echo "$STATION_SOURCE" > /work/station.txt
+              fi
+
+              test -s /work/station.txt
+              echo "wrote /work/station.txt -> $(cat /work/station.txt)"
+          env:
+            - name: STATION_NAME
+              value: "test-station"
+            - name: STATION_SOURCE
+              value: "synthetic"
+          volumeMounts:
+            - name: work
+              mountPath: /work
+
+      containers:
+        - name: tuner
+          image: busybox:1.36
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              URL=$(cat /work/station.txt 2>/dev/null || true)
+              if [ -z "$URL" ]; then
+                echo "no station resolved; refusing to start"
+                exit 1
+              fi
+              echo "tuner up: $STATION_NAME <- $URL"
+
+              while true; do
+                case "$URL" in
+                  file://*)
+                    BYTES=$(dd if=/work/stream.bin bs=16k count=4 2>/dev/null | wc -c)
+                    ;;
+                  *)
+                    BYTES=$(wget -q -O - --timeout=5 "$URL" 2>/dev/null \
+                            | dd bs=16k count=4 2>/dev/null | wc -c) || BYTES=0
+                    ;;
+                esac
+
+                if [ "${BYTES:-0}" -le 0 ]; then
+                  echo "stream gave nothing — giving up"
+                  exit 1
+                fi
+
+                echo "$(date -Iseconds) $STATION_NAME ${BYTES}B"
+                sleep 2
+              done
+          env:
+            - name: STATION_NAME
+              value: "test-station"
+          volumeMounts:
+            - name: work
+              mountPath: /work
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              cpu: 200m
+              memory: 64Mi

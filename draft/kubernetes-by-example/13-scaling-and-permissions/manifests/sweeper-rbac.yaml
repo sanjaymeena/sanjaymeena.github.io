@@ -1,0 +1,59 @@
+# Part 13 — all THREE objects. The binding is the one people forget.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sweeper
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role                      # namespaced. ClusterRole would be cluster-wide.
+metadata:
+  name: pod-reader
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get","list","watch"]   # nothing more. it needs nothing more.
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding               # joins the identity to the permissions
+metadata:
+  name: sweeper
+subjects:
+  - kind: ServiceAccount
+    name: sweeper
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sweeper
+  labels: {app: sweeper}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: sweeper}
+  template:
+    metadata:
+      labels: {app: sweeper}
+    spec:
+      serviceAccountName: sweeper      # without this it runs as `default`
+      containers:
+        - name: sweeper
+          image: bitnami/kubectl:latest
+          command: ["/bin/sh","-c"]
+          args:
+            - |
+              while true; do
+                echo "sweeper: listing pods on node $NODE_NAME"
+                kubectl get pods --field-selector spec.nodeName=$NODE_NAME \
+                  -o name || echo "sweeper: FORBIDDEN (check the RoleBinding)"
+                sleep 30
+              done
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef: {fieldPath: spec.nodeName}
+          resources:
+            requests: {cpu: 10m, memory: 32Mi}

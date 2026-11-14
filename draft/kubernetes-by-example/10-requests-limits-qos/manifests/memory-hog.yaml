@@ -1,0 +1,27 @@
+# Part 10, break-it #1 — allocate past the limit. Exit 137, OOMKilled.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: memory-hog
+  labels: {app: memory-hog}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: memory-hog}
+  template:
+    metadata:
+      labels: {app: memory-hog}
+    spec:
+      containers:
+        - name: hog
+          image: busybox:1.36
+          command: ["/bin/sh","-c"]
+          args:
+            - |
+              echo "allocating past a 64Mi limit..."
+              # tmpfs here is backed by the container's memory cgroup
+              dd if=/dev/zero of=/dev/shm/fill bs=1M count=200
+              sleep 3600
+          resources:
+            requests: {cpu: 10m, memory: 32Mi}
+            limits:   {cpu: 100m, memory: 64Mi}

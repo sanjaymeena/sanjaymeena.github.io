@@ -1,0 +1,38 @@
+# Part 11 — the speech model, with BOTH halves:
+#   toleration  -> the GPU node will accept it
+#   nodeSelector -> it will actually go there
+# Remove either and it goes wrong in a different way.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: asr
+  labels: {app: asr}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: asr}
+  template:
+    metadata:
+      labels: {app: asr}
+    spec:
+      nodeSelector:
+        pool: gpu                 # the pull
+      tolerations:                # the permission
+        - key: gpu
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
+      containers:
+        - name: asr
+          image: busybox:1.36
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef: {fieldPath: spec.nodeName}
+          command: ["/bin/sh","-c"]
+          args: ["echo \"asr on $NODE_NAME\"; while true; do sleep 10; done"]
+          resources:
+            requests: {cpu: 50m, memory: 64Mi}
+            # On a real GPU node this is where the device goes:
+            #   limits: { nvidia.com/gpu: 1 }
+            # Whole units only, and request is implied equal to limit.

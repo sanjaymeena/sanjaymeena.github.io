@@ -1,0 +1,16 @@
+# Part 8 — config out of the manifest.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: stations
+data:
+  jazz.url: "http://old-url.example/stream"
+  news.url: "http://news.example/stream"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: station-token
+type: Opaque
+stringData:                        # stringData is encoded for you. Don't pre-encode.
+  token: "not-actually-a-secret"

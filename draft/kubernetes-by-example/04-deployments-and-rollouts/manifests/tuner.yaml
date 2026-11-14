@@ -1,0 +1,32 @@
+# Part 4 — the same tuners, with an explicit rollout strategy.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tuner
+  labels: {app: tuner}
+  annotations:
+    kubernetes.io/change-cause: "part 4 baseline"
+spec:
+  replicas: 4
+  revisionHistoryLimit: 10        # how far back you can undo. keeping these is free.
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1                 # at most 5 pods exist during a roll
+      maxUnavailable: 1           # at least 3 pods serve throughout
+  selector:
+    matchLabels: {app: tuner}
+  template:
+    metadata:
+      labels: {app: tuner}
+    spec:
+      containers:
+        - name: tuner
+          image: busybox:1.36
+          env:
+            - name: TUNER_VERSION
+              value: "1"
+          command: ["/bin/sh","-c"]
+          args: ["while true; do echo \"v$TUNER_VERSION up\"; sleep 5; done"]
+          resources:
+            requests: {cpu: 20m, memory: 24Mi}

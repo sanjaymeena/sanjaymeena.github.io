@@ -118,6 +118,9 @@ export const AI_ML_TAGS = [
   'Word Embeddings',
   'Sentiment',
   'Sentiment Analysis',
+  // The Kubernetes by Example series carries this tag: MLOps infrastructure
+  // taught against a live speech-transcription fleet (manifest.series.json).
+  'MLOps',
 ] as const;
 
 /** Lowercase with hyphens/underscores folded to spaces, so "Deep Learning" == "deep-learning". */

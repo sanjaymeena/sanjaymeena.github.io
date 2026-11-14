@@ -1,0 +1,6 @@
+apiVersion: airwaves.example/v1alpha1
+kind: Station
+metadata:
+  name: test
+spec:
+  url: "http://test.example/stream"

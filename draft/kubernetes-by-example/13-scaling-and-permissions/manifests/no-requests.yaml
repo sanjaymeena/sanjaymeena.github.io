@@ -1,0 +1,21 @@
+# Part 13, break-it #1 — no CPU request, so the HPA target is a percentage
+# of nothing. TARGETS shows <unknown> and it will never scale.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: no-requests
+  labels: {app: no-requests}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: no-requests}
+  template:
+    metadata:
+      labels: {app: no-requests}
+    spec:
+      containers:
+        - name: app
+          image: busybox:1.36
+          command: ["/bin/sh","-c"]
+          args: ["while true; do sleep 10; done"]
+          # resources deliberately absent

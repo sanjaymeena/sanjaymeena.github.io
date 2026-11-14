@@ -1,0 +1,501 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=JetBrains+Mono:wght@400;500;700&family=Literata:opsz,wght@7..72,400;7..72,600;7..72,400italic&display=swap"><style>
+:root{
+  --bg:#F7F5F1; --surface:#FFFFFF; --surface-2:#EEEBE4; --sunken:#E7E3DA;
+  --ink:#1B1A15; --ink-2:#4B473E; --muted:#787365;
+  --line:#DEDACF; --line-strong:#BEB8A8;
+  --want:#30459E; --have:#A74B28; --ok:#36704A; --note:#6B4B8F;
+  --want-wash:#30459E14; --have-wash:#A74B2814; --ok-wash:#36704A14; --note-wash:#6B4B8F14;
+  --shadow:0 1px 2px #1B1A1510,0 10px 28px #1B1A150A;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#13130E; --surface:#1B1B15; --surface-2:#23231C; --sunken:#16160F;
+  --ink:#EFEDE4; --ink-2:#BEBAAD; --muted:#8E8A7C;
+  --line:#2E2E25; --line-strong:#464537;
+  --want:#8E9EF2; --have:#E08760; --ok:#75BA8F; --note:#B291D8;
+  --want-wash:#8E9EF21F; --have-wash:#E087601F; --ok-wash:#75BA8F1F; --note-wash:#B291D81F;
+  --shadow:0 1px 2px #0007,0 10px 28px #0005;
+}}
+:root[data-theme="dark"]{
+  --bg:#13130E; --surface:#1B1B15; --surface-2:#23231C; --sunken:#16160F;
+  --ink:#EFEDE4; --ink-2:#BEBAAD; --muted:#8E8A7C;
+  --line:#2E2E25; --line-strong:#464537;
+  --want:#8E9EF2; --have:#E08760; --ok:#75BA8F; --note:#B291D8;
+  --want-wash:#8E9EF21F; --have-wash:#E087601F; --ok-wash:#75BA8F1F; --note-wash:#B291D81F;
+  --shadow:0 1px 2px #0007,0 10px 28px #0005;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Literata,Georgia,serif;font-size:17.5px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;margin:0 auto;padding:0 26px 110px}
+.col{max-width:65ch}
+h1,h2,h3,h4,.eyebrow,.btn,.steptitle,.tag,.cardt,th,.tb-series,.tb-pos,.tocpanel,.anat,.pre-h{font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif}
+code,kbd,.mono,.tag,.tok{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace}
+h1{font-size:clamp(33px,5vw,55px);line-height:1.05;font-weight:700;letter-spacing:-.03em;margin:0 0 18px;text-wrap:balance}
+h2{font-size:clamp(24px,2.7vw,32px);line-height:1.15;font-weight:700;letter-spacing:-.02em;margin:0 0 16px;text-wrap:balance}
+h3{font-size:19.5px;font-weight:700;letter-spacing:-.01em;margin:0 0 9px}
+p{margin:0 0 18px}
+em{font-style:italic}
+a{color:var(--want)}
+.lede{font-size:20.5px;line-height:1.58;color:var(--ink-2);margin:0 0 22px}
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.17em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+header.top{padding:48px 0 0}
+section{padding:58px 0 0}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0}
+.tag{font-size:11.5px;padding:5px 10px;border:1px solid var(--line-strong);border-radius:3px;color:var(--ink-2);background:var(--surface)}
+.note{border-left:2px solid var(--line-strong);padding:2px 0 2px 18px;color:var(--ink-2);margin:0 0 18px}
+.note b{color:var(--ink)}
+.cw{border:1px solid var(--line);border-left:3px solid var(--note);border-radius:4px;background:var(--surface);padding:17px 19px;margin:24px 0 0}
+.cw h4{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--note);margin:0 0 9px}
+.cw p{margin:0 0 11px;color:var(--ink-2);font-size:16px;line-height:1.62}
+.cw p:last-child{margin:0}
+/* ---- top bar ---- */
+.topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tbin{max-width:1140px;margin:0 auto;padding:10px 26px;display:flex;align-items:center;gap:14px}
+.tb-series{font-size:13px;font-weight:700;letter-spacing:-.01em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.tb-series:hover{color:var(--want)}
+.tb-pos{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-left:auto;white-space:nowrap}
+.tb-btn{font:700 12px/1 "Bricolage Grotesque",sans-serif;padding:7px 11px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:3px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.tb-btn:hover{border-color:var(--want);color:var(--want)}
+.tb-btn:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.tb-btn[aria-disabled="true"]{opacity:.35;pointer-events:none}
+.tocpanel{position:absolute;left:0;right:0;top:100%;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:var(--shadow);max-height:72vh;overflow-y:auto}
+.tocpanel[hidden]{display:none}
+.tocin{max-width:1140px;margin:0 auto;padding:22px 26px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+.tocgrp h5{font:700 10.5px/1 "Bricolage Grotesque",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;padding:0 0 8px;border-bottom:1px solid var(--line)}
+.tocgrp ol{list-style:none;margin:0;padding:0}
+.tocgrp li{margin:0 0 2px}
+.tocgrp a,.tocgrp span{display:flex;gap:9px;padding:6px 8px;border-radius:3px;font-size:14px;text-decoration:none;color:var(--ink);font-family:Literata,serif}
+.tocgrp a:hover{background:var(--surface-2)}
+.tocgrp span{color:var(--muted)}
+.tocgrp .n{font:700 11px/1.6 "JetBrains Mono",monospace;color:var(--muted)}
+.tocgrp [aria-current="page"]{background:var(--want-wash);color:var(--want);font-weight:600}
+.soon{font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-left:auto;align-self:center;color:var(--muted);font-family:"Bricolage Grotesque",sans-serif}
+/* ---- stage ---- */
+.stage{margin:28px 0 0;border:1px solid var(--line);border-radius:5px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.stagefig{background:var(--sunken);padding:18px 20px;overflow-x:auto}
+.stagefig svg{display:block;width:100%;min-width:720px;height:auto}
+.scrub{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:12px 18px;border-top:1px solid var(--line);background:var(--surface-2)}
+.btn{font-size:12.5px;font-weight:700;padding:7px 13px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:3px;cursor:pointer;line-height:1.2}
+.btn:hover{border-color:var(--want);color:var(--want)}
+.btn:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.pips{display:flex;gap:5px;margin-left:auto;flex-wrap:wrap}
+.pip{width:21px;height:21px;border-radius:3px;border:1px solid var(--line-strong);background:var(--surface);color:var(--muted);font:700 11px/1 "Bricolage Grotesque",sans-serif;cursor:pointer;display:grid;place-items:center;padding:0}
+.pip[aria-current="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.pip:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.stagetext{padding:21px 23px 23px;border-top:1px solid var(--line)}
+.steptitle{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 7px}
+.stagetext h3{font-size:21.5px;margin:0 0 11px}
+.stagetext p{max-width:72ch;margin:0 0 13px;color:var(--ink-2)}
+.stagetext p:last-child{margin:0}
+.stagetext b{color:var(--ink)}
+/* ---- anatomy ---- */
+.anat{margin:26px 0 0;border:1px solid var(--line);border-radius:5px;background:var(--surface);overflow:hidden;box-shadow:var(--shadow)}
+.anat-h{padding:12px 18px;border-bottom:1px solid var(--line);background:var(--surface-2);font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.anat-cmd{padding:20px 18px 16px;background:var(--sunken);display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start;overflow-x:auto}
+.tok{font-size:14px;font-weight:500;padding:7px 10px;border:1px solid transparent;border-radius:3px;background:var(--surface);color:var(--ink);cursor:pointer;line-height:1.3;white-space:nowrap;position:relative;border-bottom:2px solid var(--line-strong)}
+.tok:hover{border-color:var(--want);color:var(--want)}
+.tok[aria-pressed="true"]{background:var(--want);border-color:var(--want);color:#fff}
+.tok:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.tok .kind{display:block;font:700 8.5px/1.4 "Bricolage Grotesque",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:3px 0 0}
+.tok[aria-pressed="true"] .kind{color:#ffffffcc}
+.anat-def{padding:18px 20px 20px;border-top:1px solid var(--line);min-height:96px}
+.anat-def h4{font-size:15px;margin:0 0 7px;font-family:"JetBrains Mono",monospace;color:var(--want)}
+.anat-def p{font-size:15.5px;line-height:1.62;color:var(--ink-2);margin:0 0 10px;max-width:70ch}
+.anat-def p:last-child{margin:0}
+.anat-def code{font-size:.9em}
+.anat-hint{font-size:13px;color:var(--muted);font-family:Literata,serif;font-style:italic}
+/* ---- tables, code ---- */
+.tbl{width:100%;border-collapse:collapse;margin:22px 0 0;font-size:15px}
+.tbl th{font-size:11px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 14px 9px 0;border-bottom:1px solid var(--line-strong)}
+.tbl td{padding:11px 14px 11px 0;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-2)}
+.tbl td:first-child{color:var(--ink);white-space:nowrap}
+.tbl td code{white-space:nowrap}
+.tblwrap{overflow-x:auto}
+code{font-size:.86em;background:var(--surface-2);border:1px solid var(--line);border-radius:3px;padding:1px 5px;color:var(--ink)}
+pre{background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:15px 17px;overflow-x:auto;font-size:13px;line-height:1.68;margin:16px 0 0}
+pre code{background:0 0;border:0;padding:0;color:var(--ink-2);font-size:inherit}
+.pre-h{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:24px 0 -6px}
+figure{margin:26px 0 0}
+figcaption{font-size:13.5px;line-height:1.55;color:var(--muted);margin:11px 0 0;max-width:76ch}
+.nextprev{display:flex;gap:14px;flex-wrap:wrap;margin:30px 0 0}
+.np{flex:1 1 230px;border:1px solid var(--line);border-radius:4px;padding:15px 17px;background:var(--surface);text-decoration:none;color:var(--ink)}
+.np:hover{border-color:var(--want)}
+.np span{display:block;font-size:10.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-family:"Bricolage Grotesque",sans-serif;margin:0 0 4px}
+footer{margin:76px 0 0;padding:26px 0 0;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+/* svg shared */
+.d-panel{fill:var(--surface);stroke:var(--line-strong)}
+.d-sunken{fill:var(--sunken);stroke:var(--line)}
+.d-box{fill:var(--surface);stroke:var(--line-strong)}
+.t{fill:var(--ink);font-family:"Bricolage Grotesque",sans-serif;font-size:12.5px;font-weight:700}
+.t-sm{fill:var(--ink-2);font-family:"JetBrains Mono",monospace;font-size:10.5px}
+.t-mut{fill:var(--muted);font-family:"JetBrains Mono",monospace;font-size:10px}
+.t-lbl{fill:var(--muted);font-family:"Bricolage Grotesque",sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.t-want{fill:var(--want)} .t-have{fill:var(--have)} .t-ok{fill:var(--ok)} .t-note{fill:var(--note)}
+.b-want{fill:var(--want-wash);stroke:var(--want)} .b-have{fill:var(--have-wash);stroke:var(--have)}
+.b-ok{fill:var(--ok-wash);stroke:var(--ok)} .b-note{fill:var(--note-wash);stroke:var(--note)}
+.cell{fill:var(--want-wash);stroke:var(--want);stroke-width:.8}
+.ah{fill:var(--ink-2)} .ah-want{fill:var(--want)} .ah-have{fill:var(--have)} .ah-ok{fill:var(--ok)}
+.flow{fill:none;stroke:var(--ink-2);stroke-width:1.4}
+.flow-want{stroke:var(--want)} .flow-have{stroke:var(--have)} .flow-ok{stroke:var(--ok)}
+.g{transition:opacity .4s ease}
+.dim{opacity:.13} .hide{opacity:0}
+.live{stroke-dasharray:5 5;animation:ants 1s linear infinite}
+@keyframes ants{to{stroke-dashoffset:-20}}
+@media (prefers-reduced-motion:reduce){.live{animation:none}.g{transition:none}}
+</style><title>Pods and Containers</title>
+<nav class="topbar">
+  <div class="tbin">
+    <a class="tb-series" href="../00-index.html">Kubernetes by Example</a>
+    <button class="tb-btn" id="tocbtn" type="button" aria-expanded="false" aria-controls="tocpanel">Contents</button>
+    <span class="tb-pos">Part 2 of 14</span><div style="display:flex;gap:6px"><a class="tb-btn" href="../01-the-object-model/index.html" title="The object model">&#8592;</a><a class="tb-btn" href="../03-labels-selectors-namespaces/index.html" title="Labels, selectors, namespaces">&#8594;</a></div>
+  </div>
+  <div class="tocpanel" id="tocpanel" hidden><div class="tocin"><div class="tocgrp"><h5>Tier 0 · The model</h5><ol><li><a href="../01-the-object-model/index.html"><span class="n">01</span>The object model</a></li><li><a href="../02-pods-and-containers/index.html" aria-current="page"><span class="n">02</span>Pods and containers</a></li><li><a href="../03-labels-selectors-namespaces/index.html"><span class="n">03</span>Labels, selectors, namespaces</a></li></ol></div><div class="tocgrp"><h5>Tier 1 · Workload kinds</h5><ol><li><a href="../04-deployments-and-rollouts/index.html"><span class="n">04</span>Deployments and rollouts</a></li><li><a href="../05-daemonsets/index.html"><span class="n">05</span>DaemonSets</a></li><li><a href="../06-statefulsets-jobs-cronjobs/index.html"><span class="n">06</span>StatefulSets, Jobs, CronJobs</a></li></ol></div><div class="tocgrp"><h5>Tier 2 · Wiring</h5><ol><li><a href="../07-services-and-ingress/index.html"><span class="n">07</span>Services and Ingress</a></li><li><a href="../08-config-and-secrets/index.html"><span class="n">08</span>Config and Secrets</a></li><li><a href="../09-storage/index.html"><span class="n">09</span>Storage</a></li></ol></div><div class="tocgrp"><h5>Tier 3 · Scheduling</h5><ol><li><a href="../10-requests-limits-qos/index.html"><span class="n">10</span>Requests, limits, QoS</a></li><li><a href="../11-placement-and-devices/index.html"><span class="n">11</span>Placement and devices</a></li></ol></div><div class="tocgrp"><h5>Tier 4 · Production</h5><ol><li><a href="../12-staying-up/index.html"><span class="n">12</span>Staying up</a></li><li><a href="../13-scaling-and-permissions/index.html"><span class="n">13</span>Scaling and permissions</a></li><li><a href="../14-helm-and-custom-resources/index.html"><span class="n">14</span>Helm and custom resources</a></li></ol></div></div></div>
+</nav>
+<div class="wrap">
+<header class="top">
+  <div class="col">
+    <p class="eyebrow">Kubernetes by Example · Part 2</p>
+    <h1>Pods and Containers</h1>
+    <p class="lede">It ran perfectly in Docker. You put it in a Pod and it died. Here is what a Pod actually is, and why that difference matters more than it looks.</p>
+    <div class="meta"><span class="tag">assumes Part 1</span><span class="tag">~18 minutes</span><span class="tag">the real tuner arrives</span></div>
+  </div>
+</header>
+
+<section>
+  <div class="col">
+    <h2>The symptom</h2>
+    <p>You've written the actual tuner now. It works — you ran it locally with <code>docker run</code> and watched it print throughput numbers, happy as anything.</p>
+    <p>So you put it in the cluster. And:</p>
+<pre><code>NAME                    READY   STATUS             RESTARTS   AGE
+tuner-6b8f4d9c7-mn4kp   0/1     CrashLoopBackOff   4          2m</code></pre>
+    <p style="margin-top:18px">Four restarts. You reach for the logs, obviously:</p>
+<pre><code>$ kubectl logs deploy/tuner
+$</code></pre>
+    <p style="margin-top:18px">Nothing. Not an error — <em>nothing</em>. An empty response and your prompt back.</p>
+    <p>At this point most people conclude that Kubernetes has eaten their logs. It hasn't. The logs are there, they're just attached to something that no longer exists, and finding them takes one extra flag that nobody tells you about on your first day.</p>
+    <p>To understand why, you need to know what you actually put your container inside.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>The thing your container lives in</h2>
+    <p>In Part 1 we treated the Pod as a box with a container in it, which was fine because we only needed to watch it get created. Now we need to open the box.</p>
+    <p>A Pod is best thought of as <b>a very small machine</b>. It has one network address. It has a lifecycle — it starts, it runs, it ends, and it does not come back. It holds one or more containers that have agreed to be co-located, sharing some things and pointedly not sharing others.</p>
+    <p>Which things get shared, and which don't, explains most of the surprising behaviour you'll meet this week.</p>
+  </div>
+  <div class="stage">
+    <div class="stagefig" id="stagefig"><svg viewBox="0 0 1000 400" role="img" aria-label="A Pod containing one init container and two app containers. The containers each have their own filesystem but share one network identity and one optional volume. The whole Pod sits on a single node and never moves.">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-want" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-want" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-have" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-have" d="M0,0 L10,5 L0,10 Z"/></marker>
+  </defs>
+
+  <g id="g-pod" class="g">
+    <rect class="d-panel" x="80" y="40" width="840" height="296" rx="5" stroke-width="1.6"/>
+    <text class="t-lbl" x="100" y="62">one Pod — the smallest thing Kubernetes will place</text>
+    <text class="t" x="100" y="82">tuner-7d4f8b9c6-x2kmp</text>
+  </g>
+
+  <g id="g-init" class="g">
+    <rect class="b-have" x="104" y="100" width="200" height="96" rx="4" stroke-width="1.3"/>
+    <text class="t t-have" x="118" y="121">init: resolve-station</text>
+    <text class="t-mut" x="118" y="138">runs first</text>
+    <text class="t-mut" x="118" y="152">runs alone</text>
+    <text class="t-mut" x="118" y="166">must finish, and exit 0</text>
+    <rect class="d-sunken" x="118" y="172" width="172" height="18" rx="2"/>
+    <text class="t-mut" x="126" y="185">own filesystem</text>
+  </g>
+
+  <g id="g-c1" class="g">
+    <rect class="b-want" x="330" y="100" width="250" height="96" rx="4" stroke-width="1.3"/>
+    <text class="t t-want" x="344" y="121">tuner</text>
+    <text class="t-mut" x="344" y="138">the long-running one</text>
+    <text class="t-mut" x="344" y="152">if it exits, it is restarted</text>
+    <rect class="d-sunken" x="344" y="172" width="222" height="18" rx="2"/>
+    <text class="t-mut" x="352" y="185">own filesystem</text>
+  </g>
+
+  <g id="g-c2" class="g">
+    <rect class="d-box" x="606" y="100" width="250" height="96" rx="4"/>
+    <text class="t" x="620" y="121">a sidecar, later</text>
+    <text class="t-mut" x="620" y="138">starts at the same time</text>
+    <text class="t-mut" x="620" y="152">same IP, same localhost</text>
+    <rect class="d-sunken" x="620" y="172" width="222" height="18" rx="2"/>
+    <text class="t-mut" x="628" y="185">own filesystem</text>
+  </g>
+
+  <g id="g-vol" class="g">
+    <rect class="d-sunken" x="104" y="212" width="752" height="44" rx="3"/>
+    <text class="t-lbl" x="118" y="230">a volume — the only way they share files</text>
+    <text class="t-sm" x="118" y="247">mounted into whichever containers ask for it</text>
+  </g>
+
+  <g id="g-net" class="g">
+    <rect class="d-sunken" x="104" y="268" width="752" height="50" rx="3"/>
+    <text class="t-lbl" x="118" y="287">one network identity for the whole Pod</text>
+    <text class="t-sm" x="118" y="305">IP 10.244.1.17<tspan class="t-mut" dx="14">one localhost · one set of ports · shared by every container above</tspan></text>
+  </g>
+
+  <g id="g-node" class="g">
+    <rect class="d-sunken" x="80" y="352" width="840" height="34" rx="3"/>
+    <text class="t-sm" x="100" y="374">node<tspan class="t-mut" dx="10">chosen once, never changed — a Pod does not move house</tspan></text>
+  </g>
+
+  <g id="f-order" class="g hide">
+    <path class="flow flow-have live" d="M308,148 H326" marker-end="url(#a-have)"/>
+    <text class="t-lbl t-have" x="130" y="96">finishes completely, then…</text>
+  </g>
+  <g id="f-together" class="g hide">
+    <path class="flow flow-want live" d="M584,148 H602" marker-start="url(#a-want)" marker-end="url(#a-want)"/>
+    <text class="t-lbl t-want" x="344" y="96">these two start together</text>
+  </g>
+  <g id="f-ports" class="g hide">
+    <path class="flow flow-have live" d="M440,198 V264" marker-end="url(#a-have)"/>
+    <path class="flow flow-have live" d="M716,198 V264" marker-end="url(#a-have)"/>
+    <rect x="452" y="222" width="250" height="17" rx="2" fill="var(--bg)"/>
+    <text class="t-lbl t-have" x="456" y="235">both bind :8080 → one of them dies</text>
+  </g>
+  <g id="f-vol" class="g hide">
+    <path class="flow live" d="M200,198 V208" marker-end="url(#a)"/>
+    <path class="flow live" d="M440,208 V198" marker-end="url(#a)"/>
+    <text class="t-lbl" x="470" y="205">init writes it · tuner reads it</text>
+  </g>
+  <g id="g-restart" class="g hide">
+    <rect x="326" y="96" width="258" height="104" rx="5" fill="none" stroke="var(--have)" stroke-width="1.6" stroke-dasharray="6 4"/>
+    <path class="flow flow-have live" d="M455,92 a34,34 0 1,1 -34,34" marker-end="url(#a-have)"/>
+    <rect x="470" y="60" width="190" height="16" fill="var(--bg)"/>
+    <text class="t-lbl t-have" x="474" y="72">restarts here. Pod stays put.</text>
+  </g>
+  <g id="g-gone" class="g hide">
+    <rect x="76" y="36" width="848" height="304" rx="5" fill="none" stroke="var(--have)" stroke-width="1.8" stroke-dasharray="7 5"/>
+    <rect x="300" y="330" width="400" height="18" fill="var(--bg)"/>
+    <text class="t-lbl t-have" x="304" y="343">gone: new name, new IP, nothing carried over</text>
+  </g>
+</svg></div>
+    <div class="scrub">
+      <button class="btn" id="prev" type="button">&#9664; Back</button>
+      <button class="btn" id="play" type="button">&#9654; Play</button>
+      <button class="btn" id="next" type="button">Next &#9654;</button>
+      <div class="pips" id="pips"></div>
+    </div>
+    <div class="stagetext">
+      <p class="steptitle" id="stepn"></p>
+      <h3 id="stept"></h3>
+      <div id="stepp"></div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="cw">
+      <h4>Shared, and not shared</h4>
+      <p><b>Shared automatically:</b> the network — one IP, one <code>localhost</code>, one set of ports. And the lifecycle: they are placed together and they are deleted together.</p>
+      <p><b>Shared only if you ask:</b> files, via a volume mounted into more than one container. Process visibility, via <code>shareProcessNamespace</code>.</p>
+      <p><b>Never shared:</b> the root filesystem. Each container gets its own, from its own image.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>The commands for looking inside</h2>
+    <p>Part 1 was about <code>get</code> and <code>apply</code> — commands for the list. These three are for the <em>world</em>: what a container said, what it's doing now, and what the cluster looks like from the inside.</p>
+  </div>
+  <div class="anat" id="an-logs"><div class="anat-h">Getting the logs, including the ones that look missing</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-logs" data-i="0" aria-pressed="false">kubectl logs<span class="kind">verb</span></button><button class="tok" type="button" data-w="an-logs" data-i="1" aria-pressed="false">deploy/tuner<span class="kind">type/name</span></button><button class="tok" type="button" data-w="an-logs" data-i="2" aria-pressed="false">-c tuner<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-logs" data-i="3" aria-pressed="false">--previous<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-logs" data-i="4" aria-pressed="false">--tail=50<span class="kind">flag</span></button></div><div class="anat-def" data-def="an-logs"><p class="anat-hint">Click any piece of the command.</p></div></div><div class="anat" id="an-exec"><div class="anat-h">Getting inside a running container</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-exec" data-i="0" aria-pressed="false">kubectl exec<span class="kind">verb</span></button><button class="tok" type="button" data-w="an-exec" data-i="1" aria-pressed="false">-it<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-exec" data-i="2" aria-pressed="false">deploy/tuner<span class="kind">type/name</span></button><button class="tok" type="button" data-w="an-exec" data-i="3" aria-pressed="false">--<span class="kind">separator</span></button><button class="tok" type="button" data-w="an-exec" data-i="4" aria-pressed="false">sh<span class="kind">command</span></button></div><div class="anat-def" data-def="an-exec"><p class="anat-hint">Click any piece of the command.</p></div></div><div class="anat" id="an-run"><div class="anat-h">A throwaway Pod, for testing from inside the cluster</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-run" data-i="0" aria-pressed="false">kubectl run probe<span class="kind">verb + name</span></button><button class="tok" type="button" data-w="an-run" data-i="1" aria-pressed="false">--rm<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-run" data-i="2" aria-pressed="false">-it<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-run" data-i="3" aria-pressed="false">--image=busybox<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-run" data-i="4" aria-pressed="false">--restart=Never<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-run" data-i="5" aria-pressed="false">-- sh<span class="kind">command</span></button></div><div class="anat-def" data-def="an-run"><p class="anat-hint">Click any piece of the command.</p></div></div>
+  <div class="col">
+    <h3 style="margin-top:34px">Which one to reach for</h3>
+    <p>A rough decision tree, since the hard part is usually knowing where to start rather than how to type it.</p>
+  </div>
+  <div class="tblwrap">
+  <table class="tbl">
+    <thead><tr><th>The Pod is…</th><th>Start with</th><th>Because</th></tr></thead>
+    <tbody>
+      <tr><td><code>Pending</code></td><td><code>kubectl describe pod</code></td><td>It hasn't been placed. There are no logs yet because there is no container yet. The reason is in the events at the bottom.</td></tr>
+      <tr><td><code>ImagePullBackOff</code></td><td><code>kubectl describe pod</code></td><td>Wrong name, wrong tag, or no credentials. Again, events — the message is usually explicit.</td></tr>
+      <tr><td><code>Init:0/1</code></td><td><code>kubectl logs -c &lt;init&gt;</code></td><td>Stuck in an init container. Name it explicitly or you'll be told the main one hasn't started.</td></tr>
+      <tr><td><code>CrashLoopBackOff</code></td><td><code>kubectl logs --previous</code></td><td>It started and then died. The evidence belongs to the dead instance.</td></tr>
+      <tr><td><code>Running</code> but wrong</td><td><code>kubectl exec -it … -- sh</code></td><td>Go in and look. Check env, check mounts, check what it can reach.</td></tr>
+      <tr><td><code>Running</code>, no shell</td><td><code>kubectl debug</code></td><td>Attaches a container with tools, sharing the target's namespaces.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Build it</h2>
+    <p>Time to retire the placeholder. The real tuner reads a stream and reports how much audio it's getting — and it now has an init container that works out <em>which</em> stream, writing the answer to a volume the tuner reads back.</p>
+    <p>It runs entirely offline. By default the init container synthesises a local stream, so nothing depends on the internet or on somebody else's radio station staying up.</p>
+  </div>
+<p class="pre-h">Apply it</p>
+<pre><code>kubectl apply -f manifests/tuner.yaml
+kubectl get pods -l app=tuner -w</code></pre>
+  <div class="col">
+    <p style="margin-top:20px">Watch the <code>STATUS</code> column rather than waiting for it to settle. You should catch <code>Init:0/1</code> go past — the init container doing its work — before <code>Running</code> appears. That transition is Part 2's whole thesis on screen for about half a second.</p>
+  </div>
+<p class="pre-h">Read both containers</p>
+<pre><code># the init container, which has already finished
+kubectl logs deploy/tuner -c resolve-station
+
+# the one still going
+kubectl logs -f deploy/tuner -c tuner --tail=20</code></pre>
+<p class="pre-h">Go in and look at what they share</p>
+<pre><code>kubectl exec -it deploy/tuner -c tuner -- sh
+
+# inside:
+cat /work/station.txt     # written by a container that no longer exists
+ip addr | grep inet       # the Pod's IP, not the container's
+env | grep STATION        # configuration, from the manifest
+exit</code></pre>
+  <div class="col">
+    <p style="margin-top:20px">That <code>cat</code> is the point of the exercise. You are reading a file written by a different container, which has already exited, and it's there because the Pod declared a volume and both containers mounted it. Remove the volume and the file vanishes — not because it was deleted, but because the two containers were never looking at the same place.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Break it</h2>
+    <h3 style="margin-top:26px">1 · Reproduce the empty logs</h3>
+    <p>Point the tuner at a station that doesn't exist and watch the symptom from the top of the page appear on demand.</p>
+  </div>
+<pre><code>kubectl set env deploy/tuner STATION_SOURCE=http://nowhere.invalid/stream
+
+kubectl get pods -l app=tuner -w     # wait for CrashLoopBackOff
+kubectl logs deploy/tuner -c tuner              # empty, or nearly
+kubectl logs deploy/tuner -c tuner --previous   # there it is</code></pre>
+  <div class="col">
+    <p style="margin-top:20px">The first <code>logs</code> catches a container that has just been started and hasn't failed yet. The second reads the one that already died. Same Pod, same command, one flag apart — and the difference between twenty minutes of confusion and a ten-second fix.</p>
+    <p>While it's broken, look at how the cluster describes it:</p>
+  </div>
+<pre><code>kubectl describe pod -l app=tuner | grep -A6 'Last State'</code></pre>
+  <div class="col">
+    <p style="margin-top:20px">You get <code>Terminated</code>, a <code>Reason</code>, and an <code>Exit Code</code>. Exit code 1 means your program decided to quit. <b>137</b> means it was killed — almost always out of memory, which is Part 10. <b>143</b> means it was asked to stop politely, which is Part 12. Those three numbers cover most of what you'll meet.</p>
+    <div class="note"><b>Put it back:</b> <code>kubectl set env deploy/tuner STATION_SOURCE=synthetic</code></div>
+    <h3 style="margin-top:34px">2 · Make two containers fight over a port</h3>
+    <p>This one is quick and the error message is wonderfully blunt.</p>
+  </div>
+<pre><code>kubectl apply -f manifests/port-clash.yaml
+kubectl get pods -l demo=port-clash
+kubectl logs -l demo=port-clash -c second</code></pre>
+  <div class="col">
+    <p style="margin-top:20px">Two containers, both trying to listen on 8080. The first wins, the second reports <code>address already in use</code> and dies. If you still half-believed containers in a Pod are isolated from each other, this is the demonstration that settles it.</p>
+    <div class="note"><b>Clean up:</b> <code>kubectl delete -f manifests/port-clash.yaml</code></div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>What follows from this</h2>
+  </div>
+  <div class="tblwrap">
+  <table class="tbl">
+    <thead><tr><th>Because…</th><th>…this is what happens</th></tr></thead>
+    <tbody>
+      <tr><td>A Pod has one IP</td><td>Containers inside reach each other on <code>localhost</code> with no config — and cannot both use the same port.</td></tr>
+      <tr><td>Containers don't share files</td><td>Anything passed between them needs a volume, declared on the Pod and mounted in both.</td></tr>
+      <tr><td>Init containers must succeed</td><td>A failing init container means the Pod never starts, which is the correct and much cheaper failure.</td></tr>
+      <tr><td>Restarts happen in place</td><td>The logs you need usually belong to the previous instance. <code>--previous</code>, every time.</td></tr>
+      <tr><td>Pods never move</td><td>Node problems are Pod problems. Nothing migrates; something new gets created elsewhere.</td></tr>
+      <tr><td>Pods are disposable</td><td>Never persist a Pod's name or IP. Both are temporary. Use labels and Services instead.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="col">
+    <div class="cw" style="border-left-color:var(--have)">
+      <h4 style="color:var(--have)">One thing to be careful about</h4>
+      <p>Because containers in a Pod share so much, it's tempting to solve every problem by adding another container to the Pod. Resist it for now.</p>
+      <p>Two containers belong in the same Pod when they genuinely cannot work apart — they need the same filesystem, or the same network identity, or must be scheduled as one unit. If they'd work fine as separate Pods talking over the network, make them separate Pods. You get independent scaling, independent restarts and a smaller blast radius, all for free.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Cheat sheet</h2>
+    <div class="cw">
+      <h4>Part 2 · pods and containers</h4>
+      <p>• The <b>Pod</b> is the unit of scheduling, not the container. One IP, one lifecycle, one node, forever.</p>
+      <p>• <b>Shared free:</b> network and lifecycle. <b>Shared on request:</b> files, via a volume. <b>Never:</b> the root filesystem.</p>
+      <p>• <b>Init containers</b> run first, one at a time, and must exit 0. Ordinary containers then start all together — there is no ordering between them.</p>
+      <p>• Two containers in one Pod cannot bind the same port. Same network namespace.</p>
+      <p>• A crash restarts the container <em>in place</em>, with growing backoff. That is what <code>CrashLoopBackOff</code> means.</p>
+      <p>• <code>kubectl logs --previous</code> is how you read the instance that died. Learn it before you need it.</p>
+      <p>• <code>-c</code> picks the container, init containers included.</p>
+      <p>• Exit <b>1</b> means it quit, <b>137</b> means it was killed (usually memory), <b>143</b> means it was asked to stop.</p>
+      <p>• <code>kubectl run probe --rm -it --image=busybox --restart=Never -- sh</code> for a look from inside the cluster.</p>
+      <p>• Pod names and IPs are temporary facts. Never write them down.</p>
+    </div>
+  </div>
+  <div class="nextprev">
+    <a class="np" href="../01-the-object-model/index.html"><span>Previous · Part 1</span>The object model</a>
+    <a class="np" href="../00-index.html"><span>Series</span>All 14 parts</a>
+    <span class="np" style="opacity:.6"><span>Next · Part 3 · soon</span>Labels, selectors, namespaces</span>
+  </div>
+</section>
+
+<footer>
+  <div class="col"><p>Part of <b>Kubernetes by Example</b>. The tuner is real from here on. Next it learns to be one of many, which turns out to be a question about labels.</p></div>
+</footer>
+</div>
+<script>
+const STEPS = [{"n": 1, "t": "A Pod is not a container", "on": ["g-pod", "g-init", "g-c1", "g-c2"], "p": ["This is the thing people trip over on day one, so let's get it out of the way. A <b>Pod</b> is not another word for a container. It's a wrapper around one <em>or more</em> containers that have agreed to live together.", "Most of your Pods will contain exactly one container, which is why the distinction feels pedantic right up until the moment it isn't. But the Pod is the unit. <b>Kubernetes schedules Pods. It never schedules containers.</b> Everything in Part 1 \u2014 the ReplicaSet counting, the scheduler choosing \u2014 was counting and choosing Pods."]}, {"n": 2, "t": "It has one network identity", "on": ["g-pod", "g-c1", "g-c2", "g-net"], "p": ["The Pod gets an IP address. Not each container \u2014 <b>the Pod</b>. Every container inside shares it.", "That means they can talk to each other over <code>localhost</code> with no configuration at all, which is lovely. It also means they share one set of port numbers, which is less lovely and we'll come back to it in a moment."]}, {"n": 3, "t": "Init containers go first, and alone", "on": ["g-pod", "g-init", "g-c1", "g-c2", "f-order"], "p": ["An <b>init container</b> runs before anything else, by itself, and has to finish and exit cleanly before the next thing happens. List several and they run one after another, in the order you wrote them.", "This is where setup goes \u2014 fetching config, waiting for a database to answer, fixing file permissions. If an init container fails, the Pod simply never gets to the interesting part, which is usually exactly what you want. Better to stop at the door than to start half-configured."]}, {"n": 4, "t": "Then the real containers start, together", "on": ["g-pod", "g-c1", "g-c2", "f-together"], "p": ["Once every init container has finished, all the ordinary containers start at once. Not in order \u2014 <em>at once</em>.", "There is no <code>dependsOn</code>. If your sidecar needs the main process to be up first, you cannot express that by arranging the list, and arranging the list is the first thing everybody tries. The answer is either an init container or a container that retries patiently."]}, {"n": 5, "t": "Sharing localhost has a sharp edge", "on": ["g-pod", "g-c1", "g-c2", "g-net", "f-ports"], "p": ["Here's the price of that shared network. Two containers in one Pod <b>cannot both listen on port 8080</b>. They're in the same port space, so the second one gets <code>address already in use</code> and dies.", "This surprises people who think of containers as isolated boxes, because in every other context they are. Inside a Pod, the network isolation is switched off on purpose \u2014 that's the whole point of putting them together."]}, {"n": 6, "t": "They do not share a filesystem", "on": ["g-pod", "g-init", "g-c1", "g-vol", "f-vol"], "p": ["Network: shared. Filesystem: <b>not</b> shared. Each container has its own, from its own image, and by default nothing written in one is visible in another.", "To pass a file between them you have to say so explicitly, by declaring a <b>volume</b> on the Pod and mounting it into both. Our init container writes which station to tune; the tuner reads it. Without that volume they'd simply be shouting past each other.", "We'll do volumes properly in Part 9. For now, note the asymmetry: you get shared networking for free and shared files only on request."]}, {"n": 7, "t": "A crash restarts the container, not the Pod", "on": ["g-pod", "g-c1", "g-restart"], "p": ["When a container exits, the kubelet starts it again <em>inside the same Pod</em>. Same Pod name, same IP, same node, and the restart counter in <code>kubectl get pods</code> ticks up by one.", "Keep failing and the delay between attempts grows \u2014 ten seconds, twenty, forty, up to five minutes. That backoff is what <code>CrashLoopBackOff</code> means. It isn't an error in itself; it's Kubernetes telling you it has stopped trying quite so eagerly.", "<b>The important consequence:</b> the logs from the attempt that failed belong to a container that no longer exists. Plain <code>kubectl logs</code> shows you the <em>current</em> one, which is usually still starting up and has nothing to say. This is why people conclude the logs are empty."]}, {"n": 8, "t": "A Pod never moves house", "on": ["g-pod", "g-node"], "p": ["The scheduler picks a node once, at the very beginning, and that decision is permanent. There is no migration. A Pod cannot be moved to a quieter machine, and nothing will move it for you.", "If the node dies, the Pod dies with it. Something else \u2014 a ReplicaSet, as it happens \u2014 notices the count is wrong and creates a <em>different</em> Pod somewhere else. Which brings us to the last and most consequential property."]}, {"n": 9, "t": "And Pods are disposable, by design", "on": ["g-pod", "g-gone"], "p": ["A Pod is not a server. It's closer to a process: it exists, it does its work, and when it stops it is gone completely. The replacement has a new name and a new IP and remembers nothing.", "<b>So never write down a Pod's IP, and never rely on its name.</b> Both are temporary facts. Everything in Kubernetes that needs to find something reliably does it another way \u2014 through labels, which is Part 3, and through Services, which is Part 7.", "Almost every piece of Kubernetes that looks over-engineered is over-engineered <em>because</em> of this one property. Once you accept that the thing running your code can vanish without warning, the rest of the design stops looking paranoid and starts looking necessary."]}];
+const svg=document.querySelector('#stagefig svg');
+const groups=[...svg.querySelectorAll('g[id]')];
+const pips=document.getElementById('pips');
+let cur=0,timer=null;
+STEPS.forEach((s,i)=>{const b=document.createElement('button');b.className='pip';b.type='button';b.textContent=s.n;
+  b.setAttribute('aria-label','Step '+s.n+': '+s.t);b.addEventListener('click',()=>{stop();show(i);});pips.appendChild(b);});
+function show(i){
+  cur=(i+STEPS.length)%STEPS.length;
+  const s=STEPS[cur],on=new Set(s.on);
+  groups.forEach(g=>{
+    const isFlow=g.id.startsWith('f-')||g.id==='g-restart'||g.id==='g-gone';
+    g.classList.remove('dim','hide');
+    if(on.has(g.id))return;
+    g.classList.add(isFlow?'hide':'dim');
+  });
+  document.getElementById('stepn').textContent='Step '+s.n+' of '+STEPS.length;
+  document.getElementById('stept').textContent=s.t;
+  document.getElementById('stepp').innerHTML=s.p.map(x=>'<p>'+x+'</p>').join('');
+  [...pips.children].forEach((b,j)=>b.setAttribute('aria-current',j===cur?'true':'false'));
+}
+function stop(){if(timer){clearInterval(timer);timer=null;document.getElementById('play').innerHTML='\u25B6 Play';}}
+document.getElementById('next').addEventListener('click',()=>{stop();show(cur+1);});
+document.getElementById('prev').addEventListener('click',()=>{stop();show(cur-1);});
+document.getElementById('play').addEventListener('click',e=>{
+  if(timer){stop();return;}
+  e.currentTarget.innerHTML='\u23F8 Pause';
+  timer=setInterval(()=>{if(cur===STEPS.length-1){stop();return;}show(cur+1);},6000);
+});
+document.addEventListener('keydown',e=>{
+  if(e.target.closest('input,textarea'))return;
+  if(e.key==='ArrowRight'){stop();show(cur+1);}
+  if(e.key==='ArrowLeft'){stop();show(cur-1);}
+});
+show(0);
+
+var ANAT = {"an-logs": [{"t": "kubectl logs", "b": "<p>Prints what a container wrote to standard output and standard error. That's the whole contract: Kubernetes collects those two streams and nothing else.</p><p>Which means if your app writes to a logfile inside the container, <code>kubectl logs</code> shows you nothing and the file disappears when the container does. Containerised programs log to stdout. It feels crude the first time; it's the right call.</p>"}, {"t": "pointing at something", "b": "<p>You can name a Pod directly, but <code>deploy/tuner</code> is nicer \u2014 it means \u201cwhatever Pod that Deployment currently owns\u201d, so it survives the Pod being replaced.</p><p>Equally valid: <code>-l app=tuner</code> to select by label, or <code>job/x</code>, <code>statefulset/x</code>, <code>ds/x</code>. With a selector matching several Pods, add <code>--max-log-requests</code> to raise the default cap of five.</p>"}, {"t": "-c, --container", "b": "<p>Which container inside the Pod. Required whenever there's more than one, and the error message when you forget helpfully lists your options.</p><p>Init containers count: <code>-c resolve-station</code> is how you read the logs of something that already finished. That's often where the real answer is hiding when a Pod never reaches <code>Running</code>. Or use <code>--all-containers</code> to stop guessing.</p>"}, {"t": "-p, --previous", "b": "<p><b>The single most useful flag on this page.</b> Shows the logs of the <em>previous</em> instance of the container \u2014 the one that died.</p><p>When a container is crash-looping, plain <code>kubectl logs</code> gives you the current attempt, which has usually just started and printed nothing. The crash you want to read about belongs to the corpse. <code>--previous</code> is how you exhume it.</p><p>If it says there's no previous container, the current one hasn't crashed yet \u2014 so look at <code>describe</code> for a pull or scheduling problem instead.</p>"}, {"t": "--tail, --since, -f", "b": "<p>Three ways to cut the volume down. <code>--tail=50</code> takes the last fifty lines; <code>--since=10m</code> or <code>--since-time=\u2026</code> takes a window; <code>-f</code> follows, like <code>tail -f</code>.</p><p><code>-f</code> and <code>--previous</code> are mutually exclusive, which makes sense when you remember the previous container is dead and has nothing more to say. Add <code>--timestamps</code> when correlating across containers.</p>"}], "an-exec": [{"t": "kubectl exec", "b": "<p>Runs a new process inside a container that is already running. Not a new container \u2014 a second process in the existing one, sharing its filesystem and its network.</p><p>It only works if the container is <code>Running</code>. For a crash-looping one there is nothing to get into, and <code>--previous</code> logs or <code>kubectl debug</code> are where you go instead.</p>"}, {"t": "-i and -t together", "b": "<p><code>-i</code> keeps standard input open so you can type; <code>-t</code> allocates a terminal so the shell behaves like a shell. Separately they're nearly useless; together they give you an interactive session, which is why you'll never see one without the other.</p><p>Leave both off for a one-shot command whose output you just want to capture.</p>"}, {"t": "which Pod", "b": "<p>Same addressing as <code>logs</code>. With a Deployment, kubectl picks one of its Pods for you \u2014 fine for a look around, worth being deliberate about when there are many and they might differ.</p>"}, {"t": "the double dash", "b": "<p>Everything after <code>--</code> is the command to run inside the container, not an argument to kubectl.</p><p>Omit it and your flags get eaten by kubectl itself. <code>kubectl exec pod -- ls -l</code> works; <code>kubectl exec pod ls -l</code> tries to interpret <code>-l</code> as a label selector and the error message is not going to help you.</p>"}, {"t": "what to run", "b": "<p><code>sh</code> because many small images don't have <code>bash</code>. <code>busybox</code> and <code>alpine</code> give you <code>sh</code>; distroless images give you nothing at all.</p><p>When there's no shell, <code>kubectl debug -it pod/X --image=busybox --target=tuner</code> attaches a temporary container with real tools that shares the target's namespaces. It's the modern answer to \u201cI can't get in to look\u201d.</p>"}], "an-run": [{"t": "kubectl run", "b": "<p>Creates a single Pod from flags, no YAML. These days it's a debugging tool rather than a deployment tool \u2014 it used to make Deployments, and no longer does.</p><p>Its real use is answering \u201ccan anything in this cluster reach that?\u201d, which you cannot test from your laptop because cluster networking is not your network.</p>"}, {"t": "--rm", "b": "<p>Delete the Pod when you exit. Without it you accumulate a quiet museum of half-forgotten debug pods, which someone eventually finds and asks about.</p>"}, {"t": "-i --tty", "b": "<p>Same as <code>exec</code>: keep stdin open, give me a terminal. Combined with <code>--rm</code> this gives the familiar feel of <code>docker run -it --rm</code>.</p>"}, {"t": "--image", "b": "<p>What to run. <code>busybox</code> gets you <code>wget</code>, <code>nslookup</code> and <code>nc</code>, which answers most networking questions. <code>nicolaka/netshoot</code> if you want the full toolkit.</p>"}, {"t": "--restart", "b": "<p>Makes it a plain Pod that stays dead when it exits. The default, <code>Always</code>, means your throwaway shell comes <em>back</em> every time you leave it \u2014 the Part 1 loop doing exactly what it promised, at the least convenient moment.</p><p><code>--restart=OnFailure</code> makes it a Job instead. For a debug shell you want <code>Never</code>.</p>"}, {"t": "the command", "b": "<p>Same double-dash rule as <code>exec</code>. Everything after it belongs to the container.</p><p>The complete incantation worth committing to memory: <code>kubectl run probe --rm -it --image=busybox --restart=Never -- sh</code>. You will type it more often than you expect.</p>"}]};
+document.querySelectorAll('.tok').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var w=btn.dataset.w, i=+btn.dataset.i, d=ANAT[w][i];
+    var panel=document.querySelector('[data-def="'+w+'"]');
+    document.querySelectorAll('.tok[data-w="'+w+'"]').forEach(function(o){o.setAttribute('aria-pressed',String(o===btn));});
+    panel.innerHTML='<h4>'+d.t+'</h4>'+d.b;
+  });
+});
+(function(){
+  var b=document.getElementById('tocbtn'),p=document.getElementById('tocpanel');
+  if(!b||!p)return;
+  b.addEventListener('click',function(){
+    var open=b.getAttribute('aria-expanded')==='true';
+    b.setAttribute('aria-expanded',String(!open)); p.hidden=open;
+  });
+  document.addEventListener('click',function(e){
+    if(!p.hidden && !p.contains(e.target) && e.target!==b){b.setAttribute('aria-expanded','false');p.hidden=true;}
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&!p.hidden){b.setAttribute('aria-expanded','false');p.hidden=true;b.focus();}
+  });
+})();
+</script>

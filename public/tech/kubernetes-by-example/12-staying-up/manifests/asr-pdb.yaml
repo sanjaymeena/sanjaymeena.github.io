@@ -1,0 +1,10 @@
+# Part 12 — a budget that leaves room for maintenance.
+# minAvailable == replicas would block every node drain, forever.
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: asr
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels: {app: asr}

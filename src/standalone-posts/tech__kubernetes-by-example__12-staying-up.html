@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>try{var t=localStorage.getItem("theme");if(t==="dark"||t==="light"){document.documentElement.dataset.theme=t;}}catch(e){}</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Staying Up - Kubernetes by Example - Seeking Wisdom</title>
+<meta name="description" content="You added a health check and it killed every pod you had. Only one of the three probes can do that, and it was the one you picked.">
+<link rel="canonical" href="https://www.sanjaymeena.io/tech/kubernetes-by-example/12-staying-up/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=JetBrains+Mono:wght@400;500;700&family=Literata:opsz,wght@7..72,400;7..72,600;7..72,400italic&display=swap"><style>
+:root{
+  --bg:#F7F5F1; --surface:#FFFFFF; --surface-2:#EEEBE4; --sunken:#E7E3DA;
+  --ink:#1B1A15; --ink-2:#4B473E; --muted:#787365;
+  --line:#DEDACF; --line-strong:#BEB8A8;
+  --want:#30459E; --have:#A74B28; --ok:#36704A; --note:#6B4B8F;
+  --want-wash:#30459E14; --have-wash:#A74B2814; --ok-wash:#36704A14; --note-wash:#6B4B8F14;
+  --shadow:0 1px 2px #1B1A1510,0 10px 28px #1B1A150A;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#13130E; --surface:#1B1B15; --surface-2:#23231C; --sunken:#16160F;
+  --ink:#EFEDE4; --ink-2:#BEBAAD; --muted:#8E8A7C;
+  --line:#2E2E25; --line-strong:#464537;
+  --want:#8E9EF2; --have:#E08760; --ok:#75BA8F; --note:#B291D8;
+  --want-wash:#8E9EF21F; --have-wash:#E087601F; --ok-wash:#75BA8F1F; --note-wash:#B291D81F;
+  --shadow:0 1px 2px #0007,0 10px 28px #0005;
+}}
+:root[data-theme="dark"]{
+  --bg:#13130E; --surface:#1B1B15; --surface-2:#23231C; --sunken:#16160F;
+  --ink:#EFEDE4; --ink-2:#BEBAAD; --muted:#8E8A7C;
+  --line:#2E2E25; --line-strong:#464537;
+  --want:#8E9EF2; --have:#E08760; --ok:#75BA8F; --note:#B291D8;
+  --want-wash:#8E9EF21F; --have-wash:#E087601F; --ok-wash:#75BA8F1F; --note-wash:#B291D81F;
+  --shadow:0 1px 2px #0007,0 10px 28px #0005;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Literata,Georgia,serif;font-size:17.5px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;margin:0 auto;padding:0 26px 110px}
+.col{max-width:65ch}
+h1,h2,h3,h4,.eyebrow,.btn,.steptitle,.tag,.cardt,th,.tb-series,.tb-pos,.tocpanel,.anat,.pre-h{font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif}
+code,kbd,.mono,.tag,.tok{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace}
+h1{font-size:clamp(33px,5vw,55px);line-height:1.05;font-weight:700;letter-spacing:-.03em;margin:0 0 18px;text-wrap:balance}
+h2{font-size:clamp(24px,2.7vw,32px);line-height:1.15;font-weight:700;letter-spacing:-.02em;margin:0 0 16px;text-wrap:balance}
+h3{font-size:19.5px;font-weight:700;letter-spacing:-.01em;margin:0 0 9px}
+p{margin:0 0 18px}
+em{font-style:italic}
+a{color:var(--want)}
+.lede{font-size:20.5px;line-height:1.58;color:var(--ink-2);margin:0 0 22px}
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.17em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+header.top{padding:48px 0 0}
+section{padding:58px 0 0}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0}
+.tag{font-size:11.5px;padding:5px 10px;border:1px solid var(--line-strong);border-radius:3px;color:var(--ink-2);background:var(--surface)}
+.note{border-left:2px solid var(--line-strong);padding:2px 0 2px 18px;color:var(--ink-2);margin:0 0 18px}
+.note b{color:var(--ink)}
+.cw{border:1px solid var(--line);border-left:3px solid var(--note);border-radius:4px;background:var(--surface);padding:17px 19px;margin:24px 0 0}
+.cw h4{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--note);margin:0 0 9px}
+.cw p{margin:0 0 11px;color:var(--ink-2);font-size:16px;line-height:1.62}
+.cw p:last-child{margin:0}
+/* ---- top bar ---- */
+.topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tbin{max-width:1140px;margin:0 auto;padding:10px 26px;display:flex;align-items:center;gap:14px}
+.tb-series{font-size:13px;font-weight:700;letter-spacing:-.01em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.tb-series:hover{color:var(--want)}
+.tb-pos{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-left:auto;white-space:nowrap}
+.tb-btn{font:700 12px/1 "Bricolage Grotesque",sans-serif;padding:7px 11px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:3px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.tb-btn:hover{border-color:var(--want);color:var(--want)}
+.tb-btn:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.tb-btn[aria-disabled="true"]{opacity:.35;pointer-events:none}
+.tocpanel{position:absolute;left:0;right:0;top:100%;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:var(--shadow);max-height:72vh;overflow-y:auto}
+.tocpanel[hidden]{display:none}
+.tocin{max-width:1140px;margin:0 auto;padding:22px 26px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+.tocgrp h5{font:700 10.5px/1 "Bricolage Grotesque",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;padding:0 0 8px;border-bottom:1px solid var(--line)}
+.tocgrp ol{list-style:none;margin:0;padding:0}
+.tocgrp li{margin:0 0 2px}
+.tocgrp a,.tocgrp span{display:flex;gap:9px;padding:6px 8px;border-radius:3px;font-size:14px;text-decoration:none;color:var(--ink);font-family:Literata,serif}
+.tocgrp a:hover{background:var(--surface-2)}
+.tocgrp span{color:var(--muted)}
+.tocgrp .n{font:700 11px/1.6 "JetBrains Mono",monospace;color:var(--muted)}
+.tocgrp [aria-current="page"]{background:var(--want-wash);color:var(--want);font-weight:600}
+.soon{font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-left:auto;align-self:center;color:var(--muted);font-family:"Bricolage Grotesque",sans-serif}
+/* ---- stage ---- */
+.stage{margin:28px 0 0;border:1px solid var(--line);border-radius:5px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.stagefig{background:var(--sunken);padding:18px 20px;overflow-x:auto}
+.stagefig svg{display:block;width:100%;min-width:720px;height:auto}
+.scrub{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:12px 18px;border-top:1px solid var(--line);background:var(--surface-2)}
+.btn{font-size:12.5px;font-weight:700;padding:7px 13px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:3px;cursor:pointer;line-height:1.2}
+.btn:hover{border-color:var(--want);color:var(--want)}
+.btn:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.pips{display:flex;gap:5px;margin-left:auto;flex-wrap:wrap}
+.pip{width:21px;height:21px;border-radius:3px;border:1px solid var(--line-strong);background:var(--surface);color:var(--muted);font:700 11px/1 "Bricolage Grotesque",sans-serif;cursor:pointer;display:grid;place-items:center;padding:0}
+.pip[aria-current="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.pip:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.stagetext{padding:21px 23px 23px;border-top:1px solid var(--line)}
+.steptitle{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 7px}
+.stagetext h3{font-size:21.5px;margin:0 0 11px}
+.stagetext p{max-width:72ch;margin:0 0 13px;color:var(--ink-2)}
+.stagetext p:last-child{margin:0}
+.stagetext b{color:var(--ink)}
+/* ---- anatomy ---- */
+.anat{margin:26px 0 0;border:1px solid var(--line);border-radius:5px;background:var(--surface);overflow:hidden;box-shadow:var(--shadow)}
+.anat-h{padding:12px 18px;border-bottom:1px solid var(--line);background:var(--surface-2);font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.anat-cmd{padding:20px 18px 16px;background:var(--sunken);display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start;overflow-x:auto}
+.tok{font-size:14px;font-weight:500;padding:7px 10px;border:1px solid transparent;border-radius:3px;background:var(--surface);color:var(--ink);cursor:pointer;line-height:1.3;white-space:nowrap;position:relative;border-bottom:2px solid var(--line-strong)}
+.tok:hover{border-color:var(--want);color:var(--want)}
+.tok[aria-pressed="true"]{background:var(--want);border-color:var(--want);color:#fff}
+.tok:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.tok .kind{display:block;font:700 8.5px/1.4 "Bricolage Grotesque",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:3px 0 0}
+.tok[aria-pressed="true"] .kind{color:#ffffffcc}
+.anat-def{padding:18px 20px 20px;border-top:1px solid var(--line);min-height:96px}
+.anat-def h4{font-size:15px;margin:0 0 7px;font-family:"JetBrains Mono",monospace;color:var(--want)}
+.anat-def p{font-size:15.5px;line-height:1.62;color:var(--ink-2);margin:0 0 10px;max-width:70ch}
+.anat-def p:last-child{margin:0}
+.anat-def code{font-size:.9em}
+.anat-hint{font-size:13px;color:var(--muted);font-family:Literata,serif;font-style:italic}
+/* ---- tables, code ---- */
+.tbl{width:100%;border-collapse:collapse;margin:22px 0 0;font-size:15px}
+.tbl th{font-size:11px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 14px 9px 0;border-bottom:1px solid var(--line-strong)}
+.tbl td{padding:11px 14px 11px 0;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-2)}
+.tbl td:first-child{color:var(--ink);white-space:nowrap}
+.tbl td code{white-space:nowrap}
+.tblwrap{overflow-x:auto}
+code{font-size:.86em;background:var(--surface-2);border:1px solid var(--line);border-radius:3px;padding:1px 5px;color:var(--ink)}
+pre{background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:15px 17px;overflow-x:auto;font-size:13px;line-height:1.68;margin:16px 0 0}
+pre code{background:0 0;border:0;padding:0;color:var(--ink-2);font-size:inherit}
+.pre-h{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:24px 0 -6px}
+figure{margin:26px 0 0}
+figcaption{font-size:13.5px;line-height:1.55;color:var(--muted);margin:11px 0 0;max-width:76ch}
+.nextprev{display:flex;gap:14px;flex-wrap:wrap;margin:30px 0 0}
+.np{flex:1 1 230px;border:1px solid var(--line);border-radius:4px;padding:15px 17px;background:var(--surface);text-decoration:none;color:var(--ink)}
+.np:hover{border-color:var(--want)}
+.np span{display:block;font-size:10.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-family:"Bricolage Grotesque",sans-serif;margin:0 0 4px}
+footer{margin:76px 0 0;padding:26px 0 0;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+/* svg shared */
+.d-panel{fill:var(--surface);stroke:var(--line-strong)}
+.d-sunken{fill:var(--sunken);stroke:var(--line)}
+.d-box{fill:var(--surface);stroke:var(--line-strong)}
+.t{fill:var(--ink);font-family:"Bricolage Grotesque",sans-serif;font-size:12.5px;font-weight:700}
+.t-sm{fill:var(--ink-2);font-family:"JetBrains Mono",monospace;font-size:10.5px}
+.t-mut{fill:var(--muted);font-family:"JetBrains Mono",monospace;font-size:10px}
+.t-lbl{fill:var(--muted);font-family:"Bricolage Grotesque",sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.t-want{fill:var(--want)} .t-have{fill:var(--have)} .t-ok{fill:var(--ok)} .t-note{fill:var(--note)}
+.b-want{fill:var(--want-wash);stroke:var(--want)} .b-have{fill:var(--have-wash);stroke:var(--have)}
+.b-ok{fill:var(--ok-wash);stroke:var(--ok)} .b-note{fill:var(--note-wash);stroke:var(--note)}
+.cell{fill:var(--want-wash);stroke:var(--want);stroke-width:.8}
+.ah{fill:var(--ink-2)} .ah-want{fill:var(--want)} .ah-have{fill:var(--have)} .ah-ok{fill:var(--ok)}
+.flow{fill:none;stroke:var(--ink-2);stroke-width:1.4}
+.flow-want{stroke:var(--want)} .flow-have{stroke:var(--have)} .flow-ok{stroke:var(--ok)}
+.g{transition:opacity .4s ease}
+.dim{opacity:.13} .hide{opacity:0}
+.live{stroke-dasharray:5 5;animation:ants 1s linear infinite}
+@keyframes ants{to{stroke-dashoffset:-20}}
+@media (prefers-reduced-motion:reduce){.live{animation:none}.g{transition:none}}
+</style>
+</head>
+<body>
+<nav class="topbar">
+  <div class="tbin">
+    <a class="tb-series" href="/tech/kubernetes-by-example/">Kubernetes by Example</a>
+    <button class="tb-btn" id="tocbtn" type="button" aria-expanded="false" aria-controls="tocpanel">Contents</button>
+    <span class="tb-pos">Part 12 of 14</span><div style="display:flex;gap:6px"><a class="tb-btn" href="/tech/kubernetes-by-example/11-placement-and-devices/" title="Placement and devices">&#8592;</a><a class="tb-btn" href="/tech/kubernetes-by-example/13-scaling-and-permissions/" title="Scaling and permissions">&#8594;</a></div>
+  </div>
+  <div class="tocpanel" id="tocpanel" hidden><div class="tocin"><div class="tocgrp"><h5>Tier 0 · The model</h5><ol><li><a href="/tech/kubernetes-by-example/01-the-object-model/"><span class="n">01</span>The object model</a></li><li><a href="/tech/kubernetes-by-example/02-pods-and-containers/"><span class="n">02</span>Pods and containers</a></li><li><a href="/tech/kubernetes-by-example/03-labels-selectors-namespaces/"><span class="n">03</span>Labels, selectors, namespaces</a></li></ol></div><div class="tocgrp"><h5>Tier 1 · Workload kinds</h5><ol><li><a href="/tech/kubernetes-by-example/04-deployments-and-rollouts/"><span class="n">04</span>Deployments and rollouts</a></li><li><a href="/tech/kubernetes-by-example/05-daemonsets/"><span class="n">05</span>DaemonSets</a></li><li><a href="/tech/kubernetes-by-example/06-statefulsets-jobs-cronjobs/"><span class="n">06</span>StatefulSets, Jobs, CronJobs</a></li></ol></div><div class="tocgrp"><h5>Tier 2 · Wiring</h5><ol><li><a href="/tech/kubernetes-by-example/07-services-and-ingress/"><span class="n">07</span>Services and Ingress</a></li><li><a href="/tech/kubernetes-by-example/08-config-and-secrets/"><span class="n">08</span>Config and Secrets</a></li><li><a href="/tech/kubernetes-by-example/09-storage/"><span class="n">09</span>Storage</a></li></ol></div><div class="tocgrp"><h5>Tier 3 · Scheduling</h5><ol><li><a href="/tech/kubernetes-by-example/10-requests-limits-qos/"><span class="n">10</span>Requests, limits, QoS</a></li><li><a href="/tech/kubernetes-by-example/11-placement-and-devices/"><span class="n">11</span>Placement and devices</a></li></ol></div><div class="tocgrp"><h5>Tier 4 · Production</h5><ol><li><a href="/tech/kubernetes-by-example/12-staying-up/" aria-current="page"><span class="n">12</span>Staying up</a></li><li><a href="/tech/kubernetes-by-example/13-scaling-and-permissions/"><span class="n">13</span>Scaling and permissions</a></li><li><a href="/tech/kubernetes-by-example/14-helm-and-custom-resources/"><span class="n">14</span>Helm and custom resources</a></li></ol></div></div></div>
+</nav>
+<div class="wrap">
+<header class="top">
+  <div class="col">
+    <p class="eyebrow">Kubernetes by Example · Part 12</p>
+    <h1>Staying Up</h1>
+    <p class="lede">You added a health check and it killed every pod you had. Only one of the three probes can do that, and it was the one you picked.</p>
+    <div class="meta"><span class="tag">assumes Parts 1–11</span><span class="tag">~19 minutes</span><span class="tag">the probe that bites</span></div>
+  </div>
+</header>
+
+<section>
+  <div class="col">
+    <h2>The symptom</h2>
+    <p>You add a liveness probe to the tuner, because adding health checks is obviously good practice.</p>
+    <p>It's fine for a week. Then one evening a few extra stations come online, and the fleet collapses.</p>
+  </div><pre><code>$ kubectl get pods -l app=tuner
+NAME                    READY   STATUS    RESTARTS       AGE
+tuner-6b8f4d9c7-mn4kp   1/1     Running   7 (30s ago)    2d
+tuner-6b8f4d9c7-qw8xn   0/1     Running   6 (12s ago)    2d
+tuner-6b8f4d9c7-z4lr9   1/1     Running   8 (45s ago)    2d</code></pre>  <div class="col">
+    <p style="margin-top:18px">Every pod restarting, repeatedly, within seconds of each other. No crashes in the logs. No OOM kills — Part 10 taught you to check, and the exit code is 137 but <code>Reason</code> says nothing about memory.</p>
+    <p>Nothing is wrong with the application. It is slightly slower than usual, because there is slightly more work. And something you installed to improve reliability is methodically killing every copy of it.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Health checks that help, and health checks that bite</h2>
+    <p>The three probes look nearly identical in YAML and do entirely different things. One controls traffic, one controls restarts, one controls the other two.</p>
+    <p>Then there's the other half of staying up, which nobody thinks about until a deploy drops requests: <b>shutting down is a sequence, and it has a race in it.</b></p>
+  </div>  <div class="stage">
+    <div class="stagefig" id="stagefig"><svg viewBox="0 0 1000 420" role="img" aria-label="Three probes doing three different jobs: a startup probe holding the others off during a slow boot, a readiness probe controlling whether traffic arrives, and a liveness probe deciding whether to restart the container. Alongside, the shutdown sequence from SIGTERM to SIGKILL.">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-want" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-want" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-have" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-have" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-ok" d="M0,0 L10,5 L0,10 Z"/></marker>
+  </defs>
+  <g id="g-start" class="g">
+    <rect class="b-note" x="40" y="56" width="290" height="110" rx="4" stroke-width="1.3"/>
+    <text class="t-lbl t-note" x="56" y="76">startupProbe</text>
+    <text class="t-sm" x="56" y="98">&quot;are you up yet?&quot;</text>
+    <text class="t-mut" x="56" y="118">holds the other two off entirely</text>
+    <text class="t-mut" x="56" y="136">generous budget, runs once</text>
+    <text class="t-mut" x="56" y="156">fails → restart</text>
+  </g>
+  <g id="g-ready" class="g">
+    <rect class="b-want" x="356" y="56" width="290" height="110" rx="4" stroke-width="1.3"/>
+    <text class="t-lbl t-want" x="372" y="76">readinessProbe</text>
+    <text class="t-sm" x="372" y="98">&quot;should I send you work?&quot;</text>
+    <text class="t-mut" x="372" y="118">controls Service endpoints</text>
+    <text class="t-mut" x="372" y="136">controls rollout pace</text>
+    <text class="t-mut" x="372" y="156">fails → no traffic. nothing restarts.</text>
+  </g>
+  <g id="g-live" class="g">
+    <rect class="b-have" x="672" y="56" width="288" height="110" rx="4" stroke-width="1.3"/>
+    <text class="t-lbl t-have" x="688" y="76">livenessProbe</text>
+    <text class="t-sm" x="688" y="98">&quot;are you wedged?&quot;</text>
+    <text class="t-mut" x="688" y="118">the only one that kills</text>
+    <text class="t-mut" x="688" y="136">fails → restart the container</text>
+    <text class="t-mut" x="688" y="156">get this wrong and it cascades</text>
+  </g>
+  <g id="g-shut" class="g">
+    <rect class="d-panel" x="40" y="200" width="920" height="126" rx="4" stroke-width="1.5"/>
+    <text class="t-lbl" x="56" y="220">shutting down — all of this happens at once</text>
+    <rect class="d-sunken" x="56" y="232" width="286" height="76" rx="3"/>
+    <text class="t-sm" x="68" y="252">removed from endpoints</text>
+    <text class="t-mut" x="68" y="270">kube-proxy must catch up</text>
+    <text class="t-mut" x="68" y="288">this takes a moment, and races</text>
+    <rect class="d-sunken" x="356" y="232" width="286" height="76" rx="3"/>
+    <text class="t-sm" x="368" y="252">preStop hook, then SIGTERM</text>
+    <text class="t-mut" x="368" y="270">your chance to finish work</text>
+    <text class="t-mut" x="368" y="288">PID 1 must actually handle it</text>
+    <rect class="b-have" x="656" y="232" width="288" height="76" rx="3" stroke-width="1.2"/>
+    <text class="t-sm t-have" x="668" y="252">SIGKILL at the deadline</text>
+    <text class="t-mut" x="668" y="270">terminationGracePeriodSeconds</text>
+    <text class="t-mut" x="668" y="288">30s by default. not negotiable.</text>
+  </g>
+  <g id="g-pdb" class="g">
+    <rect class="d-sunken" x="40" y="348" width="920" height="60" rx="3"/>
+    <text class="t-lbl t-ok" x="56" y="368">PodDisruptionBudget — only stops the polite kind</text>
+    <text class="t-mut" x="56" y="390">drains and node upgrades wait for it. crashes, OOM kills and dead nodes do not.</text>
+  </g>
+  <g id="f-order" class="g hide">
+    <path class="flow flow-note live" d="M334,111 H352" marker-end="url(#a-note)"/>
+    <path class="flow live" d="M650,111 H668" marker-end="url(#a)"/>
+    <text class="t-lbl t-note" x="90" y="186">startup finishes first, then the other two begin</text>
+  </g>
+  <g id="x-cascade" class="g hide">
+    <rect x="668" y="52" width="296" height="118" rx="4" fill="none" stroke="var(--have)" stroke-width="1.8" stroke-dasharray="6 4"/>
+    <rect x="600" y="178" width="364" height="16" fill="var(--bg)"/>
+    <text class="t-lbl t-have" x="604" y="190">slow under load → killed → more load → all of them killed</text>
+  </g>
+  <g id="x-race" class="g hide">
+    <rect x="52" y="228" width="294" height="84" rx="4" fill="none" stroke="var(--have)" stroke-width="1.7" stroke-dasharray="6 4"/>
+    <rect x="60" y="318" width="330" height="16" fill="var(--bg)"/>
+    <text class="t-lbl t-have" x="64" y="330">traffic can arrive after SIGTERM. this is the 503.</text>
+  </g>
+</svg></div>
+    <div class="scrub">
+      <button class="btn" id="prev" type="button">&#9664; Back</button>
+      <button class="btn" id="play" type="button">&#9654; Play</button>
+      <button class="btn" id="next" type="button">Next &#9654;</button>
+      <div class="pips" id="pips"></div>
+    </div>
+    <div class="stagetext">
+      <p class="steptitle" id="stepn"></p>
+      <h3 id="stept"></h3>
+      <div id="stepp"></div>
+    </div>
+  </div>  <div class="col">
+    <div class="cw">
+      <h4>If you only take one thing</h4>
+      <p><b>Readiness is nearly free and nearly always right.</b> It gates traffic and paces rollouts, and failing it costs you nothing but a pause.</p>
+      <p><b>Liveness can take down your whole fleet.</b> It is the only probe that kills, and under load it kills everything at once. Add it when you can name the wedge it detects — not by default.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>The commands</h2>
+  </div><div class="anat" id="an-probe"><div class="anat-h">Probes, and the numbers around them</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-probe" data-i="0" aria-pressed="false">livenessProbe<span class="kind">container field</span></button><button class="tok" type="button" data-w="an-probe" data-i="1" aria-pressed="false">httpGet / exec / tcpSocket<span class="kind">check type</span></button><button class="tok" type="button" data-w="an-probe" data-i="2" aria-pressed="false">periodSeconds × failureThreshold<span class="kind">timing</span></button><button class="tok" type="button" data-w="an-probe" data-i="3" aria-pressed="false">timeoutSeconds<span class="kind">timing</span></button><button class="tok" type="button" data-w="an-probe" data-i="4" aria-pressed="false">initialDelaySeconds<span class="kind">timing</span></button></div><div class="anat-def" data-def="an-probe"><p class="anat-hint">Click any piece of the command.</p></div></div><div class="anat" id="an-drain"><div class="anat-h">Draining a node safely</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-drain" data-i="0" aria-pressed="false">kubectl cordon<span class="kind">verb</span></button><button class="tok" type="button" data-w="an-drain" data-i="1" aria-pressed="false">kubectl drain<span class="kind">verb</span></button><button class="tok" type="button" data-w="an-drain" data-i="2" aria-pressed="false">--ignore-daemonsets<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-drain" data-i="3" aria-pressed="false">--delete-emptydir-data<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-drain" data-i="4" aria-pressed="false">--grace-period / --force<span class="kind">flag</span></button></div><div class="anat-def" data-def="an-drain"><p class="anat-hint">Click any piece of the command.</p></div></div><div class="anat" id="an-pdb"><div class="anat-h">Disruption budgets</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-pdb" data-i="0" aria-pressed="false">kubectl get pdb<span class="kind">verb + type</span></button><button class="tok" type="button" data-w="an-pdb" data-i="1" aria-pressed="false">minAvailable: 2<span class="kind">spec field</span></button><button class="tok" type="button" data-w="an-pdb" data-i="2" aria-pressed="false">maxUnavailable: 1<span class="kind">spec field</span></button><button class="tok" type="button" data-w="an-pdb" data-i="3" aria-pressed="false">selector<span class="kind">spec field</span></button><button class="tok" type="button" data-w="an-pdb" data-i="4" aria-pressed="false">kubectl describe pdb<span class="kind">command</span></button></div><div class="anat-def" data-def="an-pdb"><p class="anat-hint">Click any piece of the command.</p></div></div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Build it</h2>
+    <p>Readiness everywhere, a startup probe for the slow-loading speech model, a careful liveness probe, and a budget so node maintenance can't take the last one.</p>
+  </div><p class="pre-h">Probes</p>
+<pre><code>kubectl apply -f manifests/tuner-probes.yaml
+kubectl rollout status deploy/tuner
+kubectl describe pod -l app=tuner | grep -A3 -E 'Liveness|Readiness|Startup'</code></pre>  <div class="col">
+    <p style="margin-top:20px">Note the timings in that output. <code>timeout=5s</code>, not the default 1. <code>period=10s #failure=3</code> — thirty seconds of genuine trouble before anything is killed, not one slow response.</p>
+  </div><p class="pre-h">A slow starter, handled properly</p>
+<pre><code>kubectl apply -f manifests/asr-startup.yaml
+kubectl get pods -l app=asr -w</code></pre>  <div class="col">
+    <p style="margin-top:20px">It sits <code>0/1 Running</code> for a minute or so while the startup probe works through its budget, then flips to <code>1/1</code>. No restarts, because liveness never ran. With only a liveness probe it would have been killed at twenty seconds and killed again every twenty seconds after that.</p>
+  </div><p class="pre-h">A disruption budget</p>
+<pre><code>kubectl apply -f manifests/asr-pdb.yaml
+kubectl get pdb</code></pre>  <div class="col">
+    <p style="margin-top:20px">Check <code>ALLOWED DISRUPTIONS</code>. If it reads 0, a node drain will block — which is either exactly right or a configuration you'll regret at the worst moment.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Break it</h2>
+    <h3 style="margin-top:26px">1 · Build the cascade on purpose</h3>
+  </div><pre><code>kubectl apply -f manifests/liveness-cascade.yaml
+kubectl get pods -l app=cascade -w</code></pre>  <div class="col">
+    <p style="margin-top:20px">A health endpoint that takes about 1.2 seconds, and a liveness probe with the default <code>timeoutSeconds: 1</code>. Every pod is killed, comes back, is killed again — forever, while the application works perfectly throughout.</p>
+    <p>That single unset default is the whole bug. It is also the default you get by copying a probe snippet off the internet.</p>
+  </div><p class="pre-h">Fix the one number</p>
+<pre><code>kubectl patch deploy/cascade --type=json -p='[{"op":"replace",
+  "path":"/spec/template/spec/containers/0/livenessProbe/timeoutSeconds",
+  "value":5}]'
+kubectl get pods -l app=cascade -w</code></pre>  <div class="col">
+    <h3 style="margin-top:34px">2 · Lose requests during a perfectly good deploy</h3>
+  </div><pre><code>kubectl apply -f manifests/no-prestop.yaml
+# hammer it from inside the cluster while you roll it
+kubectl run load --rm -it --image=busybox --restart=Never -- \
+  sh -c 'while true; do wget -qO- -T2 http://no-prestop/ || echo FAIL; done'
+
+# in another terminal
+kubectl rollout restart deploy/no-prestop</code></pre>  <div class="col">
+    <p style="margin-top:20px">A scattering of <code>FAIL</code> lines. Those are requests that arrived at a pod which had already been told to stop — endpoint removal hadn't reached kube-proxy yet.</p>
+    <p>Now the version with a five-second <code>preStop</code>:</p>
+  </div><pre><code>kubectl apply -f manifests/with-prestop.yaml
+kubectl rollout restart deploy/with-prestop</code></pre>  <div class="col">
+    <p style="margin-top:20px">Clean. The hook does nothing but hold the container open long enough for the rest of the cluster to stop sending it work. An embarrassing fix for a subtle problem.</p>
+    <h3 style="margin-top:34px">3 · Block a drain with your own budget</h3>
+  </div><pre><code>kubectl apply -f manifests/strict-pdb.yaml     # minAvailable == replicas
+kubectl get pdb strict-pdb
+kubectl drain airwaves-worker --ignore-daemonsets --delete-emptydir-data</code></pre>  <div class="col">
+    <p style="margin-top:20px">The drain refuses to evict, forever, and says why. A PDB that permits zero disruption is a permanent block on node maintenance — and you will find out during an urgent kernel patch.</p>
+    <div class="note"><b>Clean up:</b> <code>kubectl uncordon airwaves-worker</code> and delete the strict PDB.</div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>What follows from this</h2>
+  </div>  <div class="tblwrap">
+  <table class="tbl">
+    <thead><tr><th>Because…</th><th>…this is what happens</th></tr></thead>
+    <tbody><tr><td>Readiness gates endpoints and rollouts</td><td>Without it, traffic and rollouts both assume “ready when started”. Two bugs, one omission.</td></tr><tr><td>Liveness restarts containers</td><td>Under load it fires on every pod at once and makes the problem worse. The failure amplifies.</td></tr><tr><td><code>timeoutSeconds</code> defaults to 1</td><td>Far too tight for a busy process. The most consequential unset field in this part.</td></tr><tr><td>Startup probes gate the others</td><td>They let liveness stay strict without punishing slow boots.</td></tr><tr><td>Endpoint removal races shutdown</td><td>Requests arrive after SIGTERM. A <code>preStop</code> sleep is the standard fix.</td></tr><tr><td>PID 1 must handle SIGTERM</td><td>A shell wrapper swallows it, and every shutdown waits for SIGKILL instead.</td></tr><tr><td>PDBs only cover voluntary disruption</td><td>They block drains, never crashes. <code>minAvailable == replicas</code> blocks maintenance forever.</td></tr></tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Cheat sheet</h2>
+    <div class="cw">
+      <h4>Part 12 · staying up</h4>
+      <p>• <b>readiness</b> = should I get traffic. <b>liveness</b> = should I be restarted. <b>startup</b> = have I finished booting.</p>
+      <p>• <b>Readiness first, always.</b> It gates Service endpoints and rollout pace. Failing it is safe.</p>
+      <p>• <b>Liveness is the only one that kills.</b> Add it when you can name the stuck state — not by default.</p>
+      <p>• <code>timeoutSeconds</code> defaults to <b>1</b>. Raise it, or build yourself a cascade.</p>
+      <p>• Detection time is <code>periodSeconds × failureThreshold</code>, not <code>periodSeconds</code>.</p>
+      <p>• A <b>startupProbe</b> beats a long <code>initialDelaySeconds</code> — strict liveness, generous boot.</p>
+      <p>• Endpoint removal and SIGTERM happen <b>at the same time</b>. A <code>preStop: sleep 5</code> closes the race.</p>
+      <p>• PID 1 must handle SIGTERM. A shell wrapper means everything waits for SIGKILL.</p>
+      <p>• <code>terminationGracePeriodSeconds</code> is the <em>total</em> budget, preStop included. Default 30.</p>
+      <p>• A <b>PDB</b> stops drains, never crashes. <code>ALLOWED DISRUPTIONS: 0</code> blocks node maintenance.</p>
+    </div>
+  </div>  <div class="nextprev">
+    <a class="np" href="/tech/kubernetes-by-example/11-placement-and-devices/"><span>Previous · Part 11</span>Placement and devices</a>
+    <a class="np" href="/tech/kubernetes-by-example/"><span>Series</span>All 14 parts</a>
+    <a class="np" href="/tech/kubernetes-by-example/13-scaling-and-permissions/"><span>Next · Part 13</span>Scaling and permissions</a>
+  </div>
+</section>
+
+<footer>
+  <div class="col"><p>Part of <b>Kubernetes by Example</b>. Next: growing on demand, shrinking to nothing, and asking permission.</p></div>
+</footer>
+</div>
+<script>
+const STEPS = [{"t": "Three probes, three completely different jobs", "on": ["g-start", "g-ready", "g-live"], "p": ["They share a syntax, which is unfortunate, because confusing them is how you cause an outage with code that works.", "<b>readiness</b> answers <em>should I send you work?</em> \u2014 failing it removes you from Service endpoints and nothing else happens. <b>liveness</b> answers <em>are you wedged?</em> \u2014 failing it restarts your container. <b>startup</b> answers <em>have you finished booting?</em> \u2014 and holds the other two off while you do.", "Only one of them can kill you. Be sure you know which."], "n": 1}, {"t": "Readiness is the one you almost always want", "on": ["g-ready"], "p": ["Part 4 and Part 7 both ended with a promise to come back here, because readiness quietly governs both.", "It decides whether a pod appears in its Service's EndpointSlice, so it controls traffic. And a Deployment waits for new pods to be ready before replacing more, so it controls rollout pace.", "<b>Without a readiness probe, both default to \u201cready when the process starts\u201d.</b> That's how a rolling update replaces a whole fleet in two seconds with nothing able to serve \u2014 the symptom from Part 4, finally fixable.", "Failing readiness is safe. The pod keeps running, keeps its logs, and simply stops receiving work. It's the probe you can be aggressive with."], "n": 2}, {"t": "Liveness is the dangerous one", "on": ["g-live", "x-cascade"], "p": ["Liveness exists for one narrow case: a process that is alive but permanently stuck \u2014 deadlocked, wedged on a lock, in a state it cannot leave. Restarting genuinely helps.", "For everything else it's a loaded weapon. <b>The classic disaster:</b> liveness is an HTTP check with a one-second timeout. Load rises, responses slow past a second, the probe fails, the container is killed. Its traffic moves to the others, which are now slower, so they fail too.", "<b>You have built a system that destroys itself precisely when it is busiest.</b> And the logs show nothing wrong \u2014 just restarts, which look like crashes.", "If you cannot name the specific stuck state you're detecting, you probably don't want a liveness probe at all."], "n": 3}, {"t": "Startup probes exist to keep liveness honest", "on": ["g-start", "g-live", "f-order"], "p": ["Slow-starting apps create a bind. Liveness must be tight enough to catch a wedge quickly, but loose enough to survive a ninety-second boot \u2014 and those are incompatible.", "The old workaround was a long <code>initialDelaySeconds</code>, which means a wedged container goes undetected for that long, every time, forever.", "<b>A startup probe separates the two concerns.</b> It gets a generous budget \u2014 <code>failureThreshold: 30</code> with <code>periodSeconds: 10</code> allows five minutes \u2014 and liveness doesn't begin until it passes. Then liveness can be strict, because booting is over.", "If the startup probe runs out of attempts, the container is restarted. Boot forever and you'll be told."], "n": 4}, {"t": "The numbers matter more than the check", "on": ["g-ready", "g-live"], "p": ["<code>periodSeconds</code> \u00d7 <code>failureThreshold</code> is your real detection time. Ten seconds and three failures means thirty seconds before anything happens, not ten.", "<code>timeoutSeconds</code> defaults to <b>1</b>, which is far too tight for anything doing real work under load. This single default causes more liveness cascades than any other setting.", "<code>successThreshold</code> must be 1 for liveness and startup. Readiness can require several consecutive passes, which damps a flapping backend nicely.", "<b>Rule of thumb:</b> readiness strict and fast, liveness loose and slow, startup generous. Sized by how long the check takes <em>when the system is busy</em>, not when it's idle."], "n": 5}, {"t": "Shutdown is a race you can lose", "on": ["g-shut", "x-race"], "p": ["Deleting a pod starts two things <b>simultaneously</b>: the endpoint controller removes it from Services, and the kubelet begins termination.", "They are not ordered. Endpoint removal has to propagate to kube-proxy on every node, which takes a moment \u2014 and during that moment, <b>requests are still arriving at a container that has already received SIGTERM</b>.", "That's where mysterious 503s during deploys come from. Not a crash, not a bug in your app \u2014 a race between two independent controllers that nobody coordinates."], "n": 6}, {"t": "preStop is how you win it", "on": ["g-shut"], "p": ["A <b>preStop hook</b> runs before SIGTERM is sent, and the kubelet waits for it. <code>sleep 5</code> is the famous, slightly embarrassing, entirely correct answer: it does nothing except hold the container open while endpoint removal propagates.", "Then SIGTERM arrives, and your process must actually handle it \u2014 stop accepting new work, finish what's in flight, exit. <b>If PID 1 ignores SIGTERM, nothing happens at all</b> until the grace period expires and SIGKILL arrives.", "That's a common trap with shell wrappers: <code>sh -c &quot;myapp&quot;</code> makes the shell PID 1, and it does not forward signals. Use <code>exec</code>, or set <code>shareProcessNamespace</code>, or just run the binary directly."], "n": 7}, {"t": "And then the deadline is absolute", "on": ["g-shut"], "p": ["<code>terminationGracePeriodSeconds</code> \u2014 30 by default \u2014 is the total budget for preStop <em>and</em> SIGTERM handling. When it expires, SIGKILL. No extension, no negotiation.", "Note the subtraction: a <code>sleep 10</code> preStop leaves only 20 seconds for your actual shutdown. Jobs that drain slowly need both numbers raised together.", "<b>Long grace periods slow everything down</b> \u2014 rollouts, drains, node upgrades all wait. Set it to what you genuinely need to finish in-flight work, and not the largest number you can imagine."], "n": 8}, {"t": "A PDB protects you from the polite failures only", "on": ["g-pdb"], "p": ["A <b>PodDisruptionBudget</b> says: never leave me with fewer than N available. A node drain respects it \u2014 the drain blocks rather than taking the last pod.", "<b>It only constrains voluntary disruption.</b> Drains, node upgrades, autoscaler scale-down. A crash, an OOM kill, a node catching fire \u2014 none of those ask permission, and a PDB does not apply.", "The trap is <code>minAvailable</code> equal to your replica count: nothing can ever be evicted, so node upgrades hang forever waiting for a budget that can never be satisfied. Leave room for one.", "And a PDB on a single-replica Deployment means a drain can never complete. Either accept the downtime or add a replica \u2014 those really are the only two options."], "n": 9}];
+const svg=document.querySelector('#stagefig svg');
+const groups=[...svg.querySelectorAll('g[id]')];
+const pips=document.getElementById('pips');
+let cur=0,timer=null;
+STEPS.forEach((s,i)=>{const b=document.createElement('button');b.className='pip';b.type='button';b.textContent=s.n;
+  b.setAttribute('aria-label','Step '+s.n+': '+s.t);b.addEventListener('click',()=>{stop();show(i);});pips.appendChild(b);});
+function show(i){
+  cur=(i+STEPS.length)%STEPS.length;
+  const s=STEPS[cur],on=new Set(s.on);
+  groups.forEach(g=>{
+    const isFlow=g.id.startsWith('f-')||g.id.startsWith('x-');
+    g.classList.remove('dim','hide');
+    if(on.has(g.id))return;
+    g.classList.add(isFlow?'hide':'dim');
+  });
+  document.getElementById('stepn').textContent='Step '+s.n+' of '+STEPS.length;
+  document.getElementById('stept').textContent=s.t;
+  document.getElementById('stepp').innerHTML=s.p.map(x=>'<p>'+x+'</p>').join('');
+  [...pips.children].forEach((b,j)=>b.setAttribute('aria-current',j===cur?'true':'false'));
+}
+function stop(){if(timer){clearInterval(timer);timer=null;document.getElementById('play').innerHTML='\u25B6 Play';}}
+document.getElementById('next').addEventListener('click',()=>{stop();show(cur+1);});
+document.getElementById('prev').addEventListener('click',()=>{stop();show(cur-1);});
+document.getElementById('play').addEventListener('click',e=>{
+  if(timer){stop();return;}
+  e.currentTarget.innerHTML='\u23F8 Pause';
+  timer=setInterval(()=>{if(cur===STEPS.length-1){stop();return;}show(cur+1);},6000);
+});
+document.addEventListener('keydown',e=>{
+  if(e.target.closest('input,textarea'))return;
+  if(e.key==='ArrowRight'){stop();show(cur+1);}
+  if(e.key==='ArrowLeft'){stop();show(cur-1);}
+});
+show(0);
+
+var ANAT = {"an-probe": [{"t": "the three kinds", "b": "<p>All three share the same shape: a check plus timings. <code>livenessProbe</code>, <code>readinessProbe</code>, <code>startupProbe</code>.</p><p><b>Start with readiness only.</b> Add startup if boot is slow. Add liveness only when you can name the stuck state it detects.</p>"}, {"t": "how to ask", "b": "<p><code>httpGet</code> \u2014 any 2xx or 3xx passes. <code>tcpSocket</code> \u2014 can it be connected to. <code>exec</code> \u2014 a command exiting 0.</p><p><code>exec</code> is the most flexible and the most expensive: it forks a process every period, in every pod. A one-second <code>exec</code> probe on a thousand pods is real load.</p><p><code>grpc</code> also exists now, for services implementing the standard health protocol.</p>"}, {"t": "real detection time", "b": "<p>The product is how long before anything happens. <code>10 \u00d7 3</code> = thirty seconds.</p><p>People set <code>periodSeconds: 10</code> and think they detect in ten. They detect in thirty.</p>"}, {"t": "the dangerous default", "b": "<p><b>Defaults to 1 second.</b> A probe that takes longer counts as a failure.</p><p>Under load, a health endpoint queued behind real requests easily exceeds one second. That is the liveness cascade in a single field, and it ships that way by default.</p>"}, {"t": "mostly obsolete", "b": "<p>Wait this long before probing at all. The old way to accommodate slow starts.</p><p><b>A <code>startupProbe</code> is strictly better</b> \u2014 it adapts to actual boot time instead of guessing, and keeps liveness strict afterwards.</p>"}], "an-drain": [{"t": "stop new arrivals", "b": "<p>Marks the node unschedulable. Nothing new lands; everything running stays.</p><p>The right first move when a node is misbehaving \u2014 stop the bleeding, investigate without pressure.</p>"}, {"t": "evict everything", "b": "<p>Cordons, then evicts every pod. <b>Evictions respect PodDisruptionBudgets</b>, so a drain can legitimately block \u2014 that's the budget doing its job, not a hang.</p>"}, {"t": "almost always needed", "b": "<p>DaemonSet pods are immediately recreated by their controller, so draining them is pointless. Without this flag, drain refuses to start.</p><p>You will type this every time. Part 5 explains why: a DaemonSet pod belongs to the node, not to the scheduler.</p>"}, {"t": "acknowledging data loss", "b": "<p>Required if any pod has an <code>emptyDir</code>, because draining destroys it \u2014 Part 9's lifetime rules, enforced.</p><p>The flag exists to make you confirm you understand that.</p>"}, {"t": "the blunt end", "b": "<p><code>--force</code> evicts pods nothing owns, which would otherwise never come back.</p><p><code>--grace-period=0</code> skips graceful shutdown entirely \u2014 immediate SIGKILL, in-flight work lost. Reach for it only when a node is already gone.</p>"}], "an-pdb": [{"t": "what is protected", "b": "<p>MIN AVAILABLE, MAX UNAVAILABLE, ALLOWED DISRUPTIONS. <b>That last column is the one to read.</b></p><p><code>ALLOWED DISRUPTIONS: 0</code> means no pod can be voluntarily evicted right now \u2014 and any drain will block indefinitely.</p>"}, {"t": "the floor", "b": "<p>Absolute number or a percentage. <code>minAvailable: 50%</code> scales with your replica count, which is usually what you meant.</p><p><b>Never set it equal to your replica count</b> \u2014 that permanently blocks every node upgrade.</p>"}, {"t": "the other way round", "b": "<p>Equivalent power, often clearer intent: at most one pod away at a time. You cannot set both.</p>"}, {"t": "what it covers", "b": "<p>A label selector, exactly like Part 3. It is <b>not</b> tied to a Deployment \u2014 it protects whatever matches.</p><p>Two PDBs matching the same pod is unspecified behaviour and should be avoided. As with ReplicaSets, overlapping selectors cause quiet trouble.</p>"}, {"t": "why a drain is stuck", "b": "<p>Shows current healthy count against desired, and events from the eviction API.</p><p>When <code>drain</code> sits there doing nothing, this is the command that explains it \u2014 usually a pod that is unready and therefore not counted as available.</p>"}]};
+document.querySelectorAll('.tok').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var w=btn.dataset.w, i=+btn.dataset.i, d=ANAT[w][i];
+    var panel=document.querySelector('[data-def="'+w+'"]');
+    document.querySelectorAll('.tok[data-w="'+w+'"]').forEach(function(o){o.setAttribute('aria-pressed',String(o===btn));});
+    panel.innerHTML='<h4>'+d.t+'</h4>'+d.b;
+  });
+});
+
+(function(){
+  var b=document.getElementById('tocbtn'),p=document.getElementById('tocpanel');
+  if(!b||!p)return;
+  b.addEventListener('click',function(){
+    var open=b.getAttribute('aria-expanded')==='true';
+    b.setAttribute('aria-expanded',String(!open)); p.hidden=open;
+  });
+  document.addEventListener('click',function(e){
+    if(!p.hidden && !p.contains(e.target) && e.target!==b){b.setAttribute('aria-expanded','false');p.hidden=true;}
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&!p.hidden){b.setAttribute('aria-expanded','false');p.hidden=true;b.focus();}
+  });
+})();
+</script>
+</body>
+</html>

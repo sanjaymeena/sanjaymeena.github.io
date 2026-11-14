@@ -11,6 +11,7 @@
     "astro": "astro",
     "check": "astro check",
     "migrate": "node scripts/migrate.mjs",
+    "migrate:k8s-series": "node scripts/migrate-k8s-series.mjs",
     "migrate:assets": "node scripts/copy-assets.mjs",
     "verify": "node scripts/verify-parity.mjs"
   },

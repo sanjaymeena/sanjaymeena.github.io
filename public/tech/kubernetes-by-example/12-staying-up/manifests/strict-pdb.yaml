@@ -1,0 +1,10 @@
+# Part 12, break-it #3 — minAvailable equal to the replica count.
+# ALLOWED DISRUPTIONS: 0. Every node drain blocks, forever.
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: strict-pdb
+spec:
+  minAvailable: 3
+  selector:
+    matchLabels: {app: with-prestop}

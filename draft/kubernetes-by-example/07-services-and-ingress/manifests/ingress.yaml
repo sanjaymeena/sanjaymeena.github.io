@@ -1,0 +1,18 @@
+# Part 7 — an Ingress. Needs a controller, or it does nothing and says nothing.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: airwaves
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: airwaves.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web
+                port:
+                  number: 80

@@ -1,0 +1,27 @@
+# Part 6 — the nightly tidy-up.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: prune
+  labels: {app: prune}
+spec:
+  schedule: "0 3 * * *"
+  timeZone: "Etc/UTC"             # say it explicitly or it is someone else's 3am
+  concurrencyPolicy: Forbid       # the default (Allow) is wrong for shared state
+  startingDeadlineSeconds: 300
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      ttlSecondsAfterFinished: 3600
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: prune
+              image: busybox:1.36
+              command: ["/bin/sh","-c"]
+              args: ["echo 'pruning old transcripts'; sleep 2; echo done"]
+              resources:
+                requests: {cpu: 10m, memory: 16Mi}

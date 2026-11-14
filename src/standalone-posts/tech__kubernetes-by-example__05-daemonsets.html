@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>try{var t=localStorage.getItem("theme");if(t==="dark"||t==="light"){document.documentElement.dataset.theme=t;}}catch(e){}</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DaemonSets - Kubernetes by Example - Seeking Wisdom</title>
+<meta name="description" content="Three replicas gave you two pods on one machine and none on another. When the whole point is to be there , you need a different question.">
+<link rel="canonical" href="https://www.sanjaymeena.io/tech/kubernetes-by-example/05-daemonsets/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=JetBrains+Mono:wght@400;500;700&family=Literata:opsz,wght@7..72,400;7..72,600;7..72,400italic&display=swap"><style>
+:root{
+  --bg:#F7F5F1; --surface:#FFFFFF; --surface-2:#EEEBE4; --sunken:#E7E3DA;
+  --ink:#1B1A15; --ink-2:#4B473E; --muted:#787365;
+  --line:#DEDACF; --line-strong:#BEB8A8;
+  --want:#30459E; --have:#A74B28; --ok:#36704A; --note:#6B4B8F;
+  --want-wash:#30459E14; --have-wash:#A74B2814; --ok-wash:#36704A14; --note-wash:#6B4B8F14;
+  --shadow:0 1px 2px #1B1A1510,0 10px 28px #1B1A150A;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#13130E; --surface:#1B1B15; --surface-2:#23231C; --sunken:#16160F;
+  --ink:#EFEDE4; --ink-2:#BEBAAD; --muted:#8E8A7C;
+  --line:#2E2E25; --line-strong:#464537;
+  --want:#8E9EF2; --have:#E08760; --ok:#75BA8F; --note:#B291D8;
+  --want-wash:#8E9EF21F; --have-wash:#E087601F; --ok-wash:#75BA8F1F; --note-wash:#B291D81F;
+  --shadow:0 1px 2px #0007,0 10px 28px #0005;
+}}
+:root[data-theme="dark"]{
+  --bg:#13130E; --surface:#1B1B15; --surface-2:#23231C; --sunken:#16160F;
+  --ink:#EFEDE4; --ink-2:#BEBAAD; --muted:#8E8A7C;
+  --line:#2E2E25; --line-strong:#464537;
+  --want:#8E9EF2; --have:#E08760; --ok:#75BA8F; --note:#B291D8;
+  --want-wash:#8E9EF21F; --have-wash:#E087601F; --ok-wash:#75BA8F1F; --note-wash:#B291D81F;
+  --shadow:0 1px 2px #0007,0 10px 28px #0005;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Literata,Georgia,serif;font-size:17.5px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;margin:0 auto;padding:0 26px 110px}
+.col{max-width:65ch}
+h1,h2,h3,h4,.eyebrow,.btn,.steptitle,.tag,.cardt,th,.tb-series,.tb-pos,.tocpanel,.anat,.pre-h{font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif}
+code,kbd,.mono,.tag,.tok{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace}
+h1{font-size:clamp(33px,5vw,55px);line-height:1.05;font-weight:700;letter-spacing:-.03em;margin:0 0 18px;text-wrap:balance}
+h2{font-size:clamp(24px,2.7vw,32px);line-height:1.15;font-weight:700;letter-spacing:-.02em;margin:0 0 16px;text-wrap:balance}
+h3{font-size:19.5px;font-weight:700;letter-spacing:-.01em;margin:0 0 9px}
+p{margin:0 0 18px}
+em{font-style:italic}
+a{color:var(--want)}
+.lede{font-size:20.5px;line-height:1.58;color:var(--ink-2);margin:0 0 22px}
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.17em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+header.top{padding:48px 0 0}
+section{padding:58px 0 0}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0}
+.tag{font-size:11.5px;padding:5px 10px;border:1px solid var(--line-strong);border-radius:3px;color:var(--ink-2);background:var(--surface)}
+.note{border-left:2px solid var(--line-strong);padding:2px 0 2px 18px;color:var(--ink-2);margin:0 0 18px}
+.note b{color:var(--ink)}
+.cw{border:1px solid var(--line);border-left:3px solid var(--note);border-radius:4px;background:var(--surface);padding:17px 19px;margin:24px 0 0}
+.cw h4{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--note);margin:0 0 9px}
+.cw p{margin:0 0 11px;color:var(--ink-2);font-size:16px;line-height:1.62}
+.cw p:last-child{margin:0}
+/* ---- top bar ---- */
+.topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tbin{max-width:1140px;margin:0 auto;padding:10px 26px;display:flex;align-items:center;gap:14px}
+.tb-series{font-size:13px;font-weight:700;letter-spacing:-.01em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.tb-series:hover{color:var(--want)}
+.tb-pos{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-left:auto;white-space:nowrap}
+.tb-btn{font:700 12px/1 "Bricolage Grotesque",sans-serif;padding:7px 11px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:3px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.tb-btn:hover{border-color:var(--want);color:var(--want)}
+.tb-btn:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.tb-btn[aria-disabled="true"]{opacity:.35;pointer-events:none}
+.tocpanel{position:absolute;left:0;right:0;top:100%;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:var(--shadow);max-height:72vh;overflow-y:auto}
+.tocpanel[hidden]{display:none}
+.tocin{max-width:1140px;margin:0 auto;padding:22px 26px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+.tocgrp h5{font:700 10.5px/1 "Bricolage Grotesque",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;padding:0 0 8px;border-bottom:1px solid var(--line)}
+.tocgrp ol{list-style:none;margin:0;padding:0}
+.tocgrp li{margin:0 0 2px}
+.tocgrp a,.tocgrp span{display:flex;gap:9px;padding:6px 8px;border-radius:3px;font-size:14px;text-decoration:none;color:var(--ink);font-family:Literata,serif}
+.tocgrp a:hover{background:var(--surface-2)}
+.tocgrp span{color:var(--muted)}
+.tocgrp .n{font:700 11px/1.6 "JetBrains Mono",monospace;color:var(--muted)}
+.tocgrp [aria-current="page"]{background:var(--want-wash);color:var(--want);font-weight:600}
+.soon{font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-left:auto;align-self:center;color:var(--muted);font-family:"Bricolage Grotesque",sans-serif}
+/* ---- stage ---- */
+.stage{margin:28px 0 0;border:1px solid var(--line);border-radius:5px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.stagefig{background:var(--sunken);padding:18px 20px;overflow-x:auto}
+.stagefig svg{display:block;width:100%;min-width:720px;height:auto}
+.scrub{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:12px 18px;border-top:1px solid var(--line);background:var(--surface-2)}
+.btn{font-size:12.5px;font-weight:700;padding:7px 13px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:3px;cursor:pointer;line-height:1.2}
+.btn:hover{border-color:var(--want);color:var(--want)}
+.btn:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.pips{display:flex;gap:5px;margin-left:auto;flex-wrap:wrap}
+.pip{width:21px;height:21px;border-radius:3px;border:1px solid var(--line-strong);background:var(--surface);color:var(--muted);font:700 11px/1 "Bricolage Grotesque",sans-serif;cursor:pointer;display:grid;place-items:center;padding:0}
+.pip[aria-current="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.pip:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.stagetext{padding:21px 23px 23px;border-top:1px solid var(--line)}
+.steptitle{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 7px}
+.stagetext h3{font-size:21.5px;margin:0 0 11px}
+.stagetext p{max-width:72ch;margin:0 0 13px;color:var(--ink-2)}
+.stagetext p:last-child{margin:0}
+.stagetext b{color:var(--ink)}
+/* ---- anatomy ---- */
+.anat{margin:26px 0 0;border:1px solid var(--line);border-radius:5px;background:var(--surface);overflow:hidden;box-shadow:var(--shadow)}
+.anat-h{padding:12px 18px;border-bottom:1px solid var(--line);background:var(--surface-2);font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.anat-cmd{padding:20px 18px 16px;background:var(--sunken);display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start;overflow-x:auto}
+.tok{font-size:14px;font-weight:500;padding:7px 10px;border:1px solid transparent;border-radius:3px;background:var(--surface);color:var(--ink);cursor:pointer;line-height:1.3;white-space:nowrap;position:relative;border-bottom:2px solid var(--line-strong)}
+.tok:hover{border-color:var(--want);color:var(--want)}
+.tok[aria-pressed="true"]{background:var(--want);border-color:var(--want);color:#fff}
+.tok:focus-visible{outline:2px solid var(--want);outline-offset:2px}
+.tok .kind{display:block;font:700 8.5px/1.4 "Bricolage Grotesque",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:3px 0 0}
+.tok[aria-pressed="true"] .kind{color:#ffffffcc}
+.anat-def{padding:18px 20px 20px;border-top:1px solid var(--line);min-height:96px}
+.anat-def h4{font-size:15px;margin:0 0 7px;font-family:"JetBrains Mono",monospace;color:var(--want)}
+.anat-def p{font-size:15.5px;line-height:1.62;color:var(--ink-2);margin:0 0 10px;max-width:70ch}
+.anat-def p:last-child{margin:0}
+.anat-def code{font-size:.9em}
+.anat-hint{font-size:13px;color:var(--muted);font-family:Literata,serif;font-style:italic}
+/* ---- tables, code ---- */
+.tbl{width:100%;border-collapse:collapse;margin:22px 0 0;font-size:15px}
+.tbl th{font-size:11px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 14px 9px 0;border-bottom:1px solid var(--line-strong)}
+.tbl td{padding:11px 14px 11px 0;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-2)}
+.tbl td:first-child{color:var(--ink);white-space:nowrap}
+.tbl td code{white-space:nowrap}
+.tblwrap{overflow-x:auto}
+code{font-size:.86em;background:var(--surface-2);border:1px solid var(--line);border-radius:3px;padding:1px 5px;color:var(--ink)}
+pre{background:var(--sunken);border:1px solid var(--line);border-radius:4px;padding:15px 17px;overflow-x:auto;font-size:13px;line-height:1.68;margin:16px 0 0}
+pre code{background:0 0;border:0;padding:0;color:var(--ink-2);font-size:inherit}
+.pre-h{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:24px 0 -6px}
+figure{margin:26px 0 0}
+figcaption{font-size:13.5px;line-height:1.55;color:var(--muted);margin:11px 0 0;max-width:76ch}
+.nextprev{display:flex;gap:14px;flex-wrap:wrap;margin:30px 0 0}
+.np{flex:1 1 230px;border:1px solid var(--line);border-radius:4px;padding:15px 17px;background:var(--surface);text-decoration:none;color:var(--ink)}
+.np:hover{border-color:var(--want)}
+.np span{display:block;font-size:10.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-family:"Bricolage Grotesque",sans-serif;margin:0 0 4px}
+footer{margin:76px 0 0;padding:26px 0 0;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+/* svg shared */
+.d-panel{fill:var(--surface);stroke:var(--line-strong)}
+.d-sunken{fill:var(--sunken);stroke:var(--line)}
+.d-box{fill:var(--surface);stroke:var(--line-strong)}
+.t{fill:var(--ink);font-family:"Bricolage Grotesque",sans-serif;font-size:12.5px;font-weight:700}
+.t-sm{fill:var(--ink-2);font-family:"JetBrains Mono",monospace;font-size:10.5px}
+.t-mut{fill:var(--muted);font-family:"JetBrains Mono",monospace;font-size:10px}
+.t-lbl{fill:var(--muted);font-family:"Bricolage Grotesque",sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.t-want{fill:var(--want)} .t-have{fill:var(--have)} .t-ok{fill:var(--ok)} .t-note{fill:var(--note)}
+.b-want{fill:var(--want-wash);stroke:var(--want)} .b-have{fill:var(--have-wash);stroke:var(--have)}
+.b-ok{fill:var(--ok-wash);stroke:var(--ok)} .b-note{fill:var(--note-wash);stroke:var(--note)}
+.cell{fill:var(--want-wash);stroke:var(--want);stroke-width:.8}
+.ah{fill:var(--ink-2)} .ah-want{fill:var(--want)} .ah-have{fill:var(--have)} .ah-ok{fill:var(--ok)}
+.flow{fill:none;stroke:var(--ink-2);stroke-width:1.4}
+.flow-want{stroke:var(--want)} .flow-have{stroke:var(--have)} .flow-ok{stroke:var(--ok)}
+.g{transition:opacity .4s ease}
+.dim{opacity:.13} .hide{opacity:0}
+.live{stroke-dasharray:5 5;animation:ants 1s linear infinite}
+@keyframes ants{to{stroke-dashoffset:-20}}
+@media (prefers-reduced-motion:reduce){.live{animation:none}.g{transition:none}}
+</style>
+</head>
+<body>
+<nav class="topbar">
+  <div class="tbin">
+    <a class="tb-series" href="/tech/kubernetes-by-example/">Kubernetes by Example</a>
+    <button class="tb-btn" id="tocbtn" type="button" aria-expanded="false" aria-controls="tocpanel">Contents</button>
+    <span class="tb-pos">Part 5 of 14</span><div style="display:flex;gap:6px"><a class="tb-btn" href="/tech/kubernetes-by-example/04-deployments-and-rollouts/" title="Deployments and rollouts">&#8592;</a><a class="tb-btn" href="/tech/kubernetes-by-example/06-statefulsets-jobs-cronjobs/" title="StatefulSets, Jobs, CronJobs">&#8594;</a></div>
+  </div>
+  <div class="tocpanel" id="tocpanel" hidden><div class="tocin"><div class="tocgrp"><h5>Tier 0 · The model</h5><ol><li><a href="/tech/kubernetes-by-example/01-the-object-model/"><span class="n">01</span>The object model</a></li><li><a href="/tech/kubernetes-by-example/02-pods-and-containers/"><span class="n">02</span>Pods and containers</a></li><li><a href="/tech/kubernetes-by-example/03-labels-selectors-namespaces/"><span class="n">03</span>Labels, selectors, namespaces</a></li></ol></div><div class="tocgrp"><h5>Tier 1 · Workload kinds</h5><ol><li><a href="/tech/kubernetes-by-example/04-deployments-and-rollouts/"><span class="n">04</span>Deployments and rollouts</a></li><li><a href="/tech/kubernetes-by-example/05-daemonsets/" aria-current="page"><span class="n">05</span>DaemonSets</a></li><li><a href="/tech/kubernetes-by-example/06-statefulsets-jobs-cronjobs/"><span class="n">06</span>StatefulSets, Jobs, CronJobs</a></li></ol></div><div class="tocgrp"><h5>Tier 2 · Wiring</h5><ol><li><a href="/tech/kubernetes-by-example/07-services-and-ingress/"><span class="n">07</span>Services and Ingress</a></li><li><a href="/tech/kubernetes-by-example/08-config-and-secrets/"><span class="n">08</span>Config and Secrets</a></li><li><a href="/tech/kubernetes-by-example/09-storage/"><span class="n">09</span>Storage</a></li></ol></div><div class="tocgrp"><h5>Tier 3 · Scheduling</h5><ol><li><a href="/tech/kubernetes-by-example/10-requests-limits-qos/"><span class="n">10</span>Requests, limits, QoS</a></li><li><a href="/tech/kubernetes-by-example/11-placement-and-devices/"><span class="n">11</span>Placement and devices</a></li></ol></div><div class="tocgrp"><h5>Tier 4 · Production</h5><ol><li><a href="/tech/kubernetes-by-example/12-staying-up/"><span class="n">12</span>Staying up</a></li><li><a href="/tech/kubernetes-by-example/13-scaling-and-permissions/"><span class="n">13</span>Scaling and permissions</a></li><li><a href="/tech/kubernetes-by-example/14-helm-and-custom-resources/"><span class="n">14</span>Helm and custom resources</a></li></ol></div></div></div>
+</nav>
+<div class="wrap">
+<header class="top">
+  <div class="col">
+    <p class="eyebrow">Kubernetes by Example · Part 5</p>
+    <h1>DaemonSets</h1>
+    <p class="lede">Three replicas gave you two pods on one machine and none on another. When the whole point is to be <em>there</em>, you need a different question.</p>
+    <div class="meta"><span class="tag">assumes Parts 1–4</span><span class="tag">~16 minutes</span><span class="tag">needs a 3-node cluster</span></div>
+  </div>
+</header>
+
+<section>
+  <div class="col">
+    <h2>The symptom</h2>
+    <p>You add the decoder to <em>airwaves</em>. It needs to be on every machine, because tuners hand it audio through shared memory and shared memory does not travel.</p>
+    <p>Three nodes, so you write a Deployment with three replicas. It comes up green: 3/3 ready.</p>
+    <p>And a third of your tuners are broken. Not crashing — just sitting there, waiting for a decoder that isn't on their machine.</p>
+  </div><pre><code>$ kubectl get pods -o wide -l app=decoder
+NAME              READY   STATUS    NODE
+decoder-x7k2p     1/1     Running   node-1
+decoder-m4n8q     1/1     Running   node-1
+decoder-p2w9s     1/1     Running   node-2</code></pre>  <div class="col">
+    <p style="margin-top:18px">Two on node-1. One on node-2. Nothing at all on node-3.</p>
+    <p>The Deployment did precisely what you asked. You asked for three pods. You wanted one per node, and those are not the same request — there is no way to express the second one with a replica count.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Counting nodes instead of pods</h2>
+    <p>Everything so far has been counted in replicas: a number you choose, pods the scheduler places wherever they fit. For most workloads that's exactly right — you care how much capacity exists, not where it sits.</p>
+    <p>Some workloads invert that completely. They don't have a sensible number; they have a <b>place they must be</b>.</p>
+  </div>  <div class="stage">
+    <div class="stagefig" id="stagefig"><svg viewBox="0 0 1000 400" role="img" aria-label="Three nodes. A Deployment with three replicas puts two pods on one node and none on a third. A DaemonSet puts exactly one on every node, including the one the Deployment missed.">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-want" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-want" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-have" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-have" d="M0,0 L10,5 L0,10 Z"/></marker>
+    <marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-ok" d="M0,0 L10,5 L0,10 Z"/></marker>
+  </defs>
+  <g id="g-nodes" class="g">
+    <rect class="d-panel" x="40" y="86" width="280" height="276" rx="4" stroke-width="1.5"/>
+    <text class="t-lbl" x="56" y="106">node-1</text>
+    <text class="t-mut" x="56" y="122">4 CPU</text>
+    <rect class="d-panel" x="360" y="86" width="280" height="276" rx="4" stroke-width="1.5"/>
+    <text class="t-lbl" x="376" y="106">node-2</text>
+    <text class="t-mut" x="376" y="122">4 CPU</text>
+    <rect class="d-panel" x="680" y="86" width="280" height="276" rx="4" stroke-width="1.5"/>
+    <text class="t-lbl" x="696" y="106">node-3</text>
+    <text class="t-mut" x="696" y="122">4 CPU · has a GPU</text>
+  </g>
+  <g id="g-dep" class="g">
+    <text class="t-lbl t-have" x="56" y="148">Deployment · replicas: 3 — placed by count</text>
+    <rect class="b-have" x="56" y="156" width="248" height="46" rx="3" stroke-width="1.2"/>
+    <text class="t-sm t-have" x="68" y="176">scribe</text>
+    <text class="t-mut" x="68" y="192">pod 1</text>
+    <rect class="b-have" x="56" y="210" width="248" height="46" rx="3" stroke-width="1.2"/>
+    <text class="t-sm t-have" x="68" y="230">scribe</text>
+    <text class="t-mut" x="68" y="246">pod 2</text>
+    <rect class="b-have" x="376" y="156" width="248" height="46" rx="3" stroke-width="1.2"/>
+    <text class="t-sm t-have" x="388" y="176">scribe</text>
+    <text class="t-mut" x="388" y="192">pod 3</text>
+    <rect class="d-sunken" x="696" y="156" width="248" height="46" rx="3" stroke-dasharray="4 3"/>
+    <text class="t-mut" x="708" y="183">nothing here at all</text>
+  </g>
+  <g id="g-ds" class="g">
+    <text class="t-lbl t-ok" x="56" y="288">DaemonSet — placed by node</text>
+    <rect class="b-ok" x="56" y="296" width="248" height="46" rx="3" stroke-width="1.2"/>
+    <text class="t-sm t-ok" x="68" y="316">decoder</text>
+    <text class="t-mut" x="68" y="332">one per node</text>
+    <rect class="b-ok" x="376" y="296" width="248" height="46" rx="3" stroke-width="1.2"/>
+    <text class="t-sm t-ok" x="388" y="316">decoder</text>
+    <text class="t-mut" x="388" y="332">one per node</text>
+    <rect class="b-ok" x="696" y="296" width="248" height="46" rx="3" stroke-width="1.2"/>
+    <text class="t-sm t-ok" x="708" y="316">decoder</text>
+    <text class="t-mut" x="708" y="332">one per node</text>
+  </g>
+  <g id="f-join" class="g hide">
+    <rect x="676" y="82" width="288" height="284" rx="5" fill="none" stroke="var(--ok)" stroke-width="1.8" stroke-dasharray="7 5"/>
+    <rect x="690" y="74" width="258" height="16" fill="var(--bg)"/>
+    <text class="t-lbl t-ok" x="694" y="86">a node joins → a pod appears, unprompted</text>
+  </g>
+  <g id="x-sel" class="g hide">
+    <rect x="36" y="82" width="608" height="284" rx="5" fill="none" stroke="var(--have)" stroke-width="1.7" stroke-dasharray="6 4"/>
+    <rect x="60" y="372" width="420" height="16" fill="var(--bg)"/>
+    <text class="t-lbl t-have" x="64" y="384">nodeSelector: gpu=true → these two are excluded</text>
+  </g>
+  <g id="x-taint" class="g hide">
+    <rect x="696" y="292" width="248" height="54" rx="4" fill="none" stroke="var(--have)" stroke-width="1.7" stroke-dasharray="6 4"/>
+    <rect x="690" y="358" width="270" height="16" fill="var(--bg)"/>
+    <text class="t-lbl t-have" x="694" y="370">node tainted → needs a toleration to land</text>
+  </g>
+  <g id="g-local" class="g hide">
+    <path class="flow flow-ok live" d="M180,292 V260" marker-end="url(#a-ok)"/>
+    <path class="flow flow-ok live" d="M500,292 V260" marker-end="url(#a-ok)"/>
+    <path class="flow flow-ok live" d="M820,292 V260" marker-end="url(#a-ok)"/>
+    <text class="t-lbl t-ok" x="192" y="276">serves only what is on its own node</text>
+  </g>
+</svg></div>
+    <div class="scrub">
+      <button class="btn" id="prev" type="button">&#9664; Back</button>
+      <button class="btn" id="play" type="button">&#9654; Play</button>
+      <button class="btn" id="next" type="button">Next &#9654;</button>
+      <div class="pips" id="pips"></div>
+    </div>
+    <div class="stagetext">
+      <p class="steptitle" id="stepn"></p>
+      <h3 id="stept"></h3>
+      <div id="stepp"></div>
+    </div>
+  </div>  <div class="col">
+    <div class="cw">
+      <h4>Three questions</h4>
+      <p>Answer yes to any of these and you want a DaemonSet. Answer no to all three and you want a Deployment.</p>
+      <p><b>1.</b> Does it need to exist wherever work might land? <b>2.</b> Does it serve only clients on its own node? <b>3.</b> Does it own a node-local resource — a device, a GPU, a shared memory region?</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>The commands</h2>
+  </div><div class="anat" id="an-ds"><div class="anat-h">Reading a DaemonSet</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-ds" data-i="0" aria-pressed="false">kubectl get ds<span class="kind">verb + type</span></button><button class="tok" type="button" data-w="an-ds" data-i="1" aria-pressed="false">-o wide<span class="kind">flag</span></button><button class="tok" type="button" data-w="an-ds" data-i="2" aria-pressed="false">kubectl get pods -o wide<span class="kind">command</span></button><button class="tok" type="button" data-w="an-ds" data-i="3" aria-pressed="false">kubectl describe node<span class="kind">command</span></button></div><div class="anat-def" data-def="an-ds"><p class="anat-hint">Click any piece of the command.</p></div></div><div class="anat" id="an-taint"><div class="anat-h">Taints and tolerations</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-taint" data-i="0" aria-pressed="false">kubectl taint nodes<span class="kind">verb</span></button><button class="tok" type="button" data-w="an-taint" data-i="1" aria-pressed="false">node-3<span class="kind">the node</span></button><button class="tok" type="button" data-w="an-taint" data-i="2" aria-pressed="false">gpu=true:NoSchedule<span class="kind">the taint</span></button><button class="tok" type="button" data-w="an-taint" data-i="3" aria-pressed="false">gpu=true:NoSchedule-<span class="kind">removing</span></button><button class="tok" type="button" data-w="an-taint" data-i="4" aria-pressed="false">tolerations:<span class="kind">pod field</span></button></div><div class="anat-def" data-def="an-taint"><p class="anat-hint">Click any piece of the command.</p></div></div><div class="anat" id="an-dsroll"><div class="anat-h">Updating one, and watching it go</div><div class="anat-cmd"><button class="tok" type="button" data-w="an-dsroll" data-i="0" aria-pressed="false">kubectl rollout status ds/decoder<span class="kind">command</span></button><button class="tok" type="button" data-w="an-dsroll" data-i="1" aria-pressed="false">updateStrategy<span class="kind">spec field</span></button><button class="tok" type="button" data-w="an-dsroll" data-i="2" aria-pressed="false">maxUnavailable: 1<span class="kind">spec field</span></button><button class="tok" type="button" data-w="an-dsroll" data-i="3" aria-pressed="false">kubectl delete pod -l app=decoder<span class="kind">command</span></button></div><div class="anat-def" data-def="an-dsroll"><p class="anat-hint">Click any piece of the command.</p></div></div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Build it</h2>
+    <p>A multi-node cluster, then the decoder as a DaemonSet. If you've been running a single-node <code>kind</code> cluster, this is the point where you need more than one machine.</p>
+  </div><p class="pre-h">A cluster with three nodes</p>
+<pre><code>kind delete cluster --name airwaves
+kind create cluster --name airwaves --config manifests/kind-3node.yaml
+kubectl get nodes</code></pre><p class="pre-h">The decoder, everywhere</p>
+<pre><code>kubectl apply -f manifests/decoder.yaml
+kubectl get ds decoder
+kubectl get pods -o wide -l app=decoder</code></pre>  <div class="col">
+    <p style="margin-top:20px">DESIRED is 3 and you never typed a 3. It was computed from the cluster. One pod per node, including the one the Deployment skipped.</p>
+  </div><p class="pre-h">Confirm the spread</p>
+<pre><code>kubectl get pods -o wide -l app=decoder --no-headers \
+  | awk '{print $7}' | sort | uniq -c</code></pre>  <div class="col">
+    <p style="margin-top:20px">One per node, every node. That command is worth keeping — it's how you notice the machine that quietly has none.</p>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Break it</h2>
+    <h3 style="margin-top:26px">1 · Make a node refuse it</h3>
+  </div><pre><code>kubectl taint nodes airwaves-worker2 maintenance=true:NoExecute
+
+kubectl get pods -o wide -l app=decoder
+kubectl get ds decoder</code></pre>  <div class="col">
+    <p style="margin-top:20px">The pod on that node is evicted immediately — that's <code>NoExecute</code> rather than <code>NoSchedule</code> — and DESIRED drops from 3 to 2. The DaemonSet has not failed. It has correctly concluded that this node no longer wants it.</p>
+    <p>Now give it permission:</p>
+  </div><pre><code>kubectl patch ds decoder --type=merge -p='
+spec:
+  template:
+    spec:
+      tolerations:
+        - key: maintenance
+          operator: Exists
+          effect: NoExecute'
+
+kubectl get pods -o wide -l app=decoder</code></pre>  <div class="col">
+    <p style="margin-top:20px">Back to three. The taint is still there — you didn't remove the node's objection, you gave the pod an exemption from it.</p>
+  </div><p class="pre-h">Put it back</p>
+<pre><code>kubectl taint nodes airwaves-worker2 maintenance=true:NoExecute-</code></pre>  <div class="col">
+    <h3 style="margin-top:34px">2 · Narrow it to nothing</h3>
+  </div><pre><code>kubectl patch ds decoder --type=merge \
+  -p='{"spec":{"template":{"spec":{"nodeSelector":{"gpu":"true"}}}}}'
+
+kubectl get ds decoder</code></pre>  <div class="col">
+    <p style="margin-top:20px"><code>DESIRED 0</code>, and every decoder pod gone. No error anywhere, because nothing is wrong — you asked for one per GPU node and there are no GPU nodes.</p>
+    <p>This is the DaemonSet failure mode worth recognising on sight. <b>DESIRED 0 means your selector matched no nodes</b>, and the fix is always on the node side:</p>
+  </div><pre><code>kubectl get nodes --show-labels
+kubectl label node airwaves-worker gpu=true
+kubectl get ds decoder</code></pre>  <div class="col">
+    <p style="margin-top:20px">DESIRED climbs to 1 the moment the label exists. Nothing was restarted, nothing was reapplied — the controller simply ran its query again and found a different answer.</p>
+    <div class="note"><b>Put it back:</b> remove the <code>nodeSelector</code> patch and the label when you're done experimenting.</div>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>What follows from this</h2>
+  </div>  <div class="tblwrap">
+  <table class="tbl">
+    <thead><tr><th>Because…</th><th>…this is what happens</th></tr></thead>
+    <tbody><tr><td>There is no replica count</td><td>You cannot scale a DaemonSet. The only way to have more is to have more nodes.</td></tr><tr><td>DESIRED is computed</td><td><code>DESIRED 0</code> means no node matched — look at node labels, not at the DaemonSet.</td></tr><tr><td>Nodes are tracked continuously</td><td>Scaling a node pool needs no change here. New nodes get the pod automatically.</td></tr><tr><td>There is no surge</td><td>Updates go node by node, old pod gone before new pod starts. Slow on purpose.</td></tr><tr><td>One pod serves one node</td><td>Its failure is bounded by node size — and bigger nodes mean a bigger blast radius.</td></tr><tr><td>Taints repel, tolerations permit</td><td>A toleration lets a pod land somewhere; it never attracts it there.</td></tr></tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <div class="col">
+    <h2>Cheat sheet</h2>
+    <div class="cw">
+      <h4>Part 5 · daemonsets</h4>
+      <p>• A Deployment counts <b>pods</b>. A DaemonSet counts <b>nodes</b>. Three replicas is not three machines.</p>
+      <p>• No <code>replicas</code> field exists. DESIRED is derived from how many nodes match.</p>
+      <p>• A node joins, a pod appears. No edit, no reapply — the reconcile loop over nodes.</p>
+      <p>• <code>nodeSelector</code> narrows which nodes qualify. <b>DESIRED 0 means nothing matched</b>, not that something broke.</p>
+      <p>• Nodes <b>taint</b> to repel; pods <b>tolerate</b> to be allowed. <code>NoExecute</code> also evicts what's already there.</p>
+      <p>• No surge on update — old pod must go before the new one starts. <code>maxUnavailable</code> counts nodes.</p>
+      <p>• Use one when locality is a <em>requirement</em>: node-local resources, local-only clients, must-be-everywhere agents.</p>
+      <p>• Don't use one just for even spreading — <code>topologySpreadConstraints</code> on a Deployment does that and keeps your count.</p>
+      <p>• A DaemonSet pod is a single point of failure for its node, and there is no replica count to raise.</p>
+      <p>• <code>rollout restart ds/x</code> respects pacing; <code>delete pod -l</code> does not.</p>
+    </div>
+  </div>  <div class="nextprev">
+    <a class="np" href="/tech/kubernetes-by-example/04-deployments-and-rollouts/"><span>Previous · Part 4</span>Deployments and rollouts</a>
+    <a class="np" href="/tech/kubernetes-by-example/"><span>Series</span>All 14 parts</a>
+    <a class="np" href="/tech/kubernetes-by-example/06-statefulsets-jobs-cronjobs/"><span>Next · Part 6</span>StatefulSets, Jobs, CronJobs</a>
+  </div>
+</section>
+
+<footer>
+  <div class="col"><p>Part of <b>Kubernetes by Example</b>. Next: workloads whose names and disks have to outlive them.</p></div>
+</footer>
+</div>
+<script>
+const STEPS = [{"t": "A Deployment counts; it does not spread", "on": ["g-nodes", "g-dep"], "p": ["Ask a Deployment for three replicas on a three-node cluster and you might get one per node. You might equally get two on one node and none on another.", "The scheduler places each pod independently, scoring nodes on free capacity and constraints. Nothing in that process is trying to give you one per machine. <b>Three replicas means three pods, not three nodes.</b>", "Usually fine. Occasionally catastrophic \u2014 specifically when the pod's whole purpose is to serve the machine it's standing on."], "n": 1}, {"t": "A DaemonSet counts nodes instead", "on": ["g-nodes", "g-ds"], "p": ["A <b>DaemonSet</b> inverts the question. It doesn't ask \u201chow many?\u201d, it asks \u201cwhich nodes?\u201d \u2014 and the default answer is all of them.", "There is no <code>replicas</code> field. Looking for one is the first thing everybody does, and its absence is the clearest statement of what this object is for.", "The count is a consequence of your cluster's size, not an input you control."], "n": 2}, {"t": "New node, new pod, no edit", "on": ["g-nodes", "g-ds", "f-join"], "p": ["Add a node to the cluster and the DaemonSet controller notices a node with no pod of its kind, and creates one. Remove the node and the pod goes with it.", "You never edit anything. This is the Part 1 reconcile loop with the gap defined over <em>nodes</em> rather than over a number \u2014 and it's why a DaemonSet is the right home for anything that must exist wherever work might land.", "It's also why autoscaling a node pool doesn't require a corresponding change to your monitoring agents, log shippers, or CNI."], "n": 3}, {"t": "Narrowing which nodes", "on": ["g-nodes", "g-ds", "x-sel"], "p": ["\u201cEvery node\u201d is often too many. A GPU decoder on a CPU-only machine is a crash loop with extra steps.", "A <code>nodeSelector</code> on the pod template filters by node label: <code>gpu: &quot;true&quot;</code> and the DaemonSet becomes one-per-<em>matching</em>-node. Nodes that don't match simply never get a pod \u2014 not pending, not failing, just absent.", "<b>Which means a DaemonSet showing DESIRED 0 is not broken.</b> It means nothing matched, and you should look at node labels rather than at the DaemonSet."], "n": 4}, {"t": "Getting onto nodes that push back", "on": ["g-nodes", "g-ds", "x-taint"], "p": ["Some nodes carry a <b>taint</b> \u2014 a mark meaning \u201cdon't schedule here unless you specifically say so\u201d. Control-plane nodes usually have one. GPU pools often do, to stop ordinary workloads eating expensive hardware.", "A taint repels by default, and a <b>toleration</b> on your pod is how you opt back in. DaemonSets need them more than anything else precisely because they want to be everywhere, including the awkward places.", "The full placement toolkit \u2014 affinity, anti-affinity, topology spread \u2014 is Part 11. Here you only need the pairing: nodes taint, pods tolerate."], "n": 5}, {"t": "Updates roll node by node", "on": ["g-nodes", "g-ds"], "p": ["A DaemonSet has a rollout too, with a crucial difference from Part 4: <b>there is no surge</b>. You cannot have two of a one-per-node thing on the same node, so the new pod can only start after the old one is gone.", "<code>maxUnavailable</code> is therefore how many <em>nodes</em> go without at once, and it defaults to 1. Updating a hundred-node DaemonSet is a hundred sequential replacements.", "<code>maxSurge</code> does exist now, but needs the pod to be able to tolerate a brief double-up \u2014 which, for something holding an exclusive node-local resource, it usually can't."], "n": 6}, {"t": "Why the decoder and asr are DaemonSets", "on": ["g-nodes", "g-ds", "g-local"], "p": ["Three questions. If you answer yes to any, you want a DaemonSet:", "<b>Does it need to be wherever the work is?</b> Log shippers, metrics agents, network plugins. <b>Does it serve only local clients?</b> Our decoder talks to tuners on its own node and nowhere else. <b>Does it own a node-local resource?</b> A GPU, a device file, a shared memory region.", "The decoder says yes to all three. A tuner on node-2 cannot use a decoder on node-1 \u2014 not because of policy, but because they'd have to ship raw audio over the network, which is the entire cost we were avoiding. Locality isn't an optimisation here; it's the design."], "n": 7}, {"t": "Which also sets the blast radius", "on": ["g-nodes", "g-ds", "g-local"], "p": ["A DaemonSet pod is a <b>single point of failure for its node</b>. Not for the cluster \u2014 for its node. If the decoder on node-2 dies, every tuner on node-2 is affected and no other node notices.", "That's a genuinely good property: failures stay local and the damage is bounded by node size. It's also an uncomfortable one, because the ratio is fixed by your machine size. Bigger nodes mean more eggs per basket.", "There is no replica count to raise. The only lever is making the pod itself more reliable, or making nodes smaller."], "n": 8}, {"t": "When not to use one", "on": ["g-nodes", "g-dep", "g-ds"], "p": ["If a pod would work perfectly well receiving traffic over the network from anywhere, it should be a Deployment. You get independent scaling, surge during rollouts, and a count you control.", "The common mistake is reaching for a DaemonSet to get even spreading. If that's all you want, <code>topologySpreadConstraints</code> on a Deployment does it properly, and still lets you pick the number.", "<b>Use a DaemonSet when locality is a requirement, not when it's merely nice.</b>"], "n": 9}];
+const svg=document.querySelector('#stagefig svg');
+const groups=[...svg.querySelectorAll('g[id]')];
+const pips=document.getElementById('pips');
+let cur=0,timer=null;
+STEPS.forEach((s,i)=>{const b=document.createElement('button');b.className='pip';b.type='button';b.textContent=s.n;
+  b.setAttribute('aria-label','Step '+s.n+': '+s.t);b.addEventListener('click',()=>{stop();show(i);});pips.appendChild(b);});
+function show(i){
+  cur=(i+STEPS.length)%STEPS.length;
+  const s=STEPS[cur],on=new Set(s.on);
+  groups.forEach(g=>{
+    const isFlow=g.id.startsWith('f-')||g.id.startsWith('x-');
+    g.classList.remove('dim','hide');
+    if(on.has(g.id))return;
+    g.classList.add(isFlow?'hide':'dim');
+  });
+  document.getElementById('stepn').textContent='Step '+s.n+' of '+STEPS.length;
+  document.getElementById('stept').textContent=s.t;
+  document.getElementById('stepp').innerHTML=s.p.map(x=>'<p>'+x+'</p>').join('');
+  [...pips.children].forEach((b,j)=>b.setAttribute('aria-current',j===cur?'true':'false'));
+}
+function stop(){if(timer){clearInterval(timer);timer=null;document.getElementById('play').innerHTML='\u25B6 Play';}}
+document.getElementById('next').addEventListener('click',()=>{stop();show(cur+1);});
+document.getElementById('prev').addEventListener('click',()=>{stop();show(cur-1);});
+document.getElementById('play').addEventListener('click',e=>{
+  if(timer){stop();return;}
+  e.currentTarget.innerHTML='\u23F8 Pause';
+  timer=setInterval(()=>{if(cur===STEPS.length-1){stop();return;}show(cur+1);},6000);
+});
+document.addEventListener('keydown',e=>{
+  if(e.target.closest('input,textarea'))return;
+  if(e.key==='ArrowRight'){stop();show(cur+1);}
+  if(e.key==='ArrowLeft'){stop();show(cur-1);}
+});
+show(0);
+
+var ANAT = {"an-ds": [{"t": "kubectl get daemonset", "b": "<p>Five numbers instead of a count: DESIRED, CURRENT, READY, UP-TO-DATE, AVAILABLE.</p><p>DESIRED is computed from your cluster \u2014 how many nodes match. You never set it. If it reads 0, your <code>nodeSelector</code> matched nothing and the DaemonSet is fine; the labels are the problem.</p>"}, {"t": "adding context", "b": "<p>Appends the container images and, usefully, the NODE SELECTOR column \u2014 so you can see what's narrowing it without opening the YAML.</p>"}, {"t": "where they landed", "b": "<p>The real check. Add <code>--field-selector spec.nodeName=node-2</code> to see everything on one machine.</p><p><code>kubectl get pods -o wide -l app=decoder | awk '{print $7}' | sort | uniq -c</code> gives a one-line count per node, which is how you spot the node that quietly has none.</p>"}, {"t": "the other direction", "b": "<p>From the node's point of view: what's running, what's allocated, and any taints.</p><p>When a DaemonSet pod is missing from one node, the answer is almost always a taint or a label, and both are in here.</p>"}], "an-taint": [{"t": "kubectl taint", "b": "<p>Marks a node as repelling pods that don't explicitly tolerate it. A property of the <em>node</em>, pushing outward.</p><p>The mirror image of <code>nodeSelector</code>, which is a property of the pod, pulling toward.</p>"}, {"t": "which node", "b": "<p>One node, or <code>--all</code>. Also accepts <code>-l</code>, so you can taint a whole pool: <code>kubectl taint nodes -l gpu=true \u2026</code>.</p>"}, {"t": "key=value:effect", "b": "<p>Three effects. <code>NoSchedule</code> keeps new pods away but leaves existing ones alone. <code>PreferNoSchedule</code> is a hint. <code>NoExecute</code> also <b>evicts pods already running there</b> \u2014 the one to be careful with.</p>"}, {"t": "the trailing minus", "b": "<p>Same trailing-dash convention as <code>kubectl label</code>. Must match the existing taint exactly, including the effect.</p><p><code>kubectl describe node node-3 | grep -i taint</code> first, so you remove what's actually there.</p>"}, {"t": "the other half", "b": "<p>Lives in the pod spec. An <code>Exists</code> operator tolerates any value of a key; <code>Equal</code> wants a specific one.</p><p><b>A toleration is permission, not preference.</b> It lets a pod land on a tainted node; it does nothing to attract it there. For that you need affinity \u2014 Part 11.</p>"}], "an-dsroll": [{"t": "watching a DaemonSet roll", "b": "<p>Same verb as Part 4, different arithmetic underneath. Progress is counted in nodes, and there is no surge by default.</p><p>On a large cluster this is slow by design \u2014 one node at a time, each waiting for readiness.</p>"}, {"t": "RollingUpdate or OnDelete", "b": "<p><code>RollingUpdate</code> is the default and behaves as you'd expect.</p><p><code>OnDelete</code> changes nothing until you delete a pod yourself \u2014 the escape hatch for things too disruptive to roll automatically, where you want to choose each moment.</p>"}, {"t": "how many nodes at once", "b": "<p>How many nodes may be without the pod simultaneously. Default 1.</p><p>Raising it speeds up a big rollout at the cost of a wider simultaneous gap. For a decoder, that gap means tuners on those nodes are falling back or stalling \u2014 so the number is a real trade, not a tuning knob.</p>"}, {"t": "the blunt instrument", "b": "<p>Deletes them all; the DaemonSet recreates them all, at once, with no pacing. Occasionally what you want. Usually not.</p><p><code>kubectl rollout restart ds/decoder</code> does the same job while respecting <code>maxUnavailable</code>.</p>"}]};
+document.querySelectorAll('.tok').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var w=btn.dataset.w, i=+btn.dataset.i, d=ANAT[w][i];
+    var panel=document.querySelector('[data-def="'+w+'"]');
+    document.querySelectorAll('.tok[data-w="'+w+'"]').forEach(function(o){o.setAttribute('aria-pressed',String(o===btn));});
+    panel.innerHTML='<h4>'+d.t+'</h4>'+d.b;
+  });
+});
+
+(function(){
+  var b=document.getElementById('tocbtn'),p=document.getElementById('tocpanel');
+  if(!b||!p)return;
+  b.addEventListener('click',function(){
+    var open=b.getAttribute('aria-expanded')==='true';
+    b.setAttribute('aria-expanded',String(!open)); p.hidden=open;
+  });
+  document.addEventListener('click',function(e){
+    if(!p.hidden && !p.contains(e.target) && e.target!==b){b.setAttribute('aria-expanded','false');p.hidden=true;}
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&!p.hidden){b.setAttribute('aria-expanded','false');p.hidden=true;b.focus();}
+  });
+})();
+</script>
+</body>
+</html>

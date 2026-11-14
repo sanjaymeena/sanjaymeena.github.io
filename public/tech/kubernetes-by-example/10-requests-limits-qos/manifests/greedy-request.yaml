@@ -1,0 +1,22 @@
+# Part 10, break-it #3 — request more CPU than any node has.
+# Pending forever, on an idle cluster. Part 1's ungrantable wish, explained.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: greedy
+  labels: {app: greedy}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: greedy}
+  template:
+    metadata:
+      labels: {app: greedy}
+    spec:
+      containers:
+        - name: greedy
+          image: busybox:1.36
+          command: ["/bin/sh","-c"]
+          args: ["sleep 3600"]
+          resources:
+            requests: {cpu: "64", memory: 64Mi}
